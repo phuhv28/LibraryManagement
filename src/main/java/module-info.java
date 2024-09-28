@@ -6,4 +6,6 @@ module baanhemsieunhan.librarymanagement {
 
     opens baanhemsieunhan.librarymanagement to javafx.fxml;
     exports baanhemsieunhan.librarymanagement;
+    exports baanhemsieunhan.librarymanagement.data;
+    opens baanhemsieunhan.librarymanagement.data to javafx.fxml;
 }
