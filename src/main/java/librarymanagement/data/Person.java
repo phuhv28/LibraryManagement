@@ -1,38 +1,35 @@
 package librarymanagement.data;
 
-public class Person {
-    private String personID;
-    private String firstName;
-    private String lastName;
+class Person {
+    private String name;
+    private String bio;
 
-    public String getPersonID() {
-        return personID;
+    public Person() {}
+
+    public Person(String name, String bio) {
+        this.name = name;
+        this.bio = bio;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
-    public void setPersonID(String personID) {
-        this.personID = personID;
+    public String getName() {
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getBio() {
+        return bio;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getInfo() {
+        return "Name: " + name + "\n" +
+                "Bio: " + bio;
     }
-
-    public void getInfo() {
-        System.out.println("ID: " + personID);
-        System.out.println("First Name: " + firstName);
-        System.out.println("Last Name: " + lastName);
-    }
-
 }
+

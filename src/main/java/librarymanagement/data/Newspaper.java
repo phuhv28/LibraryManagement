@@ -1,4 +1,4 @@
-package baanhemsieunhan.librarymanagement.data;
+package librarymanagement.data;
 
 class Newspaper extends Document {
     private String date;

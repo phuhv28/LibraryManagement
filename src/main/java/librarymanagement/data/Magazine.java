@@ -1,4 +1,4 @@
-package baanhemsieunhan.librarymanagement.data;
+package librarymanagement.data;
 
 class Magazine extends Document {
     private int issueNumber;
