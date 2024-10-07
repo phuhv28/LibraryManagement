@@ -1,4 +1,4 @@
-package baanhemsieunhan.librarymanagement.data;
+package librarymanagement.data;
 
 class Book extends Document {
     private Person author;

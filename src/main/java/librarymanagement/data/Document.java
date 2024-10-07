@@ -8,22 +8,19 @@ public class Document {
     private int numberAll;
     private int numberAvailable;
 
-    Document() {
+    public Document() {}
+
+    public Document(String documentID, String title, String publisher, int publicationYear, int numberAll, int numberAvailable) {
+        this.documentID = documentID;
+        this.title = title;
+        this.publisher = publisher;
+        this.publicationYear = publicationYear;
+        this.numberAll = numberAll;
+        this.numberAvailable = numberAvailable;
     }
 
-    ;
-
-    Document(String ID, String tt, String pls, int year, int all, int available) {
-        documentID = ID;
-        title = tt;
-        publisher = pls;
-        publicationYear = year;
-        numberAll = all;
-        numberAvailable = available;
-    }
-
-    public void setDocumentID(String ID) {
-        this.documentID = ID;
+    public void setDocumentID(String documentID) {
+        this.documentID = documentID;
     }
 
     public void setNumberAll(int numberAll) {
@@ -70,118 +67,12 @@ public class Document {
         return publicationYear;
     }
 
-    public void getInfo() {
-        System.out.println("ID: " + documentID);
-        System.out.println("Title: " + title);
-        System.out.println("Publisher: " + publisher);
-        System.out.println("Publication year: " + publicationYear);
-        System.out.println("Total book: " + numberAll);
-        System.out.println("Remaining book: " + numberAvailable);
+    public String getInfo() {
+        return "ID: " + documentID + "\n" +
+                "Title: " + title + "\n" +
+                "Publisher: " + publisher + "\n" +
+                "Publication year: " + publicationYear + "\n" +
+                "Total book: " + numberAll + "\n" +
+                "Remaining book: " + numberAvailable;
     }
 }
-
-class Book extends Document {
-    Person author;
-    int numberOfPage;
-
-    Book() {
-    }
-
-    ;
-
-    Book(String ID, String tt, String pls, int year,
-         int all, int available, Person au, int page) {
-        super(ID, tt, pls, year, all, available);
-        author = au;
-        numberOfPage = page;
-    }
-
-    public void setAuthor(Person author) {
-        this.author = author;
-    }
-
-    public Person getAuthor() {
-        return author;
-    }
-
-    public void setNumberOfPage(int numberOfPage) {
-        this.numberOfPage = numberOfPage;
-    }
-
-    public int getNumberOfPage() {
-        return numberOfPage;
-    }
-
-    @Override
-    public void getInfo() {
-        super.getInfo();
-        System.out.println("Number of page: " + numberOfPage);
-        //To do
-        //Print information of author
-    }
-}
-
-class Magazine extends Document {
-    private int issueNumber;
-    private String month;
-
-    Magazine() {
-    }
-
-    Magazine(String ID, String tt, String pls, int year, int all, int available, int issue, String month) {
-        super(ID, tt, pls, year, all, available);
-        this.issueNumber = issue;
-        this.month = month;
-    }
-
-    public int getIssueNumber() {
-        return issueNumber;
-    }
-
-    public void setIssueNumber(int issueNumber) {
-        this.issueNumber = issueNumber;
-    }
-
-    public String getMonth() {
-        return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    @Override
-    public void getInfo() {
-        super.getInfo();
-        System.out.println("Issue Number: " + issueNumber);
-        System.out.println("Month: " + month);
-    }
-}
-
-class Newspaper extends Document {
-    private String date;
-
-    Newspaper() {
-    }
-
-    Newspaper(String ID, String tt, String pls, int year, int all, int available, String date) {
-        super(ID, tt, pls, year, all, available);
-        this.date = date;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    @Override
-    public void getInfo() {
-        super.getInfo();
-        System.out.println("Date: " + date);
-    }
-}
-
-
