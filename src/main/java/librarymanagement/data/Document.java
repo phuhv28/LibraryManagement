@@ -1,4 +1,4 @@
-package baanhemsieunhan.librarymanagement.data;
+package librarymanagement.data;
 
 public class Document {
     private String documentID;
@@ -8,7 +8,10 @@ public class Document {
     private int numberAll;
     private int numberAvailable;
 
-    Document(){};
+    Document() {
+    }
+
+    ;
 
     Document(String ID, String tt, String pls, int year, int all, int available) {
         documentID = ID;
@@ -81,7 +84,10 @@ class Book extends Document {
     Person author;
     int numberOfPage;
 
-    Book() {};
+    Book() {
+    }
+
+    ;
 
     Book(String ID, String tt, String pls, int year,
          int all, int available, Person au, int page) {
@@ -119,7 +125,8 @@ class Magazine extends Document {
     private int issueNumber;
     private String month;
 
-    Magazine() {}
+    Magazine() {
+    }
 
     Magazine(String ID, String tt, String pls, int year, int all, int available, int issue, String month) {
         super(ID, tt, pls, year, all, available);
@@ -154,7 +161,8 @@ class Magazine extends Document {
 class Newspaper extends Document {
     private String date;
 
-    Newspaper() {}
+    Newspaper() {
+    }
 
     Newspaper(String ID, String tt, String pls, int year, int all, int available, String date) {
         super(ID, tt, pls, year, all, available);

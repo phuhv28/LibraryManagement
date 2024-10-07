@@ -1,4 +1,4 @@
-package baanhemsieunhan.librarymanagement.data;
+package librarymanagement.data;
 
 public class Person {
     private String personID;
