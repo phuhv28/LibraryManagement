@@ -18,8 +18,8 @@ import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
     private static SignUpController controller = null;
+    private static Stage stage = null;
 
-    private static Stage stage;
 
     @FXML
     private TextField tfUserName;
@@ -36,19 +36,16 @@ public class SignUpController implements Initializable {
     @FXML
     private Hyperlink lkLogin;
 
-    private SignUpController() {
-
-    }
 
     public static SignUpController getInstance() {
         if (controller == null) {
-            FXMLLoader loader = new FXMLLoader(SignUpController.class.getResource("FXML/SignUp.fxml"));
+            FXMLLoader loader = new FXMLLoader(SignUpController.class.getResource("/FXML/SignUp.fxml"));
             try {
-                Parent parent = loader.load();
-                Scene scene = new Scene(parent);
+                Parent root = loader.load();
+
                 stage = new Stage();
                 stage.setTitle("Sign Up");
-                stage.setScene(scene);
+                stage.setScene(new Scene(root, 400, 400));
                 controller = loader.getController();
 
             } catch (Exception e) {

@@ -8,4 +8,8 @@ module librarymanagement {
     opens librarymanagement.gui;
     exports librarymanagement.gui.controllers to javafx.fxml, javafx.controls, java.base;
     opens librarymanagement.gui.controllers;
+    exports librarymanagement.gui.models to java.base, javafx.controls, javafx.fxml;
+    opens librarymanagement.gui.models;
+    exports librarymanagement.gui.viewmodels to java.base, javafx.controls, javafx.fxml;
+    opens librarymanagement.gui.viewmodels;
 }

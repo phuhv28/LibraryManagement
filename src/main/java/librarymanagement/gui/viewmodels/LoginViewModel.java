@@ -1,4 +1,4 @@
-package librarymanagement.gui.controllers;
+package librarymanagement.gui.viewmodels;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
