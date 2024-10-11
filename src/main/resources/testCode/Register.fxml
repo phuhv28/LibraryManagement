@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a12318" height="500.0" layoutY="-2.0" stroke="#131010" strokeType="INSIDE" strokeWidth="5.0" width="900.0" />
+
+        <ImageView fx:id="imageView3" fitHeight="462.0" fitWidth="372.0" layoutX="26.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
+
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="312.0" layoutX="491.0" layoutY="124.0" stroke="#281b1b" strokeType="INSIDE" strokeWidth="5.0" style="-fx-arc-height: 50; -fx-arc-width: 50;" width="330.0" />
+
+
+        <PasswordField layoutX="541.0" layoutY="229.0" prefHeight="37.0" prefWidth="250.0" promptText="Password" style="-fx-font-weight: bold; -fx-background-radius: 10;">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </PasswordField>
+        <PasswordField layoutX="540.0" layoutY="290.0" prefHeight="37.0" prefWidth="250.0" promptText="Confirm Password" style="-fx-background-radius: 10; -fx-font-weight: bold;">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </PasswordField>
+        <TextField layoutX="540.0" layoutY="172.0" prefHeight="37.0" prefWidth="250.0" promptText="UserName" style="-fx-font-weight: bold; -fx-background-radius: 10;">
+            <font>
+                <Font size="14.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="TEXT" />
+            </cursor>
+        </TextField>
+
+
+        <Button layoutX="613.0" layoutY="361.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="118.0" style="-fx-font-weight: 800; -fx-background-radius: 15;" text="LOGIN" textFill="#bf2a08" textOverrun="CLIP">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Button>
+
+
+        <Text fill="#fa8d08" layoutX="509.0" layoutY="99.0" stroke="#1e1a1a" strokeType="OUTSIDE" strokeWidth="5.0" text="REGISTER NEW ACCOUNT">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Text>
+        <Line endX="-100.0" endY="-200.0" layoutX="504.0" layoutY="494.0" startX="-50.0" startY="-30.0" stroke="#281b1b" strokeWidth="5.0" />
+        <QuadCurve controlX="-50.0" controlY="-100.0" endX="50.0" fill="#1f93ff03" layoutX="450.0" layoutY="292.0" startX="-50.0" stroke="#281b1b" strokeType="INSIDE" strokeWidth="5.0" />
+        <QuadCurve controlX="-50.0" controlY="-100.0" endX="50.0" fill="#1f93ff00" layoutX="509.0" layoutY="479.0" startX="-55.0" startY="-10.0" stroke="#281b1b" strokeType="INSIDE" strokeWidth="10.0" />
+        <Line endX="100.0" endY="-34.0" layoutX="689.0" layoutY="468.0" startX="-140.0" startY="10.0" stroke="#281b1b" strokeWidth="7.0" />
+        <Line endX="100.0" endY="-34.0" layoutX="642.0" layoutY="468.0" startX="-100.0" stroke="#281b1b" strokeWidth="5.0" />
+        <Line endX="60.0" endY="-20.0" layoutX="630.0" layoutY="456.0" startX="-100.0" stroke="#281b1b" strokeWidth="5.0" />
+        <Line endX="-40.0" endY="170.0" layoutX="500.0" layoutY="280.0" startX="-95.0" startY="-20.0" stroke="#281b1b" strokeWidth="5.0" />
+        <Line endX="-45.0" endY="180.0" layoutX="512.0" layoutY="256.0" startX="-100.0" stroke="#281b1b" strokeWidth="5.0" />
+
+
+
+    </children>
+</AnchorPane>

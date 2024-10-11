@@ -1,15 +1,10 @@
-module librarymanagement {
-    requires javafx.base;
+module baanhemsieunhan.librarymanagement {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.graphics;
 
-    exports librarymanagement.gui to javafx.fxml, javafx.controls, java.base;
-    opens librarymanagement.gui;
-    exports librarymanagement.gui.controllers to javafx.fxml, javafx.controls, java.base;
-    opens librarymanagement.gui.controllers;
-    exports librarymanagement.gui.models to java.base, javafx.controls, javafx.fxml;
-    opens librarymanagement.gui.models;
-    exports librarymanagement.gui.viewmodels to java.base, javafx.controls, javafx.fxml;
-    opens librarymanagement.gui.viewmodels;
+    requires org.controlsfx.controls;
+
+    opens baanhemsieunhan.librarymanagement to javafx.fxml;
+    exports baanhemsieunhan.librarymanagement;
+    exports testCode;
 }
