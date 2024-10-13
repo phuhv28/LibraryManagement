@@ -4,6 +4,7 @@ module librarymanagement {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.desktop;
+    requires java.sql;
 
     exports librarymanagement.gui to javafx.fxml, javafx.controls, java.base;
     opens librarymanagement.gui;
