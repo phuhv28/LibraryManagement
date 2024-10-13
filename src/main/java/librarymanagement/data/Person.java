@@ -2,34 +2,34 @@ package librarymanagement.data;
 
 class Person {
     private String name;
-    private String bio;
+    private String ID;
 
     public Person() {}
 
-    public Person(String name, String bio) {
+    public Person(String name, String ID) {
         this.name = name;
-        this.bio = bio;
+        this.ID = ID;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getBio() {
-        return bio;
+    public String getID() {
+        return ID;
     }
 
     public String getInfo() {
         return "Name: " + name + "\n" +
-                "Bio: " + bio;
+                "Bio: " + ID;
     }
 }
 

@@ -1,34 +1,34 @@
 package librarymanagement.data;
 
 public class Document {
-    private String documentID;
+    private String ISBN;
     private String title;
     private String publisher;
     private int publicationYear;
-    private int numberAll;
-    private int numberAvailable;
+    private int totalQuantity;
+    private int availableQuantity;
 
     public Document() {}
 
-    public Document(String documentID, String title, String publisher, int publicationYear, int numberAll, int numberAvailable) {
-        this.documentID = documentID;
+    public Document(String documentID, String title, String publisher, int publicationYear, int totalQuantity, int availableQuantity) {
+        this.ISBN = documentID;
         this.title = title;
         this.publisher = publisher;
         this.publicationYear = publicationYear;
-        this.numberAll = numberAll;
-        this.numberAvailable = numberAvailable;
+        this.totalQuantity = totalQuantity;
+        this.availableQuantity = availableQuantity;
     }
 
-    public void setDocumentID(String documentID) {
-        this.documentID = documentID;
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
     }
 
-    public void setNumberAll(int numberAll) {
-        this.numberAll = numberAll;
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
-    public void setNumberAvailable(int numberAvailable) {
-        this.numberAvailable = numberAvailable;
+    public void setAvailableQuantity(int availableQuantity) {
+        this.availableQuantity = availableQuantity;
     }
 
     public void setPublicationYear(int publicationYear) {
@@ -43,8 +43,8 @@ public class Document {
         this.title = title;
     }
 
-    public String getDocumentID() {
-        return documentID;
+    public String getISBN() {
+        return ISBN;
     }
 
     public String getPublisher() {
@@ -55,12 +55,12 @@ public class Document {
         return title;
     }
 
-    public int getNumberAll() {
-        return numberAll;
+    public int getTotalQuantity() {
+        return totalQuantity;
     }
 
-    public int getNumberAvailable() {
-        return numberAvailable;
+    public int getAvailableQuantity() {
+        return availableQuantity;
     }
 
     public int getPublicationYear() {
@@ -68,11 +68,11 @@ public class Document {
     }
 
     public String getInfo() {
-        return "ID: " + documentID + "\n" +
+        return "ID: " + ISBN + "\n" +
                 "Title: " + title + "\n" +
                 "Publisher: " + publisher + "\n" +
                 "Publication year: " + publicationYear + "\n" +
-                "Total book: " + numberAll + "\n" +
-                "Remaining book: " + numberAvailable;
+                "Total book: " + totalQuantity + "\n" +
+                "Remaining book: " + availableQuantity;
     }
 }
