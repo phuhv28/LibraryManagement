@@ -34,7 +34,7 @@ public class LoginController implements Initializable {
 
 
     private static void prepare() {
-        FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/FXML/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/librarymanagement/gui/controllers/Login.fxml"));
         try {
             Parent parent = loader.load();
             loginScene = new Scene(parent);
