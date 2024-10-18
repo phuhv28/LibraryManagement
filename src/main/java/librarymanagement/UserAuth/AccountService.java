@@ -3,12 +3,12 @@ package librarymanagement.UserAuth;
 import java.util.*;
 
 public class AccountService {
-    private final HashMap<String, Account> accountData = new HashMap<>();
+    private static final HashMap<String, Account> accountData = new HashMap<>();
 
     /**
      * Verify user account.
      */
-    public LoginResult checkLogin(String username, String password) {
+    public static LoginResult checkLogin(String username, String password) {
         if (accountData.containsKey(username)) {
             if (accountData.get(username).getUsername().equals(password)) {
                 return LoginResult.SUCCESS;

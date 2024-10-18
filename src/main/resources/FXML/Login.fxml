@@ -7,30 +7,30 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.LoginController">
+<AnchorPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.LoginController">
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a12318" height="500.0" layoutX="0.0" layoutY="0.0" stroke="#131010" strokeType="INSIDE" strokeWidth="5.0" width="900.0" />
     <Ellipse fill="#a12318" layoutX="665.0" layoutY="414.0" radiusX="218.0" radiusY="48.0" stroke="#262020" strokeType="INSIDE" strokeWidth="3.0" />
 
     <ImageView fitHeight="462.0" fitWidth="372.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../images/Login.png" />
+                <Image url="@../images/Login.png" />
             </image>
     </ImageView>
 
     <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="489.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../../images/image_user.png" />
+            <Image url="@../images/image_user.png" />
         </image>
     </ImageView>
 
     <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="489.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../../images/image_password.png" />
+            <Image url="@../images/image_password.png" />
         </image>
     </ImageView>
     <ImageView fitHeight="83.0" fitWidth="148.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../../images/image_iconApp.png" />
+            <Image url="@../images/image_iconApp.png" />
         </image>
     </ImageView>
 

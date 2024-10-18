@@ -13,12 +13,12 @@
 
         <ImageView fitHeight="462.0" fitWidth="372.0" layoutX="26.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../images/Login.png" />
+                <Image url="@../images/Login.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="83.0" fitWidth="148.0" layoutX="590.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../images/image_iconApp.png" />
+                <Image url="@../images/image_iconApp.png" />
             </image>
         </ImageView>
 

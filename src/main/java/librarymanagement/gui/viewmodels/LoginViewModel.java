@@ -2,17 +2,42 @@ package librarymanagement.gui.viewmodels;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import librarymanagement.UserAuth.AccountService;
+import librarymanagement.UserAuth.LoginResult;
 
 public class LoginViewModel {
 
-    private StringProperty userNameProperty = new SimpleStringProperty();
-    private final StringProperty passWordProperty = new SimpleStringProperty();
+    private final StringProperty usernameProperty = new SimpleStringProperty();
+    private final StringProperty passwordProperty = new SimpleStringProperty();
+    private final StringProperty errorTextProperty = new SimpleStringProperty();
 
-    public StringProperty userNameProperty() {
-        return userNameProperty;
+    public StringProperty usernameProperty() {
+        return usernameProperty;
     }
 
-    public StringProperty passWordProperty() {
-        return passWordProperty;
+    public StringProperty passwordProperty() {
+        return passwordProperty;
+    }
+
+    public String getUsername() {
+        return usernameProperty.get();
+    }
+
+    public String getPassword() {
+        return passwordProperty.get();
+    }
+
+    public void handleLogin() {
+        LoginResult loginResult = AccountService.checkLogin(getUsername(), getPassword());
+        errorTextProperty.set(loginResult.getMessage());
+        if (loginResult == LoginResult.SUCCESS) {
+
+        } else {
+
+        }
+    }
+
+    public StringProperty errorLabelTextProperty() {
+        return errorTextProperty;
     }
 }

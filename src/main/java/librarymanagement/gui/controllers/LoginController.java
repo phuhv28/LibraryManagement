@@ -1,6 +1,5 @@
 package librarymanagement.gui.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,27 +13,33 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-    private static LoginController loginController = null;
-    private static Scene loginScene;
+    @FXML
+    public Label errorLabel;
 
     @FXML
     public CheckBox cbRemeberMe;
 
     @FXML
-    public Button btnLogin;
+    private PasswordField pfPassword;
 
     @FXML
-    private TextField tfUserName;
+    private TextField tfUsername;
 
     @FXML
-    private PasswordField tfPassWord;
+    private Button btLogin;
+
+    @FXML
+    private Button btSignUpInLogin;
+
+    private static LoginController loginController = null;
+    private static Scene loginScene;
 
     private LoginViewModel viewModel = new LoginViewModel();
 
 
 
     private static void prepare() {
-        FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/librarymanagement/gui/controllers/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/FXML/Login.fxml"));
         try {
             Parent parent = loader.load();
             loginScene = new Scene(parent);
@@ -53,12 +58,19 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tfUserName.textProperty().bindBidirectional(viewModel.userNameProperty());
-        tfPassWord.textProperty().bindBidirectional(viewModel.passWordProperty());
+        tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
+        pfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
+//        errorLabel.textProperty().bindBidirectional(viewModel.errorLabelTextProperty());
+//
+//        errorLabel.visibleProperty().bind(Bindings.createBooleanBinding(
+//                () -> !(viewModel.errorLabelTextProperty().get() == null),
+//                viewModel.errorLabelTextProperty()
+//        ));
     }
 
     @FXML
-    private void handleLogin(ActionEvent actionEvent) {
+    private void handleLogin() {
+        viewModel.handleLogin();
     }
 
 
