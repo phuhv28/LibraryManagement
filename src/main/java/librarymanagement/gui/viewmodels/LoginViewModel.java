@@ -30,11 +30,6 @@ public class LoginViewModel {
     public void handleLogin() {
         LoginResult loginResult = AccountService.checkLogin(getUsername(), getPassword());
         errorTextProperty.set(loginResult.getMessage());
-        if (loginResult == LoginResult.SUCCESS) {
-
-        } else {
-
-        }
     }
 
     public StringProperty errorLabelTextProperty() {

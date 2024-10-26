@@ -5,6 +5,16 @@ import java.util.*;
 public class AccountService {
     private static final HashMap<String, Account> accountData = new HashMap<>();
 
+    private static final AccountService INSTANCE = new AccountService();
+
+    private AccountService() {
+
+    }
+
+    public static AccountService getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * Verify user account.
      */
@@ -32,7 +42,11 @@ public class AccountService {
     /**
      * Add a user.
      */
-    public RegistrationResult addUser(String username, String password) {
+    public RegistrationResult addUser(String username, String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            return  RegistrationResult.PASSWORD_NOT_MATCH;
+        }
+
         if (isUsernameTaken(username)) {
             return RegistrationResult.USERNAME_TAKEN;
         }
