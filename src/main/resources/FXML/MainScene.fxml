@@ -10,7 +10,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="librarymanagement.gui.controllers.MainSceneController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="600.0" prefWidth="800.0">
     <children>
         <Rectangle fill="#474242" height="600.0" layoutX="0" layoutY="0" width="800.0" />
         <HBox prefHeight="600.0" prefWidth="800.0">

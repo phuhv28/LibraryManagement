@@ -6,69 +6,67 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Rectangle fill="#474242" height="450.0" width="600.0" />
+        <Rectangle fill="#474242" height="600.0" width="450.0" />
         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../images/image_home.png" />
             </image>
         </ImageView>
         <Button fx:id="btHome" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" opacity="0.0" prefHeight="43.0" prefWidth="38.0" text=" " textFill="#474242" />
-        <ImageView fitHeight="52.0" fitWidth="60.0" layoutX="537.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="52.0" fitWidth="60.0" layoutX="386.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../images/image_setting.png" />
             </image>
         </ImageView>
-        <Button fx:id="btSetting" layoutX="547.0" layoutY="7.0" mnemonicParsing="false" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text=" " textFill="#474242" />
-        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="487.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+        <Button fx:id="btSetting" layoutX="396.0" layoutY="10.0" mnemonicParsing="false" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text=" " textFill="#474242" />
+        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="334.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../images/image_account.png" />
             </image>
         </ImageView>
-        <Button fx:id="btUser" layoutX="487.0" layoutY="5.0" mnemonicParsing="false" opacity="0.0" prefHeight="44.0" prefWidth="50.0" text=" " textFill="#474242" />
-        <Label layoutX="193.0" layoutY="87.0" style="-fx-font-weight: BOLD;" text="USER INFORMATION" textFill="#f2f2f2">
+        <Button fx:id="btUser" layoutX="334.0" layoutY="7.0" mnemonicParsing="false" opacity="0.0" prefHeight="44.0" prefWidth="50.0" text=" " textFill="#474242" />
+        <Label layoutX="96.0" layoutY="86.0" style="-fx-font-weight: BOLD;" text="USER INFORMATION" textFill="#f2f2f2">
             <font>
                 <Font size="24.0" />
             </font></Label>
-        <Label layoutX="72.0" layoutY="161.0" style="-fx-font-weight: BOLD;" text="Full name :" textFill="WHITE">
+        <Label layoutX="28.0" layoutY="165.0" style="-fx-font-weight: BOLD;" text="Full name :" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="70.0" layoutY="197.0" style="-fx-font-weight: BOLD;" text="Number of books borrowed :" textFill="WHITE">
+        <Label layoutX="27.0" layoutY="205.0" style="-fx-font-weight: BOLD;" text="Number of books borrowed :" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="66.0" layoutY="237.0" style="-fx-font-weight: bold;" text=" Email :" textFill="WHITE">
+        <Label layoutX="25.0" layoutY="245.0" style="-fx-font-weight: bold;" text=" Email :" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbNumberOfBooksBorrowed" layoutX="328.0" layoutY="199.0" textFill="WHITE">
+        <Label fx:id="lbNumberOfBooksBorrowed" layoutX="283.0" layoutY="205.0" prefHeight="27.0" prefWidth="135.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbEmail" layoutX="151.0" layoutY="236.0" textFill="WHITE">
+        <Label fx:id="lbEmail" layoutX="96.0" layoutY="245.0" prefHeight="27.0" prefWidth="334.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="72.0" layoutY="276.0" style="-fx-font-weight: bold;" text="UserName :" textFill="WHITE">
+        <Label layoutX="30.0" layoutY="286.0" style="-fx-font-weight: bold;" text="UserName :" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbFullName" layoutX="186.0" layoutY="161.0" textFill="WHITE">
+        <Label fx:id="lbFullName" layoutX="123.0" layoutY="165.0" prefHeight="27.0" prefWidth="288.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbUserName" layoutX="186.0" layoutY="276.0" textFill="WHITE">
+        <Label fx:id="lbUserName" layoutX="136.0" layoutY="286.0" prefHeight="27.0" prefWidth="167.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
