@@ -1,5 +1,7 @@
 package librarymanagement.UserAuth;
 
+import librarymanagement.data.Constant;
+
 import java.sql.*;
 import java.util.*;
 import java.time.LocalDate;
@@ -31,7 +33,7 @@ public class AccountService {
         }
         return LoginResult.USERNAME_NOT_FOUND;*/
         String sql = "SELECT * FROM Customer WHERE User_name = ?";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "longmixi0401");
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, username);
@@ -60,7 +62,7 @@ public class AccountService {
         }
         return false;*/
         String sql = "SELECT * FROM Customer WHERE User_name = ?";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "longmixi0401");
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, username);
@@ -92,7 +94,7 @@ public class AccountService {
         */
         String user_id = "";
         String sql = "SELECT MAX(Customer.Customer_Id) as 'Max' FROM Customer";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "longmixi0401");
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
             PreparedStatement stmt = con.prepareStatement(sql)) {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
@@ -114,7 +116,7 @@ public class AccountService {
         DateTimeFormatter Date_formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         sql = "INSERT INTO Customer (Customer_Id, Customer_name, Customer_address, Reg_date, User_name, Password) "
                 + "VALUE (?, ?, ?, ?, ?, ?)";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "longmixi0401");
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, user_id);
             stmt.setString(2, /*name*/ null);
@@ -144,7 +146,7 @@ public class AccountService {
 
         String employee_id = "";
         String sql = "SELECT MAX(admin.Emp_id) FROM admin";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "longmixi0401");
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
             if(!rs.next()) {
@@ -160,7 +162,7 @@ public class AccountService {
 
         sql = "INSERT INTO admin (Emm_id, Admin_name, password) VALUES (?, ?, ?)";
 
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "longmixi0401");
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)){
             stmt.setString(1, employee_id);
             stmt.setString(2, username);

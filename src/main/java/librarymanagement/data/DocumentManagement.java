@@ -8,12 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentManagement {
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/library";
-    private static final String USER = "root";
-    private static final String PASSWORD = "longmixi0401";
 
     public DocumentManagement(Connection mockConnection) {
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD)) {
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD)) {
             System.out.println("Database connection successful.");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -22,7 +19,7 @@ public class DocumentManagement {
 
     public void addDocument(Book document) {
         String sql = "INSERT INTO books (ISBN, Book_title, Category, Rental_Price, Status, Author, Publisher, Total_quantity, Available_quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, document.getISBN());
@@ -44,7 +41,7 @@ public class DocumentManagement {
 
     public void deleteDocument(String documentID) {
         String sql = "DELETE FROM books WHERE ISBN = ?";
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, documentID);
@@ -63,7 +60,7 @@ public class DocumentManagement {
         List<String> listName = new ArrayList<>();
         String sql = "SELECT * FROM books WHERE Book_title LIKE ?";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, "'%" + documentName + "%'");
@@ -82,7 +79,7 @@ public class DocumentManagement {
         List<String> listName = new ArrayList<>();
         String sql = "SELECT * FROM books WHERE ISBN LIKE ?";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, ISBN);
@@ -101,7 +98,7 @@ public class DocumentManagement {
         List<String> listName = new ArrayList<>();
         String sql = "SELECT * FROM books WHERE Category = ?";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, category);
@@ -120,7 +117,7 @@ public class DocumentManagement {
         List<String> listName = new ArrayList<>();
         String sql = "SELECT * FROM books WHERE Author = ?";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, author);
@@ -140,7 +137,7 @@ public class DocumentManagement {
         String status = "";
 
         // Check if the book is still available in the library
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, ISBN);
@@ -161,7 +158,7 @@ public class DocumentManagement {
         String maxIssueID = "";
         sql = "SELECT MAX(Transaction_Id) AS max_id FROM BookTransactions";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -179,7 +176,7 @@ public class DocumentManagement {
         String bookName = "";
         sql = "SELECT * FROM books WHERE ISBN = ?";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, ISBN);
@@ -201,7 +198,7 @@ public class DocumentManagement {
                 "Status = CASE WHEN Available_quantity - 1 > 0 THEN 'Yes' ELSE 'No' END " +
                 "WHERE ISBN = ?";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, ISBN);
@@ -214,7 +211,7 @@ public class DocumentManagement {
         sql = "INSERT INTO BookTransactions (Transaction_Id, Customer_Id, Book_ISBN, Book_title, Issue_date, Return_Date, Status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, maxIssueID);
@@ -238,7 +235,7 @@ public class DocumentManagement {
         String ISBN = "";
         String returnDate = "";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, issueID);
@@ -254,7 +251,7 @@ public class DocumentManagement {
         }
 
         sql = "UPDATE BookTransactions SET Return_Date = ?, Status = ? WHERE Transaction_Id = ?";
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, returnDate);
@@ -270,7 +267,7 @@ public class DocumentManagement {
                 "Status = CASE WHEN Available_quantity + 1 > 0 THEN 'Yes' ELSE 'No' END " +
                 "WHERE ISBN = ?";
 
-        try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, ISBN);
