@@ -1,6 +1,5 @@
 package librarymanagement.gui.controllers;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,7 +31,7 @@ public class LoginController implements Initializable {
     @FXML
     private Button btRegister;
 
-    private LoginViewModel viewModel = new LoginViewModel();
+    private final LoginViewModel viewModel = new LoginViewModel();
 
     private static Scene scene;
 
