@@ -1,5 +1,6 @@
 package librarymanagement.data;
 
+import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -65,7 +66,7 @@ public class DocumentManagement {
         try (Connection con = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
-            stmt.setString(1, "%" + documentName + "%");
+            stmt.setString(1, "'%" + documentName + "%'");
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     listName.add(rs.getString("Book_title"));
