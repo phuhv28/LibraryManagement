@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="600.0" prefWidth="450.0">
+    <children>
+        <Rectangle fill="#474242" height="450.0" layoutX="0" layoutY="0" width="600.0" />
+        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/image_home.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="btHome" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" opacity="0.0" prefHeight="43.0" prefWidth="38.0" text=" " textFill="#474242" />
+        <ImageView fitHeight="52.0" fitWidth="60.0" layoutX="537.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/image_setting.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="btSetting" layoutX="547.0" layoutY="7.0" mnemonicParsing="false" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text=" " textFill="#474242" />
+        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="487.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/image_account.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="btUser" layoutX="487.0" layoutY="5.0" mnemonicParsing="false" opacity="0.0" prefHeight="44.0" prefWidth="50.0" text=" " textFill="#474242" />
+        <Label layoutX="193.0" layoutY="87.0" style="-fx-font-weight: BOLD;" text="ADD DOCUMENT" textFill="#f2f2f2">
+            <font>
+                <Font size="24.0" />
+            </font></Label>
+        <Button fx:id="btAddDocument" layoutX="462.0" layoutY="408.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="ADD" textFill="#2b1d1d">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Button>
+        <ScrollPane hbarPolicy="NEVER" layoutX="79.0" layoutY="125.0" prefHeight="227.0" prefWidth="462.0">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="263.0" prefWidth="467.0" style="-fx-background-color: #474242;">
+                    <children>
+                        <Label layoutX="5.0" layoutY="7.0" style="-fx-font-weight: bold;" text="Enter Document ID :" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font></Label>
+                        <Label layoutX="5.0" layoutY="39.0" style="-fx-font-weight: bold;" text="Enter Document Title :" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="3.0" layoutY="73.0" style="-fx-font-weight: bold;" text="Enter Document Publisher :" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="4.0" layoutY="108.0" style="-fx-font-weight: bold;" text="Enter Document Author :" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="3.0" layoutY="139.0" style="-fx-font-weight: bold;" text="Enter Document Category :" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="1.0" layoutY="171.0" style="-fx-font-weight: bold;" text="Enter Document Publication Year:" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="3.0" layoutY="203.0" style="-fx-font-weight: bold;" text="Enter Document Rental Price :" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="3.0" layoutY="233.0" style="-fx-font-weight: bold;" text="Enter Document Total Quantity :" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfDocumentID" layoutX="290.0" layoutY="4.0" promptText="ID" />
+                        <TextField fx:id="tfTitle" layoutX="291.0" layoutY="37.0" promptText="TItle" />
+                        <TextField fx:id="tfPublisher" layoutX="290.0" layoutY="71.0" promptText="Publisher" />
+                        <TextField fx:id="tfAuthor" layoutX="290.0" layoutY="104.0" promptText="Author" />
+                        <TextField fx:id="tfCategory" layoutX="289.0" layoutY="138.0" promptText="Category" />
+                        <TextField layoutX="289.0" layoutY="171.0" promptText="Publication Year" />
+                        <TextField fx:id="tfRentalPrice" layoutX="289.0" layoutY="203.0" promptText="Rental Price" />
+                        <TextField fx:id="tfTotalQuantity" layoutX="290.0" layoutY="235.0" promptText="Total Quantity" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+
+    </children>
+</AnchorPane>
+
+
+        </AnchorPane>
