@@ -1,11 +1,8 @@
 package librarymanagement.gui.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import librarymanagement.gui.viewmodels.LoginViewModel;
@@ -65,7 +62,9 @@ public class LoginController implements Initializable {
     private void handleLogin() {
         System.out.println("Da bam dang nhap");
         errorLabel.setVisible(true);
-        viewModel.handleLogin();
+        if (viewModel.handleLogin()) {
+            UIController.showMainScene();
+        }
     }
 
     @FXML

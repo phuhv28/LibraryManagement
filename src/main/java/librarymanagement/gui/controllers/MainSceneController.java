@@ -49,7 +49,7 @@ public class MainSceneController {
 
     private void loadScene(String fxmlFile) {
         try {
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource(fxmlFile));
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
             rightMainScene.getChildren().setAll(newPane);
         } catch (IOException e) {
             e.printStackTrace();
