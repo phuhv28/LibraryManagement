@@ -3,46 +3,64 @@ package librarymanagement.UserAuth;
 import librarymanagement.data.Constant;
 
 import java.sql.*;
-import java.util.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class AccountService {
-    private static final HashMap<String, Account> accountData = new HashMap<>();
-
     private static final AccountService INSTANCE = new AccountService();
 
-    private AccountService() {
+    private Connection connection;
 
+    private AccountService() {
+        try {
+            connection = DriverManager.getConnection(Constant.URL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static AccountService getInstance() {
         return INSTANCE;
     }
 
+    public void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FunctionalInterface
+    interface PreparedStatementSetter {
+        void setValues(PreparedStatement stmt) throws SQLException;
+    }
+
+    private void executeUpdate(String sql, PreparedStatementSetter setter) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            setter.setValues(stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Verify user account.
      */
     public static LoginResult checkLogin(String username, String password) {
-        /*if (accountData.containsKey(username)) {
-            if (accountData.get(username).getUsername().equals(password)) {
-                return LoginResult.SUCCESS;
-            } else {
-                return LoginResult.INCORRECT_PASSWORD;
-            }
-        }
-        return LoginResult.USERNAME_NOT_FOUND;*/
-        String sql = "SELECT * FROM Customer WHERE User_name = ?";
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
+        String sql = "SELECT * FROM User WHERE username = ?";
+        try (Connection con = DriverManager.getConnection(Constant.URL);
              PreparedStatement stmt = con.prepareStatement(sql)) {
-
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
                     return LoginResult.USERNAME_NOT_FOUND;
                 } else {
-                    String TruePassword = rs.getString("Password");
-                    if (password.equals(TruePassword)) {
+                    String truePassword = rs.getString("Password");
+                    if (password.equals(truePassword)) {
                         return LoginResult.SUCCESS;
                     }
                 }
@@ -57,78 +75,80 @@ public class AccountService {
      * Check if a username is taken.
      */
     private boolean isUsernameTaken(String username) {
-        /*if (accountData.containsKey(username)) {
-            return true;
-        }
-        return false;*/
-        String sql = "SELECT * FROM Customer WHERE User_name = ?";
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
+        String sql = "SELECT * FROM User WHERE username = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    return false;
+                if (rs.next()) {
+                    return true;
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
+
+        sql = "SELECT * FROM Admin WHERE username = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Generate new user ID based on the maximum user ID in the database.
+     */
+    private String generateNewUserId(String tableName) {
+        String newId = "";
+        String sql = "SELECT MAX(userID) as Max FROM " + tableName;
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                String temp = rs.getString("Max");
+                if (temp == null) {
+                    newId = "U101";  // Start from U101
+                } else {
+                    temp = temp.substring(1);
+                    newId = "U" + (Integer.parseInt(temp) + 1);
+                }
+            } else {
+                newId = "U101";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return newId;
     }
 
     /**
      * Add a user.
      */
-    public RegistrationResult addUser(String username, String password, String confirmPassword/*, String name, String address*/) {
+    public RegistrationResult addUser(String username, String password, String confirmPassword) {
         if (!password.equals(confirmPassword)) {
-            return  RegistrationResult.PASSWORD_NOT_MATCH;
+            return RegistrationResult.PASSWORD_NOT_MATCH;
         }
 
         if (isUsernameTaken(username)) {
             return RegistrationResult.USERNAME_TAKEN;
         }
 
-        /*
-         Create new user_id
-        */
-        String user_id = "";
-        String sql = "SELECT MAX(Customer.Customer_Id) as 'Max' FROM Customer";
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-            PreparedStatement stmt = con.prepareStatement(sql)) {
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    user_id = "C101";
-                } else {
-                    String temp = rs.getString("Max");
-                    temp = temp.substring(1);
-                    user_id = "C" + (Integer.parseInt(temp) + 1);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        /*
-         Insert into Database
-        */
+        String userId = generateNewUserId("User");
         LocalDate today = LocalDate.now();
-        DateTimeFormatter Date_formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        sql = "INSERT INTO Customer (Customer_Id, Customer_name, Customer_address, Reg_date, User_name, Password) "
-                + "VALUE (?, ?, ?, ?, ?, ?)";
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, user_id);
-            stmt.setString(2, /*name*/ null);
-            stmt.setString(3, /*address*/ null);
-            stmt.setString(4, Date_formatter.format(today));
-            stmt.setString(5, username);
-            stmt.setString(6, password);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String sql = "INSERT INTO User (userID, regDate, username, password) VALUES (?, ?, ?, ?)";
 
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        executeUpdate(sql, stmt -> {
+            stmt.setString(1, userId);
+            stmt.setString(2, dateFormatter.format(today));
+            stmt.setString(3, username);
+            stmt.setString(4, password);
+        });
 
         return RegistrationResult.SUCCESS;
     }
@@ -141,37 +161,17 @@ public class AccountService {
             return RegistrationResult.USERNAME_TAKEN;
         }
 
-        /*Account registerAccount = new Account(username, password, AccountType.ADMIN);
-        accountData.put(username, registerAccount);*/
+        String adminId = generateNewUserId("Admin");
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String sql = "INSERT INTO Admin (adminID, regDate, username, password) VALUES (?, ?, ?, ?)";
 
-        String employee_id = "";
-        String sql = "SELECT MAX(admin.Emp_id) FROM admin";
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)){
-            ResultSet rs = stmt.executeQuery();
-            if(!rs.next()) {
-                employee_id = "E101";
-            } else {
-                String temp = rs.getString("Emp_id");
-                temp = temp.substring(1);
-                employee_id = "E" + (Integer.parseInt(temp) + 1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        sql = "INSERT INTO admin (Emm_id, Admin_name, password) VALUES (?, ?, ?)";
-
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)){
-            stmt.setString(1, employee_id);
-            stmt.setString(2, username);
-            stmt.setString(3, password);
-
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        executeUpdate(sql, stmt -> {
+            stmt.setString(1, adminId);
+            stmt.setString(2, dateFormatter.format(today));
+            stmt.setString(3, username);
+            stmt.setString(4, password);
+        });
 
         return RegistrationResult.SUCCESS;
     }
