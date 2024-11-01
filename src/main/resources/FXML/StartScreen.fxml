@@ -23,7 +23,7 @@
             </AnchorPane>
 
              <fx:include source="Login.fxml" fx:id="apLogin" />
-<!--             <fx:include source="Register.fxml" fx:id="apRegister" visible="false"/>-->
+             <fx:include source="Register.fxml" fx:id="apRegister" visible="false" managed="false"/>
          </children>
       </HBox>
    </children>

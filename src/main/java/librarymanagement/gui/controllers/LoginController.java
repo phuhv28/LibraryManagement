@@ -1,11 +1,13 @@
 package librarymanagement.gui.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import librarymanagement.gui.viewmodels.LoginViewModel;
 
 import java.net.URL;
@@ -18,6 +20,9 @@ public class LoginController implements Initializable {
 
     @FXML
     public CheckBox cbRemeberMe;
+
+    @FXML
+    public AnchorPane apLogin;
 
     @FXML
     private PasswordField pfPassword;
@@ -33,23 +38,19 @@ public class LoginController implements Initializable {
 
     private final LoginViewModel viewModel = new LoginViewModel();
 
-    private static Scene scene;
-
     private static LoginController controller;
 
-    public static Scene getLoginScene() {
-        if (scene == null) {
+    public static LoginController getInstance() {
+        if (controller == null) {
             FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/FXML/Login.fxml"));
             try {
-                Parent parent = loader.load();
-                scene = new Scene(parent);
                 controller = loader.getController();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        return scene;
+        return controller;
     }
 
 
@@ -67,12 +68,8 @@ public class LoginController implements Initializable {
         viewModel.handleLogin();
     }
 
-
     @FXML
     public void handleRegister() {
-        RegisterController controller = RegisterController.getInstance();
-        if (controller != null) {
-            controller.showScene(UIController.getPrimaryStage());
-        }
+        StartScreenController.getStartScreenController().showRegister();
     }
 }

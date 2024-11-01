@@ -65,8 +65,7 @@ public class RegisterController implements Initializable {
 
     @FXML
     public void goToLogin() {
-        UIController.showScene(LoginController.getLoginScene());
-        UIController.setTitle("Login");
+        StartScreenController.getStartScreenController().showLogin();
     }
 
     @FXML
