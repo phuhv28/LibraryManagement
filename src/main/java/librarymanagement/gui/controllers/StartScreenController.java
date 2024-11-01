@@ -1,5 +1,6 @@
 package librarymanagement.gui.controllers;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,8 +9,12 @@ import javafx.scene.layout.AnchorPane;
 public class StartScreenController {
     private static Scene scene;
     private static StartScreenController startScreenController;
-    public AnchorPane apLogin;
-    public AnchorPane apRegister;
+
+    @FXML
+    private AnchorPane apLogin;
+
+    @FXML
+    private AnchorPane apRegister;
 
     public static Scene getStartScreen() {
         if (scene == null) {

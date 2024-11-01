@@ -34,7 +34,7 @@ public class UIController {
             Scene scene = new Scene(parent);
             primaryStage.setScene(scene);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

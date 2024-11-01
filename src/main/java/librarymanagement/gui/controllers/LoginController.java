@@ -27,12 +27,6 @@ public class LoginController implements Initializable {
     @FXML
     private TextField tfUsername;
 
-    @FXML
-    private Button btLogin;
-
-    @FXML
-    private Button btRegister;
-
     private final LoginViewModel viewModel = new LoginViewModel();
 
     private static LoginController controller;

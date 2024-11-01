@@ -6,10 +6,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+
 import java.io.IOException;
 
 public class MainSceneController {
 
+    @FXML
+    public HBox hBoxMain;
     @FXML
     private AnchorPane MainScene;
     @FXML
@@ -51,6 +55,7 @@ public class MainSceneController {
         try {
             AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
             rightMainScene.getChildren().setAll(newPane);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
