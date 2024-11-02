@@ -7,7 +7,7 @@ class Magazine extends Document {
     public Magazine() {}
 
     public Magazine(String documentID, String title, String publisher, int publicationYear, int numberAll, int numberAvailable, int issueNumber, String month) {
-        super(documentID, title, publisher, publicationYear, numberAll, numberAvailable);
+        super(title, publisher, publicationYear, numberAll, numberAvailable);
         this.issueNumber = issueNumber;
         this.month = month;
     }

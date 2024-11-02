@@ -1,26 +1,31 @@
 package librarymanagement.data;
 
 class Newspaper extends Document {
-    private String date;
+    private String author;
 
     public Newspaper() {}
 
-    public Newspaper(String documentID, String title, String publisher, int publicationYear, int numberAll, int numberAvailable, String date) {
-        super(documentID, title, publisher, publicationYear, numberAll, numberAvailable);
-        this.date = date;
+    @Override
+    public String getDocumentType() {
+        return "";
     }
 
-    public String getDate() {
-        return date;
+    public Newspaper(String title, String publisher, String publishedDate, int numberAll, int numberAvailable, String author) {
+        super(title, publisher, publishedDate, numberAll, numberAvailable);
+        this.author = author;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override
     public String getInfo() {
-        return super.getInfo() + "\n" +
-                "Date: " + date;
+        return super.getInfo() +
+                "\nAuthor: " + author;
     }
 }

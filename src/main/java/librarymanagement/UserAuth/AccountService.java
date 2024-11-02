@@ -112,7 +112,7 @@ public class AccountService {
             if (rs.next()) {
                 String temp = rs.getString("Max");
                 if (temp == null) {
-                    newId = "U101";  // Start from U101
+                    newId = "U101";
                 } else {
                     temp = temp.substring(1);
                     newId = "U" + (Integer.parseInt(temp) + 1);

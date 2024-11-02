@@ -1,23 +1,40 @@
 package librarymanagement.data;
 
 class Book extends Document {
-    private String category;
+    private String ISBN;
+    private String categories;
     private String author;
+    private String description;
 
     public Book() {}
 
-    public Book(String documentID, String title, String publisher, int publicationYear, int numberAll, int numberAvailable, String author, String category) {
-        super(documentID, title, publisher, publicationYear, numberAll, numberAvailable);
+    @Override
+    public String getDocumentType() {
+        return "Book";
+    }
+
+    public Book(String id, String title, String publisher, String publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount, String ISBN, String categories, String author, String description) {
+        super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount);
+        this.ISBN = ISBN;
+        this.categories = categories;
         this.author = author;
-        this.category = category;
+        this.description = description;
     }
 
-    public String getCategory() {
-        return category;
+    public String getISBN() {
+        return ISBN;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 
     public String getAuthor() {
@@ -28,11 +45,20 @@ class Book extends Document {
         this.author = author;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String getInfo() {
-        return super.getInfo() + "\n"
-                + "Author: " + this.author + "\n"
-                + "Category: " + this.category;
+        return super.getInfo() + "\n" +
+                "ISBN: " + ISBN + "\n" +
+                "Author: " + this.author + "\n" +
+                "Category: " + this.categories + "\n" +
+                "Description: " + this.description + "\n";
     }
 }
-

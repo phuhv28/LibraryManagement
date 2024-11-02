@@ -1,78 +1,56 @@
 package librarymanagement.data;
 
-public class Document {
-    private String ISBN;
+abstract class Document {
+    private String id;
     private String title;
     private String publisher;
-    private int publicationYear;
-    private int totalQuantity;
-    private int availableQuantity;
+    private String publishedDate;
+    private int pageCount;
+    private int availableCopies;
+    private double averageRating;
+    private int ratingsCount;
 
     public Document() {}
 
-    public Document(String documentID, String title, String publisher, int publicationYear, int totalQuantity, int availableQuantity) {
-        this.ISBN = documentID;
+    public Document(String id, String title, String publisher, String publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount) {
+        this.id = id;
         this.title = title;
         this.publisher = publisher;
-        this.publicationYear = publicationYear;
-        this.totalQuantity = totalQuantity;
-        this.availableQuantity = availableQuantity;
+        this.publishedDate = publishedDate;
+        this.pageCount = pageCount;
+        this.availableCopies = availableCopies;
+        this.averageRating = averageRating;
+        this.ratingsCount = ratingsCount;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
+    public String getId() { return id; }
+    public String getTitle() { return title; }
+    public String getPublisher() { return publisher; }
+    public String getPublishedDate() { return publishedDate; }
+    public int getPageCount() { return pageCount; }
+    public int getAvailableCopies() { return availableCopies; }
+    public double getAverageRating() { return averageRating; }
+    public int getRatingsCount() { return ratingsCount; }
 
-    public void setTotalQuantity(int totalQuantity) {
-        this.totalQuantity = totalQuantity;
-    }
+    public void setId(String id) { this.id = id; }
+    public void setTitle(String title) { this.title = title; }
+    public void setPublisher(String publisher) { this.publisher = publisher; }
+    public void setPublishedDate(String publishedDate) { this.publishedDate = publishedDate; }
+    public void setPageCount(int pageCount) { this.pageCount = pageCount; }
+    public void setAvailableCopies(int availableCopies) { this.availableCopies = availableCopies; }
+    public void setAverageRating(double averageRating) { this.averageRating = averageRating; }
+    public void setRatingsCount(int ratingsCount) { this.ratingsCount = ratingsCount; }
 
-    public void setAvailableQuantity(int availableQuantity) {
-        this.availableQuantity = availableQuantity;
-    }
-
-    public void setPublicationYear(int publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getTotalQuantity() {
-        return totalQuantity;
-    }
-
-    public int getAvailableQuantity() {
-        return availableQuantity;
-    }
-
-    public int getPublicationYear() {
-        return publicationYear;
-    }
+    public abstract String getDocumentType();
 
     public String getInfo() {
-        return "ID: " + ISBN + "\n" +
+        return "ID: " + id + "\n" +
                 "Title: " + title + "\n" +
                 "Publisher: " + publisher + "\n" +
-                "Publication year: " + publicationYear + "\n" +
-                "Total book: " + totalQuantity + "\n" +
-                "Remaining book: " + availableQuantity;
+                "Published Date: " + publishedDate + "\n" +
+                "Page Count: " + pageCount + "\n" +
+                "Available Copies: " + availableCopies + "\n" +
+                "Average Rating: " + averageRating + "\n" +
+                "Ratings Count: " + ratingsCount;
     }
 }
