@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="librarymanagement.gui.controllers.MainSceneController"
+            prefHeight="600.0" prefWidth="800.0">
+    <children>
+        <Rectangle fill="#474242" height="600.0" width="800.0" />
+        <HBox fx:id="hBoxMain" prefHeight="600.0" prefWidth="800.0">
+            <children>
+                <AnchorPane prefHeight="600.0" prefWidth="350.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#791a13" height="600.0" width="350.0" />
+                        <ImageView fitHeight="600.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/mainLeftScene.png" />
+                            </image>
+                        </ImageView>
+                        <Button layoutX="120.0" layoutY="548.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="98.0" style="-fx-font-weight: bold; -fx-background-radius: 15;" text="Log Out">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <TextField fx:id="tfSearch" layoutX="22.0" layoutY="195.0" prefHeight="38.0" prefWidth="294.0" promptText="Search " style="-fx-background-radius: 15; -fx-font-weight: BOLD;">
+                            <font>
+                                <Font size="14.0" />
+                            </font></TextField>
+                        <Label layoutX="17.0" layoutY="28.0" prefHeight="142.0" prefWidth="311.0" style="-fx-font-weight: bold;" text="&quot;Welcome to the E-Library! Discover endless knowledge and enjoy your reading journey with us!&quot;" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="btSearch" layoutX="23.0" layoutY="315.0" mnemonicParsing="false" opacity="0.0" prefHeight="91.0" prefWidth="83.0" text="Button" />
+                        <Button fx:id="btBorrow" layoutX="135.0" layoutY="312.0" mnemonicParsing="false" opacity="0.02" prefHeight="91.0" prefWidth="75.0" text="Button" />
+                        <Button fx:id="btReturn" layoutX="246.0" layoutY="308.0" mnemonicParsing="false" opacity="0.0" prefHeight="91.0" prefWidth="52.0" text="Button" />
+                        <Button fx:id="btFix" layoutX="34.0" layoutY="423.0" mnemonicParsing="false" opacity="0.0" prefHeight="104.0" prefWidth="70.0" text="Button" />
+                        <Button fx:id="btDelete" layoutX="132.0" layoutY="421.0" mnemonicParsing="false" opacity="0.0" prefHeight="104.0" prefWidth="75.0" text="Button" />
+                        <Button fx:id="btAdd" layoutX="233.0" layoutY="423.0" mnemonicParsing="false" opacity="0.0" prefHeight="104.0" prefWidth="83.0" text="Button" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="rightMainScene" layoutX="350.0" prefHeight="600.0" prefWidth="450.0" />
+            </children>
+        </HBox>
+    </children>
+
+</AnchorPane>

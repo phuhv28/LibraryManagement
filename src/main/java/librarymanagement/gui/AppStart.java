@@ -3,6 +3,7 @@ package librarymanagement.gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import librarymanagement.gui.controllers.LoginController;
+import librarymanagement.gui.controllers.StartScreenController;
 import librarymanagement.gui.controllers.UIController;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,7 +16,7 @@ public class AppStart extends Application {
     public void start(Stage primaryStage) throws IOException {
         UIController.setPrimaryStage(primaryStage);
 
-        Scene loginScene = LoginController.getLoginScene();
+        Scene loginScene = StartScreenController.getStartScreen();
         primaryStage.setTitle("Library Management");
         primaryStage.setScene(loginScene);
 

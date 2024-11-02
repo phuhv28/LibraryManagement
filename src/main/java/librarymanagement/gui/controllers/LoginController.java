@@ -1,12 +1,10 @@
 package librarymanagement.gui.controllers;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import librarymanagement.gui.viewmodels.LoginViewModel;
 
 import java.net.URL;
@@ -21,36 +19,29 @@ public class LoginController implements Initializable {
     public CheckBox cbRemeberMe;
 
     @FXML
+    public AnchorPane apLogin;
+
+    @FXML
     private PasswordField pfPassword;
 
     @FXML
     private TextField tfUsername;
 
-    @FXML
-    private Button btLogin;
-
-    @FXML
-    private Button btRegister;
-
-    private LoginViewModel viewModel = new LoginViewModel();
-
-    private static Scene scene;
+    private final LoginViewModel viewModel = new LoginViewModel();
 
     private static LoginController controller;
 
-    public static Scene getLoginScene() {
-        if (scene == null) {
+    public static LoginController getInstance() {
+        if (controller == null) {
             FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/FXML/Login.fxml"));
             try {
-                Parent parent = loader.load();
-                scene = new Scene(parent);
                 controller = loader.getController();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        return scene;
+        return controller;
     }
 
 
@@ -65,15 +56,13 @@ public class LoginController implements Initializable {
     private void handleLogin() {
         System.out.println("Da bam dang nhap");
         errorLabel.setVisible(true);
-        viewModel.handleLogin();
+        if (viewModel.handleLogin()) {
+            UIController.showMainScene();
+        }
     }
-
 
     @FXML
     public void handleRegister() {
-        RegisterController controller = RegisterController.getInstance();
-        if (controller != null) {
-            controller.showScene(UIController.getPrimaryStage());
-        }
+        StartScreenController.getStartScreenController().showRegister();
     }
 }

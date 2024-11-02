@@ -27,9 +27,11 @@ public class LoginViewModel {
         return passwordProperty.get();
     }
 
-    public void handleLogin() {
+    public boolean handleLogin() {
         LoginResult loginResult = AccountService.checkLogin(getUsername(), getPassword());
         errorTextProperty.set(loginResult.getMessage());
+
+        return loginResult == LoginResult.SUCCESS;
     }
 
     public StringProperty errorLabelTextProperty() {
