@@ -1,11 +1,12 @@
 package librarymanagement.data;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SQLiteInstance {
-    private static final String CONNECTION_URL = "jdbc:sqlite:database.db";
+    private static final String CONNECTION_URL = "jdbc:sqlite:library.db";
     private static SQLiteInstance instance = null;
     private Connection connection;
 
@@ -71,26 +72,26 @@ public class SQLiteInstance {
         }
     }
 
-//    public List<Integer> find(String tableName, String columnName, String value) {
-//        List<Integer> result = new ArrayList<>();
-//        try {
-//            String sql = "SELECT * FROM " + tableName + " WHERE "
-//                    + columnName + " GLOB ? ORDER BY absolute_path ASC";
-//            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-//                preparedStatement.setString(1, value);
-//                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                    while (resultSet.next()) {
-//                        result.add(resultSet.getInt("hash_code"));
-//                    }
-//                }
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return result;
-//    }
+    public List<Integer> find(String tableName, String columnName, String value) {
+        List<Integer> result = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM " + tableName + " WHERE "
+                    + columnName + " GLOB ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, value);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+//                        result.add(resultSet.getInt());
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     public ResultSet query(String sql, String... params) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql))
@@ -106,6 +107,17 @@ public class SQLiteInstance {
         return null;
     }
 
+    public void deleteRow(String tableName, String condition) {
+        String sql = "DELETE FROM " + tableName + " WHERE " + condition;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println(rowsAffected + " row(s) deleted.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void insertRow(String tableName, String... values) {
             insertRow(tableName, Arrays.asList(values));
     }
@@ -116,5 +128,8 @@ public class SQLiteInstance {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
     }
 }
