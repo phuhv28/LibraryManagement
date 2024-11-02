@@ -15,7 +15,7 @@ public class codetest extends Application {
         Parent root = loader.load();
 
         primaryStage.setTitle("JavaFX Image Example");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(root, 1000, 750));
         primaryStage.show();
     }
 
