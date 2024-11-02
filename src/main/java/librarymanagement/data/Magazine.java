@@ -1,3 +1,4 @@
+/*
 package librarymanagement.data;
 
 class Magazine extends Document {
@@ -36,3 +37,4 @@ class Magazine extends Document {
     }
 }
 
+*/

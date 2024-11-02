@@ -1,6 +1,5 @@
 package librarymanagement.data;
 
-import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,43 +7,95 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentManagement {
+    private static final DocumentManagement INSTANCE = new DocumentManagement();
 
-    public DocumentManagement(Connection mockConnection) {
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD)) {
-            System.out.println("Database connection successful.");
+    private Connection connection;
+
+    public DocumentManagement getInstance() {
+        return INSTANCE;
+    }
+
+    private DocumentManagement() {
+        try {
+            connection = DriverManager.getConnection(Constant.URL);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void addDocument(Book document) {
-        String sql = "INSERT INTO books (ISBN, Book_title, Category, Rental_Price, Status, Author, Publisher, Total_quantity, Available_quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+    public void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-            stmt.setString(1, document.getISBN());
-            stmt.setString(2, document.getTitle());
-            stmt.setString(3, document.getCategory());
-            stmt.setDouble(4, 10);
-            stmt.setString(5, "Yes");
-            stmt.setString(6, document.getAuthor());
-            stmt.setString(7, document.getPublisher());
-            stmt.setInt(8, document.getTotalQuantity());
-            stmt.setInt(9, document.getAvailableQuantity());
+    @FunctionalInterface
+    interface PreparedStatementSetter {
+        void setValues(PreparedStatement stmt) throws SQLException;
+    }
 
+    private void executeUpdate(String sql, DocumentManagement.PreparedStatementSetter setter) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            setter.setValues(stmt);
             stmt.executeUpdate();
-            System.out.println("The book has been added to the database.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteDocument(String documentID) {
-        String sql = "DELETE FROM books WHERE ISBN = ?";
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+    /*public String genarateDocID(documentType type) {
+        String newId = startID[type.ordinal()];
+        String sql = "SELECT MAX(" + nameType[type.ordinal()] + ".docID) FROM " + nameType[type.ordinal()];
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                String temp = rs.getString("Max");
+                if (temp == null) {
+                    newId += "101";
+                } else {
+                    temp = temp.substring(1);
+                    newId += Integer.parseInt(temp) + 1;
+                }
+            } else {
+                newId += "101";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return newId;
+    }*/
 
-            stmt.setString(1, documentID);
+    //tam thoi co moi Book, con Magazine va Newspaper
+    public void addBook(Book book) {
+        String sql = "INSERT INTO Book (ISBN, title, author, publisher, categories, availableCopies, " +
+                "pageCount, publishedDate, id, description, averageRating, ratingsCount) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        executeUpdate(sql, stmt -> {
+            stmt.setString(1, book.getISBN());
+            stmt.setString(2, book.getTitle());
+            stmt.setString(3, book.getAuthor());
+            stmt.setString(4, book.getPublisher());
+            stmt.setString(5, book.getCategories());
+            stmt.setInt(6, book.getAvailableCopies());
+            stmt.setInt(7, book.getPageCount());
+            stmt.setString(8, book.getPublishedDate());
+            stmt.setString(9, book.getId());
+            stmt.setString(10, book.getDescription());
+            stmt.setDouble(11, book.getAverageRating());
+            stmt.setInt(12, book.getRatingsCount());
+        });
+
+        System.out.println("Add book successfully");
+    }
+
+    public void deleteBook(String id) {
+        String sql = "DELETE FROM " + id + " WHERE docID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, id);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Book has been deleted successfully.");
@@ -56,225 +107,90 @@ public class DocumentManagement {
         }
     }
 
-    public List<String> searchDocumentByName(String documentName) {
-        List<String> listName = new ArrayList<>();
-        String sql = "SELECT * FROM books WHERE Book_title LIKE ?";
+    private List<Book> createNewBookList(String condition, String sql) throws SQLException {
+        List<Book> books = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, "%" + condition + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String title = rs.getString("title");
+                String publisher = rs.getString("publisher");
+                String publishedDate = rs.getString("publishedDate");
+                int totalQuantity = rs.getInt("totalQuantity");
+                int availableQuantity = rs.getInt("availableQuantity");
+                double averageRating = rs.getDouble("averageRating");
+                int ratingsCount = rs.getInt("ratingsCount");
+                String ISBN = rs.getString("ISBN");
+                String category = rs.getString("categories");
+                String author = rs.getString("author");
+                String description = rs.getString("description");
 
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, "'%" + documentName + "%'");
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    listName.add(rs.getString("Book_title"));
-                }
+                books.add(new Book(id, title, publisher, publishedDate, totalQuantity, availableQuantity, averageRating, ratingsCount, ISBN, category, author, description));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return listName;
+        return books;
     }
 
-    public List<String> searchDocumentByISBN(String ISBN) {
-        List<String> listName = new ArrayList<>();
-        String sql = "SELECT * FROM books WHERE ISBN LIKE ?";
-
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, ISBN);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    listName.add(rs.getString("ISBN") + " - " + rs.getString("Book_title"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return listName;
+    public List<Book> searchBookByName(String bookName) throws SQLException {
+        String sql = "SELECT * FROM Book WHERE title LIKE ?";
+        return createNewBookList(bookName, sql);
     }
 
-    public List<String> searchDocumentByCategory(String category) {
-        List<String> listName = new ArrayList<>();
-        String sql = "SELECT * FROM books WHERE Category = ?";
-
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, category);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    listName.add(rs.getString("Book_title"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return listName;
+    public List<Book> searchBookByISBN(String ISBN) throws SQLException {
+        String sql = "SELECT * FROM Book WHERE ISBN LIKE ?";
+        return createNewBookList(ISBN, sql);
     }
 
-    public List<String> searchDocumentByAuthor(String author) {
-        List<String> listName = new ArrayList<>();
-        String sql = "SELECT * FROM books WHERE Author = ?";
-
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, author);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    listName.add(rs.getString("Book_title"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return listName;
+    public List<Book> searchBookByCategory(String category) throws SQLException {
+        String sql = "SELECT * FROM Book WHERE Categories = ?";
+        return createNewBookList(category, sql);
     }
 
-    public String issueBook(String ISBN, String customerID) {
-        String sql = "SELECT * FROM books WHERE ISBN = ?";
-        String status = "";
+    public List<Book> searchDocumentByAuthor(String author) throws SQLException {
+        String sql = "SELECT * FROM Book WHERE author = ?";
+        return createNewBookList(author, sql);
+    }
 
-        // Check if the book is still available in the library
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, ISBN);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    status = rs.getString("Status");
+    public String issueBook(String ISBN, String userID) {
+        String transactionID = "T";
+        String sql = "SELECT MAX(transactionID) as Max FROM bookTransaction";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                String temp = rs.getString("Max");
+                if(temp == null) {
+                    transactionID += "101";
+                } else {
+                    temp = temp.substring(1);
+                    transactionID += Integer.parseInt(temp) + 1;
                 }
+            } else {
+                transactionID += "101";
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        if (status.equals("No")) {
-            return "This book is no longer available in the library.";
-        }
+        String finalTransactionID = transactionID;
 
-        // Create new IssueID
-        String maxIssueID = "";
-        sql = "SELECT MAX(Transaction_Id) AS max_id FROM BookTransactions";
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        sql = "INSERT INTO bookTransaction (userId, ISBN, borrowDate, returnDate, transactionID) VALUES (?, ?, ?, ?, ?)";
 
-            if (rs.next()) {
-                maxIssueID = rs.getString("max_id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        int temp = (maxIssueID != null ? Integer.parseInt(maxIssueID.substring(2)) : 0) + 1;
-        maxIssueID = "IS" + temp;
-
-        // Find bookName
-        String bookName = "";
-        sql = "SELECT * FROM books WHERE ISBN = ?";
-
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, ISBN);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    bookName = rs.getString("Book_title");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Find borrow date
-        LocalDate currentDate = LocalDate.now();
-        String borrowDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        // Update the quantity and status of the books.
-        sql = "UPDATE books SET Available_quantity = Available_quantity - 1, " +
-                "Status = CASE WHEN Available_quantity - 1 > 0 THEN 'Yes' ELSE 'No' END " +
-                "WHERE ISBN = ?";
-
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, ISBN);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Import new issue to BookTransactions
-        sql = "INSERT INTO BookTransactions (Transaction_Id, Customer_Id, Book_ISBN, Book_title, Issue_date, Return_Date, Status) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, maxIssueID);
-            stmt.setString(2, customerID);
-            stmt.setString(3, ISBN);
-            stmt.setString(4, bookName);
-            stmt.setString(5, borrowDate);
-            stmt.setString(6, null);
-            stmt.setString(7, "Issued");
-
-            stmt.executeUpdate();
-            return "Book has been issued successfully.";
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return "Book is not issued";
-        }
+        executeUpdate(sql, stmt -> {
+            stmt.setString(1, userID);
+            stmt.setString(2, ISBN);
+            stmt.setString(3, today.format(dateFormatter));
+            stmt.setString(4, null);
+            stmt.setString(5, finalTransactionID);
+        });
     }
 
     void returnBook(String issueID) {
-        String sql = "SELECT * FROM BookTransactions WHERE Transaction_Id = ?";
-        String ISBN = "";
-        String returnDate = "";
 
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, issueID);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    ISBN = rs.getString("Book_ISBN");
-                    returnDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        sql = "UPDATE BookTransactions SET Return_Date = ?, Status = ? WHERE Transaction_Id = ?";
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, returnDate);
-            stmt.setString(2, "Returned");
-            stmt.setString(3, issueID);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        sql = "UPDATE books SET Available_quantity = Available_quantity + 1, " +
-                "Status = CASE WHEN Available_quantity + 1 > 0 THEN 'Yes' ELSE 'No' END " +
-                "WHERE ISBN = ?";
-
-        try (Connection con = DriverManager.getConnection(Constant.URL, Constant.USERNAME, Constant.PASSWORD);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setString(1, ISBN);
-            stmt.executeUpdate();
-            System.out.println("Book has been returned successfully.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

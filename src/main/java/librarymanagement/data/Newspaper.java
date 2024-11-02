@@ -1,3 +1,4 @@
+/*
 package librarymanagement.data;
 
 class Newspaper extends Document {
@@ -29,3 +30,4 @@ class Newspaper extends Document {
                 "\nAuthor: " + author;
     }
 }
+*/

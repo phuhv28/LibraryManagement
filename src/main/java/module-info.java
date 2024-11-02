@@ -6,6 +6,7 @@ module librarymanagement {
     requires java.desktop;
     requires org.xerial.sqlitejdbc;
     requires java.sql;
+    requires org.json;
 
     exports librarymanagement.gui to javafx.fxml, javafx.controls, java.base;
     opens librarymanagement.gui;
