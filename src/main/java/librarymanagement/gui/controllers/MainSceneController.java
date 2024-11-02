@@ -12,13 +12,9 @@ import java.io.IOException;
 
 public class MainSceneController {
 
-    @FXML
-    public HBox hBoxMain;
-    @FXML
-    private AnchorPane MainScene;
+
     @FXML
     private AnchorPane rightMainScene;
-
     @FXML
     private Button btSearch;
     @FXML
@@ -34,21 +30,18 @@ public class MainSceneController {
     @FXML
     private TextField tfSearch;
 
-    public String Words_find;
+    private String Words_find;
 
-    private void loadTextField(){
-        Words_find = tfSearch.getText();
-    }
 
     @FXML
     public void initialize() {
         btSearch.setOnAction(event -> loadSceneSearch());
         btBorrow.setOnAction(event -> loadSceneBorrowBook());
-        btReturn.setOnAction(event -> loadSceneHome());
+        btReturn.setOnAction(event -> loadSceneReturn());
         btFix.setOnAction(event -> loadSceneFix());
         btDelete.setOnAction(event -> loadSceneDelete());
         btAdd.setOnAction(event -> loadSceneAdd());
-        tfSearch.setOnAction(event -> loadTextField());
+        tfSearch.setOnAction(event -> searchInformation());
     }
 
     private void loadScene(String fxmlFile) {
@@ -64,7 +57,6 @@ public class MainSceneController {
     private void loadSceneSearch(){
         loadScene("SearchScene.fxml");
     }
-
     private void loadSceneAdd(){
         loadScene("AddScene.fxml");
     }
@@ -72,19 +64,16 @@ public class MainSceneController {
         loadScene("DeleteScene.fxml");
     }
     private void loadSceneFix(){
-        loadScene("FixScene.fxml");
-    }
-    private void loadSceneUser(){
-        loadScene("UserScene.fxml");
-    }
-    private void loadSceneSetting(){
-        loadScene("SettingScene.fxml");
+        loadScene("EditScene.fxml");
     }
     private void loadSceneBorrowBook(){
         loadScene("BorrowBookScene.fxml");
     }
-    private void loadSceneHome(){
-        loadScene("HomeScene.fxml");
+    private void loadSceneReturn() {loadScene("HomeScene.fxml"); }
+
+    private void searchInformation(){
+        Words_find = tfSearch.getText();
+        tfSearch.clear();
     }
 
 }

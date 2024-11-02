@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddController">
     <children>
         <Rectangle fill="#474242" height="600.0" width="450.0" />
         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
@@ -31,7 +31,7 @@
             <font>
                 <Font size="24.0" />
             </font></Label>
-        <Button fx:id="btAddDocument" layoutX="343.0" layoutY="533.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="ADD" textFill="#2b1d1d">
+        <Button fx:id="btAddDocument" layoutX="343.0" layoutY="533.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" style="-fx-background-radius: 15;" text="ADD" textFill="#2b1d1d">
             <font>
                 <Font size="17.0" />
             </font>
