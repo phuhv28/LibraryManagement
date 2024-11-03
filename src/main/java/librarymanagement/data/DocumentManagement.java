@@ -154,9 +154,19 @@ public class DocumentManagement {
         return createNewBookList(author, sql);
     }
 
-    public String issueBook(String ISBN, String userID) {
+    public void issueBook(String ISBN, String userID) {
+        String sql = "SELECT availableCopies FROM Book WHERE ISBN = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next() || rs.getInt("availableCopies") == 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         String transactionID = "T";
-        String sql = "SELECT MAX(transactionID) as Max FROM bookTransaction";
+        sql = "SELECT MAX(transactionID) as Max FROM bookTransaction";
         try(PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             if(rs.next()) {
@@ -173,14 +183,17 @@ public class DocumentManagement {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         String finalTransactionID = transactionID;
 
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        sql = "INSERT INTO bookTransaction (userId, ISBN, borrowDate, returnDate, transactionID) VALUES (?, ?, ?, ?, ?)";
+        sql = "UPDATE book SET availableCopies = availableCopies - 1 WHERE ISBN = ?";
+        executeUpdate(sql, stmt -> {
+            stmt.setString(1, ISBN);
+        });
 
+        sql = "INSERT INTO bookTransaction (userId, ISBN, borrowDate, returnDate, transactionID) VALUES (?, ?, ?, ?, ?)";
         executeUpdate(sql, stmt -> {
             stmt.setString(1, userID);
             stmt.setString(2, ISBN);
@@ -188,9 +201,38 @@ public class DocumentManagement {
             stmt.setString(4, null);
             stmt.setString(5, finalTransactionID);
         });
+        System.out.println("Issue book successfully");
     }
 
     void returnBook(String issueID) {
+        String sql = "SELECT ISBN FROM bookTransaction WHERE transactionID = ?";
+        String ISBN = "";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+             stmt.setString(1, issueID);
+             ResultSet rs = stmt.executeQuery();
+             if(rs.next()) {
+                 ISBN = rs.getString("ISBN");
+             } else {
+                 System.out.println("issueID not found");
+                 return;
+             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String finalISBN = ISBN;
 
+        sql = "UPDATE book SET availableCopies = availableCopies + 1 WHERE ISBN = ?";
+        executeUpdate(sql, stmt -> {
+            stmt.setString(1, finalISBN);
+        });
+
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        sql = "UPDATE bookTransaction SET returnDate = ? WHERE transactionID = ?";
+        executeUpdate(sql, stmt -> {
+            stmt.setString(1, today.format(dateFormatter));
+        });
+        System.out.println("Return book successfully");
     }
 }
