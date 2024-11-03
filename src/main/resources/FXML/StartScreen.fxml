@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.StartScreenController">
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.StartScreenController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a12318" height="600.0" stroke="#131010" strokeType="INSIDE" strokeWidth="5.0" width="800.0" />
-      <HBox prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a12318" height="750.0" stroke="#131010" strokeType="INSIDE" strokeWidth="5.0" width="1000.0" />
+      <HBox prefHeight="750.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="600.0" prefWidth="350.0">
+            <AnchorPane prefHeight="750.0" prefWidth="500.0">
                <children>
-                  <ImageView fitHeight="555.0" fitWidth="308.0" layoutX="21.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="689.0" fitWidth="454.0" layoutX="24.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/Login.png" />
                      </image>
@@ -22,8 +19,8 @@
                </children>
             </AnchorPane>
 
-             <fx:include source="Login.fxml" fx:id="apLogin" />
-             <fx:include source="Register.fxml" fx:id="apRegister" visible="false" managed="false"/>
+             <fx:include fx:id="apLogin" source="Login.fxml" />
+             <fx:include fx:id="apRegister" managed="false" source="Register.fxml" visible="false" />
          </children>
       </HBox>
    </children>
