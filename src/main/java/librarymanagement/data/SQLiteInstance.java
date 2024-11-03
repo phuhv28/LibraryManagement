@@ -1,5 +1,6 @@
 package librarymanagement.data;
 
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +11,7 @@ public class SQLiteInstance {
     private static SQLiteInstance instance = null;
     private Connection connection;
 
-    private SQLiteInstance() {
+    public SQLiteInstance() {
         try {
             Class.forName("org.sqlite.JDBC");
             this.connection = DriverManager.getConnection(CONNECTION_URL);
@@ -49,20 +50,32 @@ public class SQLiteInstance {
         }
     }
 
-    public void insertRow(String tableName, List<String> values) {
+    public void insertRow(String tableName, List<Object> values) {
         try {
             StringBuilder insertSQL = new StringBuilder("INSERT INTO " + tableName + " VALUES (");
             for (int i = 0; i < values.size(); i++) {
                 insertSQL.append("?");
                 if (i < values.size() - 1) {
-                    insertSQL.append(",");
+                    insertSQL.append(", ");
                 }
             }
             insertSQL.append(")");
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL.toString())) {
-                for (int i = 0; i < values.size(); i++) {
-                    preparedStatement.setString(i + 1, values.get(i));
+                for (int i = 1; i <= values.size(); i++) {
+                    Object value = values.get(i);
+                    switch (value) {
+                        case String s -> preparedStatement.setString(i, s);
+                        case Integer integer -> preparedStatement.setInt(i, integer);
+                        case Double v -> preparedStatement.setDouble(i, v);
+                        case Float v -> preparedStatement.setFloat(i, v);
+                        case Boolean b -> preparedStatement.setBoolean(i, b);
+                        case Long l -> preparedStatement.setLong(i, l);
+                        case Date date -> preparedStatement.setDate(i, date);
+                        case null -> preparedStatement.setNull(i, Types.NULL);
+                        default ->
+                                throw new IllegalArgumentException("Unsupported data type: " + value.getClass().getName());
+                    }
                 }
 
                 preparedStatement.executeUpdate();
@@ -72,24 +85,38 @@ public class SQLiteInstance {
         }
     }
 
-    public List<Integer> find(String tableName, String columnName, String value) {
+
+    public List<Integer> findInt(String tableName, String columnName, String value) {
         List<Integer> result = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM " + tableName + " WHERE "
-                    + columnName + " GLOB ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, value);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-//                        result.add(resultSet.getInt());
-                    }
+        String sql = "SELECT * FROM " + tableName + " WHERE " + columnName + " GLOB ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, value);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    result.add(resultSet.getInt(1));
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
+    }
 
+    public List<String> findString(String tableName, String columnName, String value) {
+        List<String> result = new ArrayList<>();
+        String sql = "SELECT * FROM " + tableName + " WHERE " + columnName + " GLOB ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, value);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    result.add(resultSet.getString(1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 

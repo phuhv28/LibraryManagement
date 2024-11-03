@@ -1,10 +1,13 @@
 package librarymanagement.UserAuth;
 
 import librarymanagement.data.Constant;
+import librarymanagement.data.SQLiteInstance;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
@@ -32,6 +35,8 @@ public class AccountService {
             e.printStackTrace();
         }
     }
+
+    SQLiteInstance sqLiteInstance = new SQLiteInstance();
 
     @FunctionalInterface
     interface PreparedStatementSetter {
@@ -141,14 +146,22 @@ public class AccountService {
         String userId = generateNewUserId("User");
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String sql = "INSERT INTO User (userID, regDate, username, password) VALUES (?, ?, ?, ?)";
+        /*String sql = "INSERT INTO User (userID, regDate, username, password) VALUES (?, ?, ?, ?)";
 
         executeUpdate(sql, stmt -> {
             stmt.setString(1, userId);
             stmt.setString(2, dateFormatter.format(today));
             stmt.setString(3, username);
             stmt.setString(4, password);
-        });
+        });*/
+
+        List<Object> item = new ArrayList<>();
+        item.add(userId);
+        item.add(today.format(dateFormatter));
+        item.add(username);
+        item.add(password);
+
+        sqLiteInstance.insertRow("User", item);
 
         return RegistrationResult.SUCCESS;
     }
