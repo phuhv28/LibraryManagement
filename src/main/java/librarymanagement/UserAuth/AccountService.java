@@ -6,7 +6,6 @@ import librarymanagement.data.SQLiteInstance;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountService {
@@ -14,65 +13,29 @@ public class AccountService {
 
     private Connection connection;
 
-    private AccountService() {
-        try {
-            connection = DriverManager.getConnection(Constant.URL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    private AccountService() {}
 
     public static AccountService getInstance() {
         return INSTANCE;
     }
 
     public void closeConnection() {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        sqLiteInstance.close();
     }
 
-    SQLiteInstance sqLiteInstance = new SQLiteInstance();
-
-    @FunctionalInterface
-    interface PreparedStatementSetter {
-        void setValues(PreparedStatement stmt) throws SQLException;
-    }
-
-    private void executeUpdate(String sql, PreparedStatementSetter setter) {
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            setter.setValues(stmt);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
 
     /**
      * Verify user account.
      */
     public static LoginResult checkLogin(String username, String password) {
-        String sql = "SELECT * FROM User WHERE username = ?";
-        try (Connection con = DriverManager.getConnection(Constant.URL);
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    return LoginResult.USERNAME_NOT_FOUND;
-                } else {
-                    String truePassword = rs.getString("Password");
-                    if (password.equals(truePassword)) {
-                        return LoginResult.SUCCESS;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        List<List<Object>> result = sqLiteInstance.find("User", "username", username, "username", "password");
+        if (result.isEmpty()) {
+            return LoginResult.USERNAME_NOT_FOUND;
+        } else if (result.getFirst().get(1).equals(password)){
+            return LoginResult.SUCCESS;
         }
+
         return LoginResult.INCORRECT_PASSWORD;
     }
 
@@ -80,53 +43,35 @@ public class AccountService {
      * Check if a username is taken.
      */
     private boolean isUsernameTaken(String username) {
-        String sql = "SELECT * FROM User WHERE username = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        String sql = "SELECT * FROM User WHERE User.username = ? UNION SELECT * FROM Admin WHERE Admin.username = ?";
+        List<List<Object>> result = sqLiteInstance.findWithSQL(sql, new Object[]{username, username}, "username");
 
-        sql = "SELECT * FROM Admin WHERE username = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return !result.isEmpty();
     }
 
     /**
      * Generate new user ID based on the maximum user ID in the database.
+     * @param tableName name of table to generate new ID
+     * return new ID
      */
     private String generateNewUserId(String tableName) {
         String newId = "";
-        String sql = "SELECT MAX(userID) as Max FROM " + tableName;
-        try (PreparedStatement stmt = connection.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                String temp = rs.getString("Max");
-                if (temp == null) {
-                    newId = "U101";
-                } else {
-                    temp = temp.substring(1);
-                    newId = "U" + (Integer.parseInt(temp) + 1);
-                }
-            } else {
+        if (tableName.equals("User")) {
+            List<List<Object>> result = sqLiteInstance.findNotCondition("User", "Max(userId)");
+            if (result.isEmpty()) {
                 newId = "U101";
+            } else {
+                String temp = result.get(0).get(0).toString().substring(1);
+                newId = "U" + (Integer.parseInt(temp) + 1);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else if (tableName.equals("Admin")) {
+            List<List<Object>> result = sqLiteInstance.findNotCondition("Admin", "Max(adminId)");
+            if (result.isEmpty()) {
+                newId = "A101";
+            } else {
+                String temp = result.get(0).get(0).toString().substring(1);
+                newId = "A" + (Integer.parseInt(temp) + 1);
+            }
         }
         return newId;
     }
@@ -144,24 +89,13 @@ public class AccountService {
         }
 
         String userId = generateNewUserId("User");
+
+        ///Create issueDay
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        /*String sql = "INSERT INTO User (userID, regDate, username, password) VALUES (?, ?, ?, ?)";
 
-        executeUpdate(sql, stmt -> {
-            stmt.setString(1, userId);
-            stmt.setString(2, dateFormatter.format(today));
-            stmt.setString(3, username);
-            stmt.setString(4, password);
-        });*/
-
-        List<Object> item = new ArrayList<>();
-        item.add(userId);
-        item.add(today.format(dateFormatter));
-        item.add(username);
-        item.add(password);
-
-        sqLiteInstance.insertRow("User", item);
+        ///Import new user to database
+        sqLiteInstance.insertRow("User", userId, username, password, null, today.format(dateFormatter), null);
 
         return RegistrationResult.SUCCESS;
     }
@@ -174,17 +108,14 @@ public class AccountService {
             return RegistrationResult.USERNAME_TAKEN;
         }
 
-        String adminId = generateNewUserId("Admin");
+        String newAdminId = generateNewUserId("Admin");
+
+        ///Create returnDate
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String sql = "INSERT INTO Admin (adminID, regDate, username, password) VALUES (?, ?, ?, ?)";
 
-        executeUpdate(sql, stmt -> {
-            stmt.setString(1, adminId);
-            stmt.setString(2, dateFormatter.format(today));
-            stmt.setString(3, username);
-            stmt.setString(4, password);
-        });
+        ///Import new admin to database
+        sqLiteInstance.insertRow("Admin", newAdminId, username, password, null, today.format(dateFormatter), null);
 
         return RegistrationResult.SUCCESS;
     }

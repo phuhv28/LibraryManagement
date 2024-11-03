@@ -1,6 +1,5 @@
 package librarymanagement.data;
 
-import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +26,11 @@ public class SQLiteInstance {
         return instance;
     }
 
+    /**
+     * Create table
+     * @param tableName name of table
+     * @param columns columns of tablw
+     */
     public void createTable(String tableName, String... columns) {
         try {
             StringBuilder sql = new StringBuilder("DROP TABLE IF EXISTS " + tableName + ";");
@@ -50,6 +54,11 @@ public class SQLiteInstance {
         }
     }
 
+    /**
+     * function to add row to table in SQLite
+     * @param tableName table to insert
+     * @param values table properties
+     */
     public void insertRow(String tableName, List<Object> values) {
         try {
             StringBuilder insertSQL = new StringBuilder("INSERT INTO " + tableName + " VALUES (");
@@ -63,7 +72,7 @@ public class SQLiteInstance {
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL.toString())) {
                 for (int i = 1; i <= values.size(); i++) {
-                    Object value = values.get(i);
+                    Object value = values.get(i - 1);
                     switch (value) {
                         case String s -> preparedStatement.setString(i, s);
                         case Integer integer -> preparedStatement.setInt(i, integer);
@@ -85,41 +94,114 @@ public class SQLiteInstance {
         }
     }
 
+    /**
+     * function to add row to table in SQLite)
+     * @param tableName table to insert
+     * @param values table properties
+     */
+    public void insertRow(String tableName, Object... values) {
+        insertRow(tableName, Arrays.asList(values));
+    }
 
-    public List<Integer> findInt(String tableName, String columnName, String value) {
-        List<Integer> result = new ArrayList<>();
-        String sql = "SELECT * FROM " + tableName + " WHERE " + columnName + " GLOB ?";
+    /**
+     * findNotCondition function in SQLite
+     * @param tableName table to look up
+     * @param columnCheckCondition column to compare
+     * @param condition condition compare with columnCheckCondition
+     * @param columns columns return value columns
+     * @return list of results after query
+     */
+    public List<List<Object>> find(String tableName, String columnCheckCondition, String condition, String... columns) {
+        List<List<Object>> values = new ArrayList<>();
+        List<String> columnsList = Arrays.asList(columns);
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, value);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    result.add(resultSet.getInt(1));
+        if (columnsList.isEmpty()) {
+            throw new IllegalArgumentException("Columns array must not be empty");
+        }
+
+        StringBuilder sql = new StringBuilder("SELECT " + columnsList.get(0));
+        for (int i = 1; i < columnsList.size(); i++) {
+            sql.append(", ").append(columnsList.get(i));
+        }
+        sql.append(" FROM ").append(tableName).append(" WHERE ");
+        sql.append(columnCheckCondition).append(" LIKE ?");
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql.toString())) {
+            stmt.setString(1, condition);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    List<Object> row = new ArrayList<>();
+
+                    for (String column : columnsList) {
+                        row.add(rs.getObject(column));
+                    }
+
+                    values.add(row);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+
+        return values;
     }
 
-    public List<String> findString(String tableName, String columnName, String value) {
-        List<String> result = new ArrayList<>();
-        String sql = "SELECT * FROM " + tableName + " WHERE " + columnName + " GLOB ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, value);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    result.add(resultSet.getString(1));
+    /**
+     * find function for query without condition
+     * @param tableName table to look up
+     * @param columns columns of result
+     * @return list of results after query
+     */
+    public List<List<Object>> findNotCondition(String tableName, String... columns) {
+        List<List<Object>> values = new ArrayList<>();
+        List<String> columnsList = Arrays.asList(columns);
+        StringBuilder sql = new StringBuilder("SELECT " + columnsList.getFirst());
+        for (int i = 1; i < columns.length; i++) {
+            sql.append(", ").append(columns[i]);
+        }
+        sql.append(" FROM ").append(tableName);
+        try (PreparedStatement stmt = connection.prepareStatement(sql.toString())) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                List<Object> row = new ArrayList<>();
+                for (String column : columnsList) {
+                    row.add(rs.getObject(column));
                 }
+                values.add(row);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+        return values;
     }
 
+    /**
+     * find function for important query
+     * @param sql query sql
+     * @param columns columns of result
+     * @return list of results after query
+     */
+    public List<List<Object>> findWithSQL(String sql, Object[] params, String... columns) {
+        List<List<Object>> values = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                List<Object> row = new ArrayList<>();
+                for (String column : columns) {
+                    row.add(rs.getObject(column));
+                }
+                values.add(row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
     public ResultSet query(String sql, String... params) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql))
         {
@@ -134,6 +216,11 @@ public class SQLiteInstance {
         return null;
     }
 
+    /**
+     * function delete row on table in SQLite
+     * @param tableName table to delete
+     * @param condition condition of row delete
+     */
     public void deleteRow(String tableName, String condition) {
         String sql = "DELETE FROM " + tableName + " WHERE " + condition;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -144,19 +231,14 @@ public class SQLiteInstance {
         }
     }
 
-
-    public void insertRow(String tableName, String... values) {
-            insertRow(tableName, Arrays.asList(values));
-    }
-
+    /**
+     * close access to database
+     */
     public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
     }
 }
