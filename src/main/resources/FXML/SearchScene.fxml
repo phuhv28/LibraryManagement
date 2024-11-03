@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="750.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="SearchScene" prefHeight="750.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.SearchController">
     <children>
         <Rectangle fill="#474242" height="750.0" width="560.0" />
         <Button fx:id="btHome" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
@@ -39,10 +39,10 @@
             </font></Label>
         <MenuButton fx:id="mbFilter" layoutX="308.0" layoutY="222.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="187.0" text="Filter">
             <items>
-                <MenuItem fx:id="miISBN" mnemonicParsing="false" text="ISBN" />
-                <MenuItem fx:id="miName" mnemonicParsing="false" text="Name" />
-                <MenuItem fx:id="miAutthor" mnemonicParsing="false" text="Author" />
-                <MenuItem mnemonicParsing="false" text="Category" />
+                <MenuItem fx:id="mbSearchISBN" mnemonicParsing="false" text="ISBN" />
+                <MenuItem fx:id="mbSearchName" mnemonicParsing="false" text="Name" />
+                <MenuItem fx:id="mbSearchAuthor" mnemonicParsing="false" text="Author" />
+                <MenuItem fx:id="mbSearchCategory" mnemonicParsing="false" text="Category" />
             </items>
         </MenuButton>
         <Label layoutX="42.0" layoutY="227.0" style="-fx-font-weight: BOLD;" text="Search Criteria :" textFill="WHITE">
@@ -55,7 +55,7 @@
                 <Font size="24.0" />
             </font></Label>
         <TextField fx:id="tfInformation" layoutX="310.0" layoutY="282.0" prefHeight="35.0" prefWidth="187.0" />
-        <Button fx:id="btSearchDocument" layoutX="310.0" layoutY="344.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="96.0" style="-fx-font-weight: bold; -fx-background-radius: 15;" text="Search">
+        <Button fx:id="btSearchDocument" layoutX="310.0" layoutY="344.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="96.0" style="-fx-background-radius: 15;" text="Search">
             <font>
                 <Font size="16.0" />
             </font>

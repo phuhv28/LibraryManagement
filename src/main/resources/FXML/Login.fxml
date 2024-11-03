@@ -71,12 +71,10 @@
 
 
     <Line endX="242.20001220703125" layoutX="175.0" layoutY="144.0" startX="-79.80000305175781" />
-   <Label fx:id="errorLabel" layoutX="71.0" layoutY="226.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-
+    <Label fx:id="errorLabel" layoutX="71.0" layoutY="226.0" text="Label" textFill="GOLD" visible="false">
+        <font>
+            <Font size="16.0" />
+        </font></Label>
 
 
 </AnchorPane>

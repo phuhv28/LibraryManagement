@@ -14,6 +14,8 @@ public class MainSceneController {
 
 
     @FXML
+    private AnchorPane MainScene;
+    @FXML
     private AnchorPane rightMainScene;
     @FXML
     private Button btSearch;
@@ -37,6 +39,9 @@ public class MainSceneController {
     private String Words_find;
 
 
+
+
+
     @FXML
     public void initialize() {
         btSearch.setOnAction(event -> loadSceneSearch());
@@ -47,6 +52,7 @@ public class MainSceneController {
         btAdd.setOnAction(event -> loadSceneAdd());
         tfSearch.setOnAction(event -> searchInformation());
         btLogOut.setOnAction(actionEvent -> loadSceneLoginAndSignUp());
+        btAddUser.setOnAction(actionEvent -> loadSceneAddAccount());
     }
 
     private void loadScene(String fxmlFile) {
@@ -60,22 +66,53 @@ public class MainSceneController {
     }
 
     private void loadSceneSearch(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
         loadScene("SearchScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="SearchScene.fxml";
     }
     private void loadSceneAdd(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
         loadScene("AddScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="AddScene.fxml";
     }
     private void loadSceneDelete(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
         loadScene("DeleteScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="DeleteScene.fxml";
     }
     private void loadSceneFix(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
         loadScene("EditScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="EditScene.fxml";
     }
     private void loadSceneBorrowBook(){
-        loadScene("BorrowBookScene.fxml");
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+        loadScene("ListBorrowBookScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="ListBorrowBookScene.fxml";
     }
-    private void loadSceneReturn() {loadScene("HomeScene.fxml"); }
-    private void loadSceneLoginAndSignUp() {loadScene("LoginOrScene.fxml");}
+    private void loadSceneReturn() {
+        try {
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + previousSceneToReturn.previousFxmlFIle1));
+            rightMainScene.getChildren().setAll(newPane);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadSceneLoginAndSignUp() {
+        try {
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/StartScreen.fxml"));
+            MainScene.getChildren().setAll(newPane);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadSceneAddAccount() {
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+        loadScene("AddUserScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="AddUserScene.fxml";
+    }
 
     private void searchInformation(){
         Words_find = tfSearch.getText();
