@@ -29,6 +29,10 @@ public class MainSceneController {
     private Button btAdd;
     @FXML
     private TextField tfSearch;
+    @FXML
+    private Button btLogOut;
+    @FXML
+    private Button btAddUser;
 
     private String Words_find;
 
@@ -42,6 +46,7 @@ public class MainSceneController {
         btDelete.setOnAction(event -> loadSceneDelete());
         btAdd.setOnAction(event -> loadSceneAdd());
         tfSearch.setOnAction(event -> searchInformation());
+        btLogOut.setOnAction(actionEvent -> loadSceneLoginAndSignUp());
     }
 
     private void loadScene(String fxmlFile) {
@@ -70,6 +75,7 @@ public class MainSceneController {
         loadScene("BorrowBookScene.fxml");
     }
     private void loadSceneReturn() {loadScene("HomeScene.fxml"); }
+    private void loadSceneLoginAndSignUp() {loadScene("LoginOrScene.fxml");}
 
     private void searchInformation(){
         Words_find = tfSearch.getText();
