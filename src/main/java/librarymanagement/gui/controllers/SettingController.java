@@ -3,41 +3,34 @@ package librarymanagement.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 
 
-public class DeleteController {
-
+public class SettingController {
     @FXML
-    private AnchorPane DeleteScene;
+    private AnchorPane SettingScene;
     @FXML
     private Button btHome;
     @FXML
-    private Button btSetting;
-    @FXML
     private Button btUser;
     @FXML
-    private Button btDeleteDocument;
-    @FXML
-    private TextField tfDocumentID;
-
+    private Button btSetting;
 
     @FXML
     public void initialize() {
-        btHome.setOnAction(event -> loadHome());
-        btSetting.setOnAction(event -> loadSetting());
-        btUser.setOnAction(event -> loadUser());
+        btUser.setOnAction(event -> {loadUser();});
+        btHome.setOnAction(event -> {loadHome();});
+        btSetting.setOnAction(event -> {loadSetting();});
     }
 
-    private void loadScene(String fxmlFile) {
-        try {
+    private void loadScene(String fxmlFile)  {
+        try{
             AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
-            DeleteScene.getChildren().setAll(newPane);
-
-        } catch (IOException e) {
+            SettingScene.getChildren().setAll(newPane);
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -56,4 +49,3 @@ public class DeleteController {
         previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
 
 }
-

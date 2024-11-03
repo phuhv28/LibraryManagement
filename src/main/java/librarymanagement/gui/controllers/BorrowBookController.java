@@ -1,121 +1,62 @@
 package librarymanagement.gui.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.TableCell;
-import librarymanagement.data.BorrowBook;
 
-import java.util.List;
-import java.util.ArrayList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import java.io.IOException;
+
 
 
 public class BorrowBookController {
 
     @FXML
-    private TableView<BorrowBook> tableView;
+    private AnchorPane BorrowBookScene;
     @FXML
-    private TableColumn<BorrowBook, Integer> sttColumn;
+    private Button btHome;
     @FXML
-    private TableColumn<BorrowBook, Integer> documentIdColumn;
+    private Button btSetting;
     @FXML
-    private TableColumn<BorrowBook, String> documentTitleColumn;
+    private Button btUser;
     @FXML
-    private TableColumn<BorrowBook, String> borrowDateColumn;
+    private Button btBorrowDocument;
     @FXML
-    private TableColumn<BorrowBook, Void> readColumn;
-    @FXML
-    private TableColumn<BorrowBook, Void> returnColumn;
-    @FXML
-    private Label lbCheckEmpty;
+    private TextField tfDocumentID;
 
-    private ObservableList<BorrowBook> borrowBookList;
+
+
 
     @FXML
     public void initialize() {
-        // Example list books to print scenes
-        List<BorrowBook> listBook = new ArrayList<>();
-        listBook.add(new BorrowBook(134, "helo", "2024-10-01"));
-        listBook.add(new BorrowBook(146, "hi", "2024-10-02"));
-        listBook.add(new BorrowBook(180, "xin chao", "2024-10-03"));
+        btHome.setOnAction(event -> loadHome());
+        btSetting.setOnAction(event -> loadSetting());
+        btUser.setOnAction(event -> loadUser());
+    }
 
-        ObservableList<BorrowBook> observableListBook = FXCollections.observableArrayList(listBook);
-        tableView.setItems(observableListBook);
+    private void loadScene(String fxmlFile) {
+        try {
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
+            BorrowBookScene.getChildren().setAll(newPane);
 
-        if(listBook.isEmpty()) {
-            tableView.setVisible(false);
-            lbCheckEmpty.setVisible(true);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        else{
-            tableView.setVisible(true);
-            lbCheckEmpty.setVisible(false);
-        }
-
-        sttColumn.setCellValueFactory(new PropertyValueFactory<>("stt"));
-        documentIdColumn.setCellValueFactory(new PropertyValueFactory<>("documentId"));
-        documentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("documentTitle"));
-        borrowDateColumn.setCellValueFactory(new PropertyValueFactory<>("borrowDate"));
-
-        addReadButtonToTable();
-        addReturnButtonToTable();
-
     }
 
+    private void loadHome(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+        loadScene("HomeScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="HomeScene.fxml";}
+    private void loadSetting(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+        loadScene("SettingScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="SettingScene.fxml";}
+    private void loadUser(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+        loadScene("UserScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
 
-    private void addReadButtonToTable() {
-        readColumn.setCellFactory(column -> new TableCell<>() {
-            private final Button button = new Button("  READ  ");
-
-            {
-                button.setOnAction(event -> {
-                    BorrowBook book = getTableView().getItems().get(getIndex());
-                    handleFunction1(book);
-                });
-            }
-
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(button);
-                }
-            }
-        });
-    }
-
-    private void addReturnButtonToTable() {
-        returnColumn.setCellFactory(column -> new TableCell<>() {
-            private final Button button = new Button("RETURN");
-
-            {
-                button.setOnAction(event -> {
-                    BorrowBook book = getTableView().getItems().get(getIndex());
-                    handleFunction2(book);
-                });
-            }
-
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(button);
-                }
-            }
-        });
-    }
-
-    private void handleFunction1(BorrowBook book) {
-    }
-
-    private void handleFunction2(BorrowBook book) {
-    }
 
 }
 

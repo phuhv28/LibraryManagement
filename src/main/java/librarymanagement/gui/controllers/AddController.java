@@ -2,91 +2,73 @@ package librarymanagement.gui.controllers;
 
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import java.io.IOException;
+
+
 
 public class AddController {
 
     @FXML
-    private Button btAddDocument; // Button để thêm tài liệu
-
+    private AnchorPane AddScene;
     @FXML
-    private TextField tfDocumentID; // TextField để nhập ID tài liệu
-
+    private Button btHome;
     @FXML
-    private TextField tfTitle; // TextField để nhập tiêu đề tài liệu
-
+    private Button btSetting;
     @FXML
-    private TextField tfPublisher; // TextField để nhập nhà xuất bản
-
+    private Button btUser;
     @FXML
-    private TextField tfAuthor; // TextField để nhập tác giả
-
+    private Button btAddDocument;
     @FXML
-    private TextField tfCategory; // TextField để nhập thể loại
-
+    private TextField tfDocumentID;
     @FXML
-    private TextField tfRentalPrice; // TextField để nhập giá thuê
-
+    private TextField tfTitle;
     @FXML
-    private TextField tfTotalQuantity; // TextField để nhập tổng số lượng
+    private TextField tfAuthor;
+    @FXML
+    private TextField tfPublisher;
+    @FXML
+    private TextField tfPublicationYear;
+    @FXML
+    private TextField tfCategory;
+    @FXML
+    private TextField tfRentalPrice;
+    @FXML
+    private TextField tfTotalQuantity;
 
     @FXML
     public void initialize() {
-        // Phương thức này sẽ được gọi tự động khi controller được khởi tạo.
-        // Bạn có thể đặt bất kỳ mã khởi tạo nào ở đây.
-        btAddDocument.setOnMousePressed(event -> {
-            // Thay đổi style để thu nhỏ kích thước nút
-            btAddDocument.setStyle("-fx-scale-x: 1.0; -fx-scale-y: 1.0; -fx-background-radius: 15; -fx-font-weight: bold;");
-        });
-
-        // Khi nhả nút
-        btAddDocument.setOnMouseReleased(event -> {
-            // Khôi phục kích thước nút
-            btAddDocument.setStyle("-fx-scale-x: 1.0; -fx-scale-y: 1.0; -fx-background-radius: 15; -fx-font-weight: bold;");
-        });
-
-        // Khi chuột rời khỏi nút
-        btAddDocument.setOnMouseExited(event -> {
-            // Đảm bảo kích thước về lại ban đầu nếu chuột rời khỏi
-            btAddDocument.setStyle("-fx-scale-x: 1.0; -fx-scale-y: 1.0; -fx-background-radius: 15; -fx-font-weight: bold;");
-        });
-
-        // Sự kiện khi bấm nút
-        btAddDocument.setOnAction(event -> handleAddDocument());
+        btHome.setOnAction(event -> loadHome());
+        btSetting.setOnAction(event -> loadSetting());
+        btUser.setOnAction(event -> loadUser());
     }
 
-    private void handleAddDocument() {
-        // Lấy dữ liệu từ các TextField
-        String documentID = tfDocumentID.getText();
-        String title = tfTitle.getText();
-        String publisher = tfPublisher.getText();
-        String author = tfAuthor.getText();
-        String category = tfCategory.getText();
-        String rentalPrice = tfRentalPrice.getText();
-        String totalQuantity = tfTotalQuantity.getText();
+    private void loadScene(String fxmlFile) {
+        try {
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
+            AddScene.getChildren().setAll(newPane);
 
-        // Xử lý dữ liệu, ví dụ như thêm tài liệu vào cơ sở dữ liệu
-        System.out.println("Adding Document:");
-        System.out.println("ID: " + documentID);
-        System.out.println("Title: " + title);
-        System.out.println("Publisher: " + publisher);
-        System.out.println("Author: " + author);
-        System.out.println("Category: " + category);
-        System.out.println("Rental Price: " + rentalPrice);
-        System.out.println("Total Quantity: " + totalQuantity);
-
-        // Xóa nội dung các TextField sau khi thêm
-        clearFields();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void clearFields() {
-        tfDocumentID.clear();
-        tfTitle.clear();
-        tfPublisher.clear();
-        tfAuthor.clear();
-        tfCategory.clear();
-        tfRentalPrice.clear();
-        tfTotalQuantity.clear();
-    }
+    private void loadHome(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+        loadScene("HomeScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="HomeScene.fxml";}
+    private void loadSetting(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+        loadScene("SettingScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="SettingScene.fxml";}
+    private void loadUser(){
+        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+        loadScene("UserScene.fxml");
+        previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
+
+
+
 }
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="ListBorrowBooks" prefHeight="750.0" prefWidth="560.0" style="-fx-background-color: #474242;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.ListBorrowBookController">
+   <children>
+       <Rectangle fill="#474242" height="750.0" width="560.0" />
+       <Button fx:id="btHome" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
+           <graphic>
+               <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/image_home.png" />
+                   </image>
+               </ImageView>
+           </graphic></Button>
+       <Button fx:id="btSetting" layoutX="464.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="68.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
+           <graphic>
+               <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/image_setting.png" />
+                   </image>
+               </ImageView>
+           </graphic></Button>
+       <Button fx:id="btUser" layoutX="393.0" layoutY="2.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="88.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
+           <graphic>
+               <ImageView fitHeight="51.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/image_account.png" />
+                   </image>
+               </ImageView>
+           </graphic></Button>
+       <Label layoutX="152.0" layoutY="117.0" style="-fx-font-weight: BOLD;" text="ADD DOCUMENT" textFill="#f2f2f2" underline="true">
+           <font>
+               <Font size="26.0" />
+           </font></Label>
+      <Label fx:id="lbCheckEmpty" layoutX="99.0" layoutY="194.0" prefHeight="67.0" prefWidth="317.0" style="-fx-font-weight: bold;" text="There are no books in your borrowed list at the moment." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TableView fx:id="tableView" layoutX="10.0" layoutY="277.0" prefHeight="290.0" prefWidth="547.0" style="-fx-background-color: #474242;">
+          <columns>
+              <TableColumn fx:id="sttColumn" minWidth="30.0" prefWidth="30.0" text="STT" />
+              <TableColumn fx:id="documentIdColumn" prefWidth="50.0" text="Book ID" />
+              <TableColumn fx:id="documentTitleColumn" prefWidth="145.0" text="Book Title" />
+            <TableColumn fx:id="borrowDateColumn" text="Borrow Date" />
+              <TableColumn fx:id="dueDateColumn" text="Due Date" />
+              <TableColumn fx:id="readColumn" prefWidth="75.0" text="Function 1" />
+              <TableColumn fx:id="returnColumn" minWidth="14.0" prefWidth="85.0" text="Function 2" />
+          </columns>
+      </TableView>
+      <Button fx:id="btBorrowBooks" layoutX="435.0" layoutY="677.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="108.0" style="-fx-background-radius: 15;" text="BORROW BOOKS" textAlignment="CENTER" wrapText="true" />
+   </children>
+</AnchorPane>

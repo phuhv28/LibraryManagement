@@ -5,13 +5,15 @@ public class BorrowBook {
     private int documentId;
     private String documentTitle;
     private String borrowDate;
+    private String dueDate;
 
     public static int count =0;
 
-    public BorrowBook( int documentId, String documentTitle, String borrowDate) {
+    public BorrowBook( int documentId, String documentTitle, String borrowDate ,String dueDate ) {
         this.documentId = documentId;
         this.documentTitle = documentTitle;
         this.borrowDate = borrowDate;
+        this.dueDate = dueDate;
         count++;
         this.stt = count;
     }
@@ -31,4 +33,6 @@ public class BorrowBook {
     public String getBorrowDate() {
         return borrowDate;
     }
+
+    public String getDueDate() {return dueDate;}
 }
