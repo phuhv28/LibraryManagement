@@ -1,5 +1,7 @@
 package librarymanagement.data;
 
+import java.util.List;
+
 abstract class Document {
     private String id;
     private String title;
@@ -40,6 +42,8 @@ abstract class Document {
     public void setAvailableCopies(int availableCopies) { this.availableCopies = availableCopies; }
     public void setAverageRating(double averageRating) { this.averageRating = averageRating; }
     public void setRatingsCount(int ratingsCount) { this.ratingsCount = ratingsCount; }
+
+    public abstract List<Object> getAll();
 
     public abstract String getDocumentType();
 
