@@ -14,16 +14,16 @@
                 <AnchorPane prefHeight="750.0" prefWidth="370.0">
                     <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#791a13" height="750.0" width="370.0" />
-                        <Button fx:id="btLogOut" layoutX="135.0" layoutY="662.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="110.0" style="-fx-font-weight: bold; -fx-background-radius: 15;" text="Log Out">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Button>
                         <TextField fx:id="tfSearch" layoutX="15.0" layoutY="214.0" prefHeight="40.0" prefWidth="338.0" promptText="Search " style="-fx-background-radius: 15; -fx-font-weight: BOLD;">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </TextField>
+                        <Button fx:id="btLogOut" layoutX="125.0" layoutY="655.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="125.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="Log Out" textFill="#030303" textOverrun="CLIP">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Button>
                         <Label layoutX="17.0" layoutY="33.0" prefHeight="157.0" prefWidth="329.0" style="-fx-font-weight: bold;" text="&quot;Welcome to the E-Library! Discover endless knowledge and enjoy your reading journey with us!&quot;" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                             <font>
                                 <Font size="20.0" />
@@ -31,7 +31,7 @@
                         </Label>
                         <ScrollPane hbarPolicy="NEVER" layoutX="9.0" layoutY="367.0" prefHeight="257.0" prefWidth="356.0" style="-fx-background-color: #791a13;">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="364.0" style="-fx-background-color: #791a13;">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="363.0" style="-fx-background-color: #791a13;">
                                     <children>
                                         <Button fx:id="btSearch" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="110.0" style="-fx-background-color: #791a13;">
                                             <contentDisplay>TOP</contentDisplay>

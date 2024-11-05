@@ -13,12 +13,12 @@
                 <Font size="26.0" />
             </font>
         </Label>
-        <Label layoutX="47.0" layoutY="143.0" style="-fx-font-weight: bold;" text="Enter DocumentID :" textFill="WHITE">
+        <Label layoutX="47.0" layoutY="143.0" style="-fx-font-weight: bold;" text="Enter Document ID :" textFill="WHITE">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Button fx:id="btBorrowDocument" layoutX="298.0" layoutY="198.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-radius: 15;" text="BORROW">
+        <Button fx:id="btBorrowDocument" layoutX="298.0" layoutY="198.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="BORROW">
             <font>
                 <Font size="16.0" />
             </font>

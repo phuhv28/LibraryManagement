@@ -16,7 +16,7 @@ public class AddController {
     @FXML
     private Button btAddDocument;
     @FXML
-    private TextField tfDocumentID;
+    private TextField tfISBN;
     @FXML
     private TextField tfTitle;
     @FXML
@@ -28,22 +28,17 @@ public class AddController {
     @FXML
     private TextField tfCategory;
     @FXML
-    private TextField tfAvailableQuantity;
-    @FXML
-    private TextField tfISBN;
-    @FXML
-    private TextField tfTotalQuantity;
-    @FXML
-    private TextField tfRatingCount;
-    @FXML
-    private TextField tfAverageRating;
+    private TextField tfAvailableCopies;
     @FXML
     private TextField tfDescription;
     @FXML
     private Label lbError;
+    @FXML
+    private TextField tfPageCount;
 
     @FXML
     public void initialize() {
+        btAddDocument.setOnAction(e -> {handleAddDocument();});
     }
 
     private void loadScene(String fxmlFile) {
@@ -56,9 +51,24 @@ public class AddController {
         }
     }
 
+    private void handleAddDocument() {
+        tfISBN.requestFocus();
+    }
+
     private void loadError() {
         lbError.setVisible(true);
     }
 
+    private void Clear() {
+        tfISBN.clear();
+        tfTitle.clear();
+        tfAuthor.clear();
+        tfPublisher.clear();
+        tfPublicationDate.clear();
+        tfCategory.clear();
+        tfAvailableCopies.clear();
+        tfDescription.clear();
+        tfPageCount.clear();
+    }
 }
 

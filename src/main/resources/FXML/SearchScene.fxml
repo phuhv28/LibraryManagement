@@ -5,43 +5,42 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="SearchScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.SearchController">
+<AnchorPane fx:id="SearchScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.SearchController">
     <children>
-        <Rectangle fill="#474242" height="670.0" width="630.0"/>
-        <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="SEARCH DOCUMENT" textFill="#f2f2f2"
-               underline="true">
+        <Rectangle fill="#474242" height="670.0" width="630.0" />
+        <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="SEARCH DOCUMENT" textFill="#f2f2f2" underline="true">
             <font>
-                <Font size="26.0"/>
+                <Font size="26.0" />
             </font>
         </Label>
-        <MenuButton fx:id="mbFilter" layoutX="326.0" layoutY="126.0" mnemonicParsing="false" prefHeight="35.0"
-                    prefWidth="187.0" text="Filter">
+        <MenuButton fx:id="mbFilter" layoutX="326.0" layoutY="126.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="187.0" text="Filter">
             <items>
-                <MenuItem fx:id="mbSearchISBN" mnemonicParsing="false" text="ISBN"/>
-                <MenuItem fx:id="mbSearchName" mnemonicParsing="false" text="Name"/>
-                <MenuItem fx:id="mbSearchAuthor" mnemonicParsing="false" text="Author"/>
-                <MenuItem fx:id="mbSearchCategory" mnemonicParsing="false" text="Category"/>
+                <MenuItem fx:id="mbSearchISBN" mnemonicParsing="false" text="ISBN" />
+                <MenuItem fx:id="mbSearchName" mnemonicParsing="false" text="Name" />
+                <MenuItem fx:id="mbSearchAuthor" mnemonicParsing="false" text="Author" />
+                <MenuItem fx:id="mbSearchCategory" mnemonicParsing="false" text="Category" />
             </items>
         </MenuButton>
         <Label layoutX="60.0" layoutY="136.0" style="-fx-font-weight: BOLD;" text="Search Criteria :" textFill="WHITE">
             <font>
-                <Font size="24.0"/>
+                <Font size="24.0" />
             </font>
         </Label>
-        <Label layoutX="60.0" layoutY="186.0" style="-fx-font-weight: bold;" text="Enter Info with Filters :"
-               textFill="WHITE">
+        <Label layoutX="60.0" layoutY="186.0" style="-fx-font-weight: bold;" text="Enter Info with Filters :" textFill="WHITE">
             <font>
-                <Font size="24.0"/>
+                <Font size="24.0" />
             </font>
         </Label>
-        <TextField fx:id="tfInformation" layoutX="326.0" layoutY="177.0" prefHeight="35.0" prefWidth="187.0"/>
-        <Button fx:id="btSearchDocument" layoutX="326.0" layoutY="237.0" mnemonicParsing="false" prefHeight="38.0"
-                prefWidth="96.0" style="-fx-background-radius: 15;" text="Search">
+        <TextField fx:id="tfInformation" layoutX="326.0" layoutY="177.0" prefHeight="35.0" prefWidth="187.0" />
+        <Button fx:id="btSearchDocument" layoutX="326.0" layoutY="237.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="96.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="Search">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Button>
+      <Label fx:id="lbError" layoutX="60.0" layoutY="98.0" style="-fx-font-weight: bold;" text="The Document is invalid." textFill="#f03a0e" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
     </children>
 
 </AnchorPane>

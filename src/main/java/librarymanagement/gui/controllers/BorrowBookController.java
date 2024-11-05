@@ -23,6 +23,7 @@ public class BorrowBookController {
 
     @FXML
     public void initialize() {
+        btBorrowDocument.setOnAction(event -> {handleBorrowDocument();});
     }
 
     private void loadScene(String fxmlFile) {
@@ -33,6 +34,10 @@ public class BorrowBookController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleBorrowDocument() {
+        tfDocumentID.requestFocus();
     }
 
     private void loadError() {

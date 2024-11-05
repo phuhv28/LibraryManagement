@@ -18,7 +18,7 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <Button fx:id="btDeleteDocument" layoutX="298.0" layoutY="202.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="88.0" style="-fx-background-radius: 15;" text="DELETE">
+        <Button fx:id="btDeleteDocument" layoutX="298.0" layoutY="202.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="DELETE">
             <font>
                 <Font size="16.0" />
             </font>

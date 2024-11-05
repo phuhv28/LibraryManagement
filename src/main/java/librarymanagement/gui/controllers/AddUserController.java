@@ -145,6 +145,10 @@ public class AddUserController {
         mbAccount.setText("account");
     }
 
+    private void handleAddUSerOrAdmin() {
+        mbAccount.show();
+    }
+
     private void loadErrorSignUp() {
         lbErrorSignUp.setVisible(true);
         lbErrorAddAdmin.setVisible(false);

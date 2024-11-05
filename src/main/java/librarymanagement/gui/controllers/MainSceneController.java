@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 
 public class MainSceneController {
@@ -40,7 +39,6 @@ public class MainSceneController {
     @FXML
     private Button btUser;
 
-    private String Words_find;
 
 
     @FXML
@@ -115,8 +113,6 @@ public class MainSceneController {
             MainScene.setPrefWidth(800);
             MainScene.setPrefHeight(600);
             MainScene.getChildren().setAll(newPane);
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,8 +143,7 @@ public class MainSceneController {
     }
 
     private void searchInformation() {
-        Words_find = tfSearch.getText();
-        tfSearch.clear();
+
     }
 
 }

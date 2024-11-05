@@ -65,7 +65,7 @@
                 <MenuItem fx:id="mbAdd" mnemonicParsing="false" text="Add" />
             </items>
         </MenuButton>
-        <Button fx:id="btAddAccount" layoutX="487.0" layoutY="585.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="107.0" style="-fx-background-radius: 15;" text="ADD">
+        <Button fx:id="btAddAccount" layoutX="487.0" layoutY="585.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="107.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="ADD">
             <font>
                 <Font size="18.0" />
             </font>

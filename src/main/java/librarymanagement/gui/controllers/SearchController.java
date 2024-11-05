@@ -29,8 +29,8 @@ public class SearchController {
     private MenuItem mbSearchCategory;
     @FXML
     private MenuItem mbSearchName;
-
-
+    @FXML
+    private Label lbError;
 
     @FXML
     public void initialize() {
@@ -46,7 +46,8 @@ public class SearchController {
         }
     }
 
-
-
+    private void loadError() {
+        lbError.setVisible(true);
+    }
 }
 

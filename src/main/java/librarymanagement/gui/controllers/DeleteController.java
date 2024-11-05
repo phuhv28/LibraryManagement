@@ -23,6 +23,7 @@ public class DeleteController {
 
     @FXML
     public void initialize() {
+        btDeleteDocument.setOnAction(event -> {handleDeleteDocument();});
     }
 
     private void loadScene(String fxmlFile) {
@@ -33,6 +34,10 @@ public class DeleteController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleDeleteDocument() {
+        tfDocumentID.requestFocus();
     }
 
     private void loadError() {

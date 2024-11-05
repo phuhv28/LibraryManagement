@@ -46,6 +46,7 @@ public class EditController {
 
     @FXML
     public void initialize() {
+        btEditDocument.setOnAction(event -> {handleEditDocument();});
     }
 
 
@@ -59,6 +60,10 @@ public class EditController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleEditDocument() {
+        tfDocumentID.requestFocus();
     }
 
     private void loadError(){
