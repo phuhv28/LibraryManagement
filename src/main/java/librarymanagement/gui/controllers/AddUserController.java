@@ -57,6 +57,7 @@ public class AddUserController {
 
     @FXML
     public void initialize() {
+        btAddAccount.setOnAction(e -> {handleAddUSerOrAdmin();});
     }
 
     private void loadScene(String fxmlFile) {
@@ -146,7 +147,7 @@ public class AddUserController {
     }
 
     private void handleAddUSerOrAdmin() {
-        mbAccount.show();
+        mbAccount.requestFocus();
     }
 
     private void loadErrorSignUp() {
