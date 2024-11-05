@@ -14,12 +14,6 @@ public class AddUserController {
     @FXML
     private AnchorPane AddUserScene;
     @FXML
-    private Button btHome;
-    @FXML
-    private Button btSetting;
-    @FXML
-    private Button btUser;
-    @FXML
     private Button btAddAccount;
     @FXML
     private TextField tfUserName;
@@ -55,16 +49,14 @@ public class AddUserController {
     private Label lbConfirmPassword;
     @FXML
     private Label lbEnterUserName;
+    @FXML
+    private Label lbErrorSignUp;
+    @FXML
+    private Label lbErrorAddAdmin;
 
 
     @FXML
     public void initialize() {
-        btHome.setOnAction(event -> loadHome());
-        btSetting.setOnAction(event -> loadSetting());
-        btUser.setOnAction(event -> loadUser());
-        mbFunction.setOnAction(event -> {
-            loadAtStart();
-        });
     }
 
     private void loadScene(String fxmlFile) {
@@ -76,19 +68,6 @@ public class AddUserController {
             e.printStackTrace();
         }
     }
-
-    private void loadHome(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("HomeScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="HomeScene.fxml";}
-    private void loadSetting(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="SettingScene.fxml";}
-    private void loadUser(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("UserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
 
     private void loadAtStart() {
         mbFunction.setVisible(false);
@@ -166,6 +145,14 @@ public class AddUserController {
         mbAccount.setText("account");
     }
 
+    private void loadErrorSignUp() {
+        lbErrorSignUp.setVisible(true);
+        lbErrorAddAdmin.setVisible(false);
+    }
 
+    private void loadErrorAddAdmin() {
+        lbErrorAddAdmin.setVisible(true);
+        lbErrorSignUp.setVisible(false);
+    }
 }
 

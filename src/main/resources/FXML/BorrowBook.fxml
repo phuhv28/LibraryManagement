@@ -1,59 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="BorrowBookScene" prefHeight="750.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.BorrowBookController">
+<AnchorPane fx:id="BorrowBookScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.BorrowBookController">
     <children>
-        <Rectangle fill="#474242" height="750.0" width="560.0" />
-        <Button fx:id="btHome" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_home.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="btSetting" layoutX="464.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="68.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_setting.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="btUser" layoutX="390.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="88.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="51.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_account.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-
-        <Label layoutX="152.0" layoutY="117.0" style="-fx-font-weight: BOLD;" text="BORROW DOCUMENT" textFill="#f2f2f2" underline="true">
+        <Rectangle fill="#474242" height="670.0" width="630.0" />
+        <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="BORROW DOCUMENT" textFill="#f2f2f2" underline="true">
             <font>
                 <Font size="26.0" />
             </font>
         </Label>
-        <Label layoutX="43.0" layoutY="201.0" style="-fx-font-weight: bold;" text="Enter DocumentID :" textFill="WHITE">
+        <Label layoutX="47.0" layoutY="143.0" style="-fx-font-weight: bold;" text="Enter DocumentID :" textFill="WHITE">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Button fx:id="btBorrowDocument" layoutX="298.0" layoutY="263.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-radius: 15;" text="BORROW">
+        <Button fx:id="btBorrowDocument" layoutX="298.0" layoutY="198.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-radius: 15;" text="BORROW">
             <font>
                 <Font size="16.0" />
             </font>
         </Button>
-        <TextField fx:id="tfDocumentID" layoutX="298.0" layoutY="198.0" prefHeight="35.0" prefWidth="211.0" />
-
+        <TextField fx:id="tfDocumentID" layoutX="298.0" layoutY="138.0" prefHeight="35.0" prefWidth="211.0" />
+      <Label fx:id="lbError" layoutX="47.0" layoutY="107.0" style="-fx-font-weight: bold;" text="The document is invalid." textFill="#f03a0e" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
     </children>
-
 </AnchorPane>

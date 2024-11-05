@@ -7,9 +7,9 @@ public class BorrowBook {
     private String borrowDate;
     private String dueDate;
 
-    public static int count =0;
+    public static int count = 0;
 
-    public BorrowBook( int documentId, String documentTitle, String borrowDate ,String dueDate ) {
+    public BorrowBook(int documentId, String documentTitle, String borrowDate, String dueDate) {
         this.documentId = documentId;
         this.documentTitle = documentTitle;
         this.borrowDate = borrowDate;
@@ -34,5 +34,7 @@ public class BorrowBook {
         return borrowDate;
     }
 
-    public String getDueDate() {return dueDate;}
+    public String getDueDate() {
+        return dueDate;
+    }
 }

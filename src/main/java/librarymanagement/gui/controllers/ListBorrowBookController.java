@@ -41,12 +41,6 @@ public class ListBorrowBookController {
     @FXML
     private Label lbCheckEmpty;
     @FXML
-    private Button btHome;
-    @FXML
-    private Button btSetting;
-    @FXML
-    private Button btUser;
-    @FXML
     private Button btBorrowBooks;
 
     private ObservableList<BorrowBook> borrowBookList;
@@ -55,18 +49,17 @@ public class ListBorrowBookController {
     public void initialize() {
         // Example list books to print scenes
         List<BorrowBook> listBook = new ArrayList<>();
-        listBook.add(new BorrowBook(134, "helo", "2024-10-01" ,"2024-11-03"));
+        listBook.add(new BorrowBook(134, "helo", "2024-10-01", "2024-11-03"));
         listBook.add(new BorrowBook(146, "hi", "2024-10-02", "2024-12-4"));
-        listBook.add(new BorrowBook(180, "xin chao", "2024-10-03","2025-02-04"));
+        listBook.add(new BorrowBook(180, "xin chao", "2024-10-03", "2025-02-04"));
 
         ObservableList<BorrowBook> observableListBook = FXCollections.observableArrayList(listBook);
         tableView.setItems(observableListBook);
 
-        if(listBook.isEmpty()) {
+        if (listBook.isEmpty()) {
             tableView.setVisible(false);
             lbCheckEmpty.setVisible(true);
-        }
-        else{
+        } else {
             tableView.setVisible(true);
             lbCheckEmpty.setVisible(false);
         }
@@ -81,9 +74,6 @@ public class ListBorrowBookController {
         addReturnButtonToTable();
 
         btBorrowBooks.setOnAction(event -> loadBorrowBooks());
-        btHome.setOnAction(event -> loadHome());
-        btSetting.setOnAction(event -> loadSetting());
-        btUser.setOnAction(event -> loadUser());
     }
 
 
@@ -149,23 +139,11 @@ public class ListBorrowBookController {
         }
     }
 
-    private void loadHome(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("SearchScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="SearchScene.fxml";
-    }
-    private void loadSetting(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="SettingScene.fxml";}
-    private void loadUser(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("UserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
-    private void loadBorrowBooks(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
+    private void loadBorrowBooks() {
+        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
         loadScene("BorrowBook.fxml");
-        previousSceneToReturn.previousFxmlFile2="BorrowBook.fxml";}
+        previousSceneToReturn.previousFxmlFile2 = "BorrowBook.fxml";
+    }
 
 }
 

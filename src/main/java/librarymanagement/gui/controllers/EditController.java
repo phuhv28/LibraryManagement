@@ -14,12 +14,6 @@ public class EditController {
     @FXML
     private AnchorPane EditScene;
     @FXML
-    private Button btHome;
-    @FXML
-    private Button btSetting;
-    @FXML
-    private Button btUser;
-    @FXML
     private Button btEditDocument;
     @FXML
     private MenuButton mbFilter;
@@ -45,14 +39,13 @@ public class EditController {
     @FXML
     private TextField tfInformation;
 
+    @FXML
+    private Label lbError;
+
 
 
     @FXML
     public void initialize() {
-        btHome.setOnAction(event -> loadHome());
-        btSetting.setOnAction(event -> loadSetting());
-        btUser.setOnAction(event -> loadUser());
-        clear();
     }
 
 
@@ -68,24 +61,8 @@ public class EditController {
         }
     }
 
-    private void loadHome(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("HomeScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="HomeScene.fxml";}
-    private void loadSetting(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="SettingScene.fxml";}
-    private void loadUser(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("UserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
-    private void clear(){
-        tfDocumentID.clear();
-        tfInformation.clear();
-        mbFilter.setText("Filter");
+    private void loadError(){
+        lbError.setVisible(true);
     }
-
-
 }
 

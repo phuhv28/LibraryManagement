@@ -14,12 +14,6 @@ public class SearchController {
     @FXML
     private AnchorPane SearchScene;
     @FXML
-    private Button btHome;
-    @FXML
-    private Button btSetting;
-    @FXML
-    private Button btUser;
-    @FXML
     private Button btSearchDocument;
     @FXML
     private TextField tfInformation;
@@ -40,9 +34,6 @@ public class SearchController {
 
     @FXML
     public void initialize() {
-        btHome.setOnAction(event -> loadHome());
-        btSetting.setOnAction(event -> loadSetting());
-        btUser.setOnAction(event -> loadUser());
     }
 
     private void loadScene(String fxmlFile) {
@@ -55,18 +46,6 @@ public class SearchController {
         }
     }
 
-    private void loadHome(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("HomeScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="HomeScene.fxml";}
-    private void loadSetting(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="SettingScene.fxml";}
-    private void loadUser(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("UserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
 
 
 }

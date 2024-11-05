@@ -1,79 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="UserScene" prefHeight="750.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserController">
+<AnchorPane fx:id="UserScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserController">
     <children>
-        <Rectangle fill="#474242" height="750.0" width="560.0" />
-        <Button fx:id="btHome" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_home.png" />
-                    </image>
-                </ImageView>
-            </graphic></Button>
-        <Button fx:id="btSetting" layoutX="464.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="68.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_setting.png" />
-                    </image>
-                </ImageView>
-            </graphic></Button>
-        <Button fx:id="btUser" layoutX="390.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="88.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="51.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_account.png" />
-                    </image>
-                </ImageView>
-            </graphic></Button>
-        <Label layoutX="151.0" layoutY="114.0" style="-fx-font-weight: BOLD;" text="INFORMATION USER" textFill="WHITE" underline="true">
+        <Rectangle fill="#474242" height="670.0" width="630.0" />
+        <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="INFORMATION USER" textFill="WHITE" underline="true">
             <font>
                 <Font size="26.0" />
             </font>
         </Label>
-        <Label layoutX="25.0" layoutY="198.0" style="-fx-font-weight: BOLD;" text="Full name :" textFill="WHITE">
+        <Label layoutX="83.0" layoutY="155.0" style="-fx-font-weight: BOLD;" text="Full name :" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label layoutX="25.0" layoutY="239.0" style="-fx-font-weight: BOLD;" text="Number of books borrowed :" textFill="WHITE">
+        <Label layoutX="82.0" layoutY="194.0" style="-fx-font-weight: BOLD;" text="Number of books borrowed :" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label layoutX="20.0" layoutY="283.0" style="-fx-font-weight: bold;" text=" Email :" textFill="WHITE">
+        <Label layoutX="77.0" layoutY="236.0" style="-fx-font-weight: bold;" text=" Email :" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label layoutX="26.0" layoutY="326.0" style="-fx-font-weight: bold;" text="UserName :" textFill="WHITE">
+        <Label layoutX="83.0" layoutY="277.0" style="-fx-font-weight: bold;" text="UserName :" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label fx:id="lbFullName" layoutX="139.0" layoutY="200.0" prefHeight="27.0" prefWidth="288.0" textFill="WHITE">
+        <Label fx:id="lbFullName" layoutX="206.0" layoutY="154.0" prefHeight="27.0" prefWidth="288.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbNumberOfBooksBorrowed" layoutX="306.0" layoutY="241.0" prefHeight="27.0" prefWidth="231.0" textFill="WHITE">
+        <Label fx:id="lbNumberOfBooksBorrowed" layoutX="370.0" layoutY="193.0" prefHeight="27.0" prefWidth="231.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbEmail" layoutX="109.0" layoutY="283.0" prefHeight="27.0" prefWidth="316.0" textFill="WHITE">
+        <Label fx:id="lbEmail" layoutX="163.0" layoutY="236.0" prefHeight="27.0" prefWidth="316.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbUserName" layoutX="153.0" layoutY="326.0" prefHeight="27.0" prefWidth="288.0" textFill="WHITE">
+        <Label fx:id="lbUserName" layoutX="219.0" layoutY="276.0" prefHeight="27.0" prefWidth="288.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>

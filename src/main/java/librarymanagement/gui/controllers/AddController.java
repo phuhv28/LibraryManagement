@@ -5,20 +5,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import java.io.IOException;
 
+import java.io.IOException;
 
 
 public class AddController {
 
     @FXML
     private AnchorPane AddScene;
-    @FXML
-    private Button btHome;
-    @FXML
-    private Button btSetting;
-    @FXML
-    private Button btUser;
     @FXML
     private Button btAddDocument;
     @FXML
@@ -30,19 +24,26 @@ public class AddController {
     @FXML
     private TextField tfPublisher;
     @FXML
-    private TextField tfPublicationYear;
+    private TextField tfPublicationDate;
     @FXML
     private TextField tfCategory;
     @FXML
-    private TextField tfRentalPrice;
+    private TextField tfAvailableQuantity;
+    @FXML
+    private TextField tfISBN;
     @FXML
     private TextField tfTotalQuantity;
+    @FXML
+    private TextField tfRatingCount;
+    @FXML
+    private TextField tfAverageRating;
+    @FXML
+    private TextField tfDescription;
+    @FXML
+    private Label lbError;
 
     @FXML
     public void initialize() {
-        btHome.setOnAction(event -> loadHome());
-        btSetting.setOnAction(event -> loadSetting());
-        btUser.setOnAction(event -> loadUser());
     }
 
     private void loadScene(String fxmlFile) {
@@ -55,20 +56,9 @@ public class AddController {
         }
     }
 
-    private void loadHome(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("HomeScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="HomeScene.fxml";}
-    private void loadSetting(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="SettingScene.fxml";}
-    private void loadUser(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("UserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
-
-
+    private void loadError() {
+        lbError.setVisible(true);
+    }
 
 }
 

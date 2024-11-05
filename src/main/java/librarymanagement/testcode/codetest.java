@@ -10,7 +10,6 @@ public class codetest extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Tải giao diện từ file FXML với đường dẫn tuyệt đối từ thư mục resources
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/MainScene.fxml"));
         Parent root = loader.load();
 
