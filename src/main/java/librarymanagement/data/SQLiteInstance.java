@@ -26,6 +26,7 @@ public class SQLiteInstance {
         return instance;
     }
 
+
     /**
      * Create table
      * @param tableName name of table

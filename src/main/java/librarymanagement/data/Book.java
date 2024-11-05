@@ -61,14 +61,14 @@ class Book extends Document {
         List<Object> res = new ArrayList<>();
 
         res.add(ISBN);
+        res.add(getId());
         res.add(getTitle());
         res.add(author);
         res.add(getPublisher());
-        res.add(categories);
-        res.add(getAvailableCopies());
-        res.add(getPageCount());
         res.add(getPublishedDate());
-        res.add(getId());
+        res.add(categories);
+        res.add(getPageCount());
+        res.add(getAvailableCopies());
         res.add(description);
         res.add(getAverageRating());
         res.add(getRatingsCount());

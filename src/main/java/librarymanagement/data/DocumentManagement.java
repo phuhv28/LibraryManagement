@@ -44,7 +44,7 @@ public class DocumentManagement {
         String newId;
 
         List<List<Object>> result = sqLiteInstance.findNotCondition("Book", "Max(id)");
-        if (result.isEmpty()) {
+        if (result.get(0).get(0) == null) {
             newId = "B101";
         } else {
             String temp = result.get(0).get(0).toString().substring(1);
