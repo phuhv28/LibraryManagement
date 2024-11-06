@@ -11,11 +11,11 @@ public class DocumentManagement {
 
     private Connection connection;
 
-    public DocumentManagement getInstance() {
+    public static DocumentManagement getInstance() {
         return INSTANCE;
     }
 
-    public DocumentManagement() {
+    private DocumentManagement() {
     }
 
     public String generateBookID() {

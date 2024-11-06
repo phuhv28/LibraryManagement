@@ -2,7 +2,7 @@ package librarymanagement.data;
 
 import java.util.List;
 
-abstract class Document {
+public abstract class Document {
     private String id;
     private String title;
     private String publisher;

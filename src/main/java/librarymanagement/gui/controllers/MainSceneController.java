@@ -5,13 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+
 import java.io.IOException;
 
 public class MainSceneController {
 
 
     @FXML
-    private AnchorPane MainScene;
+    private AnchorPane mainScene;
+
     @FXML
     private AnchorPane rightMainScene;
     @FXML
@@ -40,7 +42,6 @@ public class MainSceneController {
     private Button btUser;
 
 
-
     @FXML
     public void initialize() {
         btSearch.setOnAction(event -> loadSceneSearch());
@@ -50,7 +51,7 @@ public class MainSceneController {
         btDelete.setOnAction(event -> loadSceneDelete());
         btAdd.setOnAction(event -> loadSceneAdd());
         tfSearch.setOnAction(event -> searchInformation());
-        btLogOut.setOnAction(actionEvent -> loadSceneLoginAndSignUp());
+        btLogOut.setOnAction(actionEvent -> handleLogOut());
         btAddUser.setOnAction(actionEvent -> loadSceneAddAccount());
         btHome.setOnAction(event -> loadHome());
         btSetting.setOnAction(event -> loadSetting());
@@ -75,8 +76,8 @@ public class MainSceneController {
 
     private void loadSceneAdd() {
         previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
-        loadScene("AddScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "AddScene.fxml";
+        loadScene("AddDocument.fxml");
+        previousSceneToReturn.previousFxmlFile2 = "AddDocument.fxml";
     }
 
     private void loadSceneDelete() {
@@ -107,15 +108,8 @@ public class MainSceneController {
         }
     }
 
-    private void loadSceneLoginAndSignUp() {
-        try {
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/StartScreen.fxml"));
-            MainScene.setPrefWidth(800);
-            MainScene.setPrefHeight(600);
-            MainScene.getChildren().setAll(newPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleLogOut() {
+        UIController.showScene(StartScreenController.getStartScreen());
     }
 
     private void loadSceneAddAccount() {
