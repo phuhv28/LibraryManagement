@@ -9,7 +9,8 @@ class Book extends Document {
     private String author;
     private String description;
 
-    public Book() {}
+    public Book() {
+    }
 
     @Override
     public String getDocumentType() {

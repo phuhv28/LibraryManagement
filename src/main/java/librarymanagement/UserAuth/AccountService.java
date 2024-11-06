@@ -1,9 +1,7 @@
 package librarymanagement.UserAuth;
 
-import librarymanagement.data.Constant;
 import librarymanagement.data.SQLiteInstance;
 
-import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -11,16 +9,11 @@ import java.util.List;
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
 
-    private Connection connection;
-
-    private AccountService() {}
+    private AccountService() {
+    }
 
     public static AccountService getInstance() {
         return INSTANCE;
-    }
-
-    public void closeConnection() {
-        sqLiteInstance.close();
     }
 
     private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
@@ -32,7 +25,7 @@ public class AccountService {
         List<List<Object>> result = sqLiteInstance.find("User", "username", username, "username", "password");
         if (result.isEmpty()) {
             return LoginResult.USERNAME_NOT_FOUND;
-        } else if (result.getFirst().get(1).equals(password)){
+        } else if (result.getFirst().get(1).equals(password)) {
             return LoginResult.SUCCESS;
         }
 
@@ -51,8 +44,9 @@ public class AccountService {
 
     /**
      * Generate new user ID based on the maximum user ID in the database.
+     *
      * @param tableName name of table to generate new ID
-     * return new ID
+     *                  return new ID
      */
     private String generateNewUserId(String tableName) {
         String newId = "";
@@ -115,7 +109,7 @@ public class AccountService {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         ///Import new admin to database
-        sqLiteInstance.insertRow("Admin", newAdminId, username, null, null, password,today.format(dateFormatter));
+        sqLiteInstance.insertRow("Admin", newAdminId, username, null, null, password, today.format(dateFormatter));
 
         return RegistrationResult.SUCCESS;
     }
