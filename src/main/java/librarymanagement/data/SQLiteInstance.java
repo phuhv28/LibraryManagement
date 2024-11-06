@@ -8,7 +8,7 @@ import java.util.List;
 public class SQLiteInstance {
     private static final String CONNECTION_URL = "jdbc:sqlite:library.db";
     private static SQLiteInstance instance = null;
-    private Connection connection;
+    protected Connection connection;
 
     public SQLiteInstance() {
         try {
@@ -26,6 +26,10 @@ public class SQLiteInstance {
         return instance;
     }
 
+    @FunctionalInterface
+    interface PreparedStatementSetter {
+        void setValues(PreparedStatement stmt) throws SQLException;
+    }
 
     /**
      * Create table
@@ -207,7 +211,7 @@ public class SQLiteInstance {
         return values;
     }
 
-    public void executeUpdate(String sql, DocumentManagement.PreparedStatementSetter setter) {
+    public void executeUpdate(String sql, PreparedStatementSetter setter) {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             setter.setValues(stmt);
             stmt.executeUpdate();
