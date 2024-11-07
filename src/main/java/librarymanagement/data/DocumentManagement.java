@@ -40,6 +40,14 @@ public class DocumentManagement {
         return res.get(0).get(0) != null;
     }
 
+    public boolean checkIfHasBookId(String id) {
+        List<List<Object>> res = sqLiteInstance.find("Book", "id", id, "id");
+        if (res.isEmpty() || res.get(0).isEmpty()) {
+            return false;
+        }
+        return res.get(0).get(0) != null;
+    }
+
     //tam thoi co moi Book, con Magazine va Newspaper
     public void addBook(Book book) {
         if (checkIfHasBookISBN(book.getISBN())) {
@@ -55,6 +63,10 @@ public class DocumentManagement {
     }
 
     public void deleteBook(String id) {
+        if (!checkIfHasBookId(id)) {
+            System.out.println("Book does not exist");
+            return;
+        }
         String condition = "id = " + "'" + id + "'";
         sqLiteInstance.deleteRow("Book", condition);
     }
@@ -112,6 +124,10 @@ public class DocumentManagement {
     }
 
     public void fixBook(String id, String attribute, String value) {
+        if (checkIfHasBookId(id)) {
+            System.out.println("Book already exists");
+            return;
+        }
         String sql = "UPDATE Book SET ? = ? WHERE id = ?";
         sqLiteInstance.executeUpdate(sql, stmt -> {
             stmt.setString(1, attribute);
