@@ -59,7 +59,6 @@ public class DocumentManagement {
         sqLiteInstance.deleteRow("Book", condition);
     }
 
-    // TO DO
     public void editBook(Book book) {
         deleteBook(book.getId());
 

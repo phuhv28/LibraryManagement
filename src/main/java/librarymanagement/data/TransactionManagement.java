@@ -55,7 +55,7 @@ public class TransactionManagement {
     }
 
     public void returnBook(String issueID) {
-        List<List<Object>> lists = sqLiteInstance.find("Book", "transactionID", issueID, "ISBN");
+        List<List<Object>> lists = sqLiteInstance.find("bookTransaction", "transactionID", issueID, "ISBN");
         String finalISBN = lists.getFirst().getFirst().toString();
 
         String sql = "UPDATE book SET availableCopies = availableCopies + 1 WHERE ISBN = ?";
@@ -69,6 +69,7 @@ public class TransactionManagement {
         sql = "UPDATE bookTransaction SET returnDate = ? WHERE transactionID = ?";
         sqLiteInstance.executeUpdate(sql, stmt -> {
             stmt.setString(1, today.format(dateFormatter));
+            stmt.setString(2, issueID);
         });
         System.out.println("Return book successfully");
     }
@@ -77,10 +78,5 @@ public class TransactionManagement {
         List<Book> books = new ArrayList<>();
         sqLiteInstance.find("bookTransaction", "userId", userID, "*");
         return books;
-    }
-
-    public static void main(String[] args) {
-        TransactionManagement transactionManagement = new TransactionManagement();
-        transactionManagement.issueBook("9781788299046", "U101");
     }
 }
