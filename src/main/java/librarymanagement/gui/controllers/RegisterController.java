@@ -32,6 +32,12 @@ public class RegisterController implements Initializable {
     private Button btRegister;
 
     @FXML
+    private TextField tfEmail;
+
+    @FXML
+    private TextField tfFullName;
+
+    @FXML
     private Hyperlink lkLogin;
 
     private final RegisterViewModel viewModel = new RegisterViewModel();
@@ -78,6 +84,8 @@ public class RegisterController implements Initializable {
                 register();
             }
         });
+        tfEmail.textProperty().bindBidirectional(viewModel.emailPropertyProperty());
+        tfFullName.textProperty().bindBidirectional(viewModel.fullNamePropertyProperty());
     }
 
     @FXML

@@ -13,16 +13,19 @@ import java.awt.*;
 import java.io.IOException;
 
 public class UserController {
-    @FXML
-    private AnchorPane UserScene;
+
     @FXML
     private Label lbFullName;
+
     @FXML
     private Label lbNumberOfBooksBorrowed;
+
     @FXML
     private Label lbUserName;
+
     @FXML
     private Label lbEmail;
+
 
     @FXML
     public void initialize() {
@@ -30,14 +33,5 @@ public class UserController {
         lbNumberOfBooksBorrowed.setText("Number of Books Borrowed");
         lbUserName.setText("User Name");
         lbEmail.setText("Email");
-    }
-
-    private void loadScene(String fxmlFile)  {
-        try{
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
-            UserScene.getChildren().setAll(newPane);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
     }
 }

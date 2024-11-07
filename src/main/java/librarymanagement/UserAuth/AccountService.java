@@ -73,7 +73,7 @@ public class AccountService {
     /**
      * Add a user.
      */
-    public RegistrationResult addUser(String username, String password, String confirmPassword) {
+    public RegistrationResult addUser(String username, String password, String confirmPassword , String fullname , String email) {
         if (!password.equals(confirmPassword)) {
             return RegistrationResult.PASSWORD_NOT_MATCH;
         }

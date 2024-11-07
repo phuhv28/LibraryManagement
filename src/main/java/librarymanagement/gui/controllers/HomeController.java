@@ -11,12 +11,6 @@ import java.io.IOException;
 public class HomeController {
     @FXML
     private AnchorPane HomeScene;
-    @FXML
-    private Button btSetting;
-    @FXML
-    private Button btUser;
-    @FXML
-    private Button btHome;
 
     @FXML
     public void initialize() {

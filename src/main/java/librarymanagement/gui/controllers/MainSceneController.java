@@ -16,31 +16,42 @@ public class MainSceneController {
 
     @FXML
     private AnchorPane rightMainScene;
+
     @FXML
     private Button btSearch;
+
     @FXML
     private Button btBorrow;
+
     @FXML
     private Button btReturn;
+
     @FXML
     private Button btFix;
+
     @FXML
     private Button btDelete;
+
     @FXML
     private Button btAdd;
+
     @FXML
     private TextField tfSearch;
+
     @FXML
     private Button btLogOut;
+
     @FXML
     private Button btAddUser;
+
     @FXML
     private Button btHome;
+
     @FXML
     private Button btSetting;
+
     @FXML
     private Button btUser;
-
 
     @FXML
     public void initialize() {

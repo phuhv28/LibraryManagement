@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="BorrowBookScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.BorrowBookController">
+<AnchorPane  prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.BorrowBookController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
         <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="BORROW DOCUMENT" textFill="#f2f2f2" underline="true">

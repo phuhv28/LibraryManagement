@@ -22,24 +22,34 @@ public class ListBorrowBookController {
 
     @FXML
     private AnchorPane ListBorrowBooks;
+
     @FXML
     private TableView<BorrowBook> tableView;
+
     @FXML
     private TableColumn<BorrowBook, Integer> sttColumn;
+
     @FXML
     private TableColumn<BorrowBook, Integer> documentIdColumn;
+
     @FXML
     private TableColumn<BorrowBook, String> documentTitleColumn;
+
     @FXML
     private TableColumn<BorrowBook, String> borrowDateColumn;
+
     @FXML
     private TableColumn<BorrowBook, String> dueDateColumn;
+
     @FXML
     private TableColumn<BorrowBook, Void> readColumn;
+
     @FXML
     private TableColumn<BorrowBook, Void> returnColumn;
+
     @FXML
     private Label lbCheckEmpty;
+
     @FXML
     private Button btBorrowBooks;
 
