@@ -187,6 +187,7 @@ public class SQLiteInstance {
     /**
      * find function for important query
      * @param sql query sql
+     * @param params columns of result
      * @param columns columns of result
      * @return list of results after query
      */

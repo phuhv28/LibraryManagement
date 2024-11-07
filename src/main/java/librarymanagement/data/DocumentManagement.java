@@ -11,7 +11,7 @@ public class DocumentManagement {
 
     private Connection connection;
 
-    public DocumentManagement getInstance() {
+    public static DocumentManagement getInstance() {
         return INSTANCE;
     }
 
@@ -104,5 +104,20 @@ public class DocumentManagement {
     public List<Book> searchBookByAuthor(String author) {
         String sql = "SELECT * FROM Book WHERE author LIKE ?";
         return createNewBookList(author, sql);
+    }
+
+    public List<Book> searchBookById(String id) {
+        String sql = "SELECT * FROM Book WHERE id LIKE ?";
+        return createNewBookList(id, sql);
+    }
+
+    public void fixBook(String id, String attribute, String value) {
+        String sql = "UPDATE Book SET ? = ? WHERE id = ?";
+        sqLiteInstance.executeUpdate(sql, stmt -> {
+            stmt.setString(1, attribute);
+            stmt.setString(2, value);
+            stmt.setString(3, id);
+        });
+        System.out.println("Fix book successfully");
     }
 }
