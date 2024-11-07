@@ -61,6 +61,11 @@ public class DocumentManagement {
 
     // TO DO
     public void editBook(Book book) {
+        deleteBook(book.getId());
+
+        sqLiteInstance.insertRow("Book", book.getAll());
+
+        System.out.println("Edit book successfully");
     }
 
     private List<Book> createNewBookList(String condition, String sql) {
