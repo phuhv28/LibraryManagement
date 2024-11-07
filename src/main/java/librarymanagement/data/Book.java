@@ -3,7 +3,7 @@ package librarymanagement.data;
 import java.util.ArrayList;
 import java.util.List;
 
-class Book extends Document {
+public class Book extends Document {
     private String ISBN;
     private String categories;
     private String author;

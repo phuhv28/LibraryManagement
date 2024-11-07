@@ -21,7 +21,7 @@
             </image>
         </ImageView>
 
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="400.0" layoutX="55.0" layoutY="150.0" stroke="#281b1b" strokeType="INSIDE" strokeWidth="5.0" style="-fx-arc-height: 50; -fx-arc-width: 50;" width="340.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="400.0" layoutX="55.0" layoutY="150.0" stroke="#281b1b" strokeType="INSIDE" strokeWidth="1.0" style="-fx-arc-height: 50; -fx-arc-width: 50;" width="340.0" />
 
         <TextField fx:id="tfUsername" layoutX="105.0" layoutY="200.0" prefHeight="35.0" prefWidth="250.0" promptText="Username" style="-fx-font-weight: bold; -fx-background-radius: 10;">
             <font>

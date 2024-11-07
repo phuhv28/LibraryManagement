@@ -8,12 +8,17 @@ module librarymanagement {
     requires java.sql;
     requires org.json;
 
-    exports librarymanagement.gui to javafx.fxml, javafx.controls, java.base;
+    exports librarymanagement.data to javafx.base;
+    opens librarymanagement.data;
+    exports librarymanagement.gui to javafx.fxml, javafx.controls, java.base ,javafx.graphics;
     opens librarymanagement.gui;
-    exports librarymanagement.gui.controllers to javafx.fxml, javafx.controls, java.base;
+    exports librarymanagement.gui.controllers to javafx.fxml, javafx.controls, java.base ,javafx.graphics;
     opens librarymanagement.gui.controllers;
-    exports librarymanagement.gui.models to java.base, javafx.controls, javafx.fxml;
+    exports librarymanagement.gui.models to java.base, javafx.controls, javafx.fxml , javafx.graphics;
     opens librarymanagement.gui.models;
-    exports librarymanagement.gui.viewmodels to java.base, javafx.controls, javafx.fxml;
+    exports librarymanagement.gui.viewmodels to java.base, javafx.controls, javafx.fxml,  javafx.graphics;
     opens librarymanagement.gui.viewmodels;
+    exports librarymanagement.testcode to java.base, javafx.controls, javafx.fxml , javafx.graphics;
+    opens librarymanagement.testcode;
+
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="EditScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.EditController">
+    <children>
+        <Rectangle fill="#474242" height="670.0" width="630.0" />
+        <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="EDIT DOCUMENT" textFill="#f2f2f2" underline="true">
+            <font>
+                <Font size="26.0" />
+            </font>
+        </Label>
+        <MenuButton fx:id="mbFilter" layoutX="312.0" layoutY="196.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="199.0" text="Fitler">
+            <items>
+                <MenuItem fx:id="mbEditTitle" mnemonicParsing="false" text="Title" />
+                <MenuItem fx:id="mbEditAuthor" mnemonicParsing="false" text="Author" />
+                <MenuItem fx:id="mbEditPublisher" mnemonicParsing="false" text="Publisher" />
+                <MenuItem fx:id="mbEditPublicationYear" mnemonicParsing="false" text="Publication Year" />
+                <MenuItem fx:id="mbEditTotalQuantity" mnemonicParsing="false" text="Total Quantity" />
+            </items>
+        </MenuButton>
+        <TextField fx:id="tfDocumentID" layoutX="312.0" layoutY="142.0" prefHeight="35.0" prefWidth="199.0" promptText="Document ID" />
+        <TextField fx:id="tfInformation" layoutX="312.0" layoutY="250.0" prefHeight="35.0" prefWidth="199.0" promptText="Information" />
+        <Label layoutX="47.0" layoutY="201.0" style="-fx-font-weight: bold;" text="Select criteria to edit :" textFill="#fafafa">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="46.0" layoutY="254.0" style="-fx-font-weight: bold;" text="Enter Info with Filters :" textFill="#f7f7f7">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Button fx:id="btEditDocument" layoutX="312.0" layoutY="310.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="EDIT">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Label layoutX="48.0" layoutY="145.0" style="-fx-font-weight: BOLD;" text="Enter Document ID :" textFill="WHITE">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+      <Label fx:id="lbError" layoutX="46.0" layoutY="111.0" style="-fx-font-weight: bold;" text="The Document is invalid." textFill="#f03a0e" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
