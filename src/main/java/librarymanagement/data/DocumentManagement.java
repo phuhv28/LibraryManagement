@@ -59,6 +59,10 @@ public class DocumentManagement {
         sqLiteInstance.deleteRow("Book", condition);
     }
 
+    // TO DO
+    public void editBook(Book book) {
+    }
+
     private List<Book> createNewBookList(String condition, String sql) {
         List<Book> books = new ArrayList<>();
         try (PreparedStatement stmt = sqLiteInstance.connection.prepareStatement(sql)) {
@@ -104,5 +108,10 @@ public class DocumentManagement {
     public List<Book> searchBookByAuthor(String author) {
         String sql = "SELECT * FROM Book WHERE author LIKE ?";
         return createNewBookList(author, sql);
+    }
+
+    public Book searchBookByID(String id) {
+        String sql = "SELECT * FROM Book WHERE id LIKE ?";
+        return createNewBookList(id, sql).getFirst();
     }
 }

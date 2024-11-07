@@ -88,8 +88,8 @@ public class MainSceneController {
 
     private void loadSceneFix() {
         previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
-        loadScene("EditScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "EditScene.fxml";
+        loadScene("EditDocument.fxml");
+        previousSceneToReturn.previousFxmlFile2 = "EditDocument.fxml";
     }
 
     private void loadSceneBorrowBook() {
