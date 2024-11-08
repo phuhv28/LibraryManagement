@@ -70,8 +70,8 @@ public class MainSceneController {
 
     private void loadSceneSearch() {
         previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
-        loadScene("SearchScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "SearchScene.fxml";
+        loadScene("SearchDocument.fxml");
+        previousSceneToReturn.previousFxmlFile2 = "SearchDocument.fxml";
     }
 
     private void loadSceneAdd() {

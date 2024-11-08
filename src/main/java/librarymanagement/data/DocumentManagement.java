@@ -95,14 +95,14 @@ public class DocumentManagement {
         return books;
     }
 
-    public List<Book> searchBookByName(String bookName) {
+    public List<Book> searchBookByTitle(String title) {
         String sql = "SELECT * FROM Book WHERE title LIKE ?";
-        return createNewBookList(bookName, sql);
+        return createNewBookList(title, sql);
     }
 
-    public List<Book> searchBookByISBN(String ISBN) {
+    public Book searchBookByISBN(String ISBN) {
         String sql = "SELECT * FROM Book WHERE ISBN LIKE ?";
-        return createNewBookList(ISBN, sql);
+        return createNewBookList(ISBN, sql).getFirst();
     }
 
     public List<Book> searchBookByCategory(String category) {
