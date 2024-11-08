@@ -1,0 +1,100 @@
+package librarymanagement.gui.viewmodels;
+
+import javafx.beans.property.*;
+import java.time.LocalDate;
+import librarymanagement.data.*;
+
+public class AddDocumentViewModel {
+    private StringProperty ISBNProperty = new SimpleStringProperty();
+    private StringProperty titleProperty = new SimpleStringProperty();
+    private StringProperty publisherProperty = new SimpleStringProperty();
+    private StringProperty authorProperty = new SimpleStringProperty();
+    private StringProperty categoryProperty = new SimpleStringProperty();
+    private ObjectProperty<LocalDate> publicationDateProperty = new SimpleObjectProperty<>();
+    private StringProperty descriptionProperty = new SimpleStringProperty();
+    private IntegerProperty availableCopiesProperty = new SimpleIntegerProperty();
+    private IntegerProperty pageCountProperty = new SimpleIntegerProperty();
+
+    public StringProperty ISBNProperty() {
+        return ISBNProperty;
+    }
+
+    public StringProperty titleProperty() {
+        return titleProperty;
+    }
+
+    public StringProperty publisherProperty() {
+        return publisherProperty;
+    }
+
+    public StringProperty authorProperty() {
+        return authorProperty;
+    }
+
+    public StringProperty categoryProperty() {
+        return categoryProperty;
+    }
+
+    public ObjectProperty<LocalDate> publicationDateProperty() {
+        return publicationDateProperty;
+    }
+
+    public StringProperty descriptionProperty() {
+        return descriptionProperty;
+    }
+
+    public IntegerProperty availableCopiesProperty() {
+        return availableCopiesProperty;
+    }
+
+    public IntegerProperty pageCountProperty() {
+        return pageCountProperty;
+    }
+
+    public void setPublicationDateProperty(LocalDate publicationDate) {
+        this.publicationDateProperty.set(publicationDate);
+    }
+
+    public String getISBN() {
+        return ISBNProperty.get();
+    }
+
+    public String getTitle() {
+        return titleProperty.get();
+    }
+
+    public String getPublisher() {
+        return publisherProperty.get();
+    }
+
+    public LocalDate getPublicationDate() {
+        return publicationDateProperty.get();
+    }
+
+    public String getAuthor() {
+        return authorProperty.get();
+    }
+
+    public int getPageCount() {
+        return pageCountProperty.get();
+    }
+
+    public String getCategory() {
+        return categoryProperty.get();
+    }
+
+    public int getAvailableCopies() {
+        return availableCopiesProperty.get();
+    }
+
+    public String getDescription() {
+        return descriptionProperty.get();
+    }
+
+    public void addDocument() {
+        Book newBook = new Book(null, getTitle(), getPublisher(),
+                getPublicationDate().toString(), getPageCount(), getAvailableCopies(),
+                0, 0, getISBN(), getCategory(), getAuthor(), getDescription());
+        DocumentManagement.getInstance().addBook(newBook);
+    }
+}

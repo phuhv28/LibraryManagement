@@ -1,12 +1,16 @@
 package librarymanagement.data;
 
-class Book extends Document {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Book extends Document {
     private String ISBN;
     private String categories;
     private String author;
     private String description;
 
-    public Book() {}
+    public Book() {
+    }
 
     @Override
     public String getDocumentType() {
@@ -51,6 +55,26 @@ class Book extends Document {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public List<Object> getAll() {
+        List<Object> res = new ArrayList<>();
+
+        res.add(ISBN);
+        res.add(getId());
+        res.add(getTitle());
+        res.add(author);
+        res.add(getPublisher());
+        res.add(getPublishedDate());
+        res.add(categories);
+        res.add(getPageCount());
+        res.add(getAvailableCopies());
+        res.add(description);
+        res.add(getAverageRating());
+        res.add(getRatingsCount());
+
+        return res;
     }
 
     @Override

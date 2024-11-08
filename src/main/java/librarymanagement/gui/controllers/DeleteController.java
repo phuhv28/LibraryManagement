@@ -1,59 +1,38 @@
 package librarymanagement.gui.controllers;
 
-
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-
-import java.io.IOException;
-
+import librarymanagement.gui.viewmodels.DeleteDocumentViewModel;
 
 public class DeleteController {
 
     @FXML
-    private AnchorPane DeleteScene;
-    @FXML
-    private Button btHome;
-    @FXML
-    private Button btSetting;
-    @FXML
-    private Button btUser;
-    @FXML
     private Button btDeleteDocument;
+
     @FXML
     private TextField tfDocumentID;
 
+    @FXML
+    private Label lbError;
+
+    private final DeleteDocumentViewModel viewModel = new DeleteDocumentViewModel();
 
     @FXML
     public void initialize() {
-        btHome.setOnAction(event -> loadHome());
-        btSetting.setOnAction(event -> loadSetting());
-        btUser.setOnAction(event -> loadUser());
+        btDeleteDocument.setOnAction(event -> {handleDeleteDocument();});
+        tfDocumentID.textProperty().bindBidirectional(viewModel.IDProperty());
     }
 
-    private void loadScene(String fxmlFile) {
-        try {
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
-            DeleteScene.getChildren().setAll(newPane);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void handleDeleteDocument() {
+        if (viewModel.checkIdDocument()) {
+            lbError.setVisible(false);
+            viewModel.deleteDocument();
+            tfDocumentID.clear();
+        }
+        else {
+            lbError.setVisible(true);
+            tfDocumentID.clear();
         }
     }
-
-    private void loadHome(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("HomeScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="HomeScene.fxml";}
-    private void loadSetting(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="SettingScene.fxml";}
-    private void loadUser(){
-        previousSceneToReturn.previousFxmlFIle1=previousSceneToReturn.previousFxmlFile2;
-        loadScene("UserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2="UserScene.fxml";}
-
 }
 

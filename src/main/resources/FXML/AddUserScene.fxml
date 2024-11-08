@@ -1,100 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="AddUserScene" prefHeight="750.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddUserController">
+<AnchorPane fx:id="AddUserScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddUserController">
     <children>
-        <Rectangle fill="#474242" height="750.0" width="560.0" />
-        <Button fx:id="btHome" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_home.png" />
-                    </image>
-                </ImageView>
-            </graphic></Button>
-        <Button fx:id="btSetting" layoutX="464.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="68.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_setting.png" />
-                    </image>
-                </ImageView>
-            </graphic></Button>
-        <Button fx:id="btUser" layoutX="390.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="88.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
-            <graphic>
-                <ImageView fitHeight="51.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/image_account.png" />
-                    </image>
-                </ImageView>
-            </graphic></Button>
-        <Label layoutX="152.0" layoutY="117.0" style="-fx-font-weight: BOLD;" text="ADD USER/ADMIN" textFill="#f2f2f2" underline="true">
+        <Rectangle fill="#474242" height="670.0" width="630.0" />
+        <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="ADD USER/ADMIN" textFill="#f2f2f2" underline="true">
             <font>
                 <Font size="26.0" />
-            </font></Label>
-      <Label layoutX="87.0" layoutY="208.0" style="-fx-font-weight: BOLD;" text="Select Account Type :" textFill="WHITE">
+            </font>
+        </Label>
+        <Label layoutX="83.0" layoutY="119.0" style="-fx-font-weight: BOLD;" text="Select Account Type :" textFill="WHITE">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Label>
+        <MenuButton fx:id="mbAccount" focusTraversable="false" layoutX="343.0" layoutY="123.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="123.0" text="account">
+            <items>
+                <MenuItem fx:id="mbUser" mnemonicParsing="false" text="User" />
+                <MenuItem fx:id="mbAdmin" mnemonicParsing="false" text="Admin" />
+            </items>
+        </MenuButton>
+        <Label fx:id="lbEnterUserName" layoutX="93.0" layoutY="230.0" style="-fx-font-weight: bold;" text="- Enter UserName :" textFill="WHITE" visible="false">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <Label fx:id="lbEnterEmail" layoutX="93.0" layoutY="268.0" style="-fx-font-weight: bold;" text="- Enter Email :" textFill="WHITE" visible="false">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <Label fx:id="lbEnterFullName" layoutX="94.0" layoutY="391.0" style="-fx-font-weight: bold;" text="- Enter FullName :" textFill="WHITE" visible="false">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <Label fx:id="lbEnterPassword" layoutX="93.0" layoutY="310.0" style="-fx-font-weight: bold;" text="- Enter Password :" textFill="WHITE" visible="false">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <Label fx:id="lbConfirmPassword" layoutX="93.0" layoutY="348.0" style="-fx-font-weight: bold;" text="- Confirm Password :" textFill="WHITE" visible="false">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <PasswordField fx:id="tfConfirmPassword" disable="true" layoutX="318.0" layoutY="349.0" visible="false" />
+        <PasswordField fx:id="tfPassword" disable="true" layoutX="317.0" layoutY="310.0" visible="false" />
+        <TextField fx:id="tfFullName" disable="true" layoutX="318.0" layoutY="388.0" visible="false" />
+        <TextField fx:id="tfEmail" disable="true" layoutX="317.0" layoutY="266.0" visible="false" />
+        <TextField fx:id="tfUserName" disable="true" layoutX="317.0" layoutY="228.0" visible="false" />
+        <Label fx:id="lbSelectFunction" layoutX="83.0" layoutY="162.0" style="-fx-font-weight: bold;" text="Select Function :" textFill="WHITE" visible="false">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Label>
+        <MenuButton fx:id="mbFunction" disable="true" focusTraversable="false" layoutX="343.0" layoutY="166.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="123.0" text="function " visible="false">
+            <items>
+                <MenuItem fx:id="mbCreat" mnemonicParsing="false" text="Creat" />
+                <MenuItem fx:id="mbAdd" mnemonicParsing="false" text="Add" />
+            </items>
+        </MenuButton>
+        <Button fx:id="btAddAccount" disable="true" focusTraversable="false" layoutX="487.0" layoutY="585.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="107.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="ADD" visible="false">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+      <Label fx:id="lbErrorSignUp" layoutX="79.0" layoutY="94.0" style="-fx-font-weight: bold;" text="The account already exists." textFill="#a90101" visible="false">
          <font>
-            <Font size="23.0" />
+            <Font size="14.0" />
          </font>
       </Label>
-      <MenuButton fx:id="mbAccount" layoutX="343.0" layoutY="209.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="123.0" text="account">
-        <items>
-          <MenuItem fx:id="mbUser" mnemonicParsing="false" text="User" />
-          <MenuItem fx:id="mbAdmin" mnemonicParsing="false" text="Admin" />
-        </items>
-      </MenuButton>
-      <Label fx:id="lbEnterUserName" layoutX="93.0" layoutY="300.0" style="-fx-font-weight: bold;" text="- Enter UserName :" textFill="WHITE" visible="false">
+      <Label fx:id="lbErrorAddAdmin" layoutX="79.0" layoutY="94.0" style="-fx-font-weight: bold;" text="This account already has admin status." textFill="#f03a0e" visible="false">
          <font>
-            <Font size="20.0" />
+            <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lbEnterEmail" layoutX="93.0" layoutY="341.0" style="-fx-font-weight: bold;" text="- Enter Email :" textFill="WHITE" visible="false">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbEnterFullName" layoutX="93.0" layoutY="379.0" style="-fx-font-weight: bold;" text="- Enter FullName :" textFill="WHITE" visible="false">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbEnterPassword" layoutX="93.0" layoutY="418.0" style="-fx-font-weight: bold;" text="- Enter Password :" textFill="WHITE" visible="false">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbConfirmPassword" layoutX="93.0" layoutY="456.0" style="-fx-font-weight: bold;" text="- Confirm Password :" textFill="WHITE" visible="false">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <PasswordField fx:id="tfConfirmPassword" layoutX="317.0" layoutY="454.0" visible="false" />
-      <PasswordField fx:id="tfPassword" layoutX="317.0" layoutY="418.0" visible="false" />
-      <TextField fx:id="tfFullName" layoutX="317.0" layoutY="379.0" visible="false" />
-      <TextField fx:id="tfEmail" layoutX="317.0" layoutY="339.0" visible="false" />
-      <TextField fx:id="tfUserName" layoutX="317.0" layoutY="299.0" visible="false" />
-      <Label fx:id="lbSelectFunction" layoutX="88.0" layoutY="245.0" style="-fx-font-weight: bold;" text="Select Function :" textFill="WHITE" visible="false">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <MenuButton fx:id="mbFunction" layoutX="344.0" layoutY="249.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="123.0" text="function " visible="false">
-         <items>
-            <MenuItem fx:id="mbCreat" mnemonicParsing="false" text="Creat" />
-            <MenuItem fx:id="mbAdd" mnemonicParsing="false" text="Add" />
-         </items>
-      </MenuButton>
-      <Button fx:id="btAddAccount" layoutX="368.0" layoutY="663.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="107.0" style="-fx-background-radius: 15;" text="ADD" visible="false">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-
+      <Label fx:id="lbErrorPassword" layoutX="79.0" layoutY="94.0" style="-fx-font-weight: bold;" text="The passwords do not match." textFill="#a90101" visible="false" />
 
 
     </children>

@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import librarymanagement.gui.viewmodels.RegisterViewModel;
 
@@ -29,6 +30,12 @@ public class RegisterController implements Initializable {
 
     @FXML
     private Button btRegister;
+
+    @FXML
+    private TextField tfEmail;
+
+    @FXML
+    private TextField tfFullName;
 
     @FXML
     private Hyperlink lkLogin;
@@ -61,6 +68,24 @@ public class RegisterController implements Initializable {
         pfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
         pfConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
         errorLabel.textProperty().bindBidirectional(viewModel.errorLabelProperty());
+
+        tfUsername.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                register();
+            }
+        });
+        pfPassword.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                register();
+            }
+        });
+        pfConfirmPassword.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                register();
+            }
+        });
+        tfEmail.textProperty().bindBidirectional(viewModel.emailPropertyProperty());
+        tfFullName.textProperty().bindBidirectional(viewModel.fullNamePropertyProperty());
     }
 
     @FXML

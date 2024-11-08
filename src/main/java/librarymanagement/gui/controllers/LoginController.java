@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import librarymanagement.gui.viewmodels.LoginViewModel;
 
@@ -50,6 +51,18 @@ public class LoginController implements Initializable {
         tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
         pfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
         errorLabel.textProperty().bindBidirectional(viewModel.errorLabelTextProperty());
+
+        tfUsername.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleLogin();
+            }
+        });
+
+        pfPassword.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleLogin();
+            }
+        });
     }
 
     @FXML

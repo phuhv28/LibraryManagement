@@ -8,7 +8,7 @@ import java.util.List;
 public class SQLiteInstance {
     private static final String CONNECTION_URL = "jdbc:sqlite:library.db";
     private static SQLiteInstance instance = null;
-    private Connection connection;
+    protected Connection connection;
 
     public SQLiteInstance() {
         try {
@@ -26,10 +26,15 @@ public class SQLiteInstance {
         return instance;
     }
 
+    @FunctionalInterface
+    interface PreparedStatementSetter {
+        void setValues(PreparedStatement stmt) throws SQLException;
+    }
+
     /**
      * Create table
      * @param tableName name of table
-     * @param columns columns of tablw
+     * @param columns columns of table
      */
     public void createTable(String tableName, String... columns) {
         try {
@@ -95,7 +100,7 @@ public class SQLiteInstance {
     }
 
     /**
-     * function to add row to table in SQLite)
+     * function to add row to table in SQLite
      * @param tableName table to insert
      * @param values table properties
      */
@@ -156,11 +161,13 @@ public class SQLiteInstance {
     public List<List<Object>> findNotCondition(String tableName, String... columns) {
         List<List<Object>> values = new ArrayList<>();
         List<String> columnsList = Arrays.asList(columns);
-        StringBuilder sql = new StringBuilder("SELECT " + columnsList.getFirst());
+
+        StringBuilder sql = new StringBuilder("SELECT ").append(columnsList.get(0));
         for (int i = 1; i < columns.length; i++) {
             sql.append(", ").append(columns[i]);
         }
         sql.append(" FROM ").append(tableName);
+
         try (PreparedStatement stmt = connection.prepareStatement(sql.toString())) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -176,9 +183,11 @@ public class SQLiteInstance {
         return values;
     }
 
+
     /**
      * find function for important query
      * @param sql query sql
+     * @param params columns of result
      * @param columns columns of result
      * @return list of results after query
      */
@@ -202,6 +211,16 @@ public class SQLiteInstance {
         }
         return values;
     }
+
+    public void executeUpdate(String sql, PreparedStatementSetter setter) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            setter.setValues(stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ResultSet query(String sql, String... params) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql))
         {

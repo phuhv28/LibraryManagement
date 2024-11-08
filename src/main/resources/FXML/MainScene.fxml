@@ -11,43 +11,43 @@
         <Rectangle fill="#474242" height="750.0" width="1000.0" />
         <HBox prefHeight="750.0" prefWidth="1000.0">
             <children>
-                <AnchorPane prefHeight="750.0" prefWidth="440.0">
+                <AnchorPane prefHeight="750.0" prefWidth="370.0">
                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#791a13" height="750.0" width="440.0" />
-                        <Button fx:id="btLogOut" layoutX="166.0" layoutY="662.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="110.0" style="-fx-font-weight: bold; -fx-background-radius: 15;" text="Log Out">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Button>
-                        <TextField fx:id="tfSearch" layoutX="24.0" layoutY="214.0" prefHeight="50.0" prefWidth="391.0" promptText="Search " style="-fx-background-radius: 15; -fx-font-weight: BOLD;">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#791a13" height="750.0" width="370.0" />
+                        <TextField fx:id="tfSearch" layoutX="15.0" layoutY="214.0" prefHeight="40.0" prefWidth="338.0" promptText="Search " style="-fx-background-radius: 15; -fx-font-weight: BOLD;">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </TextField>
-                        <Label layoutX="17.0" layoutY="28.0" prefHeight="167.0" prefWidth="401.0" style="-fx-font-weight: bold;" text="&quot;Welcome to the E-Library! Discover endless knowledge and enjoy your reading journey with us!&quot;" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <Button fx:id="btLogOut" layoutX="125.0" layoutY="655.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="125.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="Log Out" textFill="#030303" textOverrun="CLIP">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="18.0" />
+                            </font>
+                        </Button>
+                        <Label layoutX="17.0" layoutY="33.0" prefHeight="157.0" prefWidth="329.0" style="-fx-font-weight: bold;" text="&quot;Welcome to the E-Library! Discover endless knowledge and enjoy your reading journey with us!&quot;" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                            <font>
+                                <Font size="20.0" />
                             </font>
                         </Label>
-                        <ScrollPane hbarPolicy="NEVER" layoutX="6.0" layoutY="356.0" prefHeight="274.0" prefWidth="430.0" style="-fx-background-color: #791a13;">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="9.0" layoutY="367.0" prefHeight="257.0" prefWidth="356.0" style="-fx-background-color: #791a13;">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="393.0" prefWidth="429.0" style="-fx-background-color: #791a13;">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="363.0" style="-fx-background-color: #791a13;">
                                     <children>
-                                        <Button fx:id="btSearch" layoutX="20.0" layoutY="5.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="110.0" style="-fx-background-color: #791a13;">
+                                        <Button fx:id="btSearch" layoutX="7.0" layoutY="5.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="110.0" style="-fx-background-color: #791a13;">
                                             <contentDisplay>TOP</contentDisplay>
                                             <textFill>WHITE</textFill>
                                             <text>Search Document</text>
                                             <graphic>
-                                                <ImageView fitHeight="85.0" fitWidth="102.0">
+                                                <ImageView fitHeight="69.0" fitWidth="85.0">
                                                     <image>
                                                         <Image url="@../images/image_search.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btBorrow" layoutX="150.0" layoutY="2.0" mnemonicParsing="false" prefHeight="131.0" prefWidth="126.0" style="-fx-background-color: #791a13;">
+                                        <Button fx:id="btBorrow" layoutX="123.0" layoutY="4.0" mnemonicParsing="false" prefHeight="118.0" prefWidth="119.0" style="-fx-background-color: #791a13;">
                                             <graphic>
-                                                <ImageView fitHeight="91.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="80.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@../images/image_borrow.png" />
                                                     </image>
@@ -57,9 +57,9 @@
                                             <textFill>WHITE</textFill>
                                             <text>Borrow Documents</text>
                                         </Button>
-                                        <Button fx:id="btReturn" layoutX="284.0" layoutY="7.0" mnemonicParsing="false" prefHeight="104.0" prefWidth="110.0" style="-fx-background-color: #791a13;">
+                                        <Button fx:id="btReturn" layoutX="246.0" layoutY="10.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="90.0" style="-fx-background-color: #791a13;">
                                             <graphic>
-                                                <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="76.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@../images/image_return.png" />
                                                     </image>
@@ -69,9 +69,9 @@
                                             <textFill>WHITE</textFill>
                                             <text>Return</text>
                                         </Button>
-                                        <Button fx:id="btFix" layoutX="18.0" layoutY="137.0" mnemonicParsing="false" prefHeight="123.0" prefWidth="119.0" style="-fx-background-color: #791a13;">
+                                        <Button fx:id="btFix" layoutX="2.0" layoutY="132.0" mnemonicParsing="false" prefHeight="123.0" prefWidth="120.0" style="-fx-background-color: #791a13;">
                                             <graphic>
-                                                <ImageView fitHeight="95.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="82.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@../images/image_edit.png" />
                                                     </image>
@@ -82,9 +82,9 @@
                                             <text>Edit Document</text>
                                         </Button>
 
-                                        <Button fx:id="btAdd" layoutX="286.0" layoutY="137.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="103.0" style="-fx-background-color: #791a13;">
+                                        <Button fx:id="btAdd" layoutX="240.0" layoutY="136.0" mnemonicParsing="false" prefHeight="118.0" prefWidth="103.0" style="-fx-background-color: #791a13;">
                                             <graphic>
-                                                <ImageView fitHeight="89.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="76.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@../images/image_add.png" />
                                                     </image>
@@ -94,9 +94,9 @@
                                             <textFill>WHITE</textFill>
                                             <text>Add Document</text>
                                         </Button>
-                                        <Button fx:id="btDelete" layoutX="154.0" layoutY="142.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="110.0" style="-fx-background-color: #791a13;">
+                                        <Button fx:id="btDelete" layoutX="126.0" layoutY="136.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="110.0" style="-fx-background-color: #791a13;">
                                             <graphic>
-                                                <ImageView fitHeight="92.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="82.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@../images/image_delete.png" />
                                                     </image>
@@ -106,9 +106,9 @@
                                             <textFill>WHITE</textFill>
                                             <text>Delete Document</text>
                                         </Button>
-                                        <Button fx:id="btAddUser" layoutX="31.0" layoutY="272.0" mnemonicParsing="false" prefHeight="107.0" prefWidth="88.0" style="-fx-background-color: #791a13;">
+                                        <Button fx:id="btAddUser" layoutX="20.0" layoutY="267.0" mnemonicParsing="false" prefHeight="107.0" prefWidth="88.0" style="-fx-background-color: #791a13;">
                                             <graphic>
-                                                <ImageView fitHeight="94.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="75.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@../images/image_addUser.png" />
                                                     </image>
@@ -122,14 +122,47 @@
                                 </AnchorPane>
                             </content>
                         </ScrollPane>
-                        <Label layoutX="25.0" layoutY="325.0" style="-fx-font-weight: bold;" text="Function (7)" textFill="WHITE">
+                        <Label layoutX="17.0" layoutY="323.0" style="-fx-font-weight: bold;" text="Function (7)" textFill="WHITE">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Label>
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="rightMainScene" layoutX="440.0" prefHeight="750.0" prefWidth="560.0" />
+                <VBox prefHeight="750.0" prefWidth="630.0">
+                    <children>
+                        <AnchorPane prefHeight="80.0" prefWidth="630.0">
+                            <Button fx:id="btHome" layoutX="2.0" layoutY="5.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
+                                <graphic>
+                                    <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../images/image_home.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button fx:id="btSetting" layoutX="533.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="68.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
+                                <graphic>
+                                    <ImageView fitHeight="62.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../images/image_setting.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button fx:id="btUser" layoutX="454.0" layoutY="2.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="88.0" style="-fx-background-color: #474242;" text=" " textFill="#474242">
+                                <graphic>
+                                    <ImageView fitHeight="51.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../images/image_account.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                        </AnchorPane>
+                        <AnchorPane fx:id="rightMainScene" prefHeight="670.0" prefWidth="630.0" />
+                    </children>
+                </VBox>
             </children>
         </HBox>
     </children>

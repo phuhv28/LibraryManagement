@@ -1,9 +1,7 @@
 package librarymanagement.UserAuth;
 
-import librarymanagement.data.Constant;
 import librarymanagement.data.SQLiteInstance;
 
-import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -11,16 +9,11 @@ import java.util.List;
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
 
-    private Connection connection;
-
-    private AccountService() {}
+    private AccountService() {
+    }
 
     public static AccountService getInstance() {
         return INSTANCE;
-    }
-
-    public void closeConnection() {
-        sqLiteInstance.close();
     }
 
     private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
@@ -32,7 +25,7 @@ public class AccountService {
         List<List<Object>> result = sqLiteInstance.find("User", "username", username, "username", "password");
         if (result.isEmpty()) {
             return LoginResult.USERNAME_NOT_FOUND;
-        } else if (result.getFirst().get(1).equals(password)){
+        } else if (result.getFirst().get(1).equals(password)) {
             return LoginResult.SUCCESS;
         }
 
@@ -51,14 +44,15 @@ public class AccountService {
 
     /**
      * Generate new user ID based on the maximum user ID in the database.
+     *
      * @param tableName name of table to generate new ID
-     * return new ID
+     *                  return new ID
      */
     private String generateNewUserId(String tableName) {
         String newId = "";
         if (tableName.equals("User")) {
             List<List<Object>> result = sqLiteInstance.findNotCondition("User", "Max(userId)");
-            if (result.isEmpty()) {
+            if (result.get(0).get(0) == null) {
                 newId = "U101";
             } else {
                 String temp = result.get(0).get(0).toString().substring(1);
@@ -66,7 +60,7 @@ public class AccountService {
             }
         } else if (tableName.equals("Admin")) {
             List<List<Object>> result = sqLiteInstance.findNotCondition("Admin", "Max(adminId)");
-            if (result.isEmpty()) {
+            if (result.get(0).get(0) == null) {
                 newId = "A101";
             } else {
                 String temp = result.get(0).get(0).toString().substring(1);
@@ -79,7 +73,7 @@ public class AccountService {
     /**
      * Add a user.
      */
-    public RegistrationResult addUser(String username, String password, String confirmPassword) {
+    public RegistrationResult addUser(String username, String password, String confirmPassword , String fullname , String email) {
         if (!password.equals(confirmPassword)) {
             return RegistrationResult.PASSWORD_NOT_MATCH;
         }
@@ -95,7 +89,7 @@ public class AccountService {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         ///Import new user to database
-        sqLiteInstance.insertRow("User", userId, username, password, null, today.format(dateFormatter), null);
+        sqLiteInstance.insertRow("User", userId, username, password, dateFormatter.format(today), null, null);
 
         return RegistrationResult.SUCCESS;
     }
@@ -115,7 +109,7 @@ public class AccountService {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         ///Import new admin to database
-        sqLiteInstance.insertRow("Admin", newAdminId, username, password, null, today.format(dateFormatter), null);
+        sqLiteInstance.insertRow("Admin", newAdminId, username, null, null, password, today.format(dateFormatter));
 
         return RegistrationResult.SUCCESS;
     }
