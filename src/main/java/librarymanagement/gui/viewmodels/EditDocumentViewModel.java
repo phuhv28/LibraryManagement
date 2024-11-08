@@ -17,13 +17,49 @@ public class EditDocumentViewModel {
         documentIDProperty.addListener((observable, oldValue, newValue) -> {
             selectedDocumentProperty.set(DocumentManagement.getInstance().searchBookByID(documentIDProperty.get()));
             if (selectedAttributeProperty.get() != null) {
-                updateEditedFieldProperty(selectedAttributeProperty.get());
+                loadEditedFieldProperty(selectedAttributeProperty.get());
             }
         });
 
         selectedAttributeProperty().addListener((observable, oldValue, newValue) -> {
-            updateEditedFieldProperty(newValue);
+            loadEditedFieldProperty(newValue);
         });
+
+        editedFieldProperty.addListener((observable, oldValue, newValue) -> {
+            updateEditedFieldProperty();
+        });
+    }
+
+    private void updateEditedFieldProperty() {
+        switch (selectedAttributeProperty.get()) {
+            case "ISBN":
+                selectedDocumentProperty.get().setISBN(editedFieldProperty.get());
+                break;
+            case "Title":
+                selectedDocumentProperty.get().setTitle(editedFieldProperty.get());
+                break;
+            case "Publisher":
+                selectedDocumentProperty.get().setPublisher(editedFieldProperty.get());
+                break;
+            case "Author":
+                selectedDocumentProperty.get().setAuthor(editedFieldProperty.get());
+                break;
+            case "Category":
+                selectedDocumentProperty.get().setCategories(editedFieldProperty.get());
+                break;
+            case "Publication Date":
+                selectedDocumentProperty.get().setPublishedDate(editedFieldProperty.get());
+                break;
+            case "Description":
+                selectedDocumentProperty.get().setDescription(editedFieldProperty.get());
+                break;
+            case "Available copies":
+                selectedDocumentProperty.get().setAvailableCopies(Integer.parseInt(editedFieldProperty.get()));
+                break;
+            case "Page count":
+                selectedDocumentProperty.get().setPageCount(Integer.parseInt(editedFieldProperty.get()));
+                break;
+        }
     }
 
     public StringProperty documentIDProperty() {
@@ -39,10 +75,11 @@ public class EditDocumentViewModel {
     }
 
     public void save() {
+
         DocumentManagement.getInstance().editBook(selectedDocumentProperty.get());
     }
 
-    private void updateEditedFieldProperty(String selectedAttribute) {
+    private void loadEditedFieldProperty(String selectedAttribute) {
         switch (selectedAttribute) {
             case "ISBN":
                 editedFieldProperty.set(selectedDocumentProperty.get().getISBN());
