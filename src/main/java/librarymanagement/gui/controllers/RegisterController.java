@@ -84,8 +84,8 @@ public class RegisterController implements Initializable {
                 register();
             }
         });
-        tfEmail.textProperty().bindBidirectional(viewModel.emailPropertyProperty());
-        tfFullName.textProperty().bindBidirectional(viewModel.fullNamePropertyProperty());
+        tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
+        tfFullName.textProperty().bindBidirectional(viewModel.fullnameProperty());
     }
 
     @FXML

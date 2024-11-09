@@ -2,6 +2,7 @@ package librarymanagement.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import librarymanagement.gui.viewmodels.DeleteDocumentViewModel;
 
 public class DeleteController {
@@ -21,6 +22,11 @@ public class DeleteController {
     public void initialize() {
         btDeleteDocument.setOnAction(event -> {handleDeleteDocument();});
         tfDocumentID.textProperty().bindBidirectional(viewModel.IDProperty());
+        tfDocumentID.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.TAB && event.getCode() == KeyCode.ENTER) {
+                btDeleteDocument.fire();
+            }
+        });
     }
 
     private void handleDeleteDocument() {

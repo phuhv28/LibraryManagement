@@ -14,22 +14,17 @@
                 <AnchorPane prefHeight="750.0" prefWidth="370.0">
                     <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#791a13" height="750.0" width="370.0" />
-                        <TextField fx:id="tfSearch" layoutX="15.0" layoutY="214.0" prefHeight="40.0" prefWidth="338.0" promptText="Search " style="-fx-background-radius: 15; -fx-font-weight: BOLD;">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </TextField>
-                        <Button fx:id="btLogOut" layoutX="125.0" layoutY="655.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="125.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="Log Out" textFill="#030303" textOverrun="CLIP">
+                        <Button fx:id="btLogOut" layoutX="125.0" layoutY="645.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="125.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="Log Out" textFill="#030303" textOverrun="CLIP">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Button>
-                        <Label layoutX="17.0" layoutY="33.0" prefHeight="157.0" prefWidth="329.0" style="-fx-font-weight: bold;" text="&quot;Welcome to the E-Library! Discover endless knowledge and enjoy your reading journey with us!&quot;" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <Label layoutX="22.0" layoutY="29.0" prefHeight="172.0" prefWidth="330.0" style="-fx-font-weight: bold;" text="&quot;Welcome to the E-Library! Discover endless knowledge and enjoy your reading journey with us!&quot;" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                             <font>
                                 <Font size="20.0" />
                             </font>
                         </Label>
-                        <ScrollPane hbarPolicy="NEVER" layoutX="9.0" layoutY="367.0" prefHeight="257.0" prefWidth="356.0" style="-fx-background-color: #791a13;">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="9.0" layoutY="346.0" prefHeight="257.0" prefWidth="356.0" style="-fx-background-color: #791a13;">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="363.0" style="-fx-background-color: #791a13;">
                                     <children>
@@ -45,7 +40,7 @@
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btBorrow" layoutX="123.0" layoutY="4.0" mnemonicParsing="false" prefHeight="118.0" prefWidth="119.0" style="-fx-background-color: #791a13;">
+                                        <Button fx:id="btMyDocument" layoutX="123.0" layoutY="4.0" mnemonicParsing="false" prefHeight="118.0" prefWidth="119.0" style="-fx-background-color: #791a13;">
                                             <graphic>
                                                 <ImageView fitHeight="80.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
@@ -55,7 +50,7 @@
                                             </graphic>
                                             <contentDisplay>TOP</contentDisplay>
                                             <textFill>WHITE</textFill>
-                                            <text>Borrow Documents</text>
+                                            <text>My Document</text>
                                         </Button>
                                         <Button fx:id="btReturn" layoutX="246.0" layoutY="10.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="90.0" style="-fx-background-color: #791a13;">
                                             <graphic>
@@ -122,7 +117,7 @@
                                 </AnchorPane>
                             </content>
                         </ScrollPane>
-                        <Label layoutX="17.0" layoutY="323.0" style="-fx-font-weight: bold;" text="Function (7)" textFill="WHITE">
+                        <Label layoutX="17.0" layoutY="308.0" style="-fx-font-weight: bold;" text="Function (7)" textFill="WHITE">
                             <font>
                                 <Font size="18.0" />
                             </font>

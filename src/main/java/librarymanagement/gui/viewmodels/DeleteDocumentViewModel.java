@@ -20,6 +20,6 @@ public class DeleteDocumentViewModel {
     }
 
     public boolean checkIdDocument(){
-        return true;
+        return DocumentManagement.getInstance().checkIfHasBookId(getID());
     }
 }

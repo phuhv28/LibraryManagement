@@ -5,63 +5,63 @@ import librarymanagement.UserAuth.*;
 import javafx.beans.property.SimpleStringProperty;
 
 public class AddUserViewModel {
-    private StringProperty UserNameProperty = new SimpleStringProperty();
-    private StringProperty PasswordProperty = new SimpleStringProperty();
-    private StringProperty EmailProperty = new SimpleStringProperty();
-    private StringProperty FullNameProperty = new SimpleStringProperty();
-    private StringProperty ConfirmPasswordProperty = new SimpleStringProperty();
+    private StringProperty usernameProperty = new SimpleStringProperty();
+    private StringProperty passwordProperty = new SimpleStringProperty();
+    private StringProperty emailProperty = new SimpleStringProperty();
+    private StringProperty fullnameProperty = new SimpleStringProperty();
+    private StringProperty confirmPasswordProperty = new SimpleStringProperty();
 
-    public String getUserName() {
-        return UserNameProperty.get();
+    public String getUsername() {
+        return usernameProperty.get();
     }
 
-    public StringProperty userNamePropertyProperty() {
-        return UserNameProperty;
+    public StringProperty usernameProperty() {
+        return usernameProperty;
     }
 
     public String getPassword() {
-        return PasswordProperty.get();
+        return passwordProperty.get();
     }
 
-    public StringProperty passwordPropertyProperty() {
-        return PasswordProperty;
+    public StringProperty passwordProperty() {
+        return passwordProperty;
     }
 
     public String getEmail() {
-        return EmailProperty.get();
+        return emailProperty.get();
     }
 
-    public StringProperty emailPropertyProperty() {
-        return EmailProperty;
+    public StringProperty emailProperty() {
+        return emailProperty;
     }
 
-    public String getFullName() {
-        return FullNameProperty.get();
+    public String getFullname() {
+        return fullnameProperty.get();
     }
 
-    public StringProperty fullNamePropertyProperty() {
-        return FullNameProperty;
+    public StringProperty fullnameProperty() {
+        return fullnameProperty;
     }
 
     public String getConfirmPassword() {
-        return ConfirmPasswordProperty.get();
+        return confirmPasswordProperty.get();
     }
 
-    public StringProperty confirmPasswordPropertyProperty() {
-        return ConfirmPasswordProperty;
+    public StringProperty confirmPasswordProperty() {
+        return confirmPasswordProperty;
     }
 
     public void AddAccountUser() {
-         AccountService.getInstance().addUser(getUserName() , getPassword() , getConfirmPassword() ,getFullName() ,getEmail() );
+        AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullname(), getEmail());
     }
 
     public void CreatAccountAdmin() {
-        AccountService.getInstance().addUser(getUserName() , getPassword() , getConfirmPassword() ,getFullName() ,getEmail() );
-        AccountService.getInstance().addAdmin(getUserName() , getPassword());
+        AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullname(), getEmail());
+        AccountService.getInstance().addAdmin(getUsername(), getPassword());
     }
 
-    public void AddAccountAdmin() {
-        AccountService.getInstance().addAdmin(getUserName() , getPassword());
+    public void AddAccountAdminFromUser() {
+        AccountService.getInstance().addAdmin(getUsername(), getPassword());
     }
 
     public boolean checkIfAccountExists() {

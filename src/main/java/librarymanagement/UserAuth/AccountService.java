@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class AccountService {
+public class  AccountService {
     private static final AccountService INSTANCE = new AccountService();
     private static Account currentAccount = null;
 

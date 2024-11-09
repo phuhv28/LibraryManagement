@@ -12,7 +12,7 @@ public class MainSceneController {
 
 
     @FXML
-    private AnchorPane mainScene;
+    private AnchorPane MainScene;
 
     @FXML
     private AnchorPane rightMainScene;
@@ -21,7 +21,7 @@ public class MainSceneController {
     private Button btSearch;
 
     @FXML
-    private Button btBorrow;
+    private Button btMyDocument;
 
     @FXML
     private Button btReturn;
@@ -34,9 +34,6 @@ public class MainSceneController {
 
     @FXML
     private Button btAdd;
-
-    @FXML
-    private TextField tfSearch;
 
     @FXML
     private Button btLogOut;
@@ -56,12 +53,11 @@ public class MainSceneController {
     @FXML
     public void initialize() {
         btSearch.setOnAction(event -> loadSceneSearch());
-        btBorrow.setOnAction(event -> loadSceneBorrowBook());
+        btMyDocument.setOnAction(event -> loadSceneMyDocument());
         btReturn.setOnAction(event -> loadSceneReturn());
         btFix.setOnAction(event -> loadSceneFix());
         btDelete.setOnAction(event -> loadSceneDelete());
         btAdd.setOnAction(event -> loadSceneAdd());
-        tfSearch.setOnAction(event -> searchInformation());
         btLogOut.setOnAction(actionEvent -> handleLogOut());
         btAddUser.setOnAction(actionEvent -> loadSceneAddAccount());
         btHome.setOnAction(event -> loadHome());
@@ -103,10 +99,10 @@ public class MainSceneController {
         previousSceneToReturn.previousFxmlFile2 = "EditDocument.fxml";
     }
 
-    private void loadSceneBorrowBook() {
+    private void loadSceneMyDocument() {
         previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
-        loadScene("ListBorrowBookScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "ListBorrowBookScene.fxml";
+        loadScene("MyDocumentScene.fxml");
+        previousSceneToReturn.previousFxmlFile2 = "MyDocumentScene.fxml";
     }
 
     private void loadSceneReturn() {
@@ -145,10 +141,6 @@ public class MainSceneController {
         previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
         loadScene("UserInfo.fxml");
         previousSceneToReturn.previousFxmlFile2 = "UserInfo.fxml";
-    }
-
-    private void searchInformation() {
-
     }
 
 }

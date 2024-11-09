@@ -11,8 +11,8 @@ public class RegisterViewModel {
     private final StringProperty passwordProperty = new SimpleStringProperty();
     private final StringProperty confirmPasswordProperty = new SimpleStringProperty();
     private final StringProperty errorLabelProperty = new SimpleStringProperty();
-    private final StringProperty EmailProperty = new SimpleStringProperty();
-    private final StringProperty FullNameProperty = new SimpleStringProperty();
+    private final StringProperty emailProperty = new SimpleStringProperty();
+    private final StringProperty fullnameProperty = new SimpleStringProperty();
 
     public boolean handleRegister() {
         RegistrationResult registrationResult = AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword() , getFullName() ,getEmail());
@@ -32,12 +32,12 @@ public class RegisterViewModel {
         return confirmPasswordProperty;
     }
 
-    public StringProperty emailPropertyProperty() {
-        return EmailProperty;
+    public StringProperty emailProperty() {
+        return emailProperty;
     }
 
-    public StringProperty fullNamePropertyProperty() {
-        return FullNameProperty;
+    public StringProperty fullnameProperty() {
+        return fullnameProperty;
     }
 
 
@@ -58,11 +58,11 @@ public class RegisterViewModel {
     }
 
     public String getEmail() {
-        return EmailProperty.get();
+        return emailProperty.get();
     }
 
     public String getFullName() {
-        return FullNameProperty.get();
+        return fullnameProperty.get();
     }
 
 }
