@@ -23,6 +23,7 @@ public class AppStart extends Application {
         primaryStage.setMaximized(false);
         primaryStage.setResizable(true);
         primaryStage.show();
+        primaryStage.centerOnScreen();
     }
 
     public static void main(String[] args) {

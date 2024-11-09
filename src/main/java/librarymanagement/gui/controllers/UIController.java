@@ -20,6 +20,7 @@ public class UIController {
 
     public static void showScene(Scene scene) {
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
     }
 
     public static void setTitle(String title) {
@@ -33,6 +34,7 @@ public class UIController {
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
             primaryStage.setScene(scene);
+            primaryStage.centerOnScreen();
         } catch (IOException e) {
             e.printStackTrace();
         }

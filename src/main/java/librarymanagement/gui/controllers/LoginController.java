@@ -30,16 +30,13 @@ public class LoginController implements Initializable {
 
     private final LoginViewModel viewModel = new LoginViewModel();
 
-    private static LoginController controller;
-
     public static LoginController getInstance() {
-        if (controller == null) {
-            FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/FXML/Login.fxml"));
-            try {
-                controller = loader.getController();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        LoginController controller = null;
+        FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/FXML/Login.fxml"));
+        try {
+            controller = loader.getController();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return controller;
