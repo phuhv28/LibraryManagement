@@ -51,16 +51,16 @@ public class AddUserViewModel {
         return confirmPasswordProperty;
     }
 
-    public void AddAccountUser() {
+    public void addUserAccount() {
         AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullname(), getEmail());
     }
 
-    public void CreatAccountAdmin() {
+    public void createAdminAccount() {
         AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullname(), getEmail());
         AccountService.getInstance().addAdmin(getUsername(), getPassword());
     }
 
-    public void AddAccountAdminFromUser() {
+    public void setAsAdmin() {
         AccountService.getInstance().addAdmin(getUsername(), getPassword());
     }
 

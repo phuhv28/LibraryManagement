@@ -67,9 +67,20 @@ public class RegisterController implements Initializable {
         tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
         pfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
         pfConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
+        tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
+        tfFullName.textProperty().bindBidirectional(viewModel.fullnameProperty());
         errorLabel.textProperty().bindBidirectional(viewModel.errorLabelProperty());
-
         tfUsername.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                register();
+            }
+        });
+        tfEmail.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                register();
+            }
+        });
+        tfFullName.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 register();
             }
@@ -84,8 +95,6 @@ public class RegisterController implements Initializable {
                 register();
             }
         });
-        tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
-        tfFullName.textProperty().bindBidirectional(viewModel.fullnameProperty());
     }
 
     @FXML

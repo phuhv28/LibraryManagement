@@ -23,8 +23,8 @@ public class DeleteController {
         btDeleteDocument.setOnAction(event -> {handleDeleteDocument();});
         tfDocumentID.textProperty().bindBidirectional(viewModel.IDProperty());
         tfDocumentID.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.TAB && event.getCode() == KeyCode.ENTER) {
-                btDeleteDocument.fire();
+            if(event.getCode() == KeyCode.ENTER) {
+                handleDeleteDocument();
             }
         });
     }
