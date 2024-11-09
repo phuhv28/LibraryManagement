@@ -5,10 +5,8 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.converter.NumberStringConverter;
 import librarymanagement.gui.viewmodels.AddDocumentViewModel;
-
-import java.io.IOException;
-import java.util.Date;
 
 
 public class AddDocumentController {
@@ -63,12 +61,16 @@ public class AddDocumentController {
         tfCategory.textProperty().bindBidirectional(viewModel.categoryProperty());
         dpPublicationDate.valueProperty().bindBidirectional(viewModel.publicationDateProperty());
         tfDescription.textProperty().bindBidirectional(viewModel.descriptionProperty());
-        tfAvailableCopies.textProperty().bind(Bindings.createStringBinding(
-                () -> Integer.toString(viewModel.availableCopiesProperty().get()), viewModel.availableCopiesProperty()
-        ));
-        tfPageCount.textProperty().bind(Bindings.createStringBinding(
-                () -> Integer.toString(viewModel.pageCountProperty().get()), viewModel.pageCountProperty()
-        ));
+        Bindings.bindBidirectional(
+                tfAvailableCopies.textProperty(),
+                viewModel.availableCopiesProperty(),
+                new NumberStringConverter()
+        );
+        Bindings.bindBidirectional(
+                tfPageCount.textProperty(),
+                viewModel.pageCountProperty(),
+                new NumberStringConverter()
+        );
     }
 
     private void handleAddDocument() {

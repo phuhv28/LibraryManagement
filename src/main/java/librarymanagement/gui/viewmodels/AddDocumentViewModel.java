@@ -5,15 +5,15 @@ import java.time.LocalDate;
 import librarymanagement.data.*;
 
 public class AddDocumentViewModel {
-    private StringProperty ISBNProperty = new SimpleStringProperty();
-    private StringProperty titleProperty = new SimpleStringProperty();
-    private StringProperty publisherProperty = new SimpleStringProperty();
-    private StringProperty authorProperty = new SimpleStringProperty();
-    private StringProperty categoryProperty = new SimpleStringProperty();
-    private ObjectProperty<LocalDate> publicationDateProperty = new SimpleObjectProperty<>();
-    private StringProperty descriptionProperty = new SimpleStringProperty();
-    private IntegerProperty availableCopiesProperty = new SimpleIntegerProperty();
-    private IntegerProperty pageCountProperty = new SimpleIntegerProperty();
+    private final StringProperty ISBNProperty = new SimpleStringProperty();
+    private final StringProperty titleProperty = new SimpleStringProperty();
+    private final StringProperty publisherProperty = new SimpleStringProperty();
+    private final StringProperty authorProperty = new SimpleStringProperty();
+    private final StringProperty categoryProperty = new SimpleStringProperty();
+    private final ObjectProperty<LocalDate> publicationDateProperty = new SimpleObjectProperty<>();
+    private final StringProperty descriptionProperty = new SimpleStringProperty();
+    private final IntegerProperty availableCopiesProperty = new SimpleIntegerProperty();
+    private final IntegerProperty pageCountProperty = new SimpleIntegerProperty();
 
     public StringProperty ISBNProperty() {
         return ISBNProperty;
