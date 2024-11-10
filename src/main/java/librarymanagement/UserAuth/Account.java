@@ -5,12 +5,26 @@ public class Account {
     private String password;
     private String fullname;
     private String email;
+    private String regDate;
     private AccountType accountType;
 
     public Account(String username, String password, AccountType accountType) {
         this.username = username;
         this.password = password;
         this.accountType = accountType;
+    }
+
+    public Account(String username, String password, String fullname, String email, String regDate, AccountType accountType) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.email = email;
+        this.regDate = regDate;
+        this.accountType = accountType;
+    }
+
+    public Account() {
+
     }
 
     public String getUsername() {

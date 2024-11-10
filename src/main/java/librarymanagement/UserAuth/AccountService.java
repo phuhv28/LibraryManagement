@@ -8,6 +8,7 @@ import java.util.List;
 
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
+    public static Account currentAccount = new Account();
 
     private AccountService() {
     }
@@ -18,6 +19,14 @@ public class AccountService {
 
     private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
 
+    public Account getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public void setCurrentAccount(Account currentAccount) {
+        AccountService.currentAccount = currentAccount;
+    }
+
     /**
      * Verify user account.
      */
@@ -26,6 +35,13 @@ public class AccountService {
         if (result.isEmpty()) {
             return LoginResult.USERNAME_NOT_FOUND;
         } else if (result.getFirst().get(1).equals(password)) {
+            List<List<Object>> account = sqLiteInstance.find("User", "username", username, "username", "password", "fullName", "email", "regDate");
+            String currentFullName = (String) account.get(0).get(2);
+            String currentEmail = (String) account.get(0).get(3);
+            String currentRegDate = (String) account.get(0).get(4);
+            List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "*");
+            AccountType currentAccountType = (!list.isEmpty()) ? AccountType.ADMIN : AccountType.USER;
+            AccountService.currentAccount = new Account(username, password, currentFullName, currentEmail, currentRegDate, currentAccountType);
             return LoginResult.SUCCESS;
         }
 
@@ -44,9 +60,8 @@ public class AccountService {
 
     /**
      * Generate new user ID based on the maximum user ID in the database.
-     *
      * @param tableName name of table to generate new ID
-     *                  return new ID
+     * return new ID
      */
     private String generateNewUserId(String tableName) {
         String newId = "";
@@ -73,7 +88,7 @@ public class AccountService {
     /**
      * Add a user.
      */
-    public RegistrationResult addUser(String username, String password, String confirmPassword , String fullname , String email) {
+    public RegistrationResult addUser(String username, String password, String confirmPassword, String fullName, String email) {
         if (!password.equals(confirmPassword)) {
             return RegistrationResult.PASSWORD_NOT_MATCH;
         }
@@ -89,7 +104,7 @@ public class AccountService {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         ///Import new user to database
-        sqLiteInstance.insertRow("User", userId, username, password, dateFormatter.format(today), null, null);
+        sqLiteInstance.insertRow("User", userId, username, password, dateFormatter.format(today), fullName, email);
 
         return RegistrationResult.SUCCESS;
     }
@@ -112,5 +127,23 @@ public class AccountService {
         sqLiteInstance.insertRow("Admin", newAdminId, username, null, null, password, today.format(dateFormatter));
 
         return RegistrationResult.SUCCESS;
+    }
+
+    /**
+     * Check if username of admin
+     * @param username username
+     * @return isAdmin
+     */
+    public boolean isAdmin(String username) {
+        List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "*");
+
+        return !list.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        AccountService accountService = new AccountService();
+        String username = "long";
+        String password = "123";
+        checkLogin(username, password);
     }
 }
