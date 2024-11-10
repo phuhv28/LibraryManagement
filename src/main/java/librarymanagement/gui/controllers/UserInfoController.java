@@ -2,6 +2,7 @@ package librarymanagement.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import librarymanagement.UserAuth.AccountService;
 
 public class UserInfoController {
 
@@ -20,9 +21,9 @@ public class UserInfoController {
 
     @FXML
     public void initialize() {
-        lbFullName.setText("Full Name");
-        lbNumberOfBooksBorrowed.setText("Number of Books Borrowed");
-        lbUserName.setText("User Name");
-        lbEmail.setText("Email");
+        lbFullName.setText(AccountService.getInstance().getCurrentAccount().getFullname());
+        lbNumberOfBooksBorrowed.setText("0");
+        lbUserName.setText(AccountService.getInstance().getCurrentAccount().getUsername());
+        lbEmail.setText(AccountService.getInstance().getCurrentAccount().getEmail());
     }
 }

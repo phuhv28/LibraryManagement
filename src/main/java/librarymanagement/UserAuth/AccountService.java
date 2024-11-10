@@ -36,9 +36,9 @@ public class AccountService {
             return LoginResult.USERNAME_NOT_FOUND;
         } else if (result.getFirst().get(1).equals(password)) {
             List<List<Object>> account = sqLiteInstance.find("User", "username", username, "username", "password", "fullName", "email", "regDate");
-            String currentFullName = (String) account.get(0).get(2);
-            String currentEmail = (String) account.get(0).get(3);
-            String currentRegDate = (String) account.get(0).get(4);
+            String currentFullName = (String) account.getFirst().get(2);
+            String currentEmail = (String) account.getFirst().get(3);
+            String currentRegDate = (String) account.getFirst().get(4);
             List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "*");
             AccountType currentAccountType = (!list.isEmpty()) ? AccountType.ADMIN : AccountType.USER;
             AccountService.currentAccount = new Account(username, password, currentFullName, currentEmail, currentRegDate, currentAccountType);
