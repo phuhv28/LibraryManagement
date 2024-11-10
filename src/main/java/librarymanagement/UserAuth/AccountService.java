@@ -8,6 +8,7 @@ import java.util.List;
 
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
+    private static Account currentAccount = null;
 
     private AccountService() {
     }
@@ -26,6 +27,7 @@ public class AccountService {
         if (result.isEmpty()) {
             return LoginResult.USERNAME_NOT_FOUND;
         } else if (result.getFirst().get(1).equals(password)) {
+
             return LoginResult.SUCCESS;
         }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane  prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserController">
+<AnchorPane prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserInfoController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
         <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="INFORMATION USER" textFill="WHITE" underline="true">
@@ -28,7 +28,7 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label layoutX="83.0" layoutY="277.0" style="-fx-font-weight: bold;" text="UserName :" textFill="WHITE">
+        <Label layoutX="83.0" layoutY="277.0" style="-fx-font-weight: bold;" text="Username :" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>

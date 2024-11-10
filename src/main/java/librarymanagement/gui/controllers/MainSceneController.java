@@ -143,8 +143,8 @@ public class MainSceneController {
 
     private void loadUser() {
         previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
-        loadScene("UserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "UserScene.fxml";
+        loadScene("UserInfo.fxml");
+        previousSceneToReturn.previousFxmlFile2 = "UserInfo.fxml";
     }
 
     private void searchInformation() {

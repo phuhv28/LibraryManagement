@@ -49,7 +49,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <TableView fx:id="tbResults" focusTraversable="false" layoutX="15.0" layoutY="320.0" prefHeight="300.0" prefWidth="600.0">
+        <TableView fx:id="tbResults" focusTraversable="false" layoutX="15.0" layoutY="320.0" prefHeight="300.0" prefWidth="600.0" visible="false">
             <columns>
                 <TableColumn fx:id="tcID" text="ID" />
                 <TableColumn fx:id="tcISBN" prefWidth="140.0" text="ISBN" />
