@@ -6,11 +6,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class  AccountService {
+public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
-    private static Account currentAccount = null;
+    private static Account currentAccount = new Account();
 
     private AccountService() {
+    }
+
+    public static Account getCurrentAccount() {
+        return currentAccount;
     }
 
     public static AccountService getInstance() {
@@ -31,17 +35,24 @@ public class  AccountService {
      * Verify user account.
      */
     public static LoginResult checkLogin(String username, String password) {
-        List<List<Object>> result = sqLiteInstance.find("User", "username", username, "username", "password");
+        List<List<Object>> result =
+                sqLiteInstance.find("Admin", "username", username, "username");
+        boolean isAdmin = !result.isEmpty();
+        String type = isAdmin ? "Admin" : "User";
+
+        result = sqLiteInstance.find(type, "username", username,
+                "password", "fullName", "email", "regDate");
         if (result.isEmpty()) {
             return LoginResult.USERNAME_NOT_FOUND;
-        } else if (result.getFirst().get(1).equals(password)) {
-            List<List<Object>> account = sqLiteInstance.find("User", "username", username, "username", "password", "fullName", "email", "regDate");
-            String currentFullName = (String) account.getFirst().get(2);
-            String currentEmail = (String) account.getFirst().get(3);
-            String currentRegDate = (String) account.getFirst().get(4);
-            List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "*");
-            AccountType currentAccountType = (!list.isEmpty()) ? AccountType.ADMIN : AccountType.USER;
-            AccountService.currentAccount = new Account(username, password, currentFullName, currentEmail, currentRegDate, currentAccountType);
+        } else if (result.getFirst().get(0).equals(password)) {
+            String fullName = (String) result.get(0).get(1);
+            String email = (String) result.get(0).get(2);
+            String regDate = (String) result.get(0).get(3);
+            currentAccount = new Account(username, password, fullName,
+                    email, regDate, isAdmin ? AccountType.ADMIN : AccountType.USER);
+            System.out.println(currentAccount.getNumberOfBooksBorrowed());
+            System.out.println(currentAccount.getId());
+            System.out.println(currentAccount.getRegDate());
             return LoginResult.SUCCESS;
         }
 
@@ -53,7 +64,8 @@ public class  AccountService {
      */
     private boolean isUsernameTaken(String username) {
         String sql = "SELECT * FROM User WHERE User.username = ? UNION SELECT * FROM Admin WHERE Admin.username = ?";
-        List<List<Object>> result = sqLiteInstance.findWithSQL(sql, new Object[]{username, username}, "username");
+        List<List<Object>> result =
+                sqLiteInstance.findWithSQL(sql, new Object[]{username, username}, "username");
 
         return !result.isEmpty();
     }
@@ -138,12 +150,5 @@ public class  AccountService {
         List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "*");
 
         return !list.isEmpty();
-    }
-
-    public static void main(String[] args) {
-        AccountService accountService = new AccountService();
-        String username = "long";
-        String password = "123";
-        checkLogin(username, password);
     }
 }
