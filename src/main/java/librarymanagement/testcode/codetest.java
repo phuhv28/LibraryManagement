@@ -10,7 +10,7 @@ public class codetest extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/MainScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/informationDocument.fxml"));
         Parent root = loader.load();
 
         primaryStage.setTitle("JavaFX Image Example");

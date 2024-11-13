@@ -76,38 +76,45 @@ public class MainSceneController {
     }
 
     private void loadSceneSearch() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("SearchDocument.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "SearchDocument.fxml";
+        previousSceneToReturn.previousFxmlFile = "SearchDocument.fxml";
     }
 
     private void loadSceneAdd() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("AddDocument.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "AddDocument.fxml";
+        previousSceneToReturn.previousFxmlFile = "AddDocument.fxml";
     }
 
     private void loadSceneDelete() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("DeleteScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "DeleteScene.fxml";
+        previousSceneToReturn.previousFxmlFile = "DeleteScene.fxml";
     }
 
     private void loadSceneFix() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("EditDocument.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "EditDocument.fxml";
+        previousSceneToReturn.previousFxmlFile = "EditDocument.fxml";
     }
 
     private void loadSceneMyDocument() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("MyDocumentScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "MyDocumentScene.fxml";
+        previousSceneToReturn.previousFxmlFile = "MyDocumentScene.fxml";
     }
 
     private void loadSceneReturn() {
         try {
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + previousSceneToReturn.previousFxmlFIle1));
+            String fxmlFile;
+            if(previousSceneToReturn.listPreviousFxmlFile.isEmpty()) {
+                  fxmlFile = "HomeScene.fxml";
+            } else {
+                fxmlFile = previousSceneToReturn.listPreviousFxmlFile.pop();
+            }
+
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
             rightMainScene.getChildren().setAll(newPane);
 
         } catch (IOException e) {
@@ -120,27 +127,27 @@ public class MainSceneController {
     }
 
     private void loadSceneAddAccount() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("AddUserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "AddUserScene.fxml";
+        previousSceneToReturn.previousFxmlFile = "AddUserScene.fxml";
     }
 
     private void loadHome() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("HomeScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "HomeScene.fxml";
+        previousSceneToReturn.previousFxmlFile = "HomeScene.fxml";
     }
 
     private void loadSetting() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "SettingScene.fxml";
+        previousSceneToReturn.previousFxmlFile = "SettingScene.fxml";
     }
 
     private void loadUser() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("UserInfo.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "UserInfo.fxml";
+        previousSceneToReturn.previousFxmlFile = "UserInfo.fxml";
     }
 
 }

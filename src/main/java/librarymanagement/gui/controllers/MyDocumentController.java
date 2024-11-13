@@ -151,9 +151,9 @@ public class MyDocumentController {
 
 
     private void loadBorrowBooks() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("BorrowBook.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "BorrowBook.fxml";
+        previousSceneToReturn.previousFxmlFile="BorrowBook.fxml";
     }
 
 }
