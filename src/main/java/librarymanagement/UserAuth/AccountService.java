@@ -8,8 +8,13 @@ import java.util.List;
 
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
+    private static Account currentAccount = new Account();
 
     private AccountService() {
+    }
+
+    public static Account getCurrentAccount() {
+        return currentAccount;
     }
 
     public static AccountService getInstance() {
@@ -22,10 +27,24 @@ public class AccountService {
      * Verify user account.
      */
     public static LoginResult checkLogin(String username, String password) {
-        List<List<Object>> result = sqLiteInstance.find("User", "username", username, "username", "password");
+        List<List<Object>> result =
+                sqLiteInstance.find("Admin", "username", username, "username");
+        boolean isAdmin = !result.isEmpty();
+        String type = isAdmin ? "Admin" : "User";
+
+        result = sqLiteInstance.find(type, "username", username,
+                "password", "fullName", "email", "regDate");
         if (result.isEmpty()) {
             return LoginResult.USERNAME_NOT_FOUND;
-        } else if (result.getFirst().get(1).equals(password)) {
+        } else if (result.getFirst().get(0).equals(password)) {
+            String fullName = (String) result.get(0).get(1);
+            String email = (String) result.get(0).get(2);
+            String regDate = (String) result.get(0).get(3);
+            currentAccount = new Account(username, password, fullName,
+                    email, regDate, isAdmin ? AccountType.ADMIN : AccountType.USER);
+            System.out.println(currentAccount.getNumberOfBooksBorrowed());
+            System.out.println(currentAccount.getId());
+            System.out.println(currentAccount.getRegDate());
             return LoginResult.SUCCESS;
         }
 
@@ -37,7 +56,8 @@ public class AccountService {
      */
     private boolean isUsernameTaken(String username) {
         String sql = "SELECT * FROM User WHERE User.username = ? UNION SELECT * FROM Admin WHERE Admin.username = ?";
-        List<List<Object>> result = sqLiteInstance.findWithSQL(sql, new Object[]{username, username}, "username");
+        List<List<Object>> result =
+                sqLiteInstance.findWithSQL(sql, new Object[]{username, username}, "username");
 
         return !result.isEmpty();
     }
@@ -112,5 +132,16 @@ public class AccountService {
         sqLiteInstance.insertRow("Admin", newAdminId, username, null, null, password, today.format(dateFormatter));
 
         return RegistrationResult.SUCCESS;
+    }
+
+    /**
+     * Check if username of admin
+     * @param username username
+     * @return isAdmin
+     */
+    public boolean isAdmin(String username) {
+        List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "*");
+
+        return !list.isEmpty();
     }
 }
