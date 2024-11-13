@@ -13,10 +13,6 @@ public class AccountService {
     private AccountService() {
     }
 
-    public static Account getCurrentAccount() {
-        return currentAccount;
-    }
-
     public static AccountService getInstance() {
         return INSTANCE;
     }

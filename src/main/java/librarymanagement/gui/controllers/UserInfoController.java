@@ -21,7 +21,7 @@ public class UserInfoController {
 
     @FXML
     public void initialize() {
-        lbFullName.setText(AccountService.getInstance().getCurrentAccount().getFullname());
+        lbFullName.setText(AccountService.getInstance().getCurrentAccount().getFullName());
         lbNumberOfBooksBorrowed.setText("0");
         lbUserName.setText(AccountService.getInstance().getCurrentAccount().getUsername());
         lbEmail.setText(AccountService.getInstance().getCurrentAccount().getEmail());
