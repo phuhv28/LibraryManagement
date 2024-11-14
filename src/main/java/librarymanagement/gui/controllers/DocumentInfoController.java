@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
-public class informationDocumentController {
+public class DocumentInfoController {
     @FXML
     private AnchorPane informationDocument;
 

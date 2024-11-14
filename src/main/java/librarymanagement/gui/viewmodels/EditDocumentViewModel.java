@@ -75,7 +75,6 @@ public class EditDocumentViewModel {
     }
 
     public void save() {
-
         DocumentManagement.getInstance().editBook(selectedDocumentProperty.get());
     }
 

@@ -2,6 +2,7 @@ package librarymanagement.gui.controllers;
 
 
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -74,7 +75,22 @@ public class AddDocumentController {
     }
 
     private void handleAddDocument() {
-        viewModel.addDocument();
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Login");
+        loadingPopup.initOwnerStage(UIController.getPrimaryStage());
+        loadingPopup.show();
+
+        Task<Boolean> addDocumentTask = new Task<>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return viewModel.addDocument();
+            }
+        };
+
+        addDocumentTask.setOnSucceeded(event -> {
+            loadingPopup.close();
+        });
+
+        new Thread(addDocumentTask).start();
     }
 
     private void loadError() {

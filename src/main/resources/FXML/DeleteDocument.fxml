@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.DeleteController">
+<AnchorPane prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.DeleteDocumentController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
         <Label layoutX="174.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="DELETE DOCUMENT" textFill="#f2f2f2" underline="true">
@@ -24,7 +24,7 @@
             </font>
         </Button>
         <TextField fx:id="tfDocumentID" layoutX="298.0" layoutY="148.0" prefHeight="35.0" prefWidth="211.0" />
-      <Label fx:id="lbError" layoutX="43.0" layoutY="121.0" style="-fx-font-weight: bold;" text="The Docuemnt is invalid." textFill="#f03a0e" visible="false">
+      <Label fx:id="lbError" layoutX="43.0" layoutY="121.0" style="-fx-font-weight: bold;" text="The DocumentID is invalid!" textFill="#f03a0e" visible="false">
          <font>
             <Font size="14.0" />
          </font>

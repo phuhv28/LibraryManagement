@@ -37,7 +37,7 @@
             </font>
         </TextField>
         <TextField fx:id="tfFullName" layoutX="105.0" layoutY="264.0" prefHeight="35.0" prefWidth="250.0"
-                   promptText="Fullname" style="-fx-font-weight: bold; -fx-background-radius: 10;">
+                   promptText="Full name" style="-fx-font-weight: bold; -fx-background-radius: 10;">
             <font>
                 <Font size="14.0"/>
             </font>

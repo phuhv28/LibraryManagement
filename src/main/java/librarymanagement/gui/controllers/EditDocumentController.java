@@ -1,6 +1,7 @@
 package librarymanagement.gui.controllers;
 
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -89,7 +90,24 @@ public class EditDocumentController {
 
 
     private void handleEditDocument() {
-        viewModel.save();
+
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Edit Document");
+        loadingPopup.initOwnerStage(UIController.getPrimaryStage());
+        loadingPopup.show();
+
+        Task<Void> registerTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                viewModel.save();
+                return null;
+            }
+        };
+
+        registerTask.setOnSucceeded(event -> {
+            loadingPopup.close();
+        });
+
+        new Thread(registerTask).start();
     }
 
     private void loadError() {

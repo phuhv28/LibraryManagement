@@ -89,8 +89,8 @@ public class MainSceneController {
 
     private void loadSceneDelete() {
         previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
-        loadScene("DeleteScene.fxml");
-        previousSceneToReturn.previousFxmlFile = "DeleteScene.fxml";
+        loadScene("DeleteDocument.fxml");
+        previousSceneToReturn.previousFxmlFile = "DeleteDocument.fxml";
     }
 
     private void loadSceneFix() {

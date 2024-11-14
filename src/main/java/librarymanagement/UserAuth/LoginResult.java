@@ -5,7 +5,7 @@ public enum LoginResult {
     USERNAME_NOT_FOUND("Username not found."),
     INCORRECT_PASSWORD("Incorrect password.");
 
-    private String message;
+    private final String message;
 
     LoginResult(String message) {
         this.message = message;

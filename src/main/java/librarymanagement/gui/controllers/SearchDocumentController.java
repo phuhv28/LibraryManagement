@@ -1,6 +1,7 @@
 package librarymanagement.gui.controllers;
 
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -84,8 +85,25 @@ public class SearchDocumentController {
 
 
     private void searchDocument() {
-        viewModel.searchDocument();
-        tbResults.setVisible(true);
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Searching Document");
+        loadingPopup.initOwnerStage(UIController.getPrimaryStage());
+        loadingPopup.show();
+
+        Task<Void> searchTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                loadingPopup.setText("Searching for " + tfValueSearch.getText() + " ...");
+                viewModel.searchDocument();
+                return null;
+            }
+        };
+
+        searchTask.setOnSucceeded(event -> {
+            loadingPopup.close();
+            tbResults.setVisible(true);
+        });
+
+        new Thread(searchTask).start();
     }
 
     private void loadError() {

@@ -8,7 +8,7 @@ public class AddUserViewModel {
     private StringProperty usernameProperty = new SimpleStringProperty();
     private StringProperty passwordProperty = new SimpleStringProperty();
     private StringProperty emailProperty = new SimpleStringProperty();
-    private StringProperty fullnameProperty = new SimpleStringProperty();
+    private StringProperty fullNameProperty = new SimpleStringProperty();
     private StringProperty confirmPasswordProperty = new SimpleStringProperty();
 
     public String getUsername() {
@@ -35,12 +35,12 @@ public class AddUserViewModel {
         return emailProperty;
     }
 
-    public String getFullname() {
-        return fullnameProperty.get();
+    public String getFullName() {
+        return fullNameProperty.get();
     }
 
-    public StringProperty fullnameProperty() {
-        return fullnameProperty;
+    public StringProperty fullNameProperty() {
+        return fullNameProperty;
     }
 
     public String getConfirmPassword() {
@@ -52,11 +52,11 @@ public class AddUserViewModel {
     }
 
     public void addUserAccount() {
-        AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullname(), getEmail());
+        AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
     }
 
     public void createAdminAccount() {
-        AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullname(), getEmail());
+        AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
         AccountService.getInstance().addAdmin(getUsername(), getPassword());
     }
 

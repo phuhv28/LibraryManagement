@@ -2,13 +2,10 @@ package librarymanagement.gui.controllers;
 
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import librarymanagement.gui.viewmodels.AddUserViewModel;
-
-import java.io.IOException;
 
 
 public class AddUserController {
@@ -50,13 +47,13 @@ public class AddUserController {
     private TextField tfConfirmPassword;
 
     @FXML
-    private TextField tfFullname;
+    private TextField tfFullName;
 
     @FXML
     private Label lbSelectFunction;
 
     @FXML
-    private Label lbEnterFullname;
+    private Label lbEnterFullName;
 
     @FXML
     private Label lbEnterEmail;
@@ -98,7 +95,7 @@ public class AddUserController {
         btAddAccount.setOnAction(e -> {
             handleAddUSerOrAdmin();
         });
-        tfFullname.textProperty().bindBidirectional(viewModel.fullnameProperty());
+        tfFullName.textProperty().bindBidirectional(viewModel.fullNameProperty());
         tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
         tfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
         tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
@@ -113,7 +110,7 @@ public class AddUserController {
                 handleAddUSerOrAdmin();
             }
         });
-        tfFullname.setOnKeyPressed(actionEvent -> {
+        tfFullName.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
                 handleAddUSerOrAdmin();
             }
@@ -145,9 +142,9 @@ public class AddUserController {
         tfConfirmPassword.setVisible(false);
         lbConfirmPassword.setVisible(false);
         tfConfirmPassword.setDisable(true);
-        tfFullname.setVisible(false);
-        lbEnterFullname.setVisible(false);
-        tfFullname.setDisable(true);
+        tfFullName.setVisible(false);
+        lbEnterFullName.setVisible(false);
+        tfFullName.setDisable(true);
         lbEnterUsername.setVisible(false);
         tfUsername.setDisable(true);
         tfUsername.setVisible(false);
@@ -174,13 +171,13 @@ public class AddUserController {
         tfConfirmPassword.setVisible(true);
         lbConfirmPassword.setVisible(true);
         tfConfirmPassword.setDisable(false);
-        tfFullname.setVisible(true);
-        lbEnterFullname.setVisible(true);
-        tfFullname.setDisable(false);
-        tfFullname.setLayoutX(318);
-        tfFullname.setLayoutY(310);
-        lbEnterFullname.setLayoutX(93);
-        lbEnterFullname.setLayoutY(310);
+        tfFullName.setVisible(true);
+        lbEnterFullName.setVisible(true);
+        tfFullName.setDisable(false);
+        tfFullName.setLayoutX(318);
+        tfFullName.setLayoutY(310);
+        lbEnterFullName.setLayoutX(93);
+        lbEnterFullName.setLayoutY(310);
         lbEnterUsername.setVisible(true);
         tfUsername.setDisable(false);
         tfUsername.setVisible(true);
@@ -208,13 +205,13 @@ public class AddUserController {
         tfConfirmPassword.setVisible(true);
         lbConfirmPassword.setVisible(true);
         tfConfirmPassword.setDisable(false);
-        tfFullname.setVisible(true);
-        lbEnterFullname.setVisible(true);
-        tfFullname.setDisable(false);
-        tfFullname.setLayoutX(318);
-        tfFullname.setLayoutY(310);
-        lbEnterFullname.setLayoutX(93);
-        lbEnterFullname.setLayoutY(310);
+        tfFullName.setVisible(true);
+        lbEnterFullName.setVisible(true);
+        tfFullName.setDisable(false);
+        tfFullName.setLayoutX(318);
+        tfFullName.setLayoutY(310);
+        lbEnterFullName.setLayoutX(93);
+        lbEnterFullName.setLayoutY(310);
         lbEnterUsername.setVisible(true);
         tfUsername.setDisable(false);
         tfUsername.setVisible(true);
@@ -243,9 +240,9 @@ public class AddUserController {
         tfConfirmPassword.setVisible(false);
         lbConfirmPassword.setVisible(false);
         tfConfirmPassword.setDisable(true);
-        tfFullname.setVisible(false);
-        lbEnterFullname.setVisible(false);
-        tfFullname.setDisable(true);
+        tfFullName.setVisible(false);
+        lbEnterFullName.setVisible(false);
+        tfFullName.setDisable(true);
         lbEnterUsername.setVisible(true);
         tfUsername.setDisable(false);
         tfUsername.setVisible(true);
@@ -270,9 +267,9 @@ public class AddUserController {
         tfConfirmPassword.setVisible(false);
         lbConfirmPassword.setVisible(false);
         tfConfirmPassword.setDisable(true);
-        tfFullname.setVisible(false);
-        lbEnterFullname.setVisible(false);
-        tfFullname.setDisable(true);
+        tfFullName.setVisible(false);
+        lbEnterFullName.setVisible(false);
+        tfFullName.setDisable(true);
         lbEnterUsername.setVisible(false);
         tfUsername.setDisable(true);
         tfUsername.setVisible(false);
@@ -285,7 +282,7 @@ public class AddUserController {
         tfUsername.clear();
         tfPassword.clear();
         tfConfirmPassword.clear();
-        tfFullname.clear();
+        tfFullName.clear();
         tfEmail.clear();
     }
 

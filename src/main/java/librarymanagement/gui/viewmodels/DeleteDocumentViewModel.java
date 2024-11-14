@@ -5,7 +5,7 @@ import javafx.beans.property.StringProperty;
 import librarymanagement.data.*;
 
 public class DeleteDocumentViewModel {
-    private StringProperty IDProperty = new SimpleStringProperty();
+    private final StringProperty IDProperty = new SimpleStringProperty();
 
     public String getID() {
         return IDProperty.get();
@@ -15,11 +15,17 @@ public class DeleteDocumentViewModel {
         return IDProperty;
     }
 
-    public void deleteDocument(){
-        DocumentManagement.getInstance().deleteBook(getID());
+    public boolean deleteDocument() {
+        if (checkIdDocument()) {
+            DocumentManagement.getInstance().deleteBook(getID());
+            IDProperty.set("");
+            return true;
+        }
+
+        return false;
     }
 
-    public boolean checkIdDocument(){
+    public boolean checkIdDocument() {
         return DocumentManagement.getInstance().checkIfHasBookId(getID());
     }
 }

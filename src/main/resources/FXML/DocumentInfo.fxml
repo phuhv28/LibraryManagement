@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="informationDocument" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.informationDocumentController">
+<AnchorPane fx:id="informationDocument" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.DocumentInfoController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#474242" height="670.0" stroke="BLACK" strokeType="INSIDE" width="630.0" />
         <ScrollPane hbarPolicy="NEVER" layoutX="21.0" layoutY="105.0" prefHeight="499.0" prefWidth="594.0">
