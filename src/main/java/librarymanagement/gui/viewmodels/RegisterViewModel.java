@@ -1,5 +1,6 @@
 package librarymanagement.gui.viewmodels;
 
+import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -11,12 +12,16 @@ public class RegisterViewModel {
     private final StringProperty passwordProperty = new SimpleStringProperty();
     private final StringProperty confirmPasswordProperty = new SimpleStringProperty();
     private final StringProperty errorLabelProperty = new SimpleStringProperty();
-    private final StringProperty EmailProperty = new SimpleStringProperty();
-    private final StringProperty FullNameProperty = new SimpleStringProperty();
+    private final StringProperty emailProperty = new SimpleStringProperty();
+    private final StringProperty fullNameProperty = new SimpleStringProperty();
 
     public boolean handleRegister() {
         RegistrationResult registrationResult = AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword() , getFullName() ,getEmail());
-        errorLabelProperty.set(registrationResult.getMessage());
+
+        Platform.runLater(() -> {
+            errorLabelProperty.set(registrationResult.getMessage());
+        });
+
         return registrationResult.equals(RegistrationResult.SUCCESS);
     }
 
@@ -32,12 +37,12 @@ public class RegisterViewModel {
         return confirmPasswordProperty;
     }
 
-    public StringProperty emailPropertyProperty() {
-        return EmailProperty;
+    public StringProperty emailProperty() {
+        return emailProperty;
     }
 
-    public StringProperty fullNamePropertyProperty() {
-        return FullNameProperty;
+    public StringProperty fullNameProperty() {
+        return fullNameProperty;
     }
 
 
@@ -58,11 +63,11 @@ public class RegisterViewModel {
     }
 
     public String getEmail() {
-        return EmailProperty.get();
+        return emailProperty.get();
     }
 
     public String getFullName() {
-        return FullNameProperty.get();
+        return fullNameProperty.get();
     }
 
 }

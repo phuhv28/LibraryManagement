@@ -12,7 +12,7 @@ public class MainSceneController {
 
 
     @FXML
-    private AnchorPane mainScene;
+    private AnchorPane MainScene;
 
     @FXML
     private AnchorPane rightMainScene;
@@ -21,7 +21,7 @@ public class MainSceneController {
     private Button btSearch;
 
     @FXML
-    private Button btBorrow;
+    private Button btMyDocument;
 
     @FXML
     private Button btReturn;
@@ -34,9 +34,6 @@ public class MainSceneController {
 
     @FXML
     private Button btAdd;
-
-    @FXML
-    private TextField tfSearch;
 
     @FXML
     private Button btLogOut;
@@ -56,12 +53,11 @@ public class MainSceneController {
     @FXML
     public void initialize() {
         btSearch.setOnAction(event -> loadSceneSearch());
-        btBorrow.setOnAction(event -> loadSceneBorrowBook());
+        btMyDocument.setOnAction(event -> loadSceneMyDocument());
         btReturn.setOnAction(event -> loadSceneReturn());
         btFix.setOnAction(event -> loadSceneFix());
         btDelete.setOnAction(event -> loadSceneDelete());
         btAdd.setOnAction(event -> loadSceneAdd());
-        tfSearch.setOnAction(event -> searchInformation());
         btLogOut.setOnAction(actionEvent -> handleLogOut());
         btAddUser.setOnAction(actionEvent -> loadSceneAddAccount());
         btHome.setOnAction(event -> loadHome());
@@ -80,38 +76,45 @@ public class MainSceneController {
     }
 
     private void loadSceneSearch() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("SearchDocument.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "SearchDocument.fxml";
+        previousSceneToReturn.previousFxmlFile = "SearchDocument.fxml";
     }
 
     private void loadSceneAdd() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("AddDocument.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "AddDocument.fxml";
+        previousSceneToReturn.previousFxmlFile = "AddDocument.fxml";
     }
 
     private void loadSceneDelete() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
-        loadScene("DeleteScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "DeleteScene.fxml";
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        loadScene("DeleteDocument.fxml");
+        previousSceneToReturn.previousFxmlFile = "DeleteDocument.fxml";
     }
 
     private void loadSceneFix() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("EditDocument.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "EditDocument.fxml";
+        previousSceneToReturn.previousFxmlFile = "EditDocument.fxml";
     }
 
-    private void loadSceneBorrowBook() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
-        loadScene("ListBorrowBookScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "ListBorrowBookScene.fxml";
+    private void loadSceneMyDocument() {
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        loadScene("MyDocumentScene.fxml");
+        previousSceneToReturn.previousFxmlFile = "MyDocumentScene.fxml";
     }
 
     private void loadSceneReturn() {
         try {
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + previousSceneToReturn.previousFxmlFIle1));
+            String fxmlFile;
+            if(previousSceneToReturn.listPreviousFxmlFile.isEmpty()) {
+                  fxmlFile = "HomeScene.fxml";
+            } else {
+                fxmlFile = previousSceneToReturn.listPreviousFxmlFile.pop();
+            }
+
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
             rightMainScene.getChildren().setAll(newPane);
 
         } catch (IOException e) {
@@ -124,31 +127,27 @@ public class MainSceneController {
     }
 
     private void loadSceneAddAccount() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("AddUserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "AddUserScene.fxml";
+        previousSceneToReturn.previousFxmlFile = "AddUserScene.fxml";
     }
 
     private void loadHome() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("HomeScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "HomeScene.fxml";
+        previousSceneToReturn.previousFxmlFile = "HomeScene.fxml";
     }
 
     private void loadSetting() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "SettingScene.fxml";
+        previousSceneToReturn.previousFxmlFile = "SettingScene.fxml";
     }
 
     private void loadUser() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
-        loadScene("UserScene.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "UserScene.fxml";
-    }
-
-    private void searchInformation() {
-
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        loadScene("UserInfo.fxml");
+        previousSceneToReturn.previousFxmlFile = "UserInfo.fxml";
     }
 
 }

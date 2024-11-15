@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-public class ListBorrowBookController {
+public class MyDocumentController {
 
     @FXML
-    private AnchorPane ListBorrowBooks;
+    private AnchorPane MyDocument;
 
     @FXML
     private TableView<BorrowBook> tableView;
@@ -142,7 +142,7 @@ public class ListBorrowBookController {
     private void loadScene(String fxmlFile) {
         try {
             AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
-            ListBorrowBooks.getChildren().setAll(newPane);
+            MyDocument.getChildren().setAll(newPane);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -151,9 +151,9 @@ public class ListBorrowBookController {
 
 
     private void loadBorrowBooks() {
-        previousSceneToReturn.previousFxmlFIle1 = previousSceneToReturn.previousFxmlFile2;
+        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
         loadScene("BorrowBook.fxml");
-        previousSceneToReturn.previousFxmlFile2 = "BorrowBook.fxml";
+        previousSceneToReturn.previousFxmlFile="BorrowBook.fxml";
     }
 
 }

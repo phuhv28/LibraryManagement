@@ -1,5 +1,6 @@
 package librarymanagement.gui.controllers;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -67,9 +68,20 @@ public class RegisterController implements Initializable {
         tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
         pfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
         pfConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
+        tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
+        tfFullName.textProperty().bindBidirectional(viewModel.fullNameProperty());
         errorLabel.textProperty().bindBidirectional(viewModel.errorLabelProperty());
-
         tfUsername.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                register();
+            }
+        });
+        tfEmail.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                register();
+            }
+        });
+        tfFullName.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 register();
             }
@@ -84,8 +96,6 @@ public class RegisterController implements Initializable {
                 register();
             }
         });
-        tfEmail.textProperty().bindBidirectional(viewModel.emailPropertyProperty());
-        tfFullName.textProperty().bindBidirectional(viewModel.fullNamePropertyProperty());
     }
 
     @FXML
@@ -95,11 +105,28 @@ public class RegisterController implements Initializable {
 
     @FXML
     public void register() {
-        boolean succes = viewModel.handleRegister();
-        errorLabel.setVisible(true);
-        if (succes) {
-            goToLogin();
-        }
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Register");
+        loadingPopup.initOwnerStage(UIController.getPrimaryStage());
+        loadingPopup.show();
+
+        Task<Boolean> registerTask = new Task<>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return viewModel.handleRegister();
+            }
+        };
+
+        registerTask.setOnSucceeded(event -> {
+            loadingPopup.close();
+            if (registerTask.getValue()) {
+                goToLogin();
+            } else {
+                errorLabel.setVisible(true);
+            }
+        });
+
+        new Thread(registerTask).start();
+
     }
 
     public void showScene(Stage primaryStage) {

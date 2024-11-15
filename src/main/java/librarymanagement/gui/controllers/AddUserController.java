@@ -2,12 +2,10 @@ package librarymanagement.gui.controllers;
 
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import librarymanagement.gui.viewmodels.AddUserViewModel;
-
-import java.io.IOException;
 
 
 public class AddUserController {
@@ -19,25 +17,25 @@ public class AddUserController {
     private Button btAddAccount;
 
     @FXML
-    private TextField tfUserName;
+    private TextField tfUsername;
 
     @FXML
     private MenuButton mbFunction;
 
     @FXML
-    private MenuItem mbCreat;
+    private MenuItem miCreateAdminAccount;
 
     @FXML
-    private MenuItem mbAdd;
+    private MenuItem miSetAsAdmin;
 
     @FXML
     private MenuButton mbAccount;
 
     @FXML
-    private MenuItem mbUser;
+    private MenuItem miUser;
 
     @FXML
-    private MenuItem mbAdmin;
+    private MenuItem miAdmin;
 
     @FXML
     private TextField tfEmail;
@@ -67,7 +65,7 @@ public class AddUserController {
     private Label lbConfirmPassword;
 
     @FXML
-    private Label lbEnterUserName;
+    private Label lbEnterUsername;
 
     @FXML
     private Label lbErrorSignUp;
@@ -78,32 +76,55 @@ public class AddUserController {
     @FXML
     private Label lbErrorPassword;
 
-
     private final AddUserViewModel viewModel = new AddUserViewModel();
-
 
     @FXML
     public void initialize() {
-        mbUser.setOnAction(event -> {
-            loadGraphicWithUserCreat();
+        miUser.setOnAction(event -> {
+            loadGraphicWithUserCreate();
         });
-        mbAdmin.setOnAction(actionEvent -> {
+        miAdmin.setOnAction(actionEvent -> {
             loadGraphicAdmin();
         });
-        mbCreat.setOnAction(actionEvent -> {
-            loadGraphicWithAdminCreat();
+        miCreateAdminAccount.setOnAction(actionEvent -> {
+            loadGraphicWithCreateAdmin();
         });
-        mbAdd.setOnAction(actionEvent -> {
-            loadGraphicWithAdminAdd();
+        miSetAsAdmin.setOnAction(actionEvent -> {
+            loadGraphicWithSetAdmin();
         });
         btAddAccount.setOnAction(e -> {
             handleAddUSerOrAdmin();
         });
-        tfFullName.textProperty().bindBidirectional(viewModel.fullNamePropertyProperty());
-        tfEmail.textProperty().bindBidirectional(viewModel.emailPropertyProperty());
-        tfPassword.textProperty().bindBidirectional(viewModel.passwordPropertyProperty());
-        tfUserName.textProperty().bindBidirectional(viewModel.userNamePropertyProperty());
-        tfConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordPropertyProperty());
+        tfFullName.textProperty().bindBidirectional(viewModel.fullNameProperty());
+        tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
+        tfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
+        tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
+        tfConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
+        tfUsername.setOnKeyPressed(actionEvent -> {
+            if (actionEvent.getCode() == KeyCode.ENTER) {
+                handleAddUSerOrAdmin();
+            }
+        });
+        tfEmail.setOnKeyPressed(actionEvent -> {
+            if (actionEvent.getCode() == KeyCode.ENTER) {
+                handleAddUSerOrAdmin();
+            }
+        });
+        tfFullName.setOnKeyPressed(actionEvent -> {
+            if (actionEvent.getCode() == KeyCode.ENTER) {
+                handleAddUSerOrAdmin();
+            }
+        });
+        tfPassword.setOnKeyPressed(actionEvent -> {
+            if (actionEvent.getCode() == KeyCode.ENTER) {
+                handleAddUSerOrAdmin();
+            }
+        });
+        tfConfirmPassword.setOnKeyPressed(actionEvent -> {
+            if (actionEvent.getCode() == KeyCode.ENTER) {
+                handleAddUSerOrAdmin();
+            }
+        });
     }
 
     private void loadAtStart() {
@@ -124,13 +145,14 @@ public class AddUserController {
         tfFullName.setVisible(false);
         lbEnterFullName.setVisible(false);
         tfFullName.setDisable(true);
-        lbEnterUserName.setVisible(false);
-        tfUserName.setDisable(true);
-        tfUserName.setVisible(false);
+        lbEnterUsername.setVisible(false);
+        tfUsername.setDisable(true);
+        tfUsername.setVisible(false);
+        mbAccount.setText("Account");
         loadNotError();
     }
 
-    private void loadGraphicWithUserCreat() {
+    private void loadGraphicWithUserCreate() {
         mbFunction.setVisible(false);
         mbFunction.setDisable(true);
         lbSelectFunction.setVisible(false);
@@ -142,20 +164,29 @@ public class AddUserController {
         tfPassword.setVisible(true);
         tfPassword.setDisable(false);
         lbEnterPassword.setVisible(true);
+        tfPassword.setLayoutX(318);
+        tfPassword.setLayoutY(348);
+        lbEnterPassword.setLayoutX(93);
+        lbEnterPassword.setLayoutY(348);
         tfConfirmPassword.setVisible(true);
         lbConfirmPassword.setVisible(true);
         tfConfirmPassword.setDisable(false);
         tfFullName.setVisible(true);
         lbEnterFullName.setVisible(true);
         tfFullName.setDisable(false);
-        lbEnterUserName.setVisible(true);
-        tfUserName.setDisable(false);
-        tfUserName.setVisible(true);
+        tfFullName.setLayoutX(318);
+        tfFullName.setLayoutY(310);
+        lbEnterFullName.setLayoutX(93);
+        lbEnterFullName.setLayoutY(310);
+        lbEnterUsername.setVisible(true);
+        tfUsername.setDisable(false);
+        tfUsername.setVisible(true);
         mbAccount.setText("User");
         loadNotError();
+        clear();
     }
 
-    private void loadGraphicWithAdminCreat() {
+    private void loadGraphicWithCreateAdmin() {
         mbFunction.setVisible(true);
         mbFunction.setDisable(false);
         lbSelectFunction.setVisible(true);
@@ -167,21 +198,30 @@ public class AddUserController {
         tfPassword.setVisible(true);
         tfPassword.setDisable(false);
         lbEnterPassword.setVisible(true);
+        tfPassword.setLayoutX(318);
+        tfPassword.setLayoutY(348);
+        lbEnterPassword.setLayoutX(93);
+        lbEnterPassword.setLayoutY(348);
         tfConfirmPassword.setVisible(true);
         lbConfirmPassword.setVisible(true);
         tfConfirmPassword.setDisable(false);
         tfFullName.setVisible(true);
         lbEnterFullName.setVisible(true);
         tfFullName.setDisable(false);
-        lbEnterUserName.setVisible(true);
-        tfUserName.setDisable(false);
-        tfUserName.setVisible(true);
+        tfFullName.setLayoutX(318);
+        tfFullName.setLayoutY(310);
+        lbEnterFullName.setLayoutX(93);
+        lbEnterFullName.setLayoutY(310);
+        lbEnterUsername.setVisible(true);
+        tfUsername.setDisable(false);
+        tfUsername.setVisible(true);
         mbAccount.setText("Admin");
-        mbFunction.setText("Creat");
+        mbFunction.setText("Create Admin Account");
         loadNotError();
+        clear();
     }
 
-    private void loadGraphicWithAdminAdd() {
+    private void loadGraphicWithSetAdmin() {
         mbFunction.setVisible(true);
         mbFunction.setDisable(false);
         lbSelectFunction.setVisible(true);
@@ -193,18 +233,23 @@ public class AddUserController {
         tfPassword.setVisible(true);
         tfPassword.setDisable(false);
         lbEnterPassword.setVisible(true);
+        tfPassword.setLayoutX(318);
+        tfPassword.setLayoutY(310);
+        lbEnterPassword.setLayoutX(93);
+        lbEnterPassword.setLayoutY(310);
         tfConfirmPassword.setVisible(false);
         lbConfirmPassword.setVisible(false);
         tfConfirmPassword.setDisable(true);
         tfFullName.setVisible(false);
         lbEnterFullName.setVisible(false);
         tfFullName.setDisable(true);
-        lbEnterUserName.setVisible(true);
-        tfUserName.setDisable(false);
-        tfUserName.setVisible(true);
+        lbEnterUsername.setVisible(true);
+        tfUsername.setDisable(false);
+        tfUsername.setVisible(true);
         mbAccount.setText("Admin");
-        mbFunction.setText("Add");
+        mbFunction.setText("Set As Admin");
         loadNotError();
+        clear();
     }
 
     private void loadGraphicAdmin() {
@@ -225,61 +270,59 @@ public class AddUserController {
         tfFullName.setVisible(false);
         lbEnterFullName.setVisible(false);
         tfFullName.setDisable(true);
-        lbEnterUserName.setVisible(false);
-        tfUserName.setDisable(true);
-        tfUserName.setVisible(false);
+        lbEnterUsername.setVisible(false);
+        tfUsername.setDisable(true);
+        tfUsername.setVisible(false);
         mbAccount.setText("Admin");
         mbFunction.setText("Function");
         loadNotError();
     }
 
     private void clear() {
-        tfUserName.clear();
+        tfUsername.clear();
         tfPassword.clear();
         tfConfirmPassword.clear();
         tfFullName.clear();
         tfEmail.clear();
-        mbFunction.setText("function");
-        mbAccount.setText("account");
     }
 
     private void handleAddUSerOrAdmin() {
         if (mbAccount.getText().equals("User")) {
-            if(viewModel.getPassword().equals(viewModel.getConfirmPassword())) {
+            if (!viewModel.getPassword().equals(viewModel.getConfirmPassword())) {
                 loadErrorPassword();
                 clear();
                 return;
             }
-            if(viewModel.checkIfAccountExists()) {
+            if (viewModel.checkIfAccountExists()) {
                 loadErrorSignUp();
                 clear();
                 return;
             }
-            viewModel.AddAccountUser();
+            viewModel.addUserAccount();
             loadAtStart();
             clear();
-        } else if (mbUser.getText().equals("Admin")) {
-            if (mbFunction.getText().equals("Creat")) {
-                if(viewModel.getPassword().equals(viewModel.getConfirmPassword())) {
+        } else if (mbAccount.getText().equals("Admin")) {
+            if (mbFunction.getText().equals("Create Admin Account")) {
+                if (!viewModel.getPassword().equals(viewModel.getConfirmPassword())) {
                     loadErrorPassword();
                     clear();
                     return;
                 }
-                if(viewModel.checkIfAccountExists()) {
+                if (viewModel.checkIfAccountExists()) {
                     loadErrorSignUp();
                     clear();
                     return;
                 }
-                viewModel.CreatAccountAdmin();
+                viewModel.createAdminAccount();
                 loadAtStart();
                 clear();
-            } else if (mbFunction.getText().equals("Add")) {
-                if(!viewModel.checkIfAccountExists()) {
+            } else if (mbFunction.getText().equals("Set As Admin")) {
+                if (!viewModel.checkIfAccountExists()) {
                     loadErrorAddAdmin();
                     clear();
                     return;
                 }
-                viewModel.AddAccountAdmin();
+                viewModel.setAsAdmin();
                 loadAtStart();
                 clear();
             } else {
@@ -288,6 +331,7 @@ public class AddUserController {
         } else {
             return;
         }
+
     }
 
     private void loadErrorSignUp() {
@@ -302,14 +346,13 @@ public class AddUserController {
         lbErrorPassword.setVisible(false);
     }
 
-    private void loadErrorPassword(){
+    private void loadErrorPassword() {
         lbErrorAddAdmin.setVisible(false);
         lbErrorSignUp.setVisible(false);
         lbErrorPassword.setVisible(true);
     }
 
-    private void loadNotError()
-    {
+    private void loadNotError() {
         lbErrorAddAdmin.setVisible(false);
         lbErrorSignUp.setVisible(false);
         lbErrorPassword.setVisible(false);

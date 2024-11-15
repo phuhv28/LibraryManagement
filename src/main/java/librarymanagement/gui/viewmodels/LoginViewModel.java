@@ -1,5 +1,6 @@
 package librarymanagement.gui.viewmodels;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import librarymanagement.UserAuth.AccountService;
@@ -29,7 +30,10 @@ public class LoginViewModel {
 
     public boolean handleLogin() {
         LoginResult loginResult = AccountService.checkLogin(getUsername(), getPassword());
-        errorTextProperty.set(loginResult.getMessage());
+
+        Platform.runLater(() -> {
+            errorTextProperty.set(loginResult.getMessage());
+        });
 
         return loginResult == LoginResult.SUCCESS;
     }

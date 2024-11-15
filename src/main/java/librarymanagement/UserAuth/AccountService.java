@@ -23,6 +23,14 @@ public class AccountService {
 
     private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
 
+    public Account getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public void setCurrentAccount(Account currentAccount) {
+        AccountService.currentAccount = currentAccount;
+    }
+
     /**
      * Verify user account.
      */
@@ -64,9 +72,8 @@ public class AccountService {
 
     /**
      * Generate new user ID based on the maximum user ID in the database.
-     *
      * @param tableName name of table to generate new ID
-     *                  return new ID
+     * return new ID
      */
     private String generateNewUserId(String tableName) {
         String newId = "";
@@ -93,7 +100,7 @@ public class AccountService {
     /**
      * Add a user.
      */
-    public RegistrationResult addUser(String username, String password, String confirmPassword , String fullname , String email) {
+    public RegistrationResult addUser(String username, String password, String confirmPassword, String fullName, String email) {
         if (!password.equals(confirmPassword)) {
             return RegistrationResult.PASSWORD_NOT_MATCH;
         }
@@ -109,7 +116,7 @@ public class AccountService {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         ///Import new user to database
-        sqLiteInstance.insertRow("User", userId, username, password, dateFormatter.format(today), null, null);
+        sqLiteInstance.insertRow("User", userId, username, password, dateFormatter.format(today), fullName, email);
 
         return RegistrationResult.SUCCESS;
     }

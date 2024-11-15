@@ -1,7 +1,8 @@
 package librarymanagement.gui.controllers;
 
-public class previousSceneToReturn {
-    public static String previousFxmlFIle1 = "HomeScene.fxml";
-    public static String previousFxmlFile2 = "HomeScene.fxml";
+import java.util.Stack;
 
+public class previousSceneToReturn {
+    public static String previousFxmlFile = "HomeScene.fxml";
+    public static Stack<String> listPreviousFxmlFile = new Stack<>();
 }

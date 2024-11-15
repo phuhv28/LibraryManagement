@@ -91,10 +91,11 @@ public class AddDocumentViewModel {
         return descriptionProperty.get();
     }
 
-    public void addDocument() {
+    public boolean addDocument() {
         Book newBook = new Book(null, getTitle(), getPublisher(),
                 getPublicationDate().toString(), getPageCount(), getAvailableCopies(),
                 0, 0, getISBN(), getCategory(), getAuthor(), getDescription());
         DocumentManagement.getInstance().addBook(newBook);
+        return true;
     }
 }

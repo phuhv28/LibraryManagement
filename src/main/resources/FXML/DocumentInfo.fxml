@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="informationDocument" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.DocumentInfoController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#474242" height="670.0" stroke="BLACK" strokeType="INSIDE" width="630.0" />
+        <ScrollPane hbarPolicy="NEVER" layoutX="21.0" layoutY="105.0" prefHeight="499.0" prefWidth="594.0">
+         <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1039.0" prefWidth="604.0" style="-fx-background-color: #474242;">
+                  <children>
+                      <Label layoutX="45.0" layoutY="20.0" style="-fx-font-weight: bold;" text="ID :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="57.0" style="-fx-font-weight: BOLD;" text="Title :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="97.0" style="-fx-font-weight: bold;" text="Author :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="136.0" style="-fx-font-weight: bold;" text="Publisher :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="175.0" style="-fx-font-weight: bold;" text="Publication Date :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="215.0" style="-fx-font-weight: bold;" text="ISBN :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="254.0" style="-fx-font-weight: bold;" text="Categories :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="294.0" style="-fx-font-weight: bold;" text="Page count :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="337.0" style="-fx-font-weight: bold;" text="Average Rating :" textFill="#fff5f5">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="379.0" style="-fx-font-weight: bold;" text="Rating count :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="45.0" layoutY="420.0" prefHeight="30.0" prefWidth="133.0" style="-fx-font-weight: bold;" text="Description :" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbID" layoutX="100.0" layoutY="17.0" prefHeight="30.0" prefWidth="216.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                              </font>
+                      </Label>
+                      <Label fx:id="lbTitle" layoutX="119.0" layoutY="47.0" prefHeight="30.0" prefWidth="435.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbAuthor" layoutX="140.0" layoutY="90.0" prefHeight="30.0" prefWidth="228.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbPublisher" layoutX="160.0" layoutY="129.0" prefHeight="30.0" prefWidth="316.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbPublicationDate" layoutX="238.0" layoutY="173.0" prefHeight="30.0" prefWidth="175.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbISBN" layoutX="131.0" layoutY="210.0" prefHeight="30.0" prefWidth="175.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbCategories" layoutX="182.0" layoutY="249.0" prefHeight="30.0" prefWidth="167.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbPageCount" layoutX="189.0" layoutY="288.0" prefHeight="30.0" prefWidth="167.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbAverageRating" layoutX="225.0" layoutY="333.0" prefHeight="18.0" prefWidth="216.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbRatingCount" layoutX="202.0" layoutY="377.0" prefHeight="30.0" prefWidth="228.0" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="lbDescription" layoutX="184.0" layoutY="408.0" prefHeight="88.0" prefWidth="374.0" textFill="WHITE" wrapText="true">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Label layoutX="51.0" layoutY="511.0" prefHeight="35.0" prefWidth="234.0" style="-fx-font-weight: bold;" text="Rate this doucment :" textFill="#030202">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                      <Button fx:id="btOneStar" focusTraversable="false" layoutX="79.0" layoutY="543.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="78.0" style="-fx-background-color: #474242;">
+                          <graphic>
+                              <ImageView fx:id="image_OneStar" fitHeight="54.0" fitWidth="68.0">
+                                  <image>
+                                      <Image url="@../images/image_starFirst.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                      <Button fx:id="bt2Star" focusTraversable="false" layoutX="163.0" layoutY="540.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="66.0" style="-fx-background-color: #474242;">
+                          <graphic>
+                              <ImageView fx:id="image_Star2" fitHeight="57.0" fitWidth="66.0">
+                                  <image>
+                                      <Image url="@../images/image_starFirst.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                      <Button fx:id="bt3Star" focusTraversable="false" layoutX="247.0" layoutY="538.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="66.0" style="-fx-background-color: #474242;">
+                          <graphic>
+                              <ImageView fx:id="image_Star3" fitHeight="60.0" fitWidth="68.0">
+                                  <image>
+                                      <Image url="@../images/image_starFirst.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                      <Button fx:id="btFullStar" focusTraversable="false" layoutX="415.0" layoutY="536.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="54.0" style="-fx-background-color: #474242;">
+                          <graphic>
+                              <ImageView fx:id="image_FullStar" fitHeight="59.0" fitWidth="66.0">
+                                  <image>
+                                      <Image url="@../images/image_starFirst.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+      
+                      <Button fx:id="bt4Star" focusTraversable="false" layoutX="331.0" layoutY="538.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="46.0" style="-fx-background-color: #474242;">
+                          <graphic>
+                              <ImageView fx:id="image_Star4" fitHeight="57.0" fitWidth="66.0">
+                                  <image>
+                                      <Image url="@../images/image_starFirst.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                      <ImageView fitHeight="50.0" fitWidth="66.0" layoutX="60.0" layoutY="613.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../images/image_account.png" />
+                          </image>
+                      </ImageView>
+                      <TextArea fx:id="taReview" focusTraversable="false" layoutX="143.0" layoutY="607.0" prefHeight="90.0" prefWidth="390.0" promptText="Your review of this document" wrapText="true">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </TextArea>
+                      <ListView fx:id="lvComments" focusTraversable="false" layoutX="56.0" layoutY="779.0" prefHeight="232.0" prefWidth="499.0" style="-fx-background-color: #474242;" />
+                      <Label layoutX="54.0" layoutY="716.0" style="-fx-font-weight: bold;" text="User reviews for this document :" textFill="#030202">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                      </Label>
+                  </children>
+              </AnchorPane>
+         </content></ScrollPane>
+        <Label layoutX="123.0" layoutY="32.0" style="-fx-font-weight: BOLD;" text="INFORMATION OF DOCUMENT" textFill="#f2f2f2" underline="true">
+            <font>
+                <Font size="26.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
