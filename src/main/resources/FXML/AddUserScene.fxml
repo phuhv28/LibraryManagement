@@ -71,7 +71,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label fx:id="lbError" layoutX="79.0" layoutY="94.0" prefHeight="20.0" prefWidth="268.0" style="-fx-font-weight: bold;" textFill="#ffba00" visible="false">
+        <Label fx:id="lbError" layoutX="79.0" layoutY="94.0" prefHeight="20.0" prefWidth="524.0" style="-fx-font-weight: bold;" textFill="#ffba00">
             <font>
                 <Font size="14.0" />
             </font>

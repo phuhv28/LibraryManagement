@@ -7,6 +7,7 @@ module librarymanagement {
     requires org.xerial.sqlitejdbc;
     requires java.sql;
     requires org.json;
+    requires kotlin.stdlib;
 
     exports librarymanagement.data to javafx.base;
     opens librarymanagement.data;

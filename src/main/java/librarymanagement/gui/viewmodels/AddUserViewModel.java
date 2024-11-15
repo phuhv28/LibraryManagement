@@ -12,6 +12,7 @@ public class AddUserViewModel {
     private StringProperty confirmPasswordProperty = new SimpleStringProperty();
     private StringProperty menuAccountProperty = new SimpleStringProperty();
     private StringProperty menuFunctionProperty = new SimpleStringProperty();
+    private StringProperty errorTextProperty = new SimpleStringProperty();
 
     public String getUsername() {
         return usernameProperty.get();
@@ -69,41 +70,62 @@ public class AddUserViewModel {
         return menuFunctionProperty;
     }
 
-    public String addUserOrAdmin() {
+    public String getErrorText() {
+        return errorTextProperty.get();
+    }
+
+    public StringProperty errorTextProperty() {
+        return errorTextProperty;
+    }
+
+    public void addUserOrAdmin() {
         if ("User".equals(getMenuAccount())) {
             if (!getPassword().equals(getConfirmPassword())) {
-                return "error_password_not_match";
+                loadError(AddUserResult.PASSWORD_NOT_MATCH);
+                return;
             }
             if (checkIfAccountExists()) {
-                return "error_account_exist";
+                loadError(AddUserResult.ACCOUNT_EXIST);
+                return;
             }
             addUserAccount();
-            return "success_user";
+            loadError(AddUserResult.SUCCESS_CREAT);
+            return;
         } else if ("Admin".equals(getMenuAccount())) {
             if ("Create Admin Account".equals(getMenuFunction())) {
                 if (chechAccountIsAdmin()) {
-                    return "error_not_admin";
+                    loadError(AddUserResult.ACCOUNT_NOT_ADMIN);
+                    return;
                 }
                 if (!getPassword().equals(getConfirmPassword())) {
-                    return "error_password_not_match";
+                    loadError(AddUserResult.PASSWORD_NOT_MATCH);
+                    return;
                 }
                 if (checkIfAccountExists()) {
-                    return "error_account_exist";
+                    loadError(AddUserResult.ACCOUNT_EXIST);
+                    return;
                 }
                 createAdminAccount();
-                return "success_admin_created";
+                loadError(AddUserResult.SUCCESS_CREAT);
+                return;
             } else if ("Set As Admin".equals(getMenuFunction())) {
                 if (chechAccountIsAdmin()) {
-                    return "error_not_admin";
+                    loadError(AddUserResult.ACCOUNT_NOT_ADMIN);
+                    return;
                 }
-                if (checkIfAccountExists()) {
-                    return "error_add_admin";
+                else if (checkIfAccountExists()) {
+                    loadError(AddUserResult.ACCOUNT_EXIST);
+                    return;
                 }
                 setAsAdmin();
-                return "success_admin_set";
+                loadError(AddUserResult.SUCCESS_ADMIN_SET);
+                return;
             }
         }
-        return "error_unknown";
+    }
+    public void loadError(AddUserResult addUser) {
+        System.out.println(addUser.getMessage());
+        errorTextProperty.set(addUser.getMessage());
     }
 
     public void addUserAccount() {
