@@ -68,13 +68,7 @@ public class AddUserController {
     private Label lbEnterUsername;
 
     @FXML
-    private Label lbErrorSignUp;
-
-    @FXML
-    private Label lbErrorAddAdmin;
-
-    @FXML
-    private Label lbErrorPassword;
+    private Label lbError;
 
     private final AddUserViewModel viewModel = new AddUserViewModel();
 
@@ -149,7 +143,7 @@ public class AddUserController {
         tfUsername.setDisable(true);
         tfUsername.setVisible(false);
         mbAccount.setText("Account");
-        loadNotError();
+        lbError.setVisible(false);
     }
 
     private void loadGraphicWithUserCreate() {
@@ -182,7 +176,7 @@ public class AddUserController {
         tfUsername.setDisable(false);
         tfUsername.setVisible(true);
         mbAccount.setText("User");
-        loadNotError();
+        lbError.setVisible(false);
         clear();
     }
 
@@ -217,7 +211,7 @@ public class AddUserController {
         tfUsername.setVisible(true);
         mbAccount.setText("Admin");
         mbFunction.setText("Create Admin Account");
-        loadNotError();
+        lbError.setVisible(false);
         clear();
     }
 
@@ -248,7 +242,7 @@ public class AddUserController {
         tfUsername.setVisible(true);
         mbAccount.setText("Admin");
         mbFunction.setText("Set As Admin");
-        loadNotError();
+        lbError.setVisible(false);
         clear();
     }
 
@@ -275,7 +269,7 @@ public class AddUserController {
         tfUsername.setVisible(false);
         mbAccount.setText("Admin");
         mbFunction.setText("Function");
-        loadNotError();
+        lbError.setVisible(false);
     }
 
     private void clear() {
@@ -287,75 +281,45 @@ public class AddUserController {
     }
 
     private void handleAddUSerOrAdmin() {
-        if (mbAccount.getText().equals("User")) {
-            if (!viewModel.getPassword().equals(viewModel.getConfirmPassword())) {
-                loadErrorPassword();
-                clear();
-                return;
-            }
-            if (viewModel.checkIfAccountExists()) {
-                loadErrorSignUp();
-                clear();
-                return;
-            }
-            viewModel.addUserAccount();
-            loadAtStart();
-            clear();
-        } else if (mbAccount.getText().equals("Admin")) {
-            if (mbFunction.getText().equals("Create Admin Account")) {
-                if (!viewModel.getPassword().equals(viewModel.getConfirmPassword())) {
-                    loadErrorPassword();
-                    clear();
-                    return;
-                }
-                if (viewModel.checkIfAccountExists()) {
-                    loadErrorSignUp();
-                    clear();
-                    return;
-                }
-                viewModel.createAdminAccount();
+        String result = viewModel.addUserOrAdmin();
+
+        switch (result) {
+            case "error_password_not_match":
+                lbError.setText("The password and confirmation password do not match.");
+                lbError.setVisible(true);
+                break;
+            case "error_account_exist":
+                lbError.setText("This account already exists. Please choose a different username.");
+                lbError.setVisible(true);
+                break;
+            case "error_add_admin":
+                lbError.setText("Only admin users are allowed to perform this action.");
+                lbError.setVisible(true);
+                break;
+            case "error_not_admin":
+                lbError.setText("The account is not an admin account.");
+                lbError.setVisible(true);
+                break;
+            case "success_user":
                 loadAtStart();
-                clear();
-            } else if (mbFunction.getText().equals("Set As Admin")) {
-                if (!viewModel.checkIfAccountExists()) {
-                    loadErrorAddAdmin();
-                    clear();
-                    return;
-                }
-                viewModel.setAsAdmin();
+                lbError.setText("A user account has been successfully created.");
+                lbError.setVisible(true);
+                break;
+            case "success_admin_created":
                 loadAtStart();
-                clear();
-            } else {
-                return;
-            }
-        } else {
-            return;
+                lbError.setText("An admin account has been successfully created.");
+                lbError.setVisible(true);
+                break;
+            case "success_admin_set":
+                loadAtStart();
+                lbError.setText("The user account has been successfully promoted to admin.");
+                lbError.setVisible(true);
+                break;
+            default:
+                break;
         }
-
+        clear();
     }
 
-    private void loadErrorSignUp() {
-        lbErrorSignUp.setVisible(true);
-        lbErrorAddAdmin.setVisible(false);
-        lbErrorPassword.setVisible(false);
-    }
-
-    private void loadErrorAddAdmin() {
-        lbErrorAddAdmin.setVisible(true);
-        lbErrorSignUp.setVisible(false);
-        lbErrorPassword.setVisible(false);
-    }
-
-    private void loadErrorPassword() {
-        lbErrorAddAdmin.setVisible(false);
-        lbErrorSignUp.setVisible(false);
-        lbErrorPassword.setVisible(true);
-    }
-
-    private void loadNotError() {
-        lbErrorAddAdmin.setVisible(false);
-        lbErrorSignUp.setVisible(false);
-        lbErrorPassword.setVisible(false);
-    }
 }
 

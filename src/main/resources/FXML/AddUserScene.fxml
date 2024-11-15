@@ -71,17 +71,11 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label fx:id="lbErrorSignUp" layoutX="79.0" layoutY="94.0" style="-fx-font-weight: bold;" text="The account already exists." textFill="#ffba00" visible="false">
+        <Label fx:id="lbError" layoutX="79.0" layoutY="94.0" prefHeight="20.0" prefWidth="268.0" style="-fx-font-weight: bold;" textFill="#ffba00" visible="false">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="lbErrorAddAdmin" layoutX="79.0" layoutY="94.0" style="-fx-font-weight: bold;" text="This account already has admin status." textFill="#ffba00" visible="false">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <Label fx:id="lbErrorPassword" layoutX="79.0" layoutY="94.0" style="-fx-font-weight: bold;" text="The passwords do not match." textFill="#ffba00" visible="false" />
 
     </children>
 
