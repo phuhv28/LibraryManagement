@@ -1,107 +1,40 @@
 package librarymanagement.data;
 
-import java.util.List;
+public interface Document {
 
-public abstract class Document {
-    private String id;
-    private String title;
-    private String publisher;
-    private String publishedDate;
-    private int pageCount;
-    private int availableCopies;
-    private double averageRating;
-    private int ratingsCount;
+    String getId();
 
-    public Document() {
-    }
+    String getTitle();
 
-    public Document(String id, String title, String publisher, String publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount) {
-        this.id = id;
-        this.title = title;
-        this.publisher = publisher;
-        this.publishedDate = publishedDate;
-        this.pageCount = pageCount;
-        this.availableCopies = availableCopies;
-        this.averageRating = averageRating;
-        this.ratingsCount = ratingsCount;
-    }
+    String getPublisher();
 
-    public String getId() {
-        return id;
-    }
+    String getPublishedDate();
 
-    public String getTitle() {
-        return title;
-    }
+    int getPageCount();
 
-    public String getPublisher() {
-        return publisher;
-    }
+    int getAvailableCopies();
 
-    public String getPublishedDate() {
-        return publishedDate;
-    }
+    double getAverageRating();
 
-    public int getPageCount() {
-        return pageCount;
-    }
+    int getRatingsCount();
 
-    public int getAvailableCopies() {
-        return availableCopies;
-    }
+    void setId(String id);
 
-    public double getAverageRating() {
-        return averageRating;
-    }
+    void setTitle(String title);
 
-    public int getRatingsCount() {
-        return ratingsCount;
-    }
+    void setPublisher(String publisher);
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    void setPublishedDate(String publishedDate);
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    void setPageCount(int pageCount);
 
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
+    void setAvailableCopies(int availableCopies);
 
-    public void setPublishedDate(String publishedDate) {
-        this.publishedDate = publishedDate;
-    }
+    void setAverageRating(double averageRating);
 
-    public void setPageCount(int pageCount) {
-        this.pageCount = pageCount;
-    }
+    void setRatingsCount(int ratingsCount);
 
-    public void setAvailableCopies(int availableCopies) {
-        this.availableCopies = availableCopies;
-    }
+    DocumentType getDocumentType();
 
-    public void setAverageRating(double averageRating) {
-        this.averageRating = averageRating;
-    }
-
-    public void setRatingsCount(int ratingsCount) {
-        this.ratingsCount = ratingsCount;
-    }
-
-    public abstract List<Object> getAll();
-
-    public abstract String getDocumentType();
-
-    public String getInfo() {
-        return "ID: " + id + "\n" +
-                "Title: " + title + "\n" +
-                "Publisher: " + publisher + "\n" +
-                "Published Date: " + publishedDate + "\n" +
-                "Page Count: " + pageCount + "\n" +
-                "Available Copies: " + availableCopies + "\n" +
-                "Average Rating: " + averageRating + "\n" +
-                "Ratings Count: " + ratingsCount;
-    }
+    void setDocumentType(DocumentType documentType);
 }

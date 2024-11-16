@@ -95,7 +95,7 @@ public class AddDocumentViewModel {
         Book newBook = new Book(null, getTitle(), getPublisher(),
                 getPublicationDate().toString(), getPageCount(), getAvailableCopies(),
                 0, 0, getISBN(), getCategory(), getAuthor(), getDescription());
-        DocumentManagement.getInstance().addBook(newBook);
+        BookService.getInstance().addDocument(newBook);
         return true;
     }
 }

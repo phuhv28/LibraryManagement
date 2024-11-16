@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import librarymanagement.data.Book;
-import librarymanagement.data.DocumentManagement;
+import librarymanagement.data.BookService;
 
 public class EditDocumentViewModel {
     private final StringProperty documentIDProperty = new SimpleStringProperty();
@@ -15,7 +15,7 @@ public class EditDocumentViewModel {
 
     public EditDocumentViewModel() {
         documentIDProperty.addListener((observable, oldValue, newValue) -> {
-            selectedDocumentProperty.set(DocumentManagement.getInstance().searchBookByID(documentIDProperty.get()));
+            selectedDocumentProperty.set(BookService.getInstance().findDocumentById(documentIDProperty.get()));
             if (selectedAttributeProperty.get() != null) {
                 loadEditedFieldProperty(selectedAttributeProperty.get());
             }
@@ -75,7 +75,7 @@ public class EditDocumentViewModel {
     }
 
     public void save() {
-        DocumentManagement.getInstance().editBook(selectedDocumentProperty.get());
+        BookService.getInstance().updateDocument(selectedDocumentProperty.get());
     }
 
     private void loadEditedFieldProperty(String selectedAttribute) {

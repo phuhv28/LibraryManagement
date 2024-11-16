@@ -5,7 +5,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import librarymanagement.data.Book;
-import librarymanagement.data.DocumentManagement;
+import librarymanagement.data.BookService;
 
 public class SearchDocumentViewModel {
     private StringProperty valueSearchProperty = new SimpleStringProperty();
@@ -35,19 +35,19 @@ public class SearchDocumentViewModel {
 
         switch (selectedAttributeProperty.get()) {
             case "ID":
-                searchResultProperty.add(DocumentManagement.getInstance().searchBookByID(valueSearchProperty.get()));
+                searchResultProperty.add(BookService.getInstance().findDocumentById(valueSearchProperty.get()));
                 break;
             case "ISBN":
-                searchResultProperty.add(DocumentManagement.getInstance().searchBookByISBN(valueSearchProperty.get()));
+                searchResultProperty.add(BookService.getInstance().searchBookByISBN(valueSearchProperty.get()));
                 break;
             case "Title":
-                searchResultProperty.addAll(DocumentManagement.getInstance().searchBookByTitle(valueSearchProperty.get()));
+                searchResultProperty.addAll(BookService.getInstance().searchBookByTitle(valueSearchProperty.get()));
                 break;
             case "Author":
-                searchResultProperty.addAll(DocumentManagement.getInstance().searchBookByAuthor(valueSearchProperty.get()));
+                searchResultProperty.addAll(BookService.getInstance().searchBookByAuthor(valueSearchProperty.get()));
                 break;
             case "Category":
-                searchResultProperty.addAll(DocumentManagement.getInstance().searchBookByCategory(valueSearchProperty.get()));
+                searchResultProperty.addAll(BookService.getInstance().searchBookByCategory(valueSearchProperty.get()));
                 break;
         }
     }

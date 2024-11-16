@@ -75,7 +75,7 @@ public class GoogleBooksAPI {
     }
 
     public static void main(String[] args) {
-        DocumentManagement dm = new DocumentManagement();
+        BookService dm = new BookService();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         List<Book> books = searchBooks(input);

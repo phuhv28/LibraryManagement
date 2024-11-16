@@ -4,18 +4,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DocumentManagement {
-    private static final DocumentManagement INSTANCE = new DocumentManagement();
+public class BookService implements DocumentService<Book> {
+    private static final BookService INSTANCE = new BookService();
 
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
 
     private Connection connection;
 
-    public static DocumentManagement getInstance() {
+    public static BookService getInstance() {
         return INSTANCE;
     }
 
-    public DocumentManagement() {
+    public BookService() {
     }
 
     public String generateBookID() {
@@ -48,8 +48,8 @@ public class DocumentManagement {
         return res.get(0).get(0) != null;
     }
 
-    //tam thoi co moi Book, con Magazine va Newspaper
-    public void addBook(Book book) {
+    @Override
+    public void addDocument(Book book) {
         if (checkIfHasBookISBN(book.getISBN())) {
             System.out.println("Book already exists");
             return;
@@ -62,7 +62,8 @@ public class DocumentManagement {
         System.out.println("Add book successfully");
     }
 
-    public void deleteBook(String id) {
+    @Override
+    public void deleteDocument(String id) {
         if (!checkIfHasBookId(id)) {
             System.out.println("Book does not exist");
             return;
@@ -71,8 +72,9 @@ public class DocumentManagement {
         sqLiteInstance.deleteRow("Book", condition);
     }
 
-    public void editBook(Book book) {
-        deleteBook(book.getId());
+    @Override
+    public void updateDocument(Book book) {
+        deleteDocument(book.getId());
 
         sqLiteInstance.insertRow("Book", book.getAll());
 
@@ -126,7 +128,8 @@ public class DocumentManagement {
         return createNewBookList(author, sql);
     }
 
-    public Book searchBookByID(String id) {
+    @Override
+    public Book findDocumentById(String id) {
         String sql = "SELECT * FROM Book WHERE id LIKE ?";
         return createNewBookList(id, sql).getFirst();
     }

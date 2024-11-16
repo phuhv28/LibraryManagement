@@ -7,12 +7,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionManagement {
-    private static final TransactionManagement INSTANCE = new TransactionManagement();
+public class BorrowingService {
+    private static final BorrowingService INSTANCE = new BorrowingService();
 
     SQLiteInstance sqLiteInstance = new SQLiteInstance();
 
-    public TransactionManagement getInstance() {
+    public BorrowingService getInstance() {
         return INSTANCE;
     }
 
@@ -32,11 +32,11 @@ public class TransactionManagement {
     }
 
     public BorrowBook getBorrowedBookByID(String transactionID) {
-        return  (BorrowBook) sqLiteInstance.find("Transaction", "transactionID", transactionID, "*").getFirst();
+        return (BorrowBook) sqLiteInstance.find("Transaction", "transactionID", transactionID, "*").getFirst();
     }
 
     public boolean issueBook(String bookID) {
-        Book book = DocumentManagement.getInstance().searchBookByID(bookID);
+        Book book = BookService.getInstance().findDocumentById(bookID);
         if (book == null) {
             return false;
         } else {
@@ -45,7 +45,7 @@ public class TransactionManagement {
             } else {
                 book.setAvailableCopies(book.getAvailableCopies() - 1);
             }
-            DocumentManagement.getInstance().editBook(book);
+            BookService.getInstance().updateDocument(book);
 
             LocalDate today = LocalDate.now();
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -59,9 +59,9 @@ public class TransactionManagement {
 
     public void returnBook(String transactionID) {
         BorrowBook transaction = getBorrowedBookByID(transactionID);
-        Book book = DocumentManagement.getInstance().searchBookByID(transaction.getDocID());
+        Book book = BookService.getInstance().findDocumentById(transaction.getDocID());
         book.setAvailableCopies(book.getAvailableCopies() + 1);
-        DocumentManagement.getInstance().editBook(book);
+        BookService.getInstance().updateDocument(book);
 
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -73,5 +73,13 @@ public class TransactionManagement {
         List<BorrowBook> list = new ArrayList<>();
         sqLiteInstance.find("bookTransaction", "userId", userID, "*");
         return list;
+    }
+
+    // TODO
+    public void borrowDocument(String usernameOfAccount, String documentId, DocumentType documentType) {
+    }
+
+    // TODO
+    public void returnDocument(String borrowId) {
     }
 }

@@ -17,7 +17,7 @@ public class DeleteDocumentViewModel {
 
     public boolean deleteDocument() {
         if (checkIdDocument()) {
-            DocumentManagement.getInstance().deleteBook(getID());
+            BookService.getInstance().deleteDocument(getID());
             IDProperty.set("");
             return true;
         }
@@ -26,6 +26,6 @@ public class DeleteDocumentViewModel {
     }
 
     public boolean checkIdDocument() {
-        return DocumentManagement.getInstance().checkIfHasBookId(getID());
+        return BookService.getInstance().checkIfHasBookId(getID());
     }
 }

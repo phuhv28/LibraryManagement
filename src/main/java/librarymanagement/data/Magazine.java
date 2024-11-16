@@ -1,7 +1,7 @@
 /*
 package librarymanagement.data;
 
-class Magazine extends Document {
+class Magazine extends AbstractDocument {
     private int issueNumber;
     private String month;
 

@@ -3,18 +3,14 @@ package librarymanagement.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book extends Document {
+public class Book extends AbstractDocument {
     private String ISBN;
     private String categories;
     private String author;
     private String description;
 
     public Book() {
-    }
-
-    @Override
-    public String getDocumentType() {
-        return "Book";
+        this.documentType = DocumentType.BOOK;
     }
 
     public Book(String id, String title, String publisher, String publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount, String ISBN, String categories, String author, String description) {
@@ -23,6 +19,7 @@ public class Book extends Document {
         this.categories = categories;
         this.author = author;
         this.description = description;
+        this.documentType = DocumentType.BOOK;
     }
 
     public String getISBN() {
@@ -57,7 +54,7 @@ public class Book extends Document {
         this.description = description;
     }
 
-    @Override
+    //    @Override
     public List<Object> getAll() {
         List<Object> res = new ArrayList<>();
 
