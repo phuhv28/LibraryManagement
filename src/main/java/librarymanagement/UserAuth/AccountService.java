@@ -1,5 +1,8 @@
 package librarymanagement.UserAuth;
 
+import librarymanagement.data.Book;
+import librarymanagement.data.BorrowBook;
+import librarymanagement.data.DocumentManagement;
 import librarymanagement.data.SQLiteInstance;
 
 import java.time.LocalDate;
@@ -13,7 +16,7 @@ public class AccountService {
     private AccountService() {
     }
 
-    public static Account getCurrentAccount() {
+    public Account getCurrentAccount() {
         return currentAccount;
     }
 
@@ -23,9 +26,6 @@ public class AccountService {
 
     private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
 
-    public Account getCurrentAccount() {
-        return currentAccount;
-    }
 
     public void setCurrentAccount(Account currentAccount) {
         AccountService.currentAccount = currentAccount;
@@ -50,9 +50,6 @@ public class AccountService {
             String regDate = (String) result.get(0).get(3);
             currentAccount = new Account(username, password, fullName,
                     email, regDate, isAdmin ? AccountType.ADMIN : AccountType.USER);
-            System.out.println(currentAccount.getNumberOfBooksBorrowed());
-            System.out.println(currentAccount.getId());
-            System.out.println(currentAccount.getRegDate());
             return LoginResult.SUCCESS;
         }
 

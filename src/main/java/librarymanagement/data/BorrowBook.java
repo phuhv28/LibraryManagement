@@ -1,40 +1,67 @@
 package librarymanagement.data;
 
 public class BorrowBook {
-    private int stt;
-    private int documentId;
-    private String documentTitle;
-    private String borrowDate;
-    private String dueDate;
+    private String transactionID;
+    private String userID;
+    private String docID;
+    private String docTitle;
+    private String issueDate;
+    private String returnDate;
 
-    public static int count = 0;
-
-    public BorrowBook(int documentId, String documentTitle, String borrowDate, String dueDate) {
-        this.documentId = documentId;
-        this.documentTitle = documentTitle;
-        this.borrowDate = borrowDate;
-        this.dueDate = dueDate;
-        count++;
-        this.stt = count;
+    public BorrowBook(String transactionID, String userID, String docID, String docTitle, String issueDate, String returnDate) {
+        this.transactionID = transactionID;
+        this.userID = userID;
+        this.docID = docID;
+        this.docTitle = docTitle;
+        this.issueDate = issueDate;
+        this.returnDate = returnDate;
     }
 
-    public int getStt() {
-        return stt;
+    public String getTransactionID() {
+        return transactionID;
     }
 
-    public int getDocumentId() {
-        return documentId;
+    public void setTransactionID(String transactionID) {
+        this.transactionID = transactionID;
     }
 
-    public String getDocumentTitle() {
-        return documentTitle;
+    public String getUserID() {
+        return userID;
     }
 
-    public String getBorrowDate() {
-        return borrowDate;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public String getDocID() {
+        return docID;
+    }
+
+    public void setDocID(String docID) {
+        this.docID = docID;
+    }
+
+    public String getDocTitle() {
+        return docTitle;
+    }
+
+    public void setDocTitle(String docTitle) {
+        this.docTitle = docTitle;
+    }
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
     }
 }

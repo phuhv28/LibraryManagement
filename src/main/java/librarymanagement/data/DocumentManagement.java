@@ -15,7 +15,7 @@ public class DocumentManagement {
         return INSTANCE;
     }
 
-    private DocumentManagement() {
+    public DocumentManagement() {
     }
 
     public String generateBookID() {
