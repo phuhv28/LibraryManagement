@@ -251,6 +251,22 @@ public class SQLiteInstance {
     }
 
     /**
+     * update row in database
+     * @param tableName The table needs to be updated.
+     * @param column The column needs to be updated.
+     * @param newValue new value
+     * @param columnCondition column to check condition
+     * @param condition condition
+     */
+    public void updateRow(String tableName, String column, Object newValue, String columnCondition, Object condition) {
+        String sql = "UPDATE " + tableName + " SET " + column + " = ? WHERE " + columnCondition + " = ?";
+        executeUpdate(sql, stmt -> {
+            stmt.setObject(1, newValue);
+            stmt.setObject(2, columnCondition);
+        });
+    }
+
+    /**
      * close access to database
      */
     public void close() {

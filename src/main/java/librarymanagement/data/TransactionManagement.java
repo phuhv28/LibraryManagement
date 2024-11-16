@@ -1,5 +1,7 @@
 package librarymanagement.data;
 
+import librarymanagement.UserAuth.AccountService;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,69 +16,62 @@ public class TransactionManagement {
         return INSTANCE;
     }
 
-    public void issueBook(String ISBN, String userID) {
-        List<List<Object>> lists = sqLiteInstance.find("Book", "ISBN", ISBN, "availableCopies");
 
-        if (lists.isEmpty()) {
-            System.out.println("ISBN is not found.");
-            return;
-        } else if ((int) lists.getFirst().getFirst() == 0) {
-            System.out.println("No available copies found.");
-            return;
-        }
+    public String generateTransactionID() {
+        String newId;
 
-        String transactionID;
-        lists = sqLiteInstance.findWithSQL("SELECT transactionID FROM bookTransaction ORDER BY transactionID DESC LIMIT 1", new Object[]{}, "transactionID");
-        if (lists.isEmpty()) {
-            transactionID = "T101";
+        List<List<Object>> result = sqLiteInstance.findNotCondition("Transaction", "Max(transactionId)");
+        if (result.get(0).get(0) == null) {
+            newId = "T101";
         } else {
-            String temp = lists.get(0).get(0).toString().substring(1);
-            transactionID = "T" + (Integer.parseInt(temp) + 1);
+            String temp = result.get(0).get(0).toString().substring(1);
+            newId = "T" + (Integer.parseInt(temp) + 1);
         }
-        String finalTransactionID = transactionID;
+
+        return newId;
+    }
+
+    public BorrowBook getBorrowedBookByID(String transactionID) {
+        return  (BorrowBook) sqLiteInstance.find("Transaction", "transactionID", transactionID, "*").getFirst();
+    }
+
+    public boolean issueBook(String bookID) {
+        Book book = DocumentManagement.getInstance().searchBookByID(bookID);
+        if (book == null) {
+            return false;
+        } else {
+            if (book.getAvailableCopies() == 0) {
+                return false;
+            } else {
+                book.setAvailableCopies(book.getAvailableCopies() - 1);
+            }
+            DocumentManagement.getInstance().editBook(book);
+
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            sqLiteInstance.insertRow("Transaction", generateTransactionID(),
+                    AccountService.getInstance().getCurrentAccount().getId(), bookID,
+                    book.getTitle(), today.format(dateFormatter), null);
+        }
+        return true;
+    }
+
+    public void returnBook(String transactionID) {
+        BorrowBook transaction = getBorrowedBookByID(transactionID);
+        Book book = DocumentManagement.getInstance().searchBookByID(transaction.getDocID());
+        book.setAvailableCopies(book.getAvailableCopies() + 1);
+        DocumentManagement.getInstance().editBook(book);
 
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        String sql = "UPDATE book SET availableCopies = availableCopies - 1 WHERE ISBN = ?";
-        sqLiteInstance.executeUpdate(sql, stmt -> {
-            stmt.setString(1, ISBN);
-        });
-
-        sql = "INSERT INTO bookTransaction (userId, ISBN, borrowDate, returnDate, transactionID) VALUES (?, ?, ?, ?, ?)";
-        sqLiteInstance.executeUpdate(sql, stmt -> {
-            stmt.setString(1, userID);
-            stmt.setString(2, ISBN);
-            stmt.setString(3, today.format(dateFormatter));
-            stmt.setString(4, null);
-            stmt.setString(5, finalTransactionID);
-        });
-        System.out.println("Issue book successfully");
+        sqLiteInstance.updateRow("Transaction", "returnDate", today.format(dateFormatter), "transactionID", transactionID);
     }
 
-    public void returnBook(String issueID) {
-        List<List<Object>> lists = sqLiteInstance.find("bookTransaction", "transactionID", issueID, "ISBN");
-        String finalISBN = lists.getFirst().getFirst().toString();
-
-        String sql = "UPDATE book SET availableCopies = availableCopies + 1 WHERE ISBN = ?";
-        sqLiteInstance.executeUpdate(sql, stmt -> {
-            stmt.setString(1, finalISBN);
-        });
-
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        sql = "UPDATE bookTransaction SET returnDate = ? WHERE transactionID = ?";
-        sqLiteInstance.executeUpdate(sql, stmt -> {
-            stmt.setString(1, today.format(dateFormatter));
-            stmt.setString(2, issueID);
-        });
-        System.out.println("Return book successfully");
-    }
-
-    public List<Book> listBooksBorrowedByUser(String userID) {
-        List<Book> books = new ArrayList<>();
+    public List<BorrowBook> listBooksBorrowedByUser(String userID) {
+        List<BorrowBook> list = new ArrayList<>();
         sqLiteInstance.find("bookTransaction", "userId", userID, "*");
-        return books;
+        return list;
     }
 }

@@ -59,9 +59,6 @@ public class MyDocumentController {
     public void initialize() {
         // Example list books to print scenes
         List<BorrowBook> listBook = new ArrayList<>();
-        listBook.add(new BorrowBook(134, "helo", "2024-10-01", "2024-11-03"));
-        listBook.add(new BorrowBook(146, "hi", "2024-10-02", "2024-12-4"));
-        listBook.add(new BorrowBook(180, "xin chao", "2024-10-03", "2025-02-04"));
 
         ObservableList<BorrowBook> observableListBook = FXCollections.observableArrayList(listBook);
         tableView.setItems(observableListBook);
