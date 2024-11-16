@@ -8,9 +8,9 @@
 <AnchorPane fx:id="HomeScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.HomeController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
-        <Label layoutX="221.0" layoutY="40.0" style="-fx-font-weight: BOLD;" text="HOME SCREEN" textFill="WHITE" underline="true">
+        <Label layoutX="224.0" layoutY="40.0" prefHeight="40.0" prefWidth="181.0" style="-fx-font-weight: BOLD;" text="HOME SCREEN" textFill="WHITE" underline="true">
             <font>
-                <Font size="24.0" />
+                <Font size="26.0" />
             </font>
         </Label>
     </children>
