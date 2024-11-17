@@ -2,17 +2,15 @@ package librarymanagement.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import librarymanagement.UserAuth.AccountService;
+import librarymanagement.UserAuth.AccountType;
+import librarymanagement.gui.utils.SceneHistoryStack;
 
 import java.io.IOException;
 
 public class MainSceneController {
-
-
-    @FXML
-    private AnchorPane MainScene;
 
     @FXML
     private AnchorPane rightMainScene;
@@ -27,7 +25,7 @@ public class MainSceneController {
     private Button btReturn;
 
     @FXML
-    private Button btFix;
+    private Button btEditDocument;
 
     @FXML
     private Button btDelete;
@@ -55,7 +53,7 @@ public class MainSceneController {
         btSearch.setOnAction(event -> loadSceneSearch());
         btMyDocument.setOnAction(event -> loadSceneMyDocument());
         btReturn.setOnAction(event -> loadSceneReturn());
-        btFix.setOnAction(event -> loadSceneFix());
+        btEditDocument.setOnAction(event -> loadSceneFix());
         btDelete.setOnAction(event -> loadSceneDelete());
         btAdd.setOnAction(event -> loadSceneAdd());
         btLogOut.setOnAction(actionEvent -> handleLogOut());
@@ -63,6 +61,14 @@ public class MainSceneController {
         btHome.setOnAction(event -> loadHome());
         btSetting.setOnAction(event -> loadSetting());
         btUser.setOnAction(event -> loadUser());
+
+        if (AccountService.getInstance().getCurrentAccount().getAccountType() != AccountType.ADMIN) {
+            btAddUser.setVisible(false);
+            btDelete.setVisible(false);
+            btAdd.setVisible(false);
+            btEditDocument.setVisible(false);
+
+        }
     }
 
     private void loadScene(String fxmlFile) {
@@ -76,42 +82,42 @@ public class MainSceneController {
     }
 
     private void loadSceneSearch() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("SearchDocument.fxml");
-        previousSceneToReturn.previousFxmlFile = "SearchDocument.fxml";
+        SceneHistoryStack.previousFxmlFile = "SearchDocument.fxml";
     }
 
     private void loadSceneAdd() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("AddDocument.fxml");
-        previousSceneToReturn.previousFxmlFile = "AddDocument.fxml";
+        SceneHistoryStack.previousFxmlFile = "AddDocument.fxml";
     }
 
     private void loadSceneDelete() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("DeleteDocument.fxml");
-        previousSceneToReturn.previousFxmlFile = "DeleteDocument.fxml";
+        SceneHistoryStack.previousFxmlFile = "DeleteDocument.fxml";
     }
 
     private void loadSceneFix() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("EditDocument.fxml");
-        previousSceneToReturn.previousFxmlFile = "EditDocument.fxml";
+        SceneHistoryStack.previousFxmlFile = "EditDocument.fxml";
     }
 
     private void loadSceneMyDocument() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("MyDocument.fxml");
-        previousSceneToReturn.previousFxmlFile = "MyDocument.fxml";
+        SceneHistoryStack.previousFxmlFile = "MyDocument.fxml";
     }
 
     private void loadSceneReturn() {
         try {
             String fxmlFile;
-            if(previousSceneToReturn.listPreviousFxmlFile.isEmpty()) {
+            if(SceneHistoryStack.listPreviousFxmlFile.isEmpty()) {
                   fxmlFile = "HomeScene.fxml";
             } else {
-                fxmlFile = previousSceneToReturn.listPreviousFxmlFile.pop();
+                fxmlFile = SceneHistoryStack.listPreviousFxmlFile.pop();
             }
 
             AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
@@ -127,27 +133,27 @@ public class MainSceneController {
     }
 
     private void loadSceneAddAccount() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("AddUserScene.fxml");
-        previousSceneToReturn.previousFxmlFile = "AddUserScene.fxml";
+        SceneHistoryStack.previousFxmlFile = "AddUserScene.fxml";
     }
 
     private void loadHome() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("HomeScene.fxml");
-        previousSceneToReturn.previousFxmlFile = "HomeScene.fxml";
+        SceneHistoryStack.previousFxmlFile = "HomeScene.fxml";
     }
 
     private void loadSetting() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("SettingScene.fxml");
-        previousSceneToReturn.previousFxmlFile = "SettingScene.fxml";
+        SceneHistoryStack.previousFxmlFile = "SettingScene.fxml";
     }
 
     private void loadUser() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("UserInfo.fxml");
-        previousSceneToReturn.previousFxmlFile = "UserInfo.fxml";
+        SceneHistoryStack.previousFxmlFile = "UserInfo.fxml";
     }
 
 }
