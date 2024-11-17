@@ -1,6 +1,8 @@
 package librarymanagement.data;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -262,8 +264,12 @@ public class SQLiteInstance {
         String sql = "UPDATE " + tableName + " SET " + column + " = ? WHERE " + columnCondition + " = ?";
         executeUpdate(sql, stmt -> {
             stmt.setObject(1, newValue);
-            stmt.setObject(2, columnCondition);
+            stmt.setObject(2, condition);
         });
+    }
+
+    public LocalDate getToday() {
+        return LocalDate.now();
     }
 
     /**

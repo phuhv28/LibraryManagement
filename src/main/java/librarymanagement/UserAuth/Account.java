@@ -5,6 +5,7 @@ import librarymanagement.data.SQLiteInstance;
 import java.util.List;
 
 public class Account {
+    private String userID;
     private String username;
     private String password;
     private String fullName;
@@ -18,10 +19,21 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public Account(String username, String password, String fullname, String email, String regDate, AccountType accountType) {
+    public Account(String username, String password, String fullName, String email, String regDate, AccountType accountType) {
         this.username = username;
         this.password = password;
-        this.fullName = fullname;
+        this.fullName = fullName;
+        this.email = email;
+        this.regDate = regDate;
+        this.accountType = accountType;
+        this.userID = getId();
+    }
+
+    public Account(String userID, String username, String password, String fullName, String email, String regDate, AccountType accountType) {
+        this.userID = userID;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
         this.email = email;
         this.regDate = regDate;
         this.accountType = accountType;
@@ -88,7 +100,7 @@ public class Account {
     }
 
     public int getNumberOfBooksBorrowed() {
-        List<List<Object>> lists = SQLiteInstance.getInstance().find("bookTransaction", "userID", getId(), "transactionID");
+        List<List<Object>> lists = SQLiteInstance.getInstance().find("Transaction", "userID", getId(), "transactionID");
 
         return lists.isEmpty() ? 0 : lists.size();
     }

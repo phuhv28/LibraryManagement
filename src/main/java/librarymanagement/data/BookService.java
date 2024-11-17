@@ -9,8 +9,6 @@ public class BookService implements DocumentService<Book> {
 
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
 
-    private Connection connection;
-
     public static BookService getInstance() {
         return INSTANCE;
     }

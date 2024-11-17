@@ -1,7 +1,5 @@
 package librarymanagement.data;
 
-import java.util.List;
-
 public abstract class AbstractDocument implements Document {
     protected String id;
     protected String title;

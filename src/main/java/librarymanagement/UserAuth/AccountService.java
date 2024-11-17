@@ -9,6 +9,7 @@ import java.util.List;
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
     private static Account currentAccount = new Account();
+    private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
 
     private AccountService() {
     }
@@ -20,9 +21,6 @@ public class AccountService {
     public static AccountService getInstance() {
         return INSTANCE;
     }
-
-    private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
-
 
     public void setCurrentAccount(Account currentAccount) {
         AccountService.currentAccount = currentAccount;
@@ -142,7 +140,24 @@ public class AccountService {
      */
     public boolean isAdmin(String username) {
         List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "*");
-
         return !list.isEmpty();
+    }
+
+    public Account getAccountByUserID(String userID) {
+        AccountType type = userID.charAt(0) == 'A' ? AccountType.ADMIN : AccountType.USER;
+        String tableName = userID.charAt(0) == 'A' ? "Admin" : "User";
+        String column = userID.charAt(0) == 'A' ? "adminId" : "userId";
+        List<List<Object>> list = sqLiteInstance.find(tableName, column, userID, "username", "password", "fullName", "email", "regDate");
+
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        String username = (String) list.get(0).get(0);
+        String password = (String) list.get(0).get(1);
+        String fullName = (String) list.get(0).get(2);
+        String email = (String) list.get(0).get(3);
+        String regDate = (String) list.get(0).get(4);
+        return new Account(userID, username, password, fullName, email, regDate, type);
     }
 }
