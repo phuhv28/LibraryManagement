@@ -1,10 +1,12 @@
 package librarymanagement.data;
 
+import java.time.LocalDate;
+
 public abstract class AbstractDocument implements Document {
     protected String id;
     protected String title;
     protected String publisher;
-    protected String publishedDate;
+    protected LocalDate publishedDate;
     protected int pageCount;
     protected int availableCopies;
     protected double averageRating;
@@ -14,7 +16,7 @@ public abstract class AbstractDocument implements Document {
     public AbstractDocument() {
     }
 
-    public AbstractDocument(String id, String title, String publisher, String publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount) {
+    public AbstractDocument(String id, String title, String publisher, LocalDate publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount) {
         this.id = id;
         this.title = title;
         this.publisher = publisher;
@@ -41,7 +43,7 @@ public abstract class AbstractDocument implements Document {
     }
 
     @Override
-    public String getPublishedDate() {
+    public LocalDate getPublishedDate() {
         return publishedDate;
     }
 
@@ -86,7 +88,7 @@ public abstract class AbstractDocument implements Document {
     }
 
     @Override
-    public void setPublishedDate(String publishedDate) {
+    public void setPublishedDate(LocalDate publishedDate) {
         this.publishedDate = publishedDate;
     }
 

@@ -62,13 +62,13 @@ public class MainSceneController {
         btSetting.setOnAction(event -> loadSetting());
         btUser.setOnAction(event -> loadUser());
 
-        if (AccountService.getInstance().getCurrentAccount().getAccountType() != AccountType.ADMIN) {
-            btAddUser.setVisible(false);
-            btDelete.setVisible(false);
-            btAdd.setVisible(false);
-            btEditDocument.setVisible(false);
-
-        }
+//        if (AccountService.getInstance().getCurrentAccount().getAccountType() != AccountType.ADMIN) {
+//            btAddUser.setVisible(false);
+//            btDelete.setVisible(false);
+//            btAdd.setVisible(false);
+//            btEditDocument.setVisible(false);
+//
+//        }
     }
 
     private void loadScene(String fxmlFile) {

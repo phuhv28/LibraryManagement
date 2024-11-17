@@ -1,6 +1,7 @@
 package librarymanagement.data;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class BookService implements DocumentService<Book> {
                 float averageRating = rs.getFloat("averageRating");
                 int ratingCount = rs.getInt("ratingsCount");
 
-                books.add(new Book(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingCount, isbn, categories, author, description));
+                books.add(new Book(id, title, publisher, LocalDate.parse(publishedDate), pageCount, availableCopies, averageRating, ratingCount, isbn, categories, author, description));
             }
         } catch (SQLException e) {
             e.printStackTrace();

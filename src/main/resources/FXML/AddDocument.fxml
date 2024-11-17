@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="addDocumentPane" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddDocumentController">
+<AnchorPane fx:id="addDocumentPane" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddDocumentController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
 
@@ -54,7 +57,7 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <TextField fx:id="tfISBN" layoutX="382.0" layoutY="138.0" prefHeight="25.0" prefWidth="200.0" promptText="ISBN" />
+        <TextField fx:id="tfISBN" layoutX="382.0" layoutY="138.0" prefHeight="26.0" prefWidth="149.0" promptText="ISBN" />
         <TextField fx:id="tfTitle" layoutX="382.0" layoutY="178.0" prefHeight="25.0" prefWidth="200.0" promptText="TiItle" />
         <TextField fx:id="tfPublisher" layoutX="382.0" layoutY="218.0" prefHeight="25.0" prefWidth="200.0" promptText="Publisher" />
         <TextField fx:id="tfAuthor" layoutX="382.0" layoutY="258.0" prefHeight="25.0" prefWidth="200.0" promptText="Author" />
@@ -78,6 +81,7 @@
             </font>
         </Label>
       <DatePicker fx:id="dpPublicationDate" layoutX="382.0" layoutY="338.0" prefHeight="25.0" prefWidth="200.0" />
+      <Button fx:id="btFillUsingISBN" layoutX="543.0" layoutY="138.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="AutoFill" />
 
     </children>
 </AnchorPane>

@@ -145,7 +145,7 @@ public class DocumentInfoController {
                 lbTitle.setText(book.getTitle());
                 lbAuthor.setText(book.getAuthor());
                 lbPublisher.setText(book.getPublisher());
-                lbPublicationDate.setText(book.getPublishedDate());
+                lbPublicationDate.setText(book.getPublishedDate().toString());
                 lbISBN.setText(book.getISBN());
                 lbCategories.setText(book.getCategories());
                 lbPageCount.setText(String.valueOf(book.getPageCount()));

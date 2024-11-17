@@ -12,6 +12,9 @@ import librarymanagement.gui.viewmodels.AddDocumentViewModel;
 
 public class AddDocumentController {
     @FXML
+    private Button btFillUsingISBN;
+
+    @FXML
     private AnchorPane addDocumentPane;
 
     @FXML
@@ -55,6 +58,10 @@ public class AddDocumentController {
             handleAddDocument();
         });
 
+        btFillUsingISBN.setOnAction(e -> {
+            fillUsingISBN();
+        });
+
         tfISBN.textProperty().bindBidirectional(viewModel.ISBNProperty());
         tfTitle.textProperty().bindBidirectional(viewModel.titleProperty());
         tfPublisher.textProperty().bindBidirectional(viewModel.publisherProperty());
@@ -74,8 +81,27 @@ public class AddDocumentController {
         );
     }
 
+    private void fillUsingISBN() {
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Searching for Document");
+        loadingPopup.initOwnerStage(UIController.getPrimaryStage());
+        loadingPopup.show();
+
+        Task<Boolean> fillDocumentTask = new Task<>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return viewModel.fillUsingISBN();
+            }
+        };
+
+        fillDocumentTask.setOnSucceeded(event -> {
+            loadingPopup.close();
+        });
+
+        new Thread(fillDocumentTask).start();
+    }
+
     private void handleAddDocument() {
-        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Login");
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Adding document");
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
 

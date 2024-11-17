@@ -1,5 +1,7 @@
 package librarymanagement.data;
 
+import java.time.LocalDate;
+
 public interface Document {
 
     String getId();
@@ -8,7 +10,7 @@ public interface Document {
 
     String getPublisher();
 
-    String getPublishedDate();
+    LocalDate getPublishedDate();
 
     int getPageCount();
 
@@ -24,7 +26,7 @@ public interface Document {
 
     void setPublisher(String publisher);
 
-    void setPublishedDate(String publishedDate);
+    void setPublishedDate(LocalDate publishedDate);
 
     void setPageCount(int pageCount);
 

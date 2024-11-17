@@ -1,5 +1,6 @@
 package librarymanagement.data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Book extends AbstractDocument {
         this.documentType = DocumentType.BOOK;
     }
 
-    public Book(String id, String title, String publisher, String publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount, String ISBN, String categories, String author, String description) {
+    public Book(String id, String title, String publisher, LocalDate publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount, String ISBN, String categories, String author, String description) {
         super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount);
         this.ISBN = ISBN;
         this.categories = categories;
@@ -63,7 +64,7 @@ public class Book extends AbstractDocument {
         res.add(getTitle());
         res.add(author);
         res.add(getPublisher());
-        res.add(getPublishedDate());
+        res.add(getPublishedDate().toString());
         res.add(categories);
         res.add(getPageCount());
         res.add(getAvailableCopies());

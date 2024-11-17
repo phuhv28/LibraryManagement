@@ -49,7 +49,7 @@ public class EditDocumentViewModel {
                 selectedDocumentProperty.get().setCategories(editedFieldProperty.get());
                 break;
             case "Publication Date":
-                selectedDocumentProperty.get().setPublishedDate(editedFieldProperty.get());
+//                selectedDocumentProperty.get().setPublishedDate(editedFieldProperty.get());
                 break;
             case "Description":
                 selectedDocumentProperty.get().setDescription(editedFieldProperty.get());
@@ -97,7 +97,7 @@ public class EditDocumentViewModel {
                 editedFieldProperty.set(selectedDocumentProperty.get().getCategories());
                 break;
             case "Publication Date":
-                editedFieldProperty.set(selectedDocumentProperty.get().getPublishedDate());
+                editedFieldProperty.set(selectedDocumentProperty.get().getPublishedDate().toString());
                 break;
             case "Description":
                 editedFieldProperty.set(selectedDocumentProperty.get().getDescription());

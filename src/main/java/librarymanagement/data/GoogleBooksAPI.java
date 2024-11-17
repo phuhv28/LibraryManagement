@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,10 +18,9 @@ public class GoogleBooksAPI {
     private static final String API_KEY = "AIzaSyCDqQRwC5jM_KWFHGkkyDupSPbfAo9KvO8";
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
-    public static List<Book> searchBooks(String query) {
+    private static List<Book> handleAPIResult(String requestUrl) {
         List<Book> books = new ArrayList<>();
         try {
-            String requestUrl = BASE_URL + "?q=" + query.replace(" ", "+") + "&key=" + API_KEY;
             URL url = new URL(requestUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -64,7 +64,7 @@ public class GoogleBooksAPI {
 
                 Random rand = new Random();
                 int copies = rand.nextInt();
-                Book book = new Book(null, title, publisher, publishedDate, pageCount, copies, averageRating, ratingsCount, ISBN, categories, author, description);
+                Book book = new Book(null, title, publisher, LocalDate.parse(publishedDate), pageCount, copies, averageRating, ratingsCount, ISBN, categories, author, description);
                 books.add(book);
             }
 
@@ -74,14 +74,17 @@ public class GoogleBooksAPI {
         return books;
     }
 
+    public static List<Book> searchBooks(String query) {
+        String requestUrl = BASE_URL + "?q=" + query.replace(" ", "+") + "&key=" + API_KEY;
+        return handleAPIResult(requestUrl);
+    }
+
+    public static Book searchBookByISBN(String isbn) {
+        String requestUrl = BASE_URL + "?q=isbn:" + isbn + "&key=" + API_KEY;
+        return handleAPIResult(requestUrl).getFirst();
+    }
+
     public static void main(String[] args) {
-        BookService dm = new BookService();
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        List<Book> books = searchBooks(input);
-        for (Book book : books) {
-            System.out.println(book.getInfo());
-            System.out.println();
-        }
+        Book book = searchBookByISBN("9780134693903");
     }
 }
