@@ -29,7 +29,7 @@ public class AccountService {
     /**
      * Verify user account.
      */
-    public static LoginResult checkLogin(String username, String password) {
+    public LoginResult checkLogin(String username, String password) {
         List<List<Object>> result =
                 sqLiteInstance.find("Admin", "username", username, "username");
         boolean isAdmin = !result.isEmpty();

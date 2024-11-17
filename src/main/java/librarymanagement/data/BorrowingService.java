@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BorrowingService {
-    private static final BorrowingService INSTANCE = new BorrowingService();
-    SQLiteInstance sqLiteInstance = new SQLiteInstance();
+    private final SQLiteInstance sqLiteInstance = new SQLiteInstance();
+    private final DocumentService<Book> bookService;
 
-    public static BorrowingService getInstance() {
-        return INSTANCE;
+    public BorrowingService(DocumentService<Book> bookService) {
+        this.bookService = bookService;
     }
 
     private String generateBorrowRecordID() {
@@ -34,7 +34,7 @@ public class BorrowingService {
         List<List<Object>> list = sqLiteInstance.find("BorrowRecord", "recordID", recordID,
                 "userID", "docID", "borrowDate", "dueDate", "returnDate");
         Account account = AccountService.getInstance().getAccountByUserID((String) list.get(0).get(0));
-        Document document = BookService.getInstance().findDocumentById((String) list.get(0).get(1));
+        Document document = bookService.findDocumentById((String) list.get(0).get(1));
         // TODO add type MAGAZINE and THESIS
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate borrowDate = LocalDate.parse((String) list.get(0).get(2), formatter);
@@ -50,15 +50,15 @@ public class BorrowingService {
 
     // TODO
     public boolean borrowDocument(String userID, String documentId, DocumentType documentType) {
-        Document document = BookService.getInstance().findDocumentById(documentId);
+        Document document = bookService.findDocumentById(documentId);
         if (document.getAvailableCopies() == 0) {
             System.out.println("Document " + documentId + " is not available");
             return false;
         }
         if (documentType == DocumentType.BOOK) {
             document.setAvailableCopies(document.getAvailableCopies() - 1);
-            BookService.getInstance().updateDocument((Book) document);
-        } else if (documentType == DocumentType.MAGAZINE){
+            bookService.updateDocument((Book) document);
+        } else if (documentType == DocumentType.MAGAZINE) {
             // TODO
             return false;
         } else if (documentType == DocumentType.THESIS) {
@@ -81,11 +81,11 @@ public class BorrowingService {
         if (list.isEmpty()) {
             return false;
         }
-        Document document = BookService.getInstance().findDocumentById((String) list.get(0).get(1));
+        Document document = bookService.findDocumentById((String) list.get(0).get(1));
         document.setAvailableCopies(document.getAvailableCopies() + 1);
         String documentID = document.getId();
         if (documentID.charAt(0) == 'B') {
-            BookService.getInstance().updateDocument((Book) document);
+            bookService.updateDocument((Book) document);
         } else if (documentID.charAt(0) == 'M') {
             //TODO
         } else if (documentID.charAt(0) == 'T') {

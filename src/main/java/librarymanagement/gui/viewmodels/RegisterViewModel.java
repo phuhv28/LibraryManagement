@@ -14,9 +14,10 @@ public class RegisterViewModel {
     private final StringProperty errorLabelProperty = new SimpleStringProperty();
     private final StringProperty emailProperty = new SimpleStringProperty();
     private final StringProperty fullNameProperty = new SimpleStringProperty();
+    private final AccountService accountService = AccountService.getInstance();
 
     public boolean handleRegister() {
-        RegistrationResult registrationResult = AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword() , getFullName() ,getEmail());
+        RegistrationResult registrationResult = accountService.addUser(getUsername(), getPassword(), getConfirmPassword() , getFullName() ,getEmail());
 
         Platform.runLater(() -> {
             errorLabelProperty.set(registrationResult.getMessage());

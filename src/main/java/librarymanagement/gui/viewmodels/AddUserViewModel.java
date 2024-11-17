@@ -5,14 +5,15 @@ import librarymanagement.UserAuth.*;
 import javafx.beans.property.SimpleStringProperty;
 
 public class AddUserViewModel {
-    private StringProperty usernameProperty = new SimpleStringProperty();
-    private StringProperty passwordProperty = new SimpleStringProperty();
-    private StringProperty emailProperty = new SimpleStringProperty();
-    private StringProperty fullNameProperty = new SimpleStringProperty();
-    private StringProperty confirmPasswordProperty = new SimpleStringProperty();
-    private StringProperty menuAccountProperty = new SimpleStringProperty();
-    private StringProperty menuFunctionProperty = new SimpleStringProperty();
-    private StringProperty errorTextProperty = new SimpleStringProperty();
+    private final StringProperty usernameProperty = new SimpleStringProperty();
+    private final StringProperty passwordProperty = new SimpleStringProperty();
+    private final StringProperty emailProperty = new SimpleStringProperty();
+    private final StringProperty fullNameProperty = new SimpleStringProperty();
+    private final StringProperty confirmPasswordProperty = new SimpleStringProperty();
+    private final StringProperty menuAccountProperty = new SimpleStringProperty();
+    private final StringProperty menuFunctionProperty = new SimpleStringProperty();
+    private final StringProperty errorTextProperty = new SimpleStringProperty();
+    private final AccountService accountService = AccountService.getInstance();
 
     public String getUsername() {
         return usernameProperty.get();
@@ -78,6 +79,7 @@ public class AddUserViewModel {
         return errorTextProperty;
     }
 
+
     public void addUserOrAdmin() {
         if ("User".equals(getMenuAccount())) {
             if (!getPassword().equals(getConfirmPassword())) {
@@ -129,20 +131,20 @@ public class AddUserViewModel {
     }
 
     public void addUserAccount() {
-        AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
+        accountService.addUser(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
     }
 
     public void createAdminAccount() {
-        AccountService.getInstance().addUser(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
-        AccountService.getInstance().addAdmin(getUsername(), getPassword());
+        accountService.addUser(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
+        accountService.addAdmin(getUsername(), getPassword());
     }
 
     public void setAsAdmin() {
-        AccountService.getInstance().addAdmin(getUsername(), getPassword());
+        accountService.addAdmin(getUsername(), getPassword());
     }
 
     public boolean chechAccountIsAdmin() {
-        return AccountService.getInstance().isAdmin(AccountService.getInstance().getCurrentAccount().getUsername());
+        return accountService.isAdmin(accountService.getCurrentAccount().getUsername());
     }
 
     public boolean checkIfAccountExists() {

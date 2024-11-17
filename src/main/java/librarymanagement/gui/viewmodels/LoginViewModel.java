@@ -11,6 +11,7 @@ public class LoginViewModel {
     private final StringProperty usernameProperty = new SimpleStringProperty();
     private final StringProperty passwordProperty = new SimpleStringProperty();
     private final StringProperty errorTextProperty = new SimpleStringProperty();
+    private final AccountService accountService = AccountService.getInstance();
 
     public StringProperty usernameProperty() {
         return usernameProperty;
@@ -29,7 +30,7 @@ public class LoginViewModel {
     }
 
     public boolean handleLogin() {
-        LoginResult loginResult = AccountService.checkLogin(getUsername(), getPassword());
+        LoginResult loginResult = accountService.checkLogin(getUsername(), getPassword());
 
         Platform.runLater(() -> {
             errorTextProperty.set(loginResult.getMessage());

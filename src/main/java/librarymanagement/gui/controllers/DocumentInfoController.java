@@ -1,11 +1,19 @@
 package librarymanagement.gui.controllers;
 
+import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import librarymanagement.data.Document;
 
 public class DocumentInfoController {
     @FXML
@@ -84,6 +92,8 @@ public class DocumentInfoController {
 
     private final Image imageFirst = new Image(getClass().getResource("/images/image_starFirst.png").toExternalForm());
 
+    private static Stage stage;
+
     @FXML
     public void initialize() {
         btOneStar.setOnAction(event -> handleRating1Star());
@@ -91,6 +101,20 @@ public class DocumentInfoController {
         bt3Star.setOnAction(event -> handleRating3Star());
         bt4Star.setOnAction(event -> handleRating4Star());
         btFullStar.setOnAction(event -> handleRating5Star());
+    }
+
+    public static void showDocumentInfo(Document _document) {
+        FXMLLoader loader = new FXMLLoader(DocumentInfoController.class.getResource("/FXML/DocumentInfo.fxml"));
+        try {
+            Parent root = loader.load();
+            DocumentInfoController controller = loader.getController();
+            Scene scene = new Scene(root);
+            stage = new Stage();
+            stage.setScene(scene);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleRating1Star() {

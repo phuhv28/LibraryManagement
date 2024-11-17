@@ -101,8 +101,8 @@ public class MainSceneController {
 
     private void loadSceneMyDocument() {
         previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
-        loadScene("MyDocumentScene.fxml");
-        previousSceneToReturn.previousFxmlFile = "MyDocumentScene.fxml";
+        loadScene("MyDocument.fxml");
+        previousSceneToReturn.previousFxmlFile = "MyDocument.fxml";
     }
 
     private void loadSceneReturn() {

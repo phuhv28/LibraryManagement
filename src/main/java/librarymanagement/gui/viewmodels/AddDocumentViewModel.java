@@ -14,6 +14,7 @@ public class AddDocumentViewModel {
     private final StringProperty descriptionProperty = new SimpleStringProperty();
     private final IntegerProperty availableCopiesProperty = new SimpleIntegerProperty();
     private final IntegerProperty pageCountProperty = new SimpleIntegerProperty();
+    private final DocumentService<Book> bookService = DocumentServiceFactory.getDocumentService(DocumentType.BOOK);
 
     public StringProperty ISBNProperty() {
         return ISBNProperty;
@@ -95,7 +96,7 @@ public class AddDocumentViewModel {
         Book newBook = new Book(null, getTitle(), getPublisher(),
                 getPublicationDate().toString(), getPageCount(), getAvailableCopies(),
                 0, 0, getISBN(), getCategory(), getAuthor(), getDescription());
-        BookService.getInstance().addDocument(newBook);
+        bookService.addDocument(newBook);
         return true;
     }
 }

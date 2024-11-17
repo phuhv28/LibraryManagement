@@ -4,13 +4,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import librarymanagement.data.Book;
-import librarymanagement.data.BookService;
+import librarymanagement.data.*;
 
 public class SearchDocumentViewModel {
-    private StringProperty valueSearchProperty = new SimpleStringProperty();
-    private StringProperty selectedAttributeProperty = new SimpleStringProperty();
-    private ObservableList<Book> searchResultProperty = FXCollections.observableArrayList();
+    private final StringProperty valueSearchProperty = new SimpleStringProperty();
+    private final StringProperty selectedAttributeProperty = new SimpleStringProperty();
+    private final ObservableList<Book> searchResultProperty = FXCollections.observableArrayList();
+    private final DocumentService<Book> bookService = DocumentServiceFactory.getDocumentService(DocumentType.BOOK);
+
 
     public StringProperty selectedAttributeProperty() {
         return selectedAttributeProperty;
@@ -35,19 +36,19 @@ public class SearchDocumentViewModel {
 
         switch (selectedAttributeProperty.get()) {
             case "ID":
-                searchResultProperty.add(BookService.getInstance().findDocumentById(valueSearchProperty.get()));
+                searchResultProperty.add(bookService.findDocumentById(valueSearchProperty.get()));
                 break;
             case "ISBN":
-                searchResultProperty.add(BookService.getInstance().searchBookByISBN(valueSearchProperty.get()));
+                searchResultProperty.add(((BookService) bookService).searchBookByISBN(valueSearchProperty.get()));
                 break;
             case "Title":
-                searchResultProperty.addAll(BookService.getInstance().searchBookByTitle(valueSearchProperty.get()));
+                searchResultProperty.addAll(((BookService) bookService).searchBookByTitle(valueSearchProperty.get()));
                 break;
             case "Author":
-                searchResultProperty.addAll(BookService.getInstance().searchBookByAuthor(valueSearchProperty.get()));
+                searchResultProperty.addAll(((BookService) bookService).searchBookByAuthor(valueSearchProperty.get()));
                 break;
             case "Category":
-                searchResultProperty.addAll(BookService.getInstance().searchBookByCategory(valueSearchProperty.get()));
+                searchResultProperty.addAll(((BookService) bookService).searchBookByCategory(valueSearchProperty.get()));
                 break;
         }
     }

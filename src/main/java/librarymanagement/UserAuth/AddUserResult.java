@@ -8,7 +8,7 @@ public enum AddUserResult {
     ACCOUNT_NOT_ADMIN("The account is not an admin account.");
 
 
-    private String message;
+    private final String message;
 
     AddUserResult(String message) {
         this.message = message;

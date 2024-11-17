@@ -5,16 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookService implements DocumentService<Book> {
-    private static final BookService INSTANCE = new BookService();
-
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
-
-    public static BookService getInstance() {
-        return INSTANCE;
-    }
-
-    public BookService() {
-    }
 
     public String generateBookID() {
         String newId;
