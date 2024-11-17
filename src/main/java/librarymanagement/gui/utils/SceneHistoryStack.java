@@ -1,8 +1,9 @@
-package librarymanagement.gui.controllers;
+package librarymanagement.gui.utils;
 
 import java.util.Stack;
 
-public class previousSceneToReturn {
+/** Class use for Back function.*/
+public class SceneHistoryStack {
     public static String previousFxmlFile = "HomeScene.fxml";
     public static Stack<String> listPreviousFxmlFile = new Stack<>();
 }

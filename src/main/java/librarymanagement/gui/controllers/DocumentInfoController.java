@@ -1,5 +1,6 @@
 package librarymanagement.gui.controllers;
 
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -12,7 +13,9 @@ import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import librarymanagement.data.Book;
 import librarymanagement.data.Document;
 
 public class DocumentInfoController {
@@ -92,7 +95,11 @@ public class DocumentInfoController {
 
     private final Image imageFirst = new Image(getClass().getResource("/images/image_starFirst.png").toExternalForm());
 
-    private static Stage stage;
+    private Document document;
+
+    private Stage stage;
+
+    private static DocumentInfoController instance;
 
     @FXML
     public void initialize() {
@@ -103,18 +110,61 @@ public class DocumentInfoController {
         btFullStar.setOnAction(event -> handleRating5Star());
     }
 
-    public static void showDocumentInfo(Document _document) {
-        FXMLLoader loader = new FXMLLoader(DocumentInfoController.class.getResource("/FXML/DocumentInfo.fxml"));
+    public static DocumentInfoController newInstance(Document document) {
+        FXMLLoader loader = new FXMLLoader(LoadingPopupController.class.getResource("/FXML/DocumentInfo.fxml"));
         try {
-            Parent root = loader.load();
-            DocumentInfoController controller = loader.getController();
-            Scene scene = new Scene(root);
-            stage = new Stage();
+            Parent parent = loader.load();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Document Information");
             stage.setScene(scene);
+            stage.setResizable(false);
+            stage.initModality(Modality.WINDOW_MODAL);
+
+            instance = loader.getController();
+            instance.setStage(stage);
+
 
         } catch (Exception e) {
             e.printStackTrace();
+            instance = null;
         }
+
+        instance.setDocument(document);
+        return instance;
+    }
+
+    private void setDocument(Document document) {
+        this.document = document;
+    }
+
+    public void show() {
+        if (document != null) {
+            if (document instanceof Book book) {
+                lbID.setText((book).getId());
+                lbTitle.setText(book.getTitle());
+                lbAuthor.setText(book.getAuthor());
+                lbPublisher.setText(book.getPublisher());
+                lbPublicationDate.setText(book.getPublishedDate());
+                lbISBN.setText(book.getISBN());
+                lbCategories.setText(book.getCategories());
+                lbPageCount.setText(String.valueOf(book.getPageCount()));
+                lbAverageRating.setText(String.valueOf(book.getAverageRating()));
+                lbRatingCount.setText(String.valueOf(book.getRatingsCount()));
+                lbDescription.setText(book.getDescription());
+            }
+        }
+        stage.show();
+    }
+
+    public void close() {
+        if (stage != null) {
+            stage.close();
+        }
+    }
+
+    private void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     private void handleRating1Star() {

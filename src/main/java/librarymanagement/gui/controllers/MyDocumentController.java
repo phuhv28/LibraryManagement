@@ -11,7 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableCell;
 import javafx.scene.layout.AnchorPane;
-import librarymanagement.data.BorrowBook;
+import librarymanagement.data.BorrowRecord;
+import librarymanagement.gui.utils.SceneHistoryStack;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,28 +25,28 @@ public class MyDocumentController {
     private AnchorPane MyDocument;
 
     @FXML
-    private TableView<BorrowBook> tableView;
+    private TableView<BorrowRecord> tableView;
 
     @FXML
-    private TableColumn<BorrowBook, Integer> sttColumn;
+    private TableColumn<BorrowRecord, Integer> sttColumn;
 
     @FXML
-    private TableColumn<BorrowBook, Integer> documentIdColumn;
+    private TableColumn<BorrowRecord, Integer> documentIdColumn;
 
     @FXML
-    private TableColumn<BorrowBook, String> documentTitleColumn;
+    private TableColumn<BorrowRecord, String> documentTitleColumn;
 
     @FXML
-    private TableColumn<BorrowBook, String> borrowDateColumn;
+    private TableColumn<BorrowRecord, String> borrowDateColumn;
 
     @FXML
-    private TableColumn<BorrowBook, String> dueDateColumn;
+    private TableColumn<BorrowRecord, String> dueDateColumn;
 
     @FXML
-    private TableColumn<BorrowBook, Void> readColumn;
+    private TableColumn<BorrowRecord, Void> readColumn;
 
     @FXML
-    private TableColumn<BorrowBook, Void> returnColumn;
+    private TableColumn<BorrowRecord, Void> returnColumn;
 
     @FXML
     private Label lbCheckEmpty;
@@ -53,14 +54,14 @@ public class MyDocumentController {
     @FXML
     private Button btBorrowBooks;
 
-    private ObservableList<BorrowBook> borrowBookList;
+    private ObservableList<BorrowRecord> borrowBookList;
 
     @FXML
     public void initialize() {
         // Example list books to print scenes
-        List<BorrowBook> listBook = new ArrayList<>();
+        List<BorrowRecord> listBook = new ArrayList<>();
 
-        ObservableList<BorrowBook> observableListBook = FXCollections.observableArrayList(listBook);
+        ObservableList<BorrowRecord> observableListBook = FXCollections.observableArrayList(listBook);
         tableView.setItems(observableListBook);
 
         if (listBook.isEmpty()) {
@@ -90,7 +91,7 @@ public class MyDocumentController {
 
             {
                 button.setOnAction(event -> {
-                    BorrowBook book = getTableView().getItems().get(getIndex());
+                    BorrowRecord book = getTableView().getItems().get(getIndex());
                     handleFunction1(book);
                 });
             }
@@ -112,7 +113,7 @@ public class MyDocumentController {
 
             {
                 button.setOnAction(event -> {
-                    BorrowBook book = getTableView().getItems().get(getIndex());
+                    BorrowRecord book = getTableView().getItems().get(getIndex());
                     handleFunction2(book);
                 });
             }
@@ -129,11 +130,11 @@ public class MyDocumentController {
     }
 
     // function: read book
-    private void handleFunction1(BorrowBook book) {
+    private void handleFunction1(BorrowRecord book) {
     }
 
     // function: return book
-    private void handleFunction2(BorrowBook book) {
+    private void handleFunction2(BorrowRecord book) {
     }
 
     private void loadScene(String fxmlFile) {
@@ -148,9 +149,9 @@ public class MyDocumentController {
 
 
     private void loadBorrowBooks() {
-        previousSceneToReturn.listPreviousFxmlFile.push(previousSceneToReturn.previousFxmlFile);
-        loadScene("BorrowBook.fxml");
-        previousSceneToReturn.previousFxmlFile="BorrowBook.fxml";
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
+        loadScene("BorrowDocument.fxml");
+        SceneHistoryStack.previousFxmlFile="BorrowDocument.fxml";
     }
 
 }
