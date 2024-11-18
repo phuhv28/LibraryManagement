@@ -99,4 +99,39 @@ public class BorrowingService {
         sqLiteInstance.updateRow("BorrowRecord", "returnDate", returnDate, "recordID", borrowId);
         return true;
     }
+
+    public List<BorrowRecord> getBorrowRecordsOfUser(String userID) {
+        List<List<Object>> list = sqLiteInstance.find("BorrowRecord", "userID", userID,
+                "recordID", "docID", "borrowDate", "dueDate", "returnDate");
+        if (list.isEmpty()) {
+            return null;
+        }
+        List<BorrowRecord> borrowRecords = new ArrayList<>();
+        for (List<Object> row : list) {
+            if (row.get(4) == null) {
+                continue;
+            }
+            String recordID = (String) row.get(0);
+            Account account = AccountService.getInstance().getAccountByUserID(userID);
+            String documentID = (String) row.get(1);
+            Document document = null;
+            if (documentID.charAt(0) == 'B') {
+                document = bookService.findDocumentById(documentID);
+            } else if (documentID.charAt(0) == 'M') {
+                //TODO
+            } else if (documentID.charAt(0) == 'T') {
+                //TODO
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate borrowDate = LocalDate.parse((String) row.get(2), formatter);
+            LocalDate dueDate = LocalDate.parse((String) row.get(3), formatter);
+            LocalDate returnDate = LocalDate.parse((String) row.get(4), formatter);
+            borrowRecords.add(new BorrowRecord(recordID, account, document, borrowDate, dueDate, returnDate));
+        }
+        return borrowRecords;
+    }
+
+    public List<BorrowRecord> getBorrowRecordsOfCurrentAccount() {
+        return getBorrowRecordsOfUser(AccountService.getInstance().getCurrentAccount().getId());
+    }
 }
