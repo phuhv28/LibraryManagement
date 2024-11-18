@@ -49,12 +49,12 @@ public class BorrowingService {
     }
 
     // TODO
-    public boolean borrowDocument(String userID, String documentId, DocumentType documentType) {
+    public boolean borrowDocument(String userID, String documentId) {
         Document document = bookService.findDocumentById(documentId);
         if (document.getAvailableCopies() == 0) {
-            System.out.println("Document " + documentId + " is not available");
             return false;
         }
+        DocumentType documentType = document.getDocumentType();
         if (documentType == DocumentType.BOOK) {
             document.setAvailableCopies(document.getAvailableCopies() - 1);
             bookService.updateDocument((Book) document);
@@ -72,6 +72,10 @@ public class BorrowingService {
         sqLiteInstance.insertRow("BorrowRecord", generateBorrowRecordID(), account.getId(), document.getId(),
                 borrowDate.format(formatter), null, dueDate.format(formatter));
         return true;
+    }
+
+    public boolean borrowDocumentForCurrentAccount(String documentId) {
+        return borrowDocument(AccountService.getInstance().getCurrentAccount().getId(), documentId);
     }
 
     // TODO
