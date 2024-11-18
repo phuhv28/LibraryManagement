@@ -64,7 +64,11 @@ public class Book extends AbstractDocument {
         res.add(getTitle());
         res.add(author);
         res.add(getPublisher());
-        res.add(getPublishedDate().toString());
+        if (getPublishedDate() == null) {
+            res.add(null);
+        } else {
+            res.add(getPublishedDate().toString());
+        }
         res.add(categories);
         res.add(getPageCount());
         res.add(getAvailableCopies());
