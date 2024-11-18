@@ -43,10 +43,7 @@ public class MyDocumentController {
     private TableColumn<BorrowRecord, String> dueDateColumn;
 
     @FXML
-    private TableColumn<BorrowRecord, Void> readColumn;
-
-    @FXML
-    private TableColumn<BorrowRecord, Void> returnColumn;
+    private TableColumn<BorrowRecord, Void> returnCol;
 
     @FXML
     private Label lbCheckEmpty;
@@ -58,7 +55,6 @@ public class MyDocumentController {
 
     @FXML
     public void initialize() {
-        // Example list books to print scenes
         List<BorrowRecord> listBook = new ArrayList<>();
 
         ObservableList<BorrowRecord> observableListBook = FXCollections.observableArrayList(listBook);
@@ -78,37 +74,13 @@ public class MyDocumentController {
         borrowDateColumn.setCellValueFactory(new PropertyValueFactory<>("borrowDate"));
         dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
 
-        addReadButtonToTable();
         addReturnButtonToTable();
 
         btBorrowBooks.setOnAction(event -> loadBorrowBooks());
     }
 
-
-    private void addReadButtonToTable() {
-        readColumn.setCellFactory(column -> new TableCell<>() {
-            private final Button button = new Button("  READ  ");
-
-            {
-                button.setOnAction(event -> {
-                    BorrowRecord book = getTableView().getItems().get(getIndex());
-                    handleFunction1(book);
-                });
-            }
-
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(button);
-                }
-            }
-        });
-    }
-
     private void addReturnButtonToTable() {
-        returnColumn.setCellFactory(column -> new TableCell<>() {
+        returnCol.setCellFactory(column -> new TableCell<>() {
             private final Button button = new Button("RETURN");
 
             {

@@ -1,18 +1,14 @@
 package librarymanagement.gui.controllers;
 
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
 import librarymanagement.gui.viewmodels.AddUserViewModel;
 
 
 public class AddUserController {
-
-    @FXML
-    private AnchorPane AddUserScene;
-
     @FXML
     private Button btAddAccount;
 
@@ -20,22 +16,7 @@ public class AddUserController {
     private TextField tfUsername;
 
     @FXML
-    private MenuButton mbFunction;
-
-    @FXML
-    private MenuItem miCreateAdminAccount;
-
-    @FXML
-    private MenuItem miSetAsAdmin;
-
-    @FXML
-    private MenuButton mbAccount;
-
-    @FXML
-    private MenuItem miUser;
-
-    @FXML
-    private MenuItem miAdmin;
+    private MenuButton mbAccountType;
 
     @FXML
     private TextField tfEmail;
@@ -47,225 +28,95 @@ public class AddUserController {
     private TextField tfConfirmPassword;
 
     @FXML
-    private TextField tfFullName;
+    private TextField tfFullname;
 
     @FXML
-    private Label lbSelectFunction;
-
-    @FXML
-    private Label lbEnterFullName;
-
-    @FXML
-    private Label lbEnterEmail;
-
-    @FXML
-    private Label lbEnterPassword;
-
-    @FXML
-    private Label lbConfirmPassword;
-
-    @FXML
-    private Label lbEnterUsername;
-
-    @FXML
-    private Label lbError;
+    private Label lbResult;
 
     private final AddUserViewModel viewModel = new AddUserViewModel();
 
     @FXML
     public void initialize() {
-        viewModel.menuAccountProperty().set(mbAccount.getText());
-        miUser.setOnAction(event -> {
-            loadGraphicWithUserCreate();
-        });
-        miAdmin.setOnAction(actionEvent -> {
-            loadGraphicAdmin();
-        });
-        miCreateAdminAccount.setOnAction(actionEvent -> {
-            loadGraphicWithCreateAdmin();
-        });
-        miSetAsAdmin.setOnAction(actionEvent -> {
-            loadGraphicWithSetAdmin();
-        });
+        viewModel.menuAccountProperty().setValue("Account type");
         btAddAccount.setOnAction(e -> {
-            handleAddUSerOrAdmin();
+            handleAddAccount();
         });
-        tfFullName.textProperty().bindBidirectional(viewModel.fullNameProperty());
+        tfFullname.textProperty().bindBidirectional(viewModel.fullNameProperty());
         tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
         tfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
         tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
         tfConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
-        lbError.textProperty().bindBidirectional(viewModel.errorTextProperty());
-        mbAccount.textProperty().bindBidirectional(viewModel.menuAccountProperty());
-        mbFunction.textProperty().bindBidirectional(viewModel.menuFunctionProperty());
+        lbResult.textProperty().bindBidirectional(viewModel.resultProperty());
+        mbAccountType.textProperty().bindBidirectional(viewModel.menuAccountProperty());
+        for (MenuItem item : mbAccountType.getItems()) {
+            item.setOnAction(e -> {
+                mbAccountType.setText(item.getText());
+            });
+        }
         tfUsername.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
-                handleAddUSerOrAdmin();
+                handleAddAccount();
             }
         });
         tfEmail.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
-                handleAddUSerOrAdmin();
+                handleAddAccount();
             }
         });
-        tfFullName.setOnKeyPressed(actionEvent -> {
+        tfFullname.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
-                handleAddUSerOrAdmin();
+                handleAddAccount();
             }
         });
         tfPassword.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
-                handleAddUSerOrAdmin();
+                handleAddAccount();
             }
         });
         tfConfirmPassword.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
-                handleAddUSerOrAdmin();
+                handleAddAccount();
             }
         });
-    }
-
-
-    private void loadGraphicWithUserCreate() {
-        mbFunction.setVisible(false);
-        mbFunction.setDisable(true);
-        lbSelectFunction.setVisible(false);
-        btAddAccount.setVisible(true);
-        btAddAccount.setDisable(false);
-        tfEmail.setVisible(true);
-        tfEmail.setDisable(false);
-        lbEnterEmail.setVisible(true);
-        tfPassword.setVisible(true);
-        tfPassword.setDisable(false);
-        lbEnterPassword.setVisible(true);
-        tfPassword.setLayoutX(318);
-        tfPassword.setLayoutY(348);
-        lbEnterPassword.setLayoutX(93);
-        lbEnterPassword.setLayoutY(348);
-        tfConfirmPassword.setVisible(true);
-        lbConfirmPassword.setVisible(true);
-        tfConfirmPassword.setDisable(false);
-        tfFullName.setVisible(true);
-        lbEnterFullName.setVisible(true);
-        tfFullName.setDisable(false);
-        tfFullName.setLayoutX(318);
-        tfFullName.setLayoutY(310);
-        lbEnterFullName.setLayoutX(93);
-        lbEnterFullName.setLayoutY(310);
-        lbEnterUsername.setVisible(true);
-        tfUsername.setDisable(false);
-        tfUsername.setVisible(true);
-        mbAccount.setText("User");
-        lbError.setVisible(true);
-        lbError.setText(" ");
-        clear();
-    }
-
-    private void loadGraphicWithCreateAdmin() {
-        mbFunction.setVisible(true);
-        mbFunction.setDisable(false);
-        lbSelectFunction.setVisible(true);
-        btAddAccount.setVisible(true);
-        btAddAccount.setDisable(false);
-        tfEmail.setVisible(true);
-        tfEmail.setDisable(false);
-        lbEnterEmail.setVisible(true);
-        tfPassword.setVisible(true);
-        tfPassword.setDisable(false);
-        lbEnterPassword.setVisible(true);
-        tfPassword.setLayoutX(318);
-        tfPassword.setLayoutY(348);
-        lbEnterPassword.setLayoutX(93);
-        lbEnterPassword.setLayoutY(348);
-        tfConfirmPassword.setVisible(true);
-        lbConfirmPassword.setVisible(true);
-        tfConfirmPassword.setDisable(false);
-        tfFullName.setVisible(true);
-        lbEnterFullName.setVisible(true);
-        tfFullName.setDisable(false);
-        tfFullName.setLayoutX(318);
-        tfFullName.setLayoutY(310);
-        lbEnterFullName.setLayoutX(93);
-        lbEnterFullName.setLayoutY(310);
-        lbEnterUsername.setVisible(true);
-        tfUsername.setDisable(false);
-        tfUsername.setVisible(true);
-        mbAccount.setText("Admin");
-        mbFunction.setText("Create Admin Account");
-        lbError.setVisible(true);
-        lbError.setText("");
-        clear();
-    }
-
-    private void loadGraphicWithSetAdmin() {
-        mbFunction.setVisible(true);
-        mbFunction.setDisable(false);
-        lbSelectFunction.setVisible(true);
-        btAddAccount.setVisible(true);
-        btAddAccount.setDisable(false);
-        tfEmail.setVisible(true);
-        tfEmail.setDisable(false);
-        lbEnterEmail.setVisible(true);
-        tfPassword.setVisible(true);
-        tfPassword.setDisable(false);
-        lbEnterPassword.setVisible(true);
-        tfPassword.setLayoutX(318);
-        tfPassword.setLayoutY(310);
-        lbEnterPassword.setLayoutX(93);
-        lbEnterPassword.setLayoutY(310);
-        tfConfirmPassword.setVisible(false);
-        lbConfirmPassword.setVisible(false);
-        tfConfirmPassword.setDisable(true);
-        tfFullName.setVisible(false);
-        lbEnterFullName.setVisible(false);
-        tfFullName.setDisable(true);
-        lbEnterUsername.setVisible(true);
-        tfUsername.setDisable(false);
-        tfUsername.setVisible(true);
-        mbAccount.setText("Admin");
-        mbFunction.setText("Set As Admin");
-        lbError.setVisible(true);
-        lbError.setText("");
-        clear();
-    }
-
-    private void loadGraphicAdmin() {
-        mbFunction.setVisible(true);
-        mbFunction.setDisable(false);
-        lbSelectFunction.setVisible(true);
-        btAddAccount.setVisible(false);
-        btAddAccount.setDisable(true);
-        tfEmail.setVisible(false);
-        tfEmail.setDisable(true);
-        lbEnterEmail.setVisible(false);
-        tfPassword.setVisible(false);
-        tfPassword.setDisable(true);
-        lbEnterPassword.setVisible(false);
-        tfConfirmPassword.setVisible(false);
-        lbConfirmPassword.setVisible(false);
-        tfConfirmPassword.setDisable(true);
-        tfFullName.setVisible(false);
-        lbEnterFullName.setVisible(false);
-        tfFullName.setDisable(true);
-        lbEnterUsername.setVisible(false);
-        tfUsername.setDisable(true);
-        tfUsername.setVisible(false);
-        mbAccount.setText("Admin");
-        mbFunction.setText("Function");
-        lbError.setVisible(false);
     }
 
     private void clear() {
         tfUsername.clear();
         tfPassword.clear();
         tfConfirmPassword.clear();
-        tfFullName.clear();
+        tfFullname.clear();
         tfEmail.clear();
     }
 
-    private void handleAddUSerOrAdmin() {
-        viewModel.addUserOrAdmin();
-        clear();
+    private void handleAddAccount() {
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Creating Account");
+        loadingPopup.initOwnerStage(UIController.getPrimaryStage());
+        loadingPopup.show();
+
+        Task<Void> addAccountTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                viewModel.addAccount();
+                return null;
+            }
+        };
+
+        addAccountTask.setOnSucceeded(event -> {
+            loadingPopup.close();
+            lbResult.setVisible(true);
+            clear();
+        });
+
+        addAccountTask.setOnFailed(event -> {
+
+            loadingPopup.close();
+            lbResult.setText("Error!");
+            lbResult.setVisible(true);
+        });
+
+
+        new Thread(addAccountTask).start();
+
     }
 
 }

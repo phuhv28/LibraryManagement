@@ -13,7 +13,7 @@ public class BorrowRecord {
     private Status status;
 
     public enum Status {
-        BORROWING, OVERDUE, RETURN
+        BORROWING, OVERDUE, RETURNED
     }
 
     public BorrowRecord(String id, Account account, Document document, LocalDate borrowDate,
@@ -25,7 +25,7 @@ public class BorrowRecord {
         this.dueDate = dueDate;
         this.returnDate = returnDate;
         if (returnDate != null) {
-            this.status = Status.RETURN;
+            this.status = Status.RETURNED;
         } else {
             if (LocalDate.now().isAfter(dueDate)) {
                 this.status = Status.OVERDUE;

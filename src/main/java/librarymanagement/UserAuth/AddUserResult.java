@@ -1,7 +1,7 @@
 package librarymanagement.UserAuth;
 
 public enum AddUserResult {
-    SUCCESS_CREAT("An account has been successfully created."),
+    SUCCESS_CREATE("An account has been successfully created."),
     ACCOUNT_EXIST("This account already exists.Please choose a different username."),
     PASSWORD_NOT_MATCH("The password do not match."),
     SUCCESS_ADMIN_SET("The user account has been successfully promoted to admin."),

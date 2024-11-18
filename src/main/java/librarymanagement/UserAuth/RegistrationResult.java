@@ -6,7 +6,7 @@ public enum RegistrationResult {
     INVALID_USERNAME("Username is invalid."),
     PASSWORD_NOT_MATCH("Passwords do not match.");
 
-    private String message;
+    private final String message;
 
     RegistrationResult(String message) {
         this.message = message;

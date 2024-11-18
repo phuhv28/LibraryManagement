@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="MyDocument" prefHeight="670.0" prefWidth="630.0" style="-fx-background-color: #474242;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.MyDocumentController">
+<AnchorPane fx:id="MyDocument" prefHeight="670.0" prefWidth="630.0" style="-fx-background-color: #474242;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.MyDocumentController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
         <Label layoutX="216.0" layoutY="40.0" prefHeight="40.0" prefWidth="198.0" style="-fx-font-weight: BOLD;" text="My DOCUMENT" textFill="#f2f2f2" underline="true">
@@ -22,11 +25,10 @@
             <columns>
                 <TableColumn fx:id="sttColumn" minWidth="30.0" prefWidth="30.0" text="STT" />
                 <TableColumn fx:id="documentIdColumn" prefWidth="60.0" text="Book ID" />
-                <TableColumn fx:id="documentTitleColumn" prefWidth="160.0" text="Book Title" />
-                <TableColumn fx:id="borrowDateColumn" prefWidth="85.0" text="Borrow Date" />
-                <TableColumn fx:id="dueDateColumn" prefWidth="85.0" text="Due Date" />
-                <TableColumn fx:id="readColumn" prefWidth="75.0" text="Function 1" />
-                <TableColumn fx:id="returnColumn" minWidth="14.0" prefWidth="85.0" text="Function 2" />
+                <TableColumn fx:id="documentTitleColumn" prefWidth="201.59999084472656" text="Book Title" />
+                <TableColumn fx:id="borrowDateColumn" prefWidth="100.79998779296875" text="Borrow Date" />
+                <TableColumn fx:id="dueDateColumn" prefWidth="101.60003662109375" text="Due Date" />
+                <TableColumn fx:id="returnCol" prefWidth="86.39990234375" />
             </columns>
         </TableView>
         <Button fx:id="btBorrowBooks" layoutX="487.0" layoutY="583.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="117.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="BORROW BOOKS" textAlignment="CENTER" wrapText="true">

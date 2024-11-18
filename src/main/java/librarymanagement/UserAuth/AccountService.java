@@ -54,7 +54,7 @@ public class AccountService {
     /**
      * Check if a username is taken.
      */
-    private boolean isUsernameTaken(String username) {
+    public boolean isUsernameTaken(String username) {
         String sql = "SELECT * FROM User WHERE User.username = ? UNION SELECT * FROM Admin WHERE Admin.username = ?";
         List<List<Object>> result =
                 sqLiteInstance.findWithSQL(sql, new Object[]{username, username}, "username");
@@ -64,8 +64,9 @@ public class AccountService {
 
     /**
      * Generate new user ID based on the maximum user ID in the database.
+     *
      * @param tableName name of table to generate new ID
-     * return new ID
+     *                  return new ID
      */
     private String generateNewUserId(String tableName) {
         String newId = "";
@@ -90,51 +91,38 @@ public class AccountService {
     }
 
     /**
-     * Add a user.
+     * Add a account.
      */
-    public RegistrationResult addUser(String username, String password, String confirmPassword, String fullName, String email) {
-        if (!password.equals(confirmPassword)) {
-            return RegistrationResult.PASSWORD_NOT_MATCH;
-        }
-
+    public RegistrationResult addAccount(String username, String password, String confirmPassword, String fullName, String email, AccountType accountType) {
         if (isUsernameTaken(username)) {
             return RegistrationResult.USERNAME_TAKEN;
         }
 
-        String userId = generateNewUserId("User");
+        if (!password.equals(confirmPassword)) {
+            return RegistrationResult.PASSWORD_NOT_MATCH;
+        }
 
         ///Create issueDay
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        ///Import new user to database
-        sqLiteInstance.insertRow("User", userId, username, password, dateFormatter.format(today), fullName, email);
-
-        return RegistrationResult.SUCCESS;
-    }
-
-    /**
-     * Add an admin.
-     */
-    public RegistrationResult addAdmin(String username, String password) {
-        if (isUsernameTaken(username)) {
-            return RegistrationResult.USERNAME_TAKEN;
+        if (accountType == AccountType.USER) {
+            String userId = generateNewUserId("User");
+            ///Import new user to database
+            sqLiteInstance.insertRow("User", userId, username, password, dateFormatter.format(today), fullName, email);
+        } else if (accountType == AccountType.ADMIN) {
+            String newAdminId = generateNewUserId("Admin");
+            ///Import new admin to database
+            sqLiteInstance.insertRow("Admin", newAdminId, username, password, dateFormatter.format(today), fullName, email);
         }
 
-        String newAdminId = generateNewUserId("Admin");
-
-        ///Create returnDate
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        ///Import new admin to database
-        sqLiteInstance.insertRow("Admin", newAdminId, username, null, null, password, today.format(dateFormatter));
 
         return RegistrationResult.SUCCESS;
     }
 
     /**
      * Check if username of admin
+     *
      * @param username username
      * @return isAdmin
      */

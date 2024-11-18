@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import librarymanagement.data.*;
 
 public class AddDocumentViewModel {
-    private final ObjectProperty<Book> bookProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Book> bookProperty = new SimpleObjectProperty<>(new Book());
     private final StringProperty ISBNProperty = new SimpleStringProperty();
     private final StringProperty titleProperty = new SimpleStringProperty();
     private final StringProperty publisherProperty = new SimpleStringProperty();

@@ -4,6 +4,6 @@ import java.util.Stack;
 
 /** Class use for Back function.*/
 public class SceneHistoryStack {
-    public static String previousFxmlFile = "HomeScene.fxml";
+    public static String previousFxmlFile = "Home.fxml";
     public static Stack<String> listPreviousFxmlFile = new Stack<>();
 }

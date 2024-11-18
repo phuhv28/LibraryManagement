@@ -101,13 +101,18 @@ public class SearchDocumentController {
         searchTask.setOnSucceeded(event -> {
             loadingPopup.close();
             tbResults.setVisible(true);
+            if (lbError.isVisible()) {
+                lbError.setVisible(false);
+            }
+        });
+
+        searchTask.setOnFailed(event -> {
+            loadingPopup.close();
+            lbError.setText("Not found.");
+            lbError.setVisible(true);
         });
 
         new Thread(searchTask).start();
-    }
-
-    private void loadError() {
-        lbError.setVisible(true);
     }
 }
 

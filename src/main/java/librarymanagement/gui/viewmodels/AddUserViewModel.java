@@ -1,5 +1,6 @@
 package librarymanagement.gui.viewmodels;
 
+import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import librarymanagement.UserAuth.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,8 +12,8 @@ public class AddUserViewModel {
     private final StringProperty fullNameProperty = new SimpleStringProperty();
     private final StringProperty confirmPasswordProperty = new SimpleStringProperty();
     private final StringProperty menuAccountProperty = new SimpleStringProperty();
-    private final StringProperty menuFunctionProperty = new SimpleStringProperty();
-    private final StringProperty errorTextProperty = new SimpleStringProperty();
+    private final StringProperty resultProperty = new SimpleStringProperty();
+
     private final AccountService accountService = AccountService.getInstance();
 
     public String getUsername() {
@@ -63,91 +64,22 @@ public class AddUserViewModel {
         return menuAccountProperty;
     }
 
-    public String getMenuFunction() {
-        return menuFunctionProperty.get();
+    public String getResult() {
+        return resultProperty.get();
     }
 
-    public StringProperty menuFunctionProperty() {
-        return menuFunctionProperty;
-    }
-
-    public String getErrorText() {
-        return errorTextProperty.get();
-    }
-
-    public StringProperty errorTextProperty() {
-        return errorTextProperty;
+    public StringProperty resultProperty() {
+        return resultProperty;
     }
 
 
-    public void addUserOrAdmin() {
-        if ("User".equals(getMenuAccount())) {
-            if (!getPassword().equals(getConfirmPassword())) {
-                loadError(AddUserResult.PASSWORD_NOT_MATCH);
-                return;
-            }
-            if (checkIfAccountExists()) {
-                loadError(AddUserResult.ACCOUNT_EXIST);
-                return;
-            }
-            addUserAccount();
-            loadError(AddUserResult.SUCCESS_CREAT);
-            return;
-        } else if ("Admin".equals(getMenuAccount())) {
-            if ("Create Admin Account".equals(getMenuFunction())) {
-                if (chechAccountIsAdmin()) {
-                    loadError(AddUserResult.ACCOUNT_NOT_ADMIN);
-                    return;
-                }
-                if (!getPassword().equals(getConfirmPassword())) {
-                    loadError(AddUserResult.PASSWORD_NOT_MATCH);
-                    return;
-                }
-                if (checkIfAccountExists()) {
-                    loadError(AddUserResult.ACCOUNT_EXIST);
-                    return;
-                }
-                createAdminAccount();
-                loadError(AddUserResult.SUCCESS_CREAT);
-                return;
-            } else if ("Set As Admin".equals(getMenuFunction())) {
-                if (chechAccountIsAdmin()) {
-                    loadError(AddUserResult.ACCOUNT_NOT_ADMIN);
-                    return;
-                }
-                else if (checkIfAccountExists()) {
-                    loadError(AddUserResult.ACCOUNT_EXIST);
-                    return;
-                }
-                setAsAdmin();
-                loadError(AddUserResult.SUCCESS_ADMIN_SET);
-                return;
-            }
+    public void addAccount() {
+        if (menuAccountProperty.get().equals("User")) {
+            RegistrationResult result = accountService.addAccount(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail(), AccountType.USER);
+            Platform.runLater(() -> resultProperty.set(result.getMessage()));
+        } else if (menuAccountProperty.get().equals("Admin")) {
+            RegistrationResult result = accountService.addAccount(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail(), AccountType.ADMIN);
+            Platform.runLater(() -> resultProperty.set(result.getMessage()));
         }
-    }
-    public void loadError(AddUserResult addUser) {
-        System.out.println(addUser.getMessage());
-        errorTextProperty.set(addUser.getMessage());
-    }
-
-    public void addUserAccount() {
-        accountService.addUser(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
-    }
-
-    public void createAdminAccount() {
-        accountService.addUser(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
-        accountService.addAdmin(getUsername(), getPassword());
-    }
-
-    public void setAsAdmin() {
-        accountService.addAdmin(getUsername(), getPassword());
-    }
-
-    public boolean chechAccountIsAdmin() {
-        return accountService.isAdmin(accountService.getCurrentAccount().getUsername());
-    }
-
-    public boolean checkIfAccountExists() {
-        return true;
     }
 }

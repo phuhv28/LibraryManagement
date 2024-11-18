@@ -95,7 +95,19 @@ public class AddDocumentController {
 
         fillDocumentTask.setOnSucceeded(event -> {
             loadingPopup.close();
+            if (lbError.isVisible()) {
+                lbError.setVisible(false);
+            }
         });
+
+        fillDocumentTask.setOnFailed(event -> {
+
+            loadingPopup.close();
+            lbError.setText("The ISBN is invalid!");
+            lbError.setVisible(true);
+        });
+
+
 
         new Thread(fillDocumentTask).start();
     }
@@ -114,6 +126,15 @@ public class AddDocumentController {
 
         addDocumentTask.setOnSucceeded(event -> {
             loadingPopup.close();
+            if (lbError.isVisible()) {
+                lbError.setVisible(false);
+            }
+        });
+
+        addDocumentTask.setOnFailed(event -> {
+            loadingPopup.close();
+            lbError.setText("The document already exists.");
+            lbError.setVisible(true);
         });
 
         new Thread(addDocumentTask).start();

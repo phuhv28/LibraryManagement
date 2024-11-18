@@ -1,8 +1,10 @@
 package librarymanagement.gui.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,11 +18,15 @@ public class UIController {
 
     public static void setPrimaryStage(Stage primaryStage) {
         UIController.primaryStage = primaryStage;
+        primaryStage.sceneProperty().addListener((observable, oldScene, newScene) -> {
+            if (newScene != null) {
+                primaryStage.centerOnScreen();
+            }
+        });
     }
 
     public static void showScene(Scene scene) {
         primaryStage.setScene(scene);
-        primaryStage.centerOnScreen();
     }
 
     public static void setTitle(String title) {

@@ -115,7 +115,7 @@ public class MainSceneController {
         try {
             String fxmlFile;
             if(SceneHistoryStack.listPreviousFxmlFile.isEmpty()) {
-                  fxmlFile = "HomeScene.fxml";
+                  fxmlFile = "Home.fxml";
             } else {
                 fxmlFile = SceneHistoryStack.listPreviousFxmlFile.pop();
             }
@@ -134,20 +134,20 @@ public class MainSceneController {
 
     private void loadSceneAddAccount() {
         SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
-        loadScene("AddUserScene.fxml");
-        SceneHistoryStack.previousFxmlFile = "AddUserScene.fxml";
+        loadScene("AddUser.fxml");
+        SceneHistoryStack.previousFxmlFile = "AddUser.fxml";
     }
 
     private void loadHome() {
         SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
-        loadScene("HomeScene.fxml");
-        SceneHistoryStack.previousFxmlFile = "HomeScene.fxml";
+        loadScene("Home.fxml");
+        SceneHistoryStack.previousFxmlFile = "Home.fxml";
     }
 
     private void loadSetting() {
         SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
-        loadScene("SettingScene.fxml");
-        SceneHistoryStack.previousFxmlFile = "SettingScene.fxml";
+        loadScene("Setting.fxml");
+        SceneHistoryStack.previousFxmlFile = "Setting.fxml";
     }
 
     private void loadUser() {
