@@ -20,6 +20,7 @@ public class Book extends AbstractDocument {
         this.categories = categories;
         this.author = author;
         this.description = description;
+        this.documentType = DocumentType.BOOK;
     }
 
     public String getISBN() {

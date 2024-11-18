@@ -17,7 +17,6 @@ public class BorrowDocumentViewModel {
     }
 
     public Boolean borrowDocument() {
-//        return borrowingService.borrowDocument(AccountService.getInstance().getCurrentAccount().getId(), idProperty.get(), )
-        return true;
+        return borrowingService.borrowDocumentForCurrentAccount(idProperty.get());
     }
 }

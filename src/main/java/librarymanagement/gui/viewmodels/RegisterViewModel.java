@@ -5,6 +5,7 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import librarymanagement.UserAuth.AccountService;
+import librarymanagement.UserAuth.AccountType;
 import librarymanagement.UserAuth.RegistrationResult;
 
 public class RegisterViewModel {
@@ -17,7 +18,7 @@ public class RegisterViewModel {
     private final AccountService accountService = AccountService.getInstance();
 
     public boolean handleRegister() {
-        RegistrationResult registrationResult = accountService.addUser(getUsername(), getPassword(), getConfirmPassword() , getFullName() ,getEmail());
+        RegistrationResult registrationResult = accountService.addAccount(getUsername(), getPassword(), getConfirmPassword() , getFullName() ,getEmail(), AccountType.USER);
 
         Platform.runLater(() -> {
             errorLabelProperty.set(registrationResult.getMessage());

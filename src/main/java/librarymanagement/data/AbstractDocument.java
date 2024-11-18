@@ -25,11 +25,9 @@ public abstract class AbstractDocument implements Document {
         this.availableCopies = availableCopies;
         this.averageRating = averageRating;
         this.ratingsCount = ratingsCount;
-        this.documentType = id.charAt(0) == 'B' ? DocumentType.BOOK : id.charAt(0) == 'M'
-                ? DocumentType.MAGAZINE : DocumentType.THESIS;
     }
 
-    @Override
+//    @Override
     public String getId() {
         return id;
     }
@@ -101,9 +99,6 @@ public abstract class AbstractDocument implements Document {
 
     @Override
     public void setAvailableCopies(int availableCopies) {
-        if (availableCopies < 0) {
-            throw new IllegalArgumentException("Number of copies cannot be negative");
-        }
         this.availableCopies = availableCopies;
     }
 
