@@ -54,6 +54,7 @@ public class BorrowingService {
         if (document.getAvailableCopies() == 0) {
             return false;
         }
+
         DocumentType documentType = document.getDocumentType();
         if (documentType == DocumentType.BOOK) {
             document.setAvailableCopies(document.getAvailableCopies() - 1);
@@ -108,7 +109,7 @@ public class BorrowingService {
         }
         List<BorrowRecord> borrowRecords = new ArrayList<>();
         for (List<Object> row : list) {
-            if (row.get(4) == null) {
+            if (row.get(4) != null) {
                 continue;
             }
             String recordID = (String) row.get(0);
@@ -125,8 +126,7 @@ public class BorrowingService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate borrowDate = LocalDate.parse((String) row.get(2), formatter);
             LocalDate dueDate = LocalDate.parse((String) row.get(3), formatter);
-            LocalDate returnDate = LocalDate.parse((String) row.get(4), formatter);
-            borrowRecords.add(new BorrowRecord(recordID, account, document, borrowDate, dueDate, returnDate));
+            borrowRecords.add(new BorrowRecord(recordID, account, document, borrowDate, dueDate, null));
         }
         return borrowRecords;
     }

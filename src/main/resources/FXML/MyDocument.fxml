@@ -16,19 +16,19 @@
                 <Font size="26.0" />
             </font>
         </Label>
-        <Label fx:id="lbCheckEmpty" layoutX="156.0" layoutY="114.0" prefHeight="67.0" prefWidth="317.0" style="-fx-font-weight: bold;" text="There are no books in your borrowed list at the moment." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+        <Label fx:id="lbNoti" layoutX="156.0" layoutY="114.0" prefHeight="67.0" prefWidth="317.0" style="-fx-font-weight: bold;" text="There are no books in your borrowed list at the moment." textAlignment="CENTER" textFill="WHITE" wrapText="true">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <TableView fx:id="tableView" layoutX="25.0" layoutY="185.0" prefHeight="283.0" prefWidth="580.0" style="-fx-background-color: #474242;">
+        <TableView fx:id="tableView" layoutX="25.0" layoutY="185.0" prefHeight="283.0" prefWidth="580.0">
             <columns>
-                <TableColumn fx:id="sttColumn" minWidth="30.0" prefWidth="30.0" text="STT" />
-                <TableColumn fx:id="documentIdColumn" prefWidth="60.0" text="Book ID" />
-                <TableColumn fx:id="documentTitleColumn" prefWidth="201.59999084472656" text="Book Title" />
-                <TableColumn fx:id="borrowDateColumn" prefWidth="100.79998779296875" text="Borrow Date" />
-                <TableColumn fx:id="dueDateColumn" prefWidth="101.60003662109375" text="Due Date" />
-                <TableColumn fx:id="returnCol" prefWidth="86.39990234375" />
+                <TableColumn fx:id="recordIdCol" minWidth="30.0" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="documentIdCol" prefWidth="60.0" text="Doc ID" />
+                <TableColumn fx:id="documentTitleCol" prefWidth="175.0" text="Document Title" />
+                <TableColumn fx:id="borrowDateCol" prefWidth="100.0" text="Borrow Date" />
+                <TableColumn fx:id="dueDateCol" prefWidth="100.0" text="Due Date" />
+                <TableColumn fx:id="returnCol" prefWidth="92.0" />
             </columns>
         </TableView>
         <Button fx:id="btBorrowBooks" layoutX="487.0" layoutY="583.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="117.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="BORROW BOOKS" textAlignment="CENTER" wrapText="true">

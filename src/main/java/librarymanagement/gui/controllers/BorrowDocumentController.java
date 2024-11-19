@@ -46,9 +46,15 @@ public class BorrowDocumentController {
             if (borrowDocumentTask.getValue()) {
                 lbResult.setText("The document has been successfully borrowed!");
             } else {
-                lbResult.setText("The document ID is invalid!");
+                lbResult.setText("Sorry, this book is currently out of stock!");
             }
 
+            lbResult.setVisible(true);
+        });
+
+        borrowDocumentTask.setOnFailed(event -> {
+            loadingPopup.close();
+            lbResult.setText("The document is not available!");
             lbResult.setVisible(true);
         });
 

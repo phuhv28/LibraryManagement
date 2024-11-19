@@ -2,16 +2,19 @@ package librarymanagement.gui.viewmodels;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import librarymanagement.data.*;
 
 public class MyDocumentViewModel {
-//    private final ObservableList<BorrowBook> borrowedBooksProperty = FXCollections.observableArrayList();
+    private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
+    private final ObservableList<BorrowRecord> borrowedBooksProperty = FXCollections.observableArrayList(borrowingService.getBorrowRecordsOfCurrentAccount());
 
 
-//    public ObservableList<BorrowBook> borrowedBooksProperty() {
-//        return borrowedBooksProperty;
-//    }
+    public ObservableList<BorrowRecord> borrowedBooksProperty() {
+        return borrowedBooksProperty;
+    }
 
-    public Boolean handleReturn() {
-        return true;
+    public void handleReturn(BorrowRecord record) {
+        borrowingService.returnDocument(record.getId());
+        borrowedBooksProperty.remove(record);
     }
 }

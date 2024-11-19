@@ -1,7 +1,7 @@
 package librarymanagement.gui.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -13,10 +13,11 @@ import javafx.scene.control.TableCell;
 import javafx.scene.layout.AnchorPane;
 import librarymanagement.data.BorrowRecord;
 import librarymanagement.gui.utils.SceneHistoryStack;
+import librarymanagement.gui.viewmodels.MyDocumentViewModel;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class MyDocumentController {
@@ -28,51 +29,44 @@ public class MyDocumentController {
     private TableView<BorrowRecord> tableView;
 
     @FXML
-    private TableColumn<BorrowRecord, Integer> sttColumn;
+    private TableColumn<BorrowRecord, Integer> recordIdCol;
 
     @FXML
-    private TableColumn<BorrowRecord, Integer> documentIdColumn;
+    private TableColumn<BorrowRecord, String> documentIdCol;
 
     @FXML
-    private TableColumn<BorrowRecord, String> documentTitleColumn;
+    private TableColumn<BorrowRecord, String> documentTitleCol;
 
     @FXML
-    private TableColumn<BorrowRecord, String> borrowDateColumn;
+    private TableColumn<BorrowRecord, LocalDate> borrowDateCol;
 
     @FXML
-    private TableColumn<BorrowRecord, String> dueDateColumn;
+    private TableColumn<BorrowRecord, LocalDate> dueDateCol;
 
     @FXML
     private TableColumn<BorrowRecord, Void> returnCol;
 
     @FXML
-    private Label lbCheckEmpty;
+    private Label lbNoti;
 
     @FXML
     private Button btBorrowBooks;
 
-    private ObservableList<BorrowRecord> borrowBookList;
+    private final MyDocumentViewModel viewModel = new MyDocumentViewModel();
 
     @FXML
     public void initialize() {
-        List<BorrowRecord> listBook = new ArrayList<>();
 
-        ObservableList<BorrowRecord> observableListBook = FXCollections.observableArrayList(listBook);
-        tableView.setItems(observableListBook);
+        tableView.setItems(viewModel.borrowedBooksProperty());
 
-        if (listBook.isEmpty()) {
-            tableView.setVisible(false);
-            lbCheckEmpty.setVisible(true);
-        } else {
-            tableView.setVisible(true);
-            lbCheckEmpty.setVisible(false);
-        }
+        recordIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        documentIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDocument().getId()));
+        documentTitleCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDocument().getTitle()));
+        borrowDateCol.setCellValueFactory(new PropertyValueFactory<>("borrowDate"));
+        dueDateCol.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
 
-        sttColumn.setCellValueFactory(new PropertyValueFactory<>("stt"));
-        documentIdColumn.setCellValueFactory(new PropertyValueFactory<>("documentId"));
-        documentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("documentTitle"));
-        borrowDateColumn.setCellValueFactory(new PropertyValueFactory<>("borrowDate"));
-        dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        setCellFactoryForDate(borrowDateCol);
+        setCellFactoryForDate(dueDateCol);
 
         addReturnButtonToTable();
 
@@ -85,8 +79,8 @@ public class MyDocumentController {
 
             {
                 button.setOnAction(event -> {
-                    BorrowRecord book = getTableView().getItems().get(getIndex());
-                    handleFunction2(book);
+                    BorrowRecord record = getTableView().getItems().get(getIndex());
+                    handleReturn(record);
                 });
             }
 
@@ -101,12 +95,46 @@ public class MyDocumentController {
         });
     }
 
-    // function: read book
-    private void handleFunction1(BorrowRecord book) {
+    private void setCellFactoryForDate(TableColumn<BorrowRecord, LocalDate> col) {
+        col.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null && !empty) {
+                    setText(item.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                } else {
+                    setText(null);
+                }
+            }
+        });
     }
 
-    // function: return book
-    private void handleFunction2(BorrowRecord book) {
+    private void handleReturn(BorrowRecord record) {
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Adding document");
+        loadingPopup.initOwnerStage(UIController.getPrimaryStage());
+        loadingPopup.show();
+
+        Task<Void> returnTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                viewModel.handleReturn(record);
+                return null;
+            }
+        };
+
+        returnTask.setOnSucceeded(event -> {
+            loadingPopup.close();
+            lbNoti.setText("Returned successfully!");
+            lbNoti.setVisible(true);
+        });
+
+        returnTask.setOnFailed(event -> {
+            loadingPopup.close();
+            lbNoti.setText("Error!");
+            lbNoti.setVisible(true);
+        });
+
+        new Thread(returnTask).start();
     }
 
     private void loadScene(String fxmlFile) {
@@ -123,7 +151,7 @@ public class MyDocumentController {
     private void loadBorrowBooks() {
         SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("BorrowDocument.fxml");
-        SceneHistoryStack.previousFxmlFile="BorrowDocument.fxml";
+        SceneHistoryStack.previousFxmlFile = "BorrowDocument.fxml";
     }
 
 }
