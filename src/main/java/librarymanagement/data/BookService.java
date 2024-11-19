@@ -89,8 +89,16 @@ public class BookService implements DocumentService<Book> {
                 String description = rs.getString("description");
                 float averageRating = rs.getFloat("averageRating");
                 int ratingCount = rs.getInt("ratingsCount");
+                String linkToAPI = rs.getString("linkToAPI");
+                byte[] thumbnailImage = rs.getBytes("thumbnailImage");
 
-                books.add(new Book(id, title, publisher, LocalDate.parse(publishedDate), pageCount, availableCopies, averageRating, ratingCount, isbn, categories, author, description));
+                LocalDate finalDate = null;
+                if (publishedDate != null) {
+                    finalDate = LocalDate.parse(publishedDate);
+                }
+
+                books.add(new Book(id, title, publisher, finalDate, pageCount, availableCopies,
+                        averageRating, ratingCount, isbn, categories, author, description, linkToAPI, thumbnailImage));
             }
         } catch (SQLException e) {
             e.printStackTrace();

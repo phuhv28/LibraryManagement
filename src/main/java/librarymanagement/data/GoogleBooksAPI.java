@@ -1,14 +1,14 @@
 package librarymanagement.data;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,58 +20,144 @@ public class GoogleBooksAPI {
 
     private static List<Book> handleAPIResult(String requestUrl) {
         List<Book> books = new ArrayList<>();
+        ExecutorService executor = Executors.newFixedThreadPool(10); // Tạo pool 10 luồng
+        List<Future<byte[]>> futures = new ArrayList<>(); // Danh sách chứa kết quả tải ảnh
+
         try {
             URL url = new URL(requestUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
             StringBuilder content = new StringBuilder();
+            String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
             }
             in.close();
 
             JSONObject jsonResponse = new JSONObject(content.toString());
-            JSONArray items = jsonResponse.getJSONArray("items");
+            JSONArray items = jsonResponse.optJSONArray("items");
+
+            if (items == null) return books;
 
             for (int i = 0; i < items.length(); i++) {
-                JSONObject volumeInfo = items.getJSONObject(i).getJSONObject("volumeInfo");
+                JSONObject item = items.getJSONObject(i);
+                JSONObject volumeInfo = item.getJSONObject("volumeInfo");
 
-                String id = items.getJSONObject(i).getString("id");
+                String id = item.optString("id", "N/A");
                 String title = volumeInfo.optString("title", "N/A");
                 String publisher = volumeInfo.optString("publisher", "N/A");
-                String publishedDate = volumeInfo.optString("publishedDate", "N/A");
+                String publishedDateStr = volumeInfo.optString("publishedDate", "N/A");
                 int pageCount = volumeInfo.optInt("pageCount", 0);
                 double averageRating = volumeInfo.optDouble("averageRating", 0.0);
                 int ratingsCount = volumeInfo.optInt("ratingsCount", 0);
                 String ISBN = "N/A";
-                String categories = volumeInfo.has("categories") ? volumeInfo.getJSONArray("categories").join(", ") : "N/A";
-                String author = volumeInfo.has("authors") ? volumeInfo.getJSONArray("authors").join(", ") : "N/A";
+                String categories = volumeInfo.has("categories")
+                        ? volumeInfo.getJSONArray("categories").join(", ").replace("\"", "")
+                        : "N/A";
+                String author = volumeInfo.has("authors")
+                        ? volumeInfo.getJSONArray("authors").join(", ").replace("\"", "")
+                        : "N/A";
                 String description = volumeInfo.optString("description", "N/A");
+                String linkToAPI = item.optString("selfLink", "N/A");
+
+                LocalDate publishedDate = null;
+                try {
+                    if (!"N/A".equals(publishedDateStr)) {
+                        if (publishedDateStr.length() == 4) {
+                            publishedDate = LocalDate.of(Integer.parseInt(publishedDateStr), 1, 1);
+                        } else if (publishedDateStr.length() == 7) {
+                            String[] split = publishedDateStr.split("-");
+                            String year = split[0];
+                            String month = split[1];
+                            publishedDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), 1);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 if (volumeInfo.has("industryIdentifiers")) {
                     JSONArray identifiers = volumeInfo.getJSONArray("industryIdentifiers");
                     for (int j = 0; j < identifiers.length(); j++) {
                         JSONObject identifier = identifiers.getJSONObject(j);
-                        if (identifier.getString("type").equals("ISBN_13")) {
-                            ISBN = identifier.getString("identifier");
+                        if ("ISBN_13".equals(identifier.optString("type"))) {
+                            ISBN = identifier.optString("identifier");
                             break;
                         }
                     }
                 }
 
-                Random rand = new Random();
-                int copies = rand.nextInt();
-                Book book = new Book(null, title, publisher, LocalDate.parse(publishedDate), pageCount, copies, averageRating, ratingsCount, ISBN, categories, author, description);
+                byte[] imageBytes = null;
+                if (volumeInfo.has("imageLinks")) {
+                    String thumbnailURL = volumeInfo.getJSONObject("imageLinks").optString("thumbnail", null);
+                    if (thumbnailURL != null) {
+                        String finalThumbnailURL = thumbnailURL;
+                        Future<byte[]> future = executor.submit(() -> {
+                            try {
+                                URL imageUrl = new URL(finalThumbnailURL);
+                                HttpURLConnection imageConnection = (HttpURLConnection) imageUrl.openConnection();
+                                InputStream thumbnailImageStream = imageConnection.getInputStream();
+                                return convertInputStreamToByteArray(thumbnailImageStream);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+                        });
+                        futures.add(future);
+                    }
+                }
+
+                Book book = new Book(
+                        id,
+                        title,
+                        publisher,
+                        publishedDate,
+                        pageCount,
+                        5,
+                        averageRating,
+                        ratingsCount,
+                        ISBN,
+                        categories,
+                        author,
+                        description,
+                        linkToAPI,
+                        imageBytes
+                );
                 books.add(book);
             }
 
+            int index = 0;
+            for (Future<byte[]> future : futures) {
+                try {
+                    byte[] imageBytes = future.get();
+                    if (imageBytes != null && index < books.size()) {
+                        books.get(index).setThumbnailImage(imageBytes);
+                    }
+                    index++;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            executor.shutdown();
         }
         return books;
+    }
+
+    public static byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[2048];
+        int bytesRead;
+
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            byteArrayOutputStream.write(buffer, 0, bytesRead);
+        }
+
+        return byteArrayOutputStream.toByteArray();
     }
 
     public static List<Book> searchBooks(String query) {
@@ -81,10 +167,13 @@ public class GoogleBooksAPI {
 
     public static Book searchBookByISBN(String isbn) {
         String requestUrl = BASE_URL + "?q=isbn:" + isbn + "&key=" + API_KEY;
-        return handleAPIResult(requestUrl).getFirst();
+        return handleAPIResult(requestUrl).get(0);
     }
 
     public static void main(String[] args) {
-        Book book = searchBookByISBN("9780134693903");
+        List<Book> books = searchBooks("Cooking");
+        BookService bookService = new BookService();
+        bookService.addDocument(books.get(3));
+        System.out.println(bookService.findDocumentById("B191").getInfo());
     }
 }

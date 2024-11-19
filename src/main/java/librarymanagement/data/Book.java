@@ -14,8 +14,21 @@ public class Book extends AbstractDocument {
         this.documentType = DocumentType.BOOK;
     }
 
-    public Book(String id, String title, String publisher, LocalDate publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount, String ISBN, String categories, String author, String description) {
+    public Book(String id, String title, String publisher, LocalDate publishedDate, int pageCount,
+                int availableCopies, double averageRating, int ratingsCount, String ISBN,
+                String categories, String author, String description) {
         super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount);
+        this.ISBN = ISBN;
+        this.categories = categories;
+        this.author = author;
+        this.description = description;
+        this.documentType = DocumentType.BOOK;
+    }
+
+    public Book(String id, String title, String publisher, LocalDate publishedDate, int pageCount, int availableCopies,
+                double averageRating, int ratingsCount, String ISBN,
+                String categories, String author, String description, String linkToAPI, byte[] thumbnailImage) {
+        super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount, linkToAPI, thumbnailImage);
         this.ISBN = ISBN;
         this.categories = categories;
         this.author = author;
@@ -75,7 +88,8 @@ public class Book extends AbstractDocument {
         res.add(description);
         res.add(getAverageRating());
         res.add(getRatingsCount());
-
+        res.add(linkToAPI);
+        res.add(thumbnailImage);
         return res;
     }
 

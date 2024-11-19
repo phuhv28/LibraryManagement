@@ -1,5 +1,8 @@
 package librarymanagement.data;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 public abstract class AbstractDocument implements Document {
@@ -12,11 +15,14 @@ public abstract class AbstractDocument implements Document {
     protected double averageRating;
     protected int ratingsCount;
     protected DocumentType documentType;
+    protected String linkToAPI;
+    protected byte[] thumbnailImage;
 
     public AbstractDocument() {
     }
 
-    public AbstractDocument(String id, String title, String publisher, LocalDate publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount) {
+    public AbstractDocument(String id, String title, String publisher, LocalDate publishedDate, int pageCount,
+                            int availableCopies, double averageRating, int ratingsCount) {
         this.id = id;
         this.title = title;
         this.publisher = publisher;
@@ -27,7 +33,22 @@ public abstract class AbstractDocument implements Document {
         this.ratingsCount = ratingsCount;
     }
 
-//    @Override
+    public AbstractDocument(String id, String title, String publisher, LocalDate publishedDate, int pageCount,
+                            int availableCopies, double averageRating, int ratingsCount,
+                           String linkToAPI, byte[] thumbnailImage) {
+        this.id = id;
+        this.title = title;
+        this.publisher = publisher;
+        this.publishedDate = publishedDate;
+        this.pageCount = pageCount;
+        this.availableCopies = availableCopies;
+        this.averageRating = averageRating;
+        this.ratingsCount = ratingsCount;
+        this.linkToAPI = linkToAPI;
+        this.thumbnailImage = thumbnailImage;
+    }
+
+//        @Override
     public String getId() {
         return id;
     }
@@ -117,7 +138,27 @@ public abstract class AbstractDocument implements Document {
         this.documentType = documentType;
     }
 
-//    public abstract List<Object> getAll();
+    public String getLinkToAPI() {
+        return linkToAPI;
+    }
+
+    public void setLinkToAPI(String linkToAPI) {
+        this.linkToAPI = linkToAPI;
+    }
+
+    public InputStream getThumbnailImage() {
+        return new ByteArrayInputStream(thumbnailImage);
+    }
+
+    public void setThumbnailImage(InputStream thumbnailImage) throws IOException {
+        this.thumbnailImage = GoogleBooksAPI.convertInputStreamToByteArray(thumbnailImage);
+    }
+
+    public void setThumbnailImage(byte[] thumbnailImage) {
+        this.thumbnailImage = thumbnailImage;
+    }
+
+    //    public abstract List<Object> getAll();
 
     public String getInfo() {
         return "ID: " + id + "\n" +

@@ -88,9 +88,10 @@ public class SQLiteInstance {
                         case Boolean b -> preparedStatement.setBoolean(i, b);
                         case Long l -> preparedStatement.setLong(i, l);
                         case Date date -> preparedStatement.setDate(i, date);
+                        case byte[] bytes -> preparedStatement.setBytes(i, bytes);
                         case null -> preparedStatement.setNull(i, Types.NULL);
                         default ->
-                                throw new IllegalArgumentException("Unsupported data type: " + value.getClass().getName());
+                            throw new IllegalArgumentException("Unsupported data type: " + value.getClass().getName());
                     }
                 }
 

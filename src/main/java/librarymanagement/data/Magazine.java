@@ -1,40 +1,36 @@
-/*
 package librarymanagement.data;
 
+import java.time.LocalDate;
+
 class Magazine extends AbstractDocument {
-    private int issueNumber;
-    private String month;
+    private String ISSN;
+    private String categories;
 
-    public Magazine() {}
-
-    public Magazine(String documentID, String title, String publisher, int publicationYear, int numberAll, int numberAvailable, int issueNumber, String month) {
-        super(title, publisher, publicationYear, numberAll, numberAvailable);
-        this.issueNumber = issueNumber;
-        this.month = month;
+    public Magazine(String ISSN, String categories) {
+        this.ISSN = ISSN;
+        this.categories = categories;
     }
 
-    public int getIssueNumber() {
-        return issueNumber;
+    public Magazine(String id, String title, String publisher, LocalDate publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount, String ISSN, String categories) {
+        super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount);
+        this.ISSN = ISSN;
+        this.categories = categories;
     }
 
-    public void setIssueNumber(int issueNumber) {
-        this.issueNumber = issueNumber;
+    public String getISSN() {
+        return ISSN;
     }
 
-    public String getMonth() {
-        return month;
+    public void setISSN(String ISSN) {
+        this.ISSN = ISSN;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    public String getCategories() {
+        return categories;
     }
 
-    @Override
-    public String getInfo() {
-        return super.getInfo() + "\n" +
-                "Issue Number: " + issueNumber + "\n" +
-                "Month: " + month;
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 }
 
-*/
