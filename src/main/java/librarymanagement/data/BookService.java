@@ -2,8 +2,11 @@ package librarymanagement.data;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BookService implements DocumentService<Book> {
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
@@ -94,7 +97,17 @@ public class BookService implements DocumentService<Book> {
 
                 LocalDate finalDate = null;
                 if (publishedDate != null) {
-                    finalDate = LocalDate.parse(publishedDate);
+                    if (publishedDate.length() == 4) {
+                        finalDate = LocalDate.of(Integer.parseInt(publishedDate), 1, 1);
+                    } else if (publishedDate.length() == 7) {
+                        DateTimeFormatter yearMonthFormatter = new DateTimeFormatterBuilder()
+                                .appendPattern("yyyy-MM")
+                                .parseDefaulting(java.time.temporal.ChronoField.DAY_OF_MONTH, 1)
+                                .toFormatter(Locale.getDefault());
+                        finalDate = LocalDate.parse(publishedDate, yearMonthFormatter);
+                    } else {
+                        finalDate = LocalDate.parse(publishedDate);
+                    }
                 }
 
                 books.add(new Book(id, title, publisher, finalDate, pageCount, availableCopies,
