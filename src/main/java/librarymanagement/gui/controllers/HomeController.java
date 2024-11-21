@@ -99,7 +99,7 @@ public class HomeController {
 
     public void ScrollRight(ScrollPane currentScrollPane) {
         double currentHval = currentScrollPane.getHvalue();
-        double newHaval = currentHval + 0.1;
+        double newHaval = currentHval + 0.05;
 
         if (newHaval > 1) {
             newHaval = 1;
@@ -109,7 +109,7 @@ public class HomeController {
 
     public void ScrollLeft(ScrollPane currentScrollPane) {
         double currentHval = currentScrollPane.getHvalue();
-        double newHaval = currentHval - 0.1;
+        double newHaval = currentHval - 0.05;
         if (newHaval < 0) {
             newHaval = 0;
         }
@@ -147,7 +147,7 @@ public class HomeController {
             button.setStyle("-fx-background-color: #232f33;");
 
             button.setOnAction(actionEvent -> {
-                //DocumentInfoController.newInstance((Document) ((AbstractDocument) listBook.get(index)));
+                DocumentInfoController.newInstance((Document) ((AbstractDocument) listBook.get(index)));
                 System.out.println("click Button :" + index);
             });
 

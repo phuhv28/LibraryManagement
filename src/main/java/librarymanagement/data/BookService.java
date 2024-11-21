@@ -149,4 +149,10 @@ public class BookService implements DocumentService<Book> {
         String sql = "SELECT * FROM Book ORDER BY id DESC LIMIT 10";
         return createNewBookList(null, sql);
     }
+
+    public List<Book> getAllDocument() {
+        String sql = "SELECT * FROM Book";
+        return createNewBookList(null, sql);
+    }
+
 }

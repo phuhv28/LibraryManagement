@@ -6,115 +6,142 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="HomeScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.HomeController">
+<AnchorPane fx:id="HomeScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.HomeController">
     <children>
-        <Rectangle fill="#474242" height="670.0" width="630.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="77.0" stroke="#0f1416" strokeType="INSIDE" width="630.0" />
-        <ScrollPane hbarPolicy="NEVER" layoutX="33.0" layoutY="95.0" prefHeight="551.0" prefWidth="570.0" style="-fx-background-color: #474242;">
-         <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="706.0" prefWidth="589.0" style="-fx-background-color: #1c2528;">
+        <Rectangle fill="#474242" height="670.0" width="630.0"/>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="77.0" stroke="#0f1416" strokeType="INSIDE"
+                   width="630.0"/>
+        <ScrollPane hbarPolicy="NEVER" layoutX="33.0" layoutY="95.0" prefHeight="551.0" prefWidth="570.0"
+                    style="-fx-background-color: #474242;">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="706.0" prefWidth="589.0"
+                            style="-fx-background-color: #1c2528;">
                     <children>
-                        <Label layoutX="11.0" layoutY="204.0" prefHeight="35.0" prefWidth="211.0" style="-fx-font-weight: bold;" text="&lt;NEWEST DOCUMENTS&gt;" textFill="#d7d300">
+                        <Label layoutX="11.0" layoutY="204.0" prefHeight="35.0" prefWidth="211.0"
+                               style="-fx-font-weight: bold;" text="&lt;NEWEST DOCUMENTS&gt;" textFill="#d7d300">
                             <font>
-                                <Font size="17.0" />
+                                <Font size="17.0"/>
                             </font>
                         </Label>
-                        <ScrollPane fx:id="scrollLibrary" hbarPolicy="NEVER" layoutX="13.0" layoutY="9.0" prefHeight="188.0" prefWidth="527.0" style="-fx-background-color: #474242;" vbarPolicy="NEVER">
+                        <ScrollPane fx:id="scrollLibrary" hbarPolicy="NEVER" layoutX="13.0" layoutY="9.0"
+                                    prefHeight="188.0" prefWidth="527.0" style="-fx-background-color: #474242;"
+                                    vbarPolicy="NEVER">
                             <content>
-                                <AnchorPane fx:id="apLibrary" minHeight="0.0" minWidth="0.0" prefHeight="189.0" prefWidth="527.0" style="-fx-background-color: #232f33;">
+                                <AnchorPane fx:id="apLibrary" minHeight="0.0" minWidth="0.0" prefHeight="189.0"
+                                            prefWidth="527.0" style="-fx-background-color: #232f33;">
                                     <children>
-                                        <HBox fx:id="DocumentOfLibrary" alignment="CENTER" layoutY="0.0" prefHeight="188.0" prefWidth="527.0" spacing="15" />
-                                    </children>
-                                      </AnchorPane>
-                            </content>
-                        </ScrollPane>
-                        <ScrollPane fx:id="scrollDocumentNewest" hbarPolicy="NEVER" layoutX="11.0" layoutY="246.0" prefHeight="188.0" prefWidth="527.0" style="-fx-background-color: #474242;" vbarPolicy="NEVER">
-                            <content>
-                                <AnchorPane fx:id="apDocumentNewest" minHeight="0.0" minWidth="0.0" prefHeight="196.0" prefWidth="532.0" style="-fx-background-color: #232f33;">
-                                    <children>
-                                        <HBox fx:id="DocumentNewest" alignment="CENTER" prefHeight="188.0" prefWidth="533.0" spacing="15" />
+                                        <HBox fx:id="DocumentOfLibrary" alignment="CENTER" layoutY="0.0"
+                                              prefHeight="188.0" prefWidth="527.0" spacing="15"/>
                                     </children>
                                 </AnchorPane>
                             </content>
                         </ScrollPane>
-                        <Label layoutX="9.0" layoutY="445.0" style="-fx-font-weight: bold;" text="&lt;MOST BORROWED DOCUMENTS&gt;" textFill="#d7d300">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                        </Label>
-                        <ScrollPane fx:id="scrollDocumentBorrowed" hbarPolicy="NEVER" layoutX="10.0" layoutY="480.0" prefHeight="188.0" prefWidth="527.0" style="-fx-background-color: #474242;" vbarPolicy="NEVER">
+                        <ScrollPane fx:id="scrollDocumentNewest" hbarPolicy="NEVER" layoutX="11.0" layoutY="246.0"
+                                    prefHeight="188.0" prefWidth="527.0" style="-fx-background-color: #474242;"
+                                    vbarPolicy="NEVER">
                             <content>
-                                <AnchorPane fx:id="apDocumentBorrowed" minHeight="0.0" minWidth="0.0" prefHeight="199.0" prefWidth="533.0" style="-fx-background-color: #232f33;">
+                                <AnchorPane fx:id="apDocumentNewest" minHeight="0.0" minWidth="0.0" prefHeight="189.0"
+                                            prefWidth="527.0" style="-fx-background-color: #232f33;">
                                     <children>
-                                        <HBox fx:id="DocumentBorrowed" alignment="CENTER" prefHeight="188.0" prefWidth="530.0" spacing="15" />
+                                        <HBox fx:id="DocumentNewest" alignment="CENTER" prefHeight="188.0"
+                                              prefWidth="527.0" spacing="15"/>
                                     </children>
                                 </AnchorPane>
                             </content>
                         </ScrollPane>
-                  <Line endX="146.0" endY="1.52587890625E-5" layoutX="392.0" layoutY="222.0" startX="-158.00001525878906" startY="1.52587890625E-5" stroke="WHITE" strokeWidth="2.0" />
-                  <Line endX="50.0" layoutX="487.0" layoutY="459.0" startX="-165.0" stroke="WHITE" strokeWidth="2.0" />
-                        <Button fx:id="btLeftListLibrary" layoutX="-12.0" layoutY="80.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="42.0" style="-fx-background-color: #232f33;">
+                        <Label layoutX="9.0" layoutY="445.0" style="-fx-font-weight: bold;"
+                               text="&lt;MOST BORROWED DOCUMENTS&gt;" textFill="#d7d300">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Label>
+                        <ScrollPane fx:id="scrollDocumentBorrowed" hbarPolicy="NEVER" layoutX="10.0" layoutY="480.0"
+                                    prefHeight="188.0" prefWidth="527.0" style="-fx-background-color: #474242;"
+                                    vbarPolicy="NEVER">
+                            <content>
+                                <AnchorPane fx:id="apDocumentBorrowed" minHeight="0.0" minWidth="0.0" prefHeight="188.0"
+                                            prefWidth="527.0" style="-fx-background-color: #232f33;">
+                                    <children>
+                                        <HBox fx:id="DocumentBorrowed" alignment="CENTER" prefHeight="188.0"
+                                              prefWidth="527.0" spacing="15"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </ScrollPane>
+                        <Line endX="146.0" endY="1.52587890625E-5" layoutX="392.0" layoutY="222.0"
+                              startX="-158.00001525878906" startY="1.52587890625E-5" stroke="WHITE" strokeWidth="2.0"/>
+                        <Line endX="50.0" layoutX="487.0" layoutY="459.0" startX="-165.0" stroke="WHITE"
+                              strokeWidth="2.0"/>
+                        <Button fx:id="btLeftListLibrary" layoutX="-12.0" layoutY="80.0" mnemonicParsing="false"
+                                prefHeight="40.0" prefWidth="42.0" style="-fx-background-color: #232f33;">
                             <graphic>
                                 <ImageView fitHeight="34.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/image_left.png" />
+                                        <Image url="@../images/image_left.png"/>
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="btRightListLibrary" layoutX="523.0" layoutY="80.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="31.0" style="-fx-background-color: #232f33;">
+                        <Button fx:id="btRightListLibrary" layoutX="523.0" layoutY="80.0" mnemonicParsing="false"
+                                prefHeight="52.0" prefWidth="31.0" style="-fx-background-color: #232f33;">
                             <graphic>
                                 <ImageView fitHeight="34.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/image_right.png" />
+                                        <Image url="@../images/image_right.png"/>
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="btLeftListNewest" layoutX="-9.0" layoutY="321.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="26.0" style="-fx-background-color: #232f33;">
+                        <Button fx:id="btLeftListNewest" layoutX="-9.0" layoutY="321.0" mnemonicParsing="false"
+                                prefHeight="31.0" prefWidth="26.0" style="-fx-background-color: #232f33;">
                             <graphic>
                                 <ImageView fitHeight="34.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/image_left.png" />
+                                        <Image url="@../images/image_left.png"/>
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="btRightListNewest" layoutX="523.0" layoutY="321.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="38.0" style="-fx-background-color: #232f33;">
+                        <Button fx:id="btRightListNewest" layoutX="523.0" layoutY="321.0" mnemonicParsing="false"
+                                prefHeight="34.0" prefWidth="38.0" style="-fx-background-color: #232f33;">
                             <graphic>
                                 <ImageView fitHeight="34.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/image_right.png" />
+                                        <Image url="@../images/image_right.png"/>
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="btLeftListBorrow" layoutX="-10.0" layoutY="548.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="28.0" style="-fx-background-color: #232f33;">
+                        <Button fx:id="btLeftListBorrow" layoutX="-10.0" layoutY="548.0" mnemonicParsing="false"
+                                prefHeight="54.0" prefWidth="28.0" style="-fx-background-color: #232f33;">
                             <graphic>
                                 <ImageView fitHeight="34.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/image_left.png" />
+                                        <Image url="@../images/image_left.png"/>
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="btRightListBorrowed" layoutX="522.0" layoutY="548.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="42.0" style="-fx-background-color: #232f33;">
+                        <Button fx:id="btRightListBorrowed" layoutX="522.0" layoutY="548.0" mnemonicParsing="false"
+                                prefHeight="53.0" prefWidth="42.0" style="-fx-background-color: #232f33;">
                             <graphic>
                                 <ImageView fitHeight="34.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/image_right.png" />
+                                        <Image url="@../images/image_right.png"/>
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
                     </children>
                 </AnchorPane>
-         </content>
+            </content>
         </ScrollPane>
-      <Text fill="WHITE" fontSmoothingType="LCD" layoutX="40.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: BOLD;" text="HOMESCREEN">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Text>
+        <Text fill="WHITE" fontSmoothingType="LCD" layoutX="40.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              style="-fx-font-weight: BOLD;" text="HOMESCREEN">
+            <font>
+                <Font size="27.0"/>
+            </font>
+        </Text>
     </children>
 </AnchorPane>
