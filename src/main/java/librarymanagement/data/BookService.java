@@ -11,7 +11,8 @@ import java.util.Locale;
 public class BookService implements DocumentService<Book> {
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
 
-    public String generateBookID() {
+    @Override
+    public String generateNewID() {
         String newId;
 
         List<List<Object>> result = sqLiteInstance.findNotCondition("Book", "Max(id)");
@@ -47,11 +48,8 @@ public class BookService implements DocumentService<Book> {
             System.out.println("Book already exists");
             return;
         }
-
-        book.setId(generateBookID());
-
+        book.setId(generateNewID());
         sqLiteInstance.insertRow("Book", book.getAll());
-
         System.out.println("Add book successfully");
     }
 
@@ -77,7 +75,9 @@ public class BookService implements DocumentService<Book> {
     private List<Book> createNewBookList(String condition, String sql) {
         List<Book> books = new ArrayList<>();
         try (PreparedStatement stmt = sqLiteInstance.connection.prepareStatement(sql)) {
-            stmt.setString(1, "%" + condition + "%");
+            if (condition != null && !condition.isEmpty()) {
+                stmt.setString(1, "%" + condition + "%");
+            }
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String isbn = rs.getString("ISBN");
@@ -96,7 +96,7 @@ public class BookService implements DocumentService<Book> {
                 byte[] thumbnailImage = rs.getBytes("thumbnailImage");
 
                 LocalDate finalDate = null;
-                if (publishedDate != null) {
+                if (publishedDate != null && !publishedDate.equals("N/A")) {
                     if (publishedDate.length() == 4) {
                         finalDate = LocalDate.of(Integer.parseInt(publishedDate), 1, 1);
                     } else if (publishedDate.length() == 7) {
@@ -143,5 +143,10 @@ public class BookService implements DocumentService<Book> {
     public Book findDocumentById(String id) {
         String sql = "SELECT * FROM Book WHERE id LIKE ?";
         return createNewBookList(id, sql).getFirst();
+    }
+
+    public List<Book> getRecentlyAddedBooks() {
+        String sql = "SELECT * FROM Book ORDER BY id DESC LIMIT 10";
+        return createNewBookList(null, sql);
     }
 }

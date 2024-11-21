@@ -14,14 +14,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GoogleBooksAPI {
-
     private static final String API_KEY = "AIzaSyCDqQRwC5jM_KWFHGkkyDupSPbfAo9KvO8";
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
     private static List<Book> handleAPIResult(String requestUrl) {
         List<Book> books = new ArrayList<>();
-        ExecutorService executor = Executors.newFixedThreadPool(10); // Tạo pool 10 luồng
-        List<Future<byte[]>> futures = new ArrayList<>(); // Danh sách chứa kết quả tải ảnh
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+        List<Future<byte[]>> futures = new ArrayList<>();
 
         try {
             URL url = new URL(requestUrl);
@@ -93,10 +92,9 @@ public class GoogleBooksAPI {
                 if (volumeInfo.has("imageLinks")) {
                     String thumbnailURL = volumeInfo.getJSONObject("imageLinks").optString("thumbnail", null);
                     if (thumbnailURL != null) {
-                        String finalThumbnailURL = thumbnailURL;
                         Future<byte[]> future = executor.submit(() -> {
                             try {
-                                URL imageUrl = new URL(finalThumbnailURL);
+                                URL imageUrl = new URL(thumbnailURL);
                                 HttpURLConnection imageConnection = (HttpURLConnection) imageUrl.openConnection();
                                 InputStream thumbnailImageStream = imageConnection.getInputStream();
                                 return convertInputStreamToByteArray(thumbnailImageStream);
@@ -148,6 +146,130 @@ public class GoogleBooksAPI {
         return books;
     }
 
+    private static List<Magazine> handleAPIResultMageZine(String requestUrl) {
+        List<Magazine> magazines = new ArrayList<>();
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+        List<Future<byte[]>> futures = new ArrayList<>();
+
+        try {
+            URL url = new URL(requestUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder content = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+
+            JSONObject jsonResponse = new JSONObject(content.toString());
+            JSONArray items = jsonResponse.optJSONArray("items");
+
+            if (items == null) return magazines;
+
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+                JSONObject volumeInfo = item.getJSONObject("volumeInfo");
+
+                String id = item.optString("id", "N/A");
+                String title = volumeInfo.optString("title", "N/A");
+                String publisher = volumeInfo.optString("publisher", "N/A");
+                String publishedDateStr = volumeInfo.optString("publishedDate", "N/A");
+                int pageCount = volumeInfo.optInt("pageCount", 0);
+                double averageRating = volumeInfo.optDouble("averageRating", 0.0);
+                int ratingsCount = volumeInfo.optInt("ratingsCount", 0);
+                String ISSN = "N/A";
+                String categories = volumeInfo.has("categories")
+                        ? volumeInfo.getJSONArray("categories").join(", ").replace("\"", "")
+                        : "N/A";
+
+                LocalDate publishedDate = null;
+                try {
+                    if (!"N/A".equals(publishedDateStr)) {
+                        if (publishedDateStr.length() == 4) {
+                            publishedDate = LocalDate.of(Integer.parseInt(publishedDateStr), 1, 1);
+                        } else if (publishedDateStr.length() == 7) {
+                            String[] split = publishedDateStr.split("-");
+                            publishedDate = LocalDate.of(
+                                    Integer.parseInt(split[0]),
+                                    Integer.parseInt(split[1]),
+                                    1
+                            );
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (volumeInfo.has("industryIdentifiers")) {
+                    JSONArray identifiers = volumeInfo.getJSONArray("industryIdentifiers");
+                    for (int j = 0; j < identifiers.length(); j++) {
+                        JSONObject identifier = identifiers.getJSONObject(j);
+                        if ("ISSN".equals(identifier.optString("type"))) {
+                            ISSN = identifier.optString("identifier");
+                            break;
+                        }
+                    }
+                }
+
+                String linkToAPI = item.optString("selfLink", "N/A");
+
+                byte[] imageBytes = null;
+                if (volumeInfo.has("imageLinks")) {
+                    String thumbnailURL = volumeInfo.getJSONObject("imageLinks").optString("thumbnail", null);
+                    if (thumbnailURL != null) {
+                        Future<byte[]> future = executor.submit(() -> {
+                            try {
+                                URL imageUrl = new URL(thumbnailURL);
+                                HttpURLConnection imageConnection = (HttpURLConnection) imageUrl.openConnection();
+                                InputStream thumbnailImageStream = imageConnection.getInputStream();
+                                return convertInputStreamToByteArray(thumbnailImageStream);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+                        });
+                        futures.add(future);
+                    }
+                }
+
+                Magazine magazine = new Magazine(
+                        id,
+                        title,
+                        publisher,
+                        publishedDate,
+                        pageCount,
+                        5,
+                        averageRating,
+                        ratingsCount,
+                        ISSN,
+                        categories,
+                        linkToAPI,
+                        imageBytes
+                );
+                magazines.add(magazine);
+            }
+
+            for (int i = 0; i < magazines.size(); i++) {
+                try {
+                    byte[] imageBytes = futures.get(i).get();
+                    magazines.get(i).setThumbnailImage(imageBytes);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            executor.shutdown();
+        }
+        return magazines;
+    }
+
+
     public static byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[2048];
@@ -171,9 +293,10 @@ public class GoogleBooksAPI {
     }
 
     public static void main(String[] args) {
-        List<Book> books = searchBooks("Cooking");
-        BookService bookService = new BookService();
-        bookService.addDocument(books.get(3));
-        System.out.println(bookService.findDocumentById("B191").getInfo());
+        DocumentService bookService = new BookService();
+        Document books = bookService.findDocumentById("B120");
+
+        System.out.println(books.getTitle());
+
     }
 }

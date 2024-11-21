@@ -2,6 +2,11 @@ package librarymanagement.data;
 
 public class ThesisService implements DocumentService<Thesis> {
     @Override
+    public String generateNewID() {
+        return "";
+    }
+
+    @Override
     public void addDocument(Thesis document) {
 
     }

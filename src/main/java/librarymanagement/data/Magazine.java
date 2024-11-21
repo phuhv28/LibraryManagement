@@ -11,8 +11,11 @@ class Magazine extends AbstractDocument {
         this.categories = categories;
     }
 
-    public Magazine(String id, String title, String publisher, LocalDate publishedDate, int pageCount, int availableCopies, double averageRating, int ratingsCount, String ISSN, String categories) {
-        super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount);
+    public Magazine(String id, String title, String publisher, LocalDate publishedDate, int pageCount,
+                    int availableCopies, double averageRating, int ratingsCount, String ISSN,
+                    String categories, String linkToAPI, byte[] thumbnailImage) {
+        super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount,
+                linkToAPI, thumbnailImage);
         this.ISSN = ISSN;
         this.categories = categories;
     }

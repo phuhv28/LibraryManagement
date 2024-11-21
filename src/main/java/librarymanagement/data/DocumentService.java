@@ -1,6 +1,10 @@
 package librarymanagement.data;
 
+import java.util.List;
+
 public interface DocumentService<T extends Document> {
+    String generateNewID();
+
     void addDocument(T document);
 
     void updateDocument(T document);
