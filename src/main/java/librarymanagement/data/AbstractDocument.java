@@ -147,6 +147,9 @@ public abstract class AbstractDocument implements Document {
     }
 
     public InputStream getThumbnailImage() {
+        if(thumbnailImage == null ) {
+            return null;
+        }
         return new ByteArrayInputStream(thumbnailImage);
     }
 
