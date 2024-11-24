@@ -71,6 +71,11 @@ public class MyDocumentController {
         addReturnButtonToTable();
 
         btBorrowBooks.setOnAction(event -> loadBorrowBooks());
+        if (viewModel.borrowedBooksProperty() == null || viewModel.borrowedBooksProperty().isEmpty()) {
+            lbNoti.setText("There are no books in your borrowed list at the moment.");
+            lbNoti.setVisible(true);
+            tableView.setVisible(false);
+        }
     }
 
     private void addReturnButtonToTable() {

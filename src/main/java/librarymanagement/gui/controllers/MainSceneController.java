@@ -62,6 +62,8 @@ public class MainSceneController {
         btSetting.setOnAction(event -> loadSetting());
         btUser.setOnAction(event -> loadUser());
 
+        loadHome();
+
 //        if (AccountService.getInstance().getCurrentAccount().getAccountType() != AccountType.ADMIN) {
 //            btAddUser.setVisible(false);
 //            btDelete.setVisible(false);

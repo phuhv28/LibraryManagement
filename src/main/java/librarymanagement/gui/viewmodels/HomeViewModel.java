@@ -3,7 +3,7 @@ package librarymanagement.gui.viewmodels;
 import librarymanagement.data.*;
 import java.util.List;
 
-public class HomeViewModels {
+public class HomeViewModel {
     private final DocumentService<Book> bookService = DocumentServiceFactory.getDocumentService(DocumentType.BOOK);
 
     public List<Book> getListAllBook() {

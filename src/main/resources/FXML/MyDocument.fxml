@@ -16,7 +16,7 @@
                 <Font size="26.0" />
             </font>
         </Label>
-        <Label fx:id="lbNoti" layoutX="156.0" layoutY="114.0" prefHeight="67.0" prefWidth="317.0" style="-fx-font-weight: bold;" text="There are no books in your borrowed list at the moment." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+        <Label fx:id="lbNoti" layoutX="156.0" layoutY="114.0" prefHeight="67.0" prefWidth="317.0" style="-fx-font-weight: bold;" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
             <font>
                 <Font size="18.0" />
             </font>

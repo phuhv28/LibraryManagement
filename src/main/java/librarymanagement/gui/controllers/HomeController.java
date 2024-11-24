@@ -1,7 +1,6 @@
 package librarymanagement.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,14 +16,11 @@ import javafx.scene.text.FontWeight;
 import librarymanagement.data.AbstractDocument;
 import librarymanagement.data.Book;
 import librarymanagement.data.Document;
-import librarymanagement.gui.viewmodels.HomeViewModels;
+import librarymanagement.gui.viewmodels.HomeViewModel;
 
-import java.io.IOException;
 import java.util.List;
 
 public class HomeController {
-    @FXML
-    private AnchorPane HomeScene;
 
     @FXML
     private Button btLeftListLibrary;
@@ -73,31 +69,22 @@ public class HomeController {
 
     private final Image imagePublic = new Image(getClass().getResource("/images/image_bookPublic.png").toExternalForm());
 
-    private HomeViewModels viewModels = new HomeViewModels();
+    private final HomeViewModel viewModel = new HomeViewModel();
 
     @FXML
     public void initialize() {
-        btLeftListBorrow.setOnAction(actionEvent -> ScrollLeft(scrollDocumentBorrowed));
-        btRightListBorrowed.setOnAction(actionEvent -> ScrollRight(scrollDocumentBorrowed));
-        btLeftListLibrary.setOnAction(actionEvent -> ScrollLeft(scrollLibrary));
-        btRightListLibrary.setOnAction(actionEvent -> ScrollRight(scrollLibrary));
-        btLeftListNewest.setOnAction(actionEvent -> ScrollLeft(scrollDocumentNewest));
-        btRightListNewest.setOnAction(actionEvent -> ScrollRight(scrollDocumentNewest));
-        setImageHbox(DocumentOfLibrary, apLibrary, viewModels.getListAllBook());
-        setImageHbox(DocumentNewest, apDocumentNewest, viewModels.getListNewestBooks());
-        setImageHbox(DocumentBorrowed, apDocumentBorrowed, viewModels.getListMostBorrowedBooks());
+        btLeftListBorrow.setOnAction(actionEvent -> scrollLeft(scrollDocumentBorrowed));
+        btRightListBorrowed.setOnAction(actionEvent -> scrollRight(scrollDocumentBorrowed));
+        btLeftListLibrary.setOnAction(actionEvent -> scrollLeft(scrollLibrary));
+        btRightListLibrary.setOnAction(actionEvent -> scrollRight(scrollLibrary));
+        btLeftListNewest.setOnAction(actionEvent -> scrollLeft(scrollDocumentNewest));
+        btRightListNewest.setOnAction(actionEvent -> scrollRight(scrollDocumentNewest));
+        setImageHBox(DocumentOfLibrary, apLibrary, viewModel.getListAllBook());
+        setImageHBox(DocumentNewest, apDocumentNewest, viewModel.getListNewestBooks());
+        setImageHBox(DocumentBorrowed, apDocumentBorrowed, viewModel.getListMostBorrowedBooks());
     }
 
-    private void loadScene(String fxmlFile) {
-        try {
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
-            HomeScene.getChildren().setAll(newPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void ScrollRight(ScrollPane currentScrollPane) {
+    public void scrollRight(ScrollPane currentScrollPane) {
         double currentHval = currentScrollPane.getHvalue();
         double newHaval = currentHval + 0.05;
 
@@ -107,7 +94,7 @@ public class HomeController {
         currentScrollPane.setHvalue(newHaval);
     }
 
-    public void ScrollLeft(ScrollPane currentScrollPane) {
+    public void scrollLeft(ScrollPane currentScrollPane) {
         double currentHval = currentScrollPane.getHvalue();
         double newHaval = currentHval - 0.05;
         if (newHaval < 0) {
@@ -116,7 +103,7 @@ public class HomeController {
         currentScrollPane.setHvalue(newHaval);
     }
 
-    public void setImageHbox(HBox currentHBox, AnchorPane currentAnchorpane, List<Book> listBook) {
+    public void setImageHBox(HBox currentHBox, AnchorPane currentAnchorpane, List<Book> listBook) {
         if (listBook.isEmpty()) {
             return;
         }
