@@ -59,7 +59,7 @@ public class BorrowingService {
                 return BorrowResult.OUT_OF_STOCK;
             }
             book.setAvailableCopies(book.getAvailableCopies() - 1);
-            bookService.updateDocument((Book) book);
+            bookService.updateDocument(book);
         } else if (documentId.charAt(0) == 'M') {
             // TODO
         } else if (documentId.charAt(0) == 'T') {

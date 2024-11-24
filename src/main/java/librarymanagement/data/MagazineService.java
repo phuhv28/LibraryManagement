@@ -9,10 +9,10 @@ public class MagazineService implements DocumentService<Magazine> {
         String newId;
 
         List<List<Object>> result = sqLiteInstance.findNotCondition("Book", "Max(id)");
-        if (result.get(0).get(0) == null) {
+        if (result.getFirst().getFirst() == null) {
             newId = "M101";
         } else {
-            String temp = result.get(0).get(0).toString().substring(1);
+            String temp = result.getFirst().getFirst().toString().substring(1);
             newId = "M" + (Integer.parseInt(temp) + 1);
         }
 

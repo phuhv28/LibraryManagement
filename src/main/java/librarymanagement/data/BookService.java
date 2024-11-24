@@ -43,12 +43,12 @@ public class BookService implements DocumentService<Book> {
 
     public boolean checkIfHasTitleAndAuthor(String title, String author) {
         List<List<Object>> res = sqLiteInstance.find("Book", "title", title, "title");
-        if (res.isEmpty() || res.get(0).isEmpty()) {
+        if (res.isEmpty() || res.getFirst().isEmpty()) {
             return false;
         }
-        boolean has = res.get(0).get(0) != null;
+        boolean has = res.getFirst().getFirst() != null;
         res = sqLiteInstance.find("Book", "author", author, "author");
-        return has && res.get(0).get(0) != null;
+        return has && res.getFirst().getFirst() != null;
     }
 
     @Override

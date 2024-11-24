@@ -21,9 +21,7 @@ public class DeleteDocumentController {
 
     @FXML
     public void initialize() {
-        btDeleteDocument.setOnAction(event -> {
-            handleDeleteDocument();
-        });
+        btDeleteDocument.setOnAction(_ -> handleDeleteDocument());
         tfDocumentID.textProperty().bindBidirectional(viewModel.IDProperty());
         tfDocumentID.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -44,7 +42,7 @@ public class DeleteDocumentController {
             }
         };
 
-        registerTask.setOnSucceeded(event -> {
+        registerTask.setOnSucceeded(_ -> {
             loadingPopup.close();
             if (!registerTask.getValue()) {
                 lbError.setText("Document not found!");

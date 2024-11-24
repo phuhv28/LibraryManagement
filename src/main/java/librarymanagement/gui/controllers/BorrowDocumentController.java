@@ -24,9 +24,7 @@ public class BorrowDocumentController {
     public void initialize() {
         tfDocumentID.textProperty().bindBidirectional(viewModel.idProperty());
 
-        btBorrowDocument.setOnAction(event -> {
-            handleBorrowDocument();
-        });
+        btBorrowDocument.setOnAction(_ -> handleBorrowDocument());
     }
 
     private void handleBorrowDocument() {
@@ -41,7 +39,7 @@ public class BorrowDocumentController {
             }
         };
 
-        borrowDocumentTask.setOnSucceeded(event -> {
+        borrowDocumentTask.setOnSucceeded(_ -> {
             loadingPopup.close();
             lbResult.setText(borrowDocumentTask.getValue().getMessage());
             lbResult.setVisible(true);
