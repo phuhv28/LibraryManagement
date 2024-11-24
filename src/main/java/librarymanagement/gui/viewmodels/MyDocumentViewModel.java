@@ -22,8 +22,11 @@ public class MyDocumentViewModel {
         return borrowedBooksProperty;
     }
 
-    public void handleReturn(BorrowRecord record) {
-        borrowingService.returnDocument(record.getId());
-        borrowedBooksProperty.remove(record);
+    public boolean handleReturn(BorrowRecord record) {
+        boolean result = borrowingService.returnDocument(record.getId());
+        if (result) {
+            borrowedBooksProperty.remove(record);
+        }
+        return result;
     }
 }

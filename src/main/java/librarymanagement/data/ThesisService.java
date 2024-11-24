@@ -1,14 +1,14 @@
 package librarymanagement.data;
 
 public class ThesisService implements DocumentService<Thesis> {
-    @Override
-    public String generateNewID() {
+    private String generateNewID() {
         return "";
     }
 
     @Override
-    public void addDocument(Thesis document) {
+    public boolean addDocument(Thesis document) {
 
+        return false;
     }
 
     @Override
@@ -17,8 +17,8 @@ public class ThesisService implements DocumentService<Thesis> {
     }
 
     @Override
-    public void deleteDocument(String id) {
-
+    public boolean deleteDocument(String id) {
+        return true;
     }
 
     @Override

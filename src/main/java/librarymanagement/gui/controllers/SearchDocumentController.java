@@ -99,27 +99,26 @@ public class SearchDocumentController {
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
 
-        Task<Void> searchTask = new Task<>() {
+        Task<Boolean> searchTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Boolean call() throws Exception {
                 loadingPopup.setText("Searching for " + tfValueSearch.getText() + " ...");
-                viewModel.searchDocument();
-                return null;
+                return viewModel.searchDocument();
             }
         };
 
         searchTask.setOnSucceeded(event -> {
             loadingPopup.close();
-            tbResults.setVisible(true);
-            if (lbError.isVisible()) {
-                lbError.setVisible(false);
-            }
-        });
+            if (searchTask.getValue()) {
+                tbResults.setVisible(true);
+                if (lbError.isVisible()) {
+                    lbError.setVisible(false);
 
-        searchTask.setOnFailed(event -> {
-            loadingPopup.close();
-            lbError.setText("Not found.");
-            lbError.setVisible(true);
+                }
+            } else {
+                lbError.setVisible(true);
+                lbError.setText("Error!");
+            }
         });
 
         new Thread(searchTask).start();

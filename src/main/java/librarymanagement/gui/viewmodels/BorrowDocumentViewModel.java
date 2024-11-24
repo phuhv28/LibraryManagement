@@ -6,6 +6,7 @@ import librarymanagement.UserAuth.AccountService;
 import librarymanagement.data.BorrowingService;
 import librarymanagement.data.DocumentServiceFactory;
 import librarymanagement.data.DocumentType;
+import librarymanagement.gui.controllers.BorrowResult;
 
 public class BorrowDocumentViewModel {
     private final StringProperty idProperty = new SimpleStringProperty();
@@ -16,7 +17,7 @@ public class BorrowDocumentViewModel {
         return idProperty;
     }
 
-    public Boolean borrowDocument() {
+    public BorrowResult borrowDocument() {
         return borrowingService.borrowDocumentForCurrentAccount(idProperty.get());
     }
 }

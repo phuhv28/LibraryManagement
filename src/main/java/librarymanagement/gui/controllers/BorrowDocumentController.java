@@ -34,36 +34,20 @@ public class BorrowDocumentController {
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
 
-        Task<Boolean> borrowDocumentTask = new Task<>() {
+        Task<BorrowResult> borrowDocumentTask = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected BorrowResult call() throws Exception {
                 return viewModel.borrowDocument();
             }
         };
 
         borrowDocumentTask.setOnSucceeded(event -> {
             loadingPopup.close();
-            if (borrowDocumentTask.getValue()) {
-                lbResult.setText("The document has been successfully borrowed!");
-            } else {
-                lbResult.setText("Sorry, this book is currently out of stock!");
-            }
-
-            lbResult.setVisible(true);
-        });
-
-        borrowDocumentTask.setOnFailed(event -> {
-            loadingPopup.close();
-            lbResult.setText("The document is not available!");
+            lbResult.setText(borrowDocumentTask.getValue().getMessage());
             lbResult.setVisible(true);
         });
 
         new Thread(borrowDocumentTask).start();
     }
-
-    private void loadError() {
-        lbResult.setVisible(true);
-    }
-
 }
 

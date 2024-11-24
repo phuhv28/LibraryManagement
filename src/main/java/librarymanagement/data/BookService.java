@@ -11,35 +11,34 @@ import java.util.Locale;
 public class BookService implements DocumentService<Book> {
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
 
-    @Override
-    public String generateNewID() {
+    private String generateNewID() {
         String newId;
 
         List<List<Object>> result = sqLiteInstance.findNotCondition("Book", "Max(id)");
-        if (result.get(0).get(0) == null) {
+        if (result.getFirst().getFirst() == null) {
             newId = "B101";
         } else {
-            String temp = result.get(0).get(0).toString().substring(1);
+            String temp = result.getFirst().getFirst().toString().substring(1);
             newId = "B" + (Integer.parseInt(temp) + 1);
         }
 
         return newId;
     }
 
-    public boolean checkIfHasBookISBN(String isbn) {
+    private boolean checkIfHasBookISBN(String isbn) {
         List<List<Object>> res = sqLiteInstance.find("Book", "ISBN", isbn, "ISBN");
-        if (res.isEmpty() || res.get(0).isEmpty()) {
+        if (res.isEmpty() || res.getFirst().isEmpty()) {
             return false;
         }
-        return res.get(0).get(0) != null;
+        return res.getFirst().getFirst() != null;
     }
 
-    public boolean checkIfHasBookId(String id) {
+    private boolean checkIfHasBookId(String id) {
         List<List<Object>> res = sqLiteInstance.find("Book", "id", id, "id");
-        if (res.isEmpty() || res.get(0).isEmpty()) {
+        if (res.isEmpty() || res.getFirst().isEmpty()) {
             return false;
         }
-        return res.get(0).get(0) != null;
+        return res.getFirst().getFirst() != null;
     }
 
     public boolean checkIfHasTitleAndAuthor(String title, String author) {
@@ -53,26 +52,29 @@ public class BookService implements DocumentService<Book> {
     }
 
     @Override
-    public void addDocument(Book book) {
+    public boolean addDocument(Book book) {
         if (book.getISBN() == null && checkIfHasTitleAndAuthor(book.getTitle(), book.getAuthor())) {
-            return;
+            return false;
         } else if (checkIfHasBookISBN(book.getISBN())) {
             System.out.println("Book already exists");
-            return;
+            return false;
         }
         book.setId(generateNewID());
         sqLiteInstance.insertRow("Book", book.getAll());
         System.out.println("Add book successfully");
+        return true;
     }
 
     @Override
-    public void deleteDocument(String id) {
+    public boolean deleteDocument(String id) {
         if (!checkIfHasBookId(id)) {
             System.out.println("Book does not exist");
-            return;
+            return false;
         }
+
         String condition = "id = " + "'" + id + "'";
         sqLiteInstance.deleteRow("Book", condition);
+        return true;
     }
 
     @Override
@@ -128,6 +130,11 @@ public class BookService implements DocumentService<Book> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        if (books.isEmpty()) {
+            return null;
+        }
+
         return books;
     }
 
@@ -138,7 +145,12 @@ public class BookService implements DocumentService<Book> {
 
     public Book searchBookByISBN(String ISBN) {
         String sql = "SELECT * FROM Book WHERE ISBN LIKE ?";
-        return createNewBookList(ISBN, sql).getFirst();
+        List<Book> books = createNewBookList(ISBN, sql);
+        if (books == null) {
+            return null;
+        }
+
+        return books.getFirst();
     }
 
     public List<Book> searchBookByCategory(String category) {
@@ -154,7 +166,11 @@ public class BookService implements DocumentService<Book> {
     @Override
     public Book findDocumentById(String id) {
         String sql = "SELECT * FROM Book WHERE id LIKE ?";
-        return createNewBookList(id, sql).getFirst();
+        List<Book> books = createNewBookList(id, sql);
+        if (books == null) {
+            return null;
+        }
+        return books.getFirst();
     }
 
     public List<Book> getRecentlyAddedBooks() {

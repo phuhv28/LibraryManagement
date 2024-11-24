@@ -6,20 +6,28 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import librarymanagement.data.*;
 
+import java.time.LocalDate;
+
 public class EditDocumentViewModel {
     private final StringProperty documentIDProperty = new SimpleStringProperty();
     private final StringProperty editedFieldProperty = new SimpleStringProperty();
     private final ObjectProperty<Book> selectedDocumentProperty = new SimpleObjectProperty<>();
     private final StringProperty selectedAttributeProperty = new SimpleStringProperty();
+    private final StringProperty resultProperty = new SimpleStringProperty();
 
     private final DocumentService<Book> bookService = DocumentServiceFactory.getDocumentService(DocumentType.BOOK);
 
     public EditDocumentViewModel() {
         documentIDProperty.addListener((observable, oldValue, newValue) -> {
             selectedDocumentProperty.set(bookService.findDocumentById(documentIDProperty.get()));
-            if (selectedAttributeProperty.get() != null) {
-                loadEditedFieldProperty(selectedAttributeProperty.get());
+            if (selectedDocumentProperty.get() == null) {
+                resultProperty.set("Invalid document id!");
+            } else {
+                if (selectedAttributeProperty.get() != null) {
+                    loadEditedFieldProperty(selectedAttributeProperty.get());
+                }
             }
+
         });
 
         selectedAttributeProperty().addListener((observable, oldValue, newValue) -> {
@@ -49,7 +57,7 @@ public class EditDocumentViewModel {
                 selectedDocumentProperty.get().setCategories(editedFieldProperty.get());
                 break;
             case "Publication Date":
-//                selectedDocumentProperty.get().setPublishedDate(editedFieldProperty.get());
+                selectedDocumentProperty.get().setPublishedDate(LocalDate.parse(editedFieldProperty.get()));
                 break;
             case "Description":
                 selectedDocumentProperty.get().setDescription(editedFieldProperty.get());
@@ -73,6 +81,10 @@ public class EditDocumentViewModel {
 
     public StringProperty selectedAttributeProperty() {
         return selectedAttributeProperty;
+    }
+
+    public StringProperty resultProperty() {
+        return resultProperty;
     }
 
     public void save() {

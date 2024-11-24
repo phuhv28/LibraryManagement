@@ -6,6 +6,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import librarymanagement.data.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchDocumentViewModel {
     private final StringProperty valueSearchProperty = new SimpleStringProperty();
     private final StringProperty selectedAttributeProperty = new SimpleStringProperty();
@@ -25,9 +28,9 @@ public class SearchDocumentViewModel {
         return searchResultProperty;
     }
 
-    public void searchDocument() {
-        if (valueSearchProperty.get() == null) {
-            return;
+    public boolean searchDocument() {
+        if (valueSearchProperty.get() == null || selectedAttributeProperty.get() == null) {
+            return false;
         }
 
         if (!searchResultProperty.isEmpty()) {
@@ -35,21 +38,43 @@ public class SearchDocumentViewModel {
         }
 
         switch (selectedAttributeProperty.get()) {
-            case "ID":
-                searchResultProperty.add(bookService.findDocumentById(valueSearchProperty.get()));
+            case "ID": {
+                Book book = bookService.findDocumentById(valueSearchProperty.get());
+                if (book != null) {
+                    searchResultProperty.add(book);
+                }
                 break;
-            case "ISBN":
-                searchResultProperty.add(((BookService) bookService).searchBookByISBN(valueSearchProperty.get()));
+            }
+            case "ISBN": {
+                Book book = ((BookService) bookService).searchBookByISBN(valueSearchProperty.get());
+                if (book != null) {
+                    searchResultProperty.add(book);
+                }
                 break;
-            case "Title":
-                searchResultProperty.addAll(((BookService) bookService).searchBookByTitle(valueSearchProperty.get()));
+            }
+            case "Title": {
+                List<Book> books = ((BookService) bookService).searchBookByTitle(valueSearchProperty.get());
+                if (books != null) {
+                    searchResultProperty.addAll(books);
+                }
                 break;
-            case "Author":
-                searchResultProperty.addAll(((BookService) bookService).searchBookByAuthor(valueSearchProperty.get()));
+            }
+            case "Author": {
+                List<Book> books = ((BookService) bookService).searchBookByAuthor(valueSearchProperty.get());
+                if (books != null) {
+                    searchResultProperty.addAll(books);
+                }
                 break;
-            case "Category":
-                searchResultProperty.addAll(((BookService) bookService).searchBookByCategory(valueSearchProperty.get()));
+            }
+            case "Category": {
+                List<Book> books = ((BookService) bookService).searchBookByCategory(valueSearchProperty.get());
+                if (books != null) {
+                    searchResultProperty.addAll(books);
+                }
                 break;
+            }
         }
+
+        return true;
     }
 }

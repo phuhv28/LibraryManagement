@@ -4,7 +4,7 @@ public enum AccountType {
     ADMIN("Admin"),
     USER("User");
 
-    private String type;
+    private final String type;
 
     AccountType(String type) {
         this.type = type;

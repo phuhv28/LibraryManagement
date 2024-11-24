@@ -2,6 +2,7 @@ package librarymanagement.data;
 
 import librarymanagement.UserAuth.Account;
 import librarymanagement.UserAuth.AccountService;
+import librarymanagement.gui.controllers.BorrowResult;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +24,7 @@ public class BorrowingService {
         if (result.getFirst().getFirst() == null) {
             newId = "R101";
         } else {
-            String temp = result.get(0).get(0).toString().substring(1);
+            String temp = result.getFirst().getFirst().toString().substring(1);
             newId = "R" + (Integer.parseInt(temp) + 1);
         }
 
@@ -33,48 +34,49 @@ public class BorrowingService {
     public BorrowRecord getBorrowRecordByID(String recordID) {
         List<List<Object>> list = sqLiteInstance.find("BorrowRecord", "recordID", recordID,
                 "userID", "docID", "borrowDate", "dueDate", "returnDate");
-        Account account = AccountService.getInstance().getAccountByUserID((String) list.get(0).get(0));
-        Document document = bookService.findDocumentById((String) list.get(0).get(1));
+        Account account = AccountService.getInstance().getAccountByUserID((String) list.getFirst().getFirst());
+        Document document = bookService.findDocumentById((String) list.getFirst().get(1));
         // TODO add type MAGAZINE and THESIS
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate borrowDate = LocalDate.parse((String) list.get(0).get(2), formatter);
-        LocalDate dueDate = LocalDate.parse((String) list.get(0).get(3), formatter);
+        LocalDate borrowDate = LocalDate.parse((String) list.getFirst().get(2), formatter);
+        LocalDate dueDate = LocalDate.parse((String) list.getFirst().get(3), formatter);
         LocalDate returnDate;
-        if (list.get(0).get(4) == null) {
+        if (list.getFirst().get(4) == null) {
             returnDate = null;
         } else {
-            returnDate = LocalDate.parse((String) list.get(0).get(4), formatter);
+            returnDate = LocalDate.parse((String) list.getFirst().get(4), formatter);
         }
         return new BorrowRecord(recordID, account, document, borrowDate, dueDate, returnDate);
     }
 
-    public boolean borrowDocument(String userID, String documentId) {
-        Document document = null;
+    public BorrowResult borrowDocument(String userID, String documentId) {
         if (documentId.charAt(0) == 'B') {
-            document = bookService.findDocumentById(documentId);
-            if (document == null) {
-                return false;
+            Book book = bookService.findDocumentById(documentId);
+            if (book == null) {
+                return BorrowResult.NOT_FOUND;
             }
-            if (document.getAvailableCopies() == 0) {
-                return false;
+            if (book.getAvailableCopies() == 0) {
+                return BorrowResult.OUT_OF_STOCK;
             }
-            document.setAvailableCopies(document.getAvailableCopies() - 1);
-            bookService.updateDocument((Book) document);
+            book.setAvailableCopies(book.getAvailableCopies() - 1);
+            bookService.updateDocument((Book) book);
         } else if (documentId.charAt(0) == 'M') {
             // TODO
         } else if (documentId.charAt(0) == 'T') {
             //TODO
+        } else {
+            return BorrowResult.NOT_FOUND;
         }
         Account account = AccountService.getInstance().getAccountByUserID(userID);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate borrowDate = sqLiteInstance.getToday();
         LocalDate dueDate = borrowDate.plusDays(10);
-        sqLiteInstance.insertRow("BorrowRecord", generateBorrowRecordID(), account.getId(), document.getId(),
+        sqLiteInstance.insertRow("BorrowRecord", generateBorrowRecordID(), account.getId(), documentId,
                 borrowDate.format(formatter), null, dueDate.format(formatter));
-        return true;
+        return BorrowResult.SUCCESS;
     }
 
-    public boolean borrowDocumentForCurrentAccount(String documentId) {
+    public BorrowResult borrowDocumentForCurrentAccount(String documentId) {
         return borrowDocument(AccountService.getInstance().getCurrentAccount().getId(), documentId);
     }
 
@@ -84,7 +86,7 @@ public class BorrowingService {
         if (list.isEmpty()) {
             return false;
         }
-        Document document = bookService.findDocumentById((String) list.get(0).get(1));
+        Document document = bookService.findDocumentById((String) list.getFirst().get(1));
         document.setAvailableCopies(document.getAvailableCopies() + 1);
         String documentID = document.getId();
         if (documentID.charAt(0) == 'B') {
@@ -110,7 +112,7 @@ public class BorrowingService {
             if (row.get(4) != null) {
                 continue;
             }
-            String recordID = (String) row.get(0);
+            String recordID = (String) row.getFirst();
             Account account = AccountService.getInstance().getAccountByUserID(userID);
             String documentID = (String) row.get(1);
             Document document = null;

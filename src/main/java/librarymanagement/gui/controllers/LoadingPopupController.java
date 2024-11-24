@@ -8,9 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
-import java.util.concurrent.ExecutorService;
 
 public class LoadingPopupController {
 

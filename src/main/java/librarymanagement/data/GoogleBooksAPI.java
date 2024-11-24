@@ -6,6 +6,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -17,6 +18,9 @@ public class GoogleBooksAPI {
     private static final String API_KEY = "AIzaSyCDqQRwC5jM_KWFHGkkyDupSPbfAo9KvO8";
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
+    /**
+     * @return null if not found.
+     */
     private static List<Book> handleAPIResult(String requestUrl) {
         List<Book> books = new ArrayList<>();
         ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -143,6 +147,11 @@ public class GoogleBooksAPI {
         } finally {
             executor.shutdown();
         }
+
+        if (books.isEmpty()) {
+            return null;
+        }
+
         return books;
     }
 
@@ -266,6 +275,11 @@ public class GoogleBooksAPI {
         } finally {
             executor.shutdown();
         }
+
+        if (magazines.isEmpty()) {
+            return null;
+        }
+
         return magazines;
     }
 
@@ -289,14 +303,10 @@ public class GoogleBooksAPI {
 
     public static Book searchBookByISBN(String isbn) {
         String requestUrl = BASE_URL + "?q=isbn:" + isbn + "&key=" + API_KEY;
-        return handleAPIResult(requestUrl).get(0);
-    }
-
-    public static void main(String[] args) {
-        DocumentService bookService = new BookService();
-        Document books = bookService.findDocumentById("B120");
-
-        System.out.println(books.getTitle());
-
+        List<Book> books = handleAPIResult(requestUrl);
+        if (books == null) {
+            return null;
+        }
+        return books.getFirst();
     }
 }

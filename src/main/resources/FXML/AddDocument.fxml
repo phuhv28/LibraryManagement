@@ -75,7 +75,7 @@
         </Label>
         <TextField fx:id="tfAvailableCopies" layoutX="382.0" layoutY="418.0" prefHeight="25.0" prefWidth="200.0" promptText="Available copies" />
         <TextField fx:id="tfPageCount" layoutX="382.0" layoutY="458.0" prefHeight="25.0" prefWidth="200.0" promptText="Page count" />
-        <Label fx:id="lbError" layoutX="63.0" layoutY="96.0" style="-fx-font-weight: bold;" text="The document already exists." textFill="#f03a0ef5" visible="false">
+        <Label fx:id="lbResult" layoutX="63.0" layoutY="96.0" style="-fx-font-weight: bold;" text="The document already exists." textFill="#f03a0ef5" visible="false">
             <font>
                 <Font size="14.0" />
             </font>

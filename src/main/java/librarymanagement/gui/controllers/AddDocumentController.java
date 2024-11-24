@@ -45,7 +45,7 @@ public class AddDocumentController {
     private TextField tfDescription;
 
     @FXML
-    private Label lbError;
+    private Label lbResult;
 
     @FXML
     private TextField tfPageCount;
@@ -95,16 +95,16 @@ public class AddDocumentController {
 
         fillDocumentTask.setOnSucceeded(event -> {
             loadingPopup.close();
-            if (lbError.isVisible()) {
-                lbError.setVisible(false);
+            if (lbResult.isVisible()) {
+                lbResult.setVisible(false);
             }
         });
 
         fillDocumentTask.setOnFailed(event -> {
 
             loadingPopup.close();
-            lbError.setText("The ISBN is invalid!");
-            lbError.setVisible(true);
+            lbResult.setText("The ISBN is invalid!");
+            lbResult.setVisible(true);
         });
 
 
@@ -113,6 +113,13 @@ public class AddDocumentController {
     }
 
     private void handleAddDocument() {
+        if (tfTitle.getText() == null || tfTitle.getText().isEmpty()
+        || tfAuthor.getText() == null || tfAuthor.getText().isEmpty()) {
+            lbResult.setText("Title and Author are required!");
+            lbResult.setVisible(true);
+            return;
+        }
+
         LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Adding document");
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
@@ -126,22 +133,19 @@ public class AddDocumentController {
 
         addDocumentTask.setOnSucceeded(event -> {
             loadingPopup.close();
-            if (lbError.isVisible()) {
-                lbError.setVisible(false);
+            lbResult.setVisible(true);
+            if (addDocumentTask.getValue()) {
+                lbResult.setText("Document added successfully!");
+            } else {
+                lbResult.setText("The document already exists!");
             }
-        });
-
-        addDocumentTask.setOnFailed(event -> {
-            loadingPopup.close();
-            lbError.setText("The document already exists.");
-            lbError.setVisible(true);
         });
 
         new Thread(addDocumentTask).start();
     }
 
     private void loadError() {
-        lbError.setVisible(true);
+        lbResult.setVisible(true);
     }
 
     private void clear() {

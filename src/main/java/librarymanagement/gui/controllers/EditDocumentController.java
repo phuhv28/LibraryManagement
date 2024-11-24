@@ -14,6 +14,9 @@ import java.io.IOException;
 public class EditDocumentController {
 
     @FXML
+    private Label lbError;
+
+    @FXML
     private MenuItem miCategory;
 
     @FXML
@@ -64,6 +67,7 @@ public class EditDocumentController {
 
         tfDocumentID.textProperty().bindBidirectional(viewModel.documentIDProperty());
         tfEditedField.textProperty().bindBidirectional(viewModel.editedFieldProperty());
+        lbError.textProperty().bindBidirectional(viewModel.resultProperty());
 
 
         for (MenuItem menuItem : mbSelectedField.getItems()) {

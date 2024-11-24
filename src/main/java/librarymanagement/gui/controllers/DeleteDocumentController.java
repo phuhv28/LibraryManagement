@@ -47,12 +47,11 @@ public class DeleteDocumentController {
         registerTask.setOnSucceeded(event -> {
             loadingPopup.close();
             if (!registerTask.getValue()) {
-                lbError.setText("The DocumentID is invalid!");
+                lbError.setText("Document not found!");
             } else {
                 lbError.setText("Delete successfully!");
             }
             lbError.setVisible(true);
-
         });
 
         new Thread(registerTask).start();

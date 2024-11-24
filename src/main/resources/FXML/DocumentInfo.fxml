@@ -18,57 +18,57 @@
          <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1039.0" prefWidth="604.0" style="-fx-background-color: #474242;">
                   <children>
-                      <Label layoutX="45.0" layoutY="20.0" prefHeight="30.0" prefWidth="39.0" style="-fx-font-weight: bold;" text="ID :" textFill="WHITE">
+                      <Label focusTraversable="false" layoutX="45.0" layoutY="20.0" prefHeight="30.0" prefWidth="39.0" text="ID :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="60.0" prefHeight="30.0" prefWidth="69.0" style="-fx-font-weight: BOLD;" text="Title :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="60.0" prefHeight="30.0" prefWidth="69.0" text="Title :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="100.0" prefHeight="30.0" prefWidth="95.0" style="-fx-font-weight: bold;" text="Author :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="100.0" prefHeight="30.0" prefWidth="95.0" text="Author :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="140.0" prefHeight="30.0" prefWidth="106.0" style="-fx-font-weight: bold;" text="Publisher :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="140.0" prefHeight="30.0" prefWidth="106.0" text="Publisher :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="180.0" prefHeight="30.0" prefWidth="175.0" style="-fx-font-weight: bold;" text="Publication Date :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="180.0" prefHeight="30.0" prefWidth="175.0" text="Publication Date :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="220.0" prefHeight="30.0" prefWidth="85.0" style="-fx-font-weight: bold;" text="ISBN :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="220.0" prefHeight="30.0" prefWidth="85.0" text="ISBN :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="260.0" prefHeight="30.0" prefWidth="131.0" style="-fx-font-weight: bold;" text="Categories :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="260.0" prefHeight="30.0" prefWidth="131.0" text="Categories :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="300.0" prefHeight="30.0" prefWidth="160.0" style="-fx-font-weight: bold;" text="Page count :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="300.0" prefHeight="30.0" prefWidth="160.0" text="Page count :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="340.0" prefHeight="30.0" prefWidth="184.0" style="-fx-font-weight: bold;" text="Average Rating :" textFill="#fff5f5">
+                      <Label layoutX="45.0" layoutY="340.0" prefHeight="30.0" prefWidth="184.0" text="Average Rating :" textFill="#fff5f5">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="380.0" prefHeight="30.0" prefWidth="157.0" style="-fx-font-weight: bold;" text="Rating count :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="380.0" prefHeight="30.0" prefWidth="157.0" text="Rating count :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="45.0" layoutY="420.0" prefHeight="30.0" prefWidth="153.0" style="-fx-font-weight: bold;" text="Description :" textFill="WHITE">
+                      <Label layoutX="45.0" layoutY="420.0" prefHeight="30.0" prefWidth="153.0" text="Description :" textFill="WHITE">
                           <font>
                               <Font size="20.0" />
                           </font>
@@ -128,7 +128,7 @@
                               <Font size="20.0" />
                           </font>
                       </Label>
-                      <Label layoutX="51.0" layoutY="511.0" prefHeight="35.0" prefWidth="234.0" style="-fx-font-weight: bold;" text="Rate this doucment :" textFill="#030202">
+                      <Label layoutX="51.0" layoutY="511.0" prefHeight="35.0" prefWidth="234.0" text="Rate this doucment :" textFill="#030202">
                           <font>
                               <Font size="20.0" />
                           </font>
@@ -190,7 +190,7 @@
                           </font>
                       </TextArea>
                       <ListView fx:id="lvComments" focusTraversable="false" layoutX="56.0" layoutY="779.0" prefHeight="232.0" prefWidth="499.0" style="-fx-background-color: #474242;" />
-                      <Label layoutX="54.0" layoutY="710.0" style="-fx-font-weight: bold;" text="User reviews for this document :" textFill="#030202">
+                      <Label layoutX="54.0" layoutY="710.0" text="User reviews for this document :" textFill="#030202">
                           <font>
                               <Font size="20.0" />
                           </font>

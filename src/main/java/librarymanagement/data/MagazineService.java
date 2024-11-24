@@ -5,8 +5,7 @@ import java.util.List;
 public class MagazineService implements DocumentService<Magazine> {
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
 
-    @Override
-    public String generateNewID() {
+    private String generateNewID() {
         String newId;
 
         List<List<Object>> result = sqLiteInstance.findNotCondition("Book", "Max(id)");
@@ -21,8 +20,9 @@ public class MagazineService implements DocumentService<Magazine> {
     }
 
     @Override
-    public void addDocument(Magazine magazine) {
+    public boolean addDocument(Magazine magazine) {
 
+        return false;
     }
 
     @Override
@@ -31,8 +31,8 @@ public class MagazineService implements DocumentService<Magazine> {
     }
 
     @Override
-    public void deleteDocument(String id) {
-
+    public boolean deleteDocument(String id) {
+        return true;
     }
 
     @Override

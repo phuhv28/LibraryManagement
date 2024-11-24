@@ -73,13 +73,15 @@ public class AddUserViewModel {
     }
 
 
-    public void addAccount() {
+    public RegistrationResult addAccount() {
         if (menuAccountProperty.get().equals("User")) {
             RegistrationResult result = accountService.addAccount(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail(), AccountType.USER);
             Platform.runLater(() -> resultProperty.set(result.getMessage()));
-        } else if (menuAccountProperty.get().equals("Admin")) {
+            return result;
+        } else {
             RegistrationResult result = accountService.addAccount(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail(), AccountType.ADMIN);
             Platform.runLater(() -> resultProperty.set(result.getMessage()));
+            return result;
         }
     }
 }

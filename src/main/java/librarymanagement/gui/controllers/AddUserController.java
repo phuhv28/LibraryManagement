@@ -5,7 +5,11 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import librarymanagement.UserAuth.RegistrationResult;
 import librarymanagement.gui.viewmodels.AddUserViewModel;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 
 public class AddUserController {
@@ -89,34 +93,45 @@ public class AddUserController {
     }
 
     private void handleAddAccount() {
+        if (Objects.equals(mbAccountType.getText(), "Account type")
+                || tfUsername.getText() == null || tfUsername.getText().isEmpty()
+                || tfPassword.getText() == null || tfPassword.getText().isEmpty()
+                || tfConfirmPassword.getText() == null || tfConfirmPassword.getText().isEmpty()
+                || tfFullname.getText() == null || tfFullname.getText().isEmpty()
+                || tfEmail.getText() == null || tfEmail.getText().isEmpty()) {
+            lbResult.setText("You need to fill all fields!");
+            lbResult.setVisible(true);
+            return;
+        }
+
         LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Creating Account");
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
 
-        Task<Void> addAccountTask = new Task<>() {
+        Task<RegistrationResult> addAccountTask = getVoidTask(loadingPopup);
+
+
+        new Thread(addAccountTask).start();
+
+    }
+
+    @NotNull
+    private Task<RegistrationResult> getVoidTask(LoadingPopupController loadingPopup) {
+        Task<RegistrationResult> addAccountTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
-                viewModel.addAccount();
-                return null;
+            protected RegistrationResult call() throws Exception {
+                return viewModel.addAccount();
             }
         };
 
         addAccountTask.setOnSucceeded(event -> {
             loadingPopup.close();
             lbResult.setVisible(true);
+            lbResult.setText(addAccountTask.getValue().getMessage());
             clear();
         });
 
-        addAccountTask.setOnFailed(event -> {
-
-            loadingPopup.close();
-            lbResult.setText("Error!");
-            lbResult.setVisible(true);
-        });
-
-
-        new Thread(addAccountTask).start();
-
+        return addAccountTask;
     }
 
 }

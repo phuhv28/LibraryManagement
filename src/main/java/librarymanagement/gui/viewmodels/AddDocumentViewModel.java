@@ -172,8 +172,7 @@ public class AddDocumentViewModel {
     }
 
     public boolean addDocument() {
-        bookService.addDocument(bookProperty.get());
-        return true;
+        return bookService.addDocument(bookProperty.get());
     }
 
     public Boolean fillUsingISBN() {

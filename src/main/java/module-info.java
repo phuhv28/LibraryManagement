@@ -8,6 +8,7 @@ module librarymanagement {
     requires java.sql;
     requires org.json;
     requires kotlin.stdlib;
+    requires annotations;
 
     exports librarymanagement.data to javafx.base;
     opens librarymanagement.data;
@@ -21,4 +22,5 @@ module librarymanagement {
     opens librarymanagement.gui.viewmodels;
     exports librarymanagement.gui.utils to java.base, javafx.controls, javafx.fxml, javafx.graphics;
     opens librarymanagement.gui.utils;
+    exports librarymanagement.UserAuth;
 }

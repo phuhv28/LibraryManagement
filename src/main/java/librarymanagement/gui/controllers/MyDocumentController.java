@@ -119,11 +119,10 @@ public class MyDocumentController {
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
 
-        Task<Void> returnTask = new Task<>() {
+        Task<Boolean> returnTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
-                viewModel.handleReturn(record);
-                return null;
+            protected Boolean call() throws Exception {
+                return viewModel.handleReturn(record);
             }
         };
 
