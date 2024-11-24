@@ -1,10 +1,5 @@
 package librarymanagement.gui.controllers;
 
-import javafx.application.Platform;
-import javafx.beans.Observable;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,9 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import librarymanagement.data.Book;
 import librarymanagement.data.Document;
-
-import javafx.scene.input.MouseEvent;
-import java.awt.font.ImageGraphicAttribute;
 
 public class DocumentInfoController {
     @FXML

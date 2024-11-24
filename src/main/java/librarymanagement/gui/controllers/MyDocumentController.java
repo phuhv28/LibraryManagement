@@ -121,7 +121,7 @@ public class MyDocumentController {
 
         Task<Boolean> returnTask = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 return viewModel.handleReturn(record);
             }
         };
@@ -141,9 +141,9 @@ public class MyDocumentController {
         new Thread(returnTask).start();
     }
 
-    private void loadScene(String fxmlFile) {
+    private void loadScene() {
         try {
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + fxmlFile));
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + "BorrowDocument.fxml"));
             MyDocument.getChildren().setAll(newPane);
 
         } catch (IOException e) {
@@ -154,7 +154,7 @@ public class MyDocumentController {
 
     private void loadBorrowBooks() {
         SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
-        loadScene("BorrowDocument.fxml");
+        loadScene();
         SceneHistoryStack.previousFxmlFile = "BorrowDocument.fxml";
     }
 

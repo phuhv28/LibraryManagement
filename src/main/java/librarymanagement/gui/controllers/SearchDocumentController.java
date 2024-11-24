@@ -101,7 +101,7 @@ public class SearchDocumentController {
 
         Task<Boolean> searchTask = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 loadingPopup.setText("Searching for " + tfValueSearch.getText() + " ...");
                 return viewModel.searchDocument();
             }

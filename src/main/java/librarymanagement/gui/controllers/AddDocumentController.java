@@ -5,17 +5,14 @@ import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.converter.NumberStringConverter;
 import librarymanagement.gui.viewmodels.AddDocumentViewModel;
+import org.jetbrains.annotations.NotNull;
 
 
 public class AddDocumentController {
     @FXML
     private Button btFillUsingISBN;
-
-    @FXML
-    private AnchorPane addDocumentPane;
 
     @FXML
     private Button btAddDocument;
@@ -54,13 +51,9 @@ public class AddDocumentController {
 
     @FXML
     public void initialize() {
-        btAddDocument.setOnAction(e -> {
-            handleAddDocument();
-        });
+        btAddDocument.setOnAction(_ -> handleAddDocument());
 
-        btFillUsingISBN.setOnAction(e -> {
-            fillUsingISBN();
-        });
+        btFillUsingISBN.setOnAction(_ -> fillUsingISBN());
 
         tfISBN.textProperty().bindBidirectional(viewModel.ISBNProperty());
         tfTitle.textProperty().bindBidirectional(viewModel.titleProperty());
@@ -88,20 +81,19 @@ public class AddDocumentController {
 
         Task<Boolean> fillDocumentTask = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 return viewModel.fillUsingISBN();
             }
         };
 
-        fillDocumentTask.setOnSucceeded(event -> {
+        fillDocumentTask.setOnSucceeded(_ -> {
             loadingPopup.close();
             if (lbResult.isVisible()) {
                 lbResult.setVisible(false);
             }
         });
 
-        fillDocumentTask.setOnFailed(event -> {
-
+        fillDocumentTask.setOnFailed(_ -> {
             loadingPopup.close();
             lbResult.setText("The ISBN is invalid!");
             lbResult.setVisible(true);
@@ -124,14 +116,21 @@ public class AddDocumentController {
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
 
+        Task<Boolean> addDocumentTask = getBooleanTask(loadingPopup);
+
+        new Thread(addDocumentTask).start();
+    }
+
+    @NotNull
+    private Task<Boolean> getBooleanTask(LoadingPopupController loadingPopup) {
         Task<Boolean> addDocumentTask = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 return viewModel.addDocument();
             }
         };
 
-        addDocumentTask.setOnSucceeded(event -> {
+        addDocumentTask.setOnSucceeded(_ -> {
             loadingPopup.close();
             lbResult.setVisible(true);
             if (addDocumentTask.getValue()) {
@@ -140,24 +139,7 @@ public class AddDocumentController {
                 lbResult.setText("The document already exists!");
             }
         });
-
-        new Thread(addDocumentTask).start();
-    }
-
-    private void loadError() {
-        lbResult.setVisible(true);
-    }
-
-    private void clear() {
-        tfISBN.clear();
-        tfTitle.clear();
-        tfAuthor.clear();
-        tfPublisher.clear();
-        dpPublicationDate.setValue(null);
-        tfCategory.clear();
-        tfAvailableCopies.clear();
-        tfDescription.clear();
-        tfPageCount.clear();
+        return addDocumentTask;
     }
 }
 

@@ -91,7 +91,7 @@ public class AccountService {
     }
 
     /**
-     * Add a account.
+     * Add an account.
      */
     public RegistrationResult addAccount(String username, String password, String confirmPassword, String fullName, String email, AccountType accountType) {
         if (isUsernameTaken(username)) {

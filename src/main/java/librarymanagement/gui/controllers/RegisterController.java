@@ -111,7 +111,7 @@ public class RegisterController implements Initializable {
 
         Task<Boolean> registerTask = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 return viewModel.handleRegister();
             }
         };

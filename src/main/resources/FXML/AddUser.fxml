@@ -56,7 +56,7 @@
         </MenuButton>
         <TextField fx:id="tfUsername" layoutX="347.0" layoutY="228.0" prefHeight="26.0" prefWidth="159.0" promptText="Username" style="-fx-font-weight: bold;" />
         <TextField fx:id="tfEmail" layoutX="347.0" layoutY="266.0" promptText="Email" style="-fx-font-weight: bold;" />
-        <TextField fx:id="tfFullname" layoutX="347.0" layoutY="304.0" promptText="Fullname" style="-fx-font-weight: bold;" />
+        <TextField fx:id="tfFullName" layoutX="347.0" layoutY="304.0" promptText="Fullname" style="-fx-font-weight: bold;" />
         <PasswordField fx:id="tfPassword" layoutX="347.0" layoutY="342.0" prefHeight="26.0" prefWidth="159.0" promptText="Password" style="-fx-font-weight: bold;" />
         <PasswordField fx:id="tfConfirmPassword" layoutX="347.0" layoutY="380.0" prefHeight="26.0" prefWidth="159.0" promptText="Confirm Password" style="-fx-font-weight: bold;" />
 

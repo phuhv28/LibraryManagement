@@ -3,45 +3,42 @@ package librarymanagement.gui.controllers;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import librarymanagement.gui.viewmodels.EditDocumentViewModel;
 
-import java.io.IOException;
-
-
 public class EditDocumentController {
+    @FXML
+    private TextField tfISBN;
+
+    @FXML
+    private TextField tfTitle;
+
+    @FXML
+    private TextField tfPublisher;
+
+    @FXML
+    private TextField tfDescription;
+
+    @FXML
+    private TextField tfAvailableCopies;
+
+    @FXML
+    private TextField tfAuthor;
+
+    @FXML
+    private TextField tfCategory;
+
+    @FXML
+    private TextField tfPageCount;
+
+    @FXML
+    private DatePicker dpPublicationDate;
+
+    @FXML
+    private Button btEnter;
 
     @FXML
     private Label lbError;
-
-    @FXML
-    private MenuItem miCategory;
-
-    @FXML
-    private MenuItem miPublicationDate;
-
-    @FXML
-    private MenuItem miDescription;
-
-    @FXML
-    private MenuItem miAvailableCopies;
-
-    @FXML
-    private MenuItem miPageCount;
-
-    @FXML
-    private MenuItem miISBN;
-
-    @FXML
-    private MenuItem miTitle;
-
-    @FXML
-    private MenuItem miPublisher;
-
-    @FXML
-    private MenuItem miAuthor;
 
     @FXML
     private TextField tfDocumentID;
@@ -50,48 +47,12 @@ public class EditDocumentController {
     private TextField tfEditedField;
 
     @FXML
-    private Label lbFieldToEdit;
-
-    @FXML
     private Button btSave;
-
-    @FXML
-    private MenuButton mbSelectedField;
 
     private final EditDocumentViewModel viewModel = new EditDocumentViewModel();
 
     public void initialize() {
-        btSave.setOnAction(event -> {
-            handleEditDocument();
-        });
-
-        tfDocumentID.textProperty().bindBidirectional(viewModel.documentIDProperty());
-        tfEditedField.textProperty().bindBidirectional(viewModel.editedFieldProperty());
-        lbError.textProperty().bindBidirectional(viewModel.resultProperty());
-
-
-        for (MenuItem menuItem : mbSelectedField.getItems()) {
-            setupMenuItemAction(menuItem);
-        }
-
-        tfEditedField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue != null) {
-                btSave.setVisible(true);
-            }
-        });
     }
-
-    private void setupMenuItemAction(MenuItem menuItem) {
-        menuItem.setOnAction(event -> {
-            lbFieldToEdit.setText(menuItem.getText() + " :");
-            tfEditedField.setVisible(true);
-            mbSelectedField.setText(menuItem.getText());
-            lbFieldToEdit.setVisible(true);
-            viewModel.selectedAttributeProperty().set(menuItem.getText());
-        });
-    }
-
-
 
     private void handleEditDocument() {
 
@@ -101,7 +62,7 @@ public class EditDocumentController {
 
         Task<Void> registerTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 viewModel.save();
                 return null;
             }
@@ -112,10 +73,6 @@ public class EditDocumentController {
         });
 
         new Thread(registerTask).start();
-    }
-
-    private void loadError() {
-//        lbError.setVisible(true);
     }
 }
 

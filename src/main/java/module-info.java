@@ -3,11 +3,8 @@ module librarymanagement {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
-    requires java.desktop;
-    requires org.xerial.sqlitejdbc;
     requires java.sql;
     requires org.json;
-    requires kotlin.stdlib;
     requires annotations;
 
     exports librarymanagement.data to javafx.base;

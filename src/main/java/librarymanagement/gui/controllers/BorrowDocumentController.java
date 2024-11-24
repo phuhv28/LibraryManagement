@@ -36,7 +36,7 @@ public class BorrowDocumentController {
 
         Task<BorrowResult> borrowDocumentTask = new Task<>() {
             @Override
-            protected BorrowResult call() throws Exception {
+            protected BorrowResult call() {
                 return viewModel.borrowDocument();
             }
         };

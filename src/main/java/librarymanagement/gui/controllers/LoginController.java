@@ -18,9 +18,6 @@ public class LoginController implements Initializable {
     public Label errorLabel;
 
     @FXML
-    public CheckBox cbRemeberMe;
-
-    @FXML
     public AnchorPane apLogin;
 
     @FXML
@@ -71,7 +68,7 @@ public class LoginController implements Initializable {
 
         Task<Boolean> loginTask = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 return viewModel.handleLogin();
             }
         };

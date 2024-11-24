@@ -39,7 +39,7 @@ public class DeleteDocumentController {
 
         Task<Boolean> registerTask = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 return viewModel.deleteDocument();
             }
         };

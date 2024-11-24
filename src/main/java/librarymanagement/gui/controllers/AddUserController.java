@@ -32,7 +32,7 @@ public class AddUserController {
     private TextField tfConfirmPassword;
 
     @FXML
-    private TextField tfFullname;
+    private TextField tfFullName;
 
     @FXML
     private Label lbResult;
@@ -42,10 +42,8 @@ public class AddUserController {
     @FXML
     public void initialize() {
         viewModel.menuAccountProperty().setValue("Account type");
-        btAddAccount.setOnAction(e -> {
-            handleAddAccount();
-        });
-        tfFullname.textProperty().bindBidirectional(viewModel.fullNameProperty());
+        btAddAccount.setOnAction(_ -> handleAddAccount());
+        tfFullName.textProperty().bindBidirectional(viewModel.fullNameProperty());
         tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
         tfPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
         tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
@@ -53,9 +51,7 @@ public class AddUserController {
         lbResult.textProperty().bindBidirectional(viewModel.resultProperty());
         mbAccountType.textProperty().bindBidirectional(viewModel.menuAccountProperty());
         for (MenuItem item : mbAccountType.getItems()) {
-            item.setOnAction(e -> {
-                mbAccountType.setText(item.getText());
-            });
+            item.setOnAction(_ -> mbAccountType.setText(item.getText()));
         }
         tfUsername.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
@@ -67,7 +63,7 @@ public class AddUserController {
                 handleAddAccount();
             }
         });
-        tfFullname.setOnKeyPressed(actionEvent -> {
+        tfFullName.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
                 handleAddAccount();
             }
@@ -88,7 +84,7 @@ public class AddUserController {
         tfUsername.clear();
         tfPassword.clear();
         tfConfirmPassword.clear();
-        tfFullname.clear();
+        tfFullName.clear();
         tfEmail.clear();
     }
 
@@ -97,7 +93,7 @@ public class AddUserController {
                 || tfUsername.getText() == null || tfUsername.getText().isEmpty()
                 || tfPassword.getText() == null || tfPassword.getText().isEmpty()
                 || tfConfirmPassword.getText() == null || tfConfirmPassword.getText().isEmpty()
-                || tfFullname.getText() == null || tfFullname.getText().isEmpty()
+                || tfFullName.getText() == null || tfFullName.getText().isEmpty()
                 || tfEmail.getText() == null || tfEmail.getText().isEmpty()) {
             lbResult.setText("You need to fill all fields!");
             lbResult.setVisible(true);
@@ -119,12 +115,12 @@ public class AddUserController {
     private Task<RegistrationResult> getVoidTask(LoadingPopupController loadingPopup) {
         Task<RegistrationResult> addAccountTask = new Task<>() {
             @Override
-            protected RegistrationResult call() throws Exception {
+            protected RegistrationResult call() {
                 return viewModel.addAccount();
             }
         };
 
-        addAccountTask.setOnSucceeded(event -> {
+        addAccountTask.setOnSucceeded(_ -> {
             loadingPopup.close();
             lbResult.setVisible(true);
             lbResult.setText(addAccountTask.getValue().getMessage());
