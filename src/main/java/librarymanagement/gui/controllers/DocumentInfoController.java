@@ -99,8 +99,6 @@ public class DocumentInfoController {
 
     private Stage stage;
 
-    private static DocumentInfoController instance;
-
     @FXML
     public void initialize() {
         btOneStar.setOnAction(event -> handleRating1Star());
@@ -112,6 +110,7 @@ public class DocumentInfoController {
 
     public static DocumentInfoController newInstance(Document document) {
         FXMLLoader loader = new FXMLLoader(LoadingPopupController.class.getResource("/FXML/DocumentInfo.fxml"));
+        DocumentInfoController instance;
         try {
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
