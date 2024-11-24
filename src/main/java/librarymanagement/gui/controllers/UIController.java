@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import librarymanagement.data.Document;
 
 import java.io.IOException;
 
@@ -44,5 +45,10 @@ public class UIController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void showDocumentInfo(Document document) {
+        DocumentInfoController controller = DocumentInfoController.newInstance(document);
+        controller.show();
     }
 }

@@ -57,7 +57,7 @@ public class SearchDocumentController {
     @FXML
     private Label lbError;
 
-    private SearchDocumentViewModel viewModel = new SearchDocumentViewModel();
+    private final SearchDocumentViewModel viewModel = new SearchDocumentViewModel();
 
     public void initialize() {
         btSearchDocument.setOnAction(event -> {
@@ -74,6 +74,16 @@ public class SearchDocumentController {
         tcISBN.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
         tcTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         tcAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
+
+        tbResults.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Book selectedBook = tbResults.getSelectionModel().getSelectedItem();
+
+                if (selectedBook != null) {
+                    UIController.showDocumentInfo(selectedBook);
+                }
+            }
+        });
     }
 
     private void setupMenuItemAction(MenuItem menuItem) {
