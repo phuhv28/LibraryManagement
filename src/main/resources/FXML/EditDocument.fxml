@@ -5,53 +5,110 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.EditDocumentController">
+<AnchorPane prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.EditDocumentController">
     <children>
-        <Rectangle fill="#474242" height="670.0" width="630.0" />
-        <Label layoutX="205.0" layoutY="40.0" prefHeight="40.0" prefWidth="219.0" style="-fx-font-weight: BOLD;" text="EDIT DOCUMENT" textFill="#f2f2f2" underline="true">
+        <Rectangle fill="#474242" height="670.0" width="630.0"/>
+        <Button fx:id="btEnter" focusTraversable="false" layoutX="512.0" layoutY="139.0" mnemonicParsing="false"
+                prefHeight="35.0" prefWidth="85.0" style="-fx-background-radius: 15; -fx-font-weight: BOLD;"
+                text="ENTER"/>
+        <Button fx:id="btSave" focusTraversable="false" layoutX="318.0" layoutY="567.0" mnemonicParsing="false"
+                prefHeight="45.0" prefWidth="113.0" style="-fx-background-radius: 15; -fx-font-weight: BOLD;"
+                text="SAVE">
             <font>
-                <Font size="26.0" />
-            </font>
-        </Label>
-        <MenuButton fx:id="mbSelectedField" layoutX="347.0" layoutY="195.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="199.0" text="Choose field">
-            <items>
-                <MenuItem fx:id="miISBN" mnemonicParsing="false" text="ISBN" />
-                <MenuItem fx:id="miTitle" mnemonicParsing="false" text="Title" />
-                <MenuItem fx:id="miPublisher" mnemonicParsing="false" text="Publisher" />
-                <MenuItem fx:id="miAuthor" mnemonicParsing="false" text="Author" />
-                <MenuItem fx:id="miCategory" mnemonicParsing="false" text="Category" />
-                <MenuItem fx:id="miPublicationDate" mnemonicParsing="false" text="Publication Date" />
-                <MenuItem fx:id="miDescription" mnemonicParsing="false" text="Description" />
-                <MenuItem fx:id="miAvailableCopies" mnemonicParsing="false" text="Available copies" />
-                <MenuItem fx:id="miPageCount" mnemonicParsing="false" text="Page count" />
-            </items>
-        </MenuButton>
-        <TextField fx:id="tfDocumentID" layoutX="347.0" layoutY="140.0" prefHeight="35.0" prefWidth="199.0" promptText="Document ID" />
-        <TextField fx:id="tfEditedField" layoutX="347.0" layoutY="250.0" prefHeight="35.0" prefWidth="199.0" promptText="Information" visible="false" />
-        <Label layoutX="83.0" layoutY="201.0" style="-fx-font-weight: bold;" text="Select field to edit :" textFill="#fafafa">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-        <Label fx:id="lbFieldToEdit" layoutX="83.0" layoutY="250.0" style="-fx-font-weight: bold;" text="Field to edit :" textFill="#f7f7f7" visible="false">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-        <Button fx:id="btSave" focusTraversable="false" layoutX="347.0" layoutY="304.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="SAVE" visible="false">
-            <font>
-                <Font size="18.0" />
+                <Font size="18.0"/>
             </font>
         </Button>
-        <Label layoutX="83.0" layoutY="145.0" style="-fx-font-weight: BOLD;" text="Enter Document ID :" textFill="WHITE">
+        <Label layoutX="205.0" layoutY="40.0" prefHeight="40.0" prefWidth="219.0" style="-fx-font-weight: BOLD;"
+               text="EDIT DOCUMENT" textFill="#f2f2f2" underline="true">
             <font>
-                <Font size="24.0" />
+                <Font size="26.0"/>
             </font>
         </Label>
-        <Label fx:id="lbError" layoutX="83.0" layoutY="111.0" style="-fx-font-weight: bold;" text="The Document is invalid." textFill="#f03a0e" visible="false">
+        <TextField fx:id="tfDocumentID" layoutX="318.0" layoutY="140.0" prefHeight="35.0" prefWidth="175.0"
+                   promptText="Document ID"/>
+        <TextField fx:id="tfEditedField" layoutX="347.0" layoutY="250.0" prefHeight="35.0" prefWidth="199.0"
+                   promptText="Information" visible="false"/>
+        <Label fx:id="lbFieldToEdit" layoutX="83.0" layoutY="250.0" style="-fx-font-weight: bold;"
+               text="Field to edit :" textFill="#f7f7f7" visible="false">
             <font>
-                <Font size="14.0" />
+                <Font size="24.0"/>
             </font>
         </Label>
+        <Label layoutX="71.0" layoutY="144.0" style="-fx-font-weight: BOLD;" text="Enter Document ID :"
+               textFill="WHITE">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbError" layoutX="83.0" layoutY="111.0" style="-fx-font-weight: bold;"
+               text="The Document is invalid." textFill="#f03a0e" visible="false">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbISBN" layoutX="137.0" layoutY="200.0" style="-fx-font-weight: bold;" text="ISBN :"
+               textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbTitle" layoutX="136.0" layoutY="240.0" style="-fx-font-weight: bold;" text="Title :"
+               textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbPublisher" layoutX="137.0" layoutY="280.0" style="-fx-font-weight: bold;" text="Publisher :"
+               textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbAuthor" layoutX="137.0" layoutY="320.0" style="-fx-font-weight: bold;" text="Author :"
+               textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbCategory" layoutX="137.0" layoutY="400.0" style="-fx-font-weight: bold;" text="Category :"
+               textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbPublicationDate" layoutX="137.0" layoutY="360.0" style="-fx-font-weight: bold;"
+               text="Publication Date :" textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbDescription" layoutX="137.0" layoutY="440.0" style="-fx-font-weight: bold;" text="Description :"
+               textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbAvailableCopies" layoutX="137.0" layoutY="480.0" style="-fx-font-weight: bold;"
+               text="Available Copies :" textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="lbPageCount" layoutX="137.0" layoutY="520.0" style="-fx-font-weight: bold;" text="Page Count :"
+               textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="tfISBN" layoutX="318.0" layoutY="197.0" prefHeight="26.0" prefWidth="175.0"/>
+        <TextField fx:id="tfTitle" layoutX="318.0" layoutY="237.0" prefHeight="26.0" prefWidth="175.0"/>
+        <TextField fx:id="tfPublisher" layoutX="318.0" layoutY="279.0" prefHeight="26.0" prefWidth="175.0"/>
+        <TextField fx:id="tfDescription" layoutX="318.0" layoutY="437.0" prefHeight="26.0" prefWidth="175.0"/>
+        <TextField fx:id="tfAvailableCopies" layoutX="318.0" layoutY="478.0" prefHeight="26.0" prefWidth="175.0"/>
+        <TextField fx:id="tfAuthor" layoutX="318.0" layoutY="320.0" prefHeight="26.0" prefWidth="175.0"/>
+        <TextField fx:id="tfCategory" layoutX="318.0" layoutY="397.0" prefHeight="26.0" prefWidth="175.0"/>
+        <TextField fx:id="tfPageCount" layoutX="318.0" layoutY="521.0" prefHeight="26.0" prefWidth="175.0"/>
+        <DatePicker fx:id="dpPublicationDate" layoutX="318.0" layoutY="359.0"/>
     </children>
 </AnchorPane>

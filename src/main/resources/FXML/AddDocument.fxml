@@ -1,87 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="addDocumentPane" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddDocumentController">
+<AnchorPane fx:id="addDocumentPane" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddDocumentController">
     <children>
-        <Rectangle fill="#474242" height="670.0" width="630.0" />
+        <Rectangle fill="#474242" height="670.0" width="630.0"/>
 
-        <Label layoutX="208.0" layoutY="40.0" prefHeight="40.0" prefWidth="213.0" style="-fx-font-weight: BOLD;" text="ADD DOCUMENT" textFill="#f2f2f2" underline="true">
+        <Label layoutX="208.0" layoutY="40.0" prefHeight="40.0" prefWidth="213.0" style="-fx-font-weight: BOLD;"
+               text="ADD DOCUMENT" textFill="#f2f2f2" underline="true">
             <font>
-                <Font size="26.0" />
+                <Font size="26.0"/>
             </font>
         </Label>
-        <Button fx:id="btAddDocument" focusTraversable="false" layoutX="382.0" layoutY="498.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="113.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="ADD" textFill="#2b1d1d">
+        <Button fx:id="btAddDocument" focusTraversable="false" layoutX="376.0" layoutY="498.0" mnemonicParsing="false"
+                prefHeight="45.0" prefWidth="113.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="ADD"
+                textFill="#2b1d1d">
             <font>
-                <Font size="18.0" />
+                <Font size="18.0"/>
             </font>
         </Button>
-        <Label layoutX="48.0" layoutY="138.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document ISBN :" textFill="WHITE" wrapText="true">
+        <Label layoutX="54.0" layoutY="138.0" prefHeight="30.0" prefWidth="280.0" style="-fx-font-weight: bold;"
+               text="Document ISBN :" textFill="WHITE" wrapText="true">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label layoutX="48.0" layoutY="178.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document Title :" textFill="WHITE">
+        <Label layoutX="54.0" layoutY="178.0" prefHeight="30.0" prefWidth="157.0" style="-fx-font-weight: bold;"
+               text="Document Title :" textFill="WHITE">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label layoutX="48.0" layoutY="218.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document Publisher :" textFill="WHITE">
+        <Label layoutX="54.0" layoutY="218.0" prefHeight="30.0" prefWidth="306.0" style="-fx-font-weight: bold;"
+               text="Document Publisher :" textFill="WHITE">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label layoutX="48.0" layoutY="258.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document Author :" textFill="WHITE">
+        <Label layoutX="54.0" layoutY="258.0" prefHeight="30.0" prefWidth="306.0" style="-fx-font-weight: bold;"
+               text="Document Author :" textFill="WHITE">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label layoutX="48.0" layoutY="298.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document Category :" textFill="WHITE">
+        <Label layoutX="54.0" layoutY="298.0" prefHeight="30.0" prefWidth="306.0" style="-fx-font-weight: bold;"
+               text="Document Category :" textFill="WHITE">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label layoutX="48.0" layoutY="338.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document Publication Date:" textFill="WHITE" wrapText="true">
+        <Label layoutX="54.0" layoutY="338.0" prefHeight="30.0" prefWidth="299.0" style="-fx-font-weight: bold;"
+               text="Document Publication Date:" textFill="WHITE" wrapText="true">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label layoutX="48.0" layoutY="378.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document Description :" textFill="WHITE" wrapText="true">
+        <Label layoutX="54.0" layoutY="378.0" prefHeight="30.0" prefWidth="292.0" style="-fx-font-weight: bold;"
+               text="Document Description :" textFill="WHITE" wrapText="true">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <TextField fx:id="tfISBN" layoutX="382.0" layoutY="138.0" prefHeight="26.0" prefWidth="149.0" promptText="ISBN" />
-        <TextField fx:id="tfTitle" layoutX="382.0" layoutY="178.0" prefHeight="25.0" prefWidth="200.0" promptText="TiItle" />
-        <TextField fx:id="tfPublisher" layoutX="382.0" layoutY="218.0" prefHeight="25.0" prefWidth="200.0" promptText="Publisher" />
-        <TextField fx:id="tfAuthor" layoutX="382.0" layoutY="258.0" prefHeight="25.0" prefWidth="200.0" promptText="Author" />
-        <TextField fx:id="tfCategory" layoutX="382.0" layoutY="298.0" prefHeight="25.0" prefWidth="200.0" promptText="Category" />
-        <TextField fx:id="tfDescription" layoutX="382.0" layoutY="378.0" prefHeight="25.0" prefWidth="200.0" promptText="Description" />
-        <Label layoutX="48.0" layoutY="458.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document Page Count :" textFill="#fffcfc" wrapText="true">
+        <TextField fx:id="tfISBN" layoutX="376.0" layoutY="138.0" prefHeight="26.0" prefWidth="149.0"
+                   promptText="ISBN"/>
+        <TextField fx:id="tfTitle" layoutX="376.0" layoutY="178.0" prefHeight="25.0" prefWidth="200.0"
+                   promptText="TiItle"/>
+        <TextField fx:id="tfPublisher" layoutX="376.0" layoutY="218.0" prefHeight="25.0" prefWidth="200.0"
+                   promptText="Publisher"/>
+        <TextField fx:id="tfAuthor" layoutX="376.0" layoutY="258.0" prefHeight="25.0" prefWidth="200.0"
+                   promptText="Author"/>
+        <TextField fx:id="tfCategory" layoutX="376.0" layoutY="298.0" prefHeight="25.0" prefWidth="200.0"
+                   promptText="Category"/>
+        <TextField fx:id="tfDescription" layoutX="376.0" layoutY="378.0" prefHeight="25.0" prefWidth="200.0"
+                   promptText="Description"/>
+        <Label layoutX="54.0" layoutY="458.0" prefHeight="30.0" prefWidth="299.0" style="-fx-font-weight: bold;"
+               text="Document Page Count :" textFill="#fffcfc" wrapText="true">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label layoutX="48.0" layoutY="418.0" prefHeight="30.0" prefWidth="324.0" style="-fx-font-weight: bold;" text="Enter Document Available Copies :" textFill="WHITE" wrapText="true">
+        <Label layoutX="54.0" layoutY="418.0" prefHeight="30.0" prefWidth="306.0" style="-fx-font-weight: bold;"
+               text="Document Available Copies :" textFill="WHITE" wrapText="true">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <TextField fx:id="tfAvailableCopies" layoutX="382.0" layoutY="418.0" prefHeight="25.0" prefWidth="200.0" promptText="Available copies" />
-        <TextField fx:id="tfPageCount" layoutX="382.0" layoutY="458.0" prefHeight="25.0" prefWidth="200.0" promptText="Page count" />
-        <Label fx:id="lbResult" layoutX="63.0" layoutY="96.0" style="-fx-font-weight: bold;" text="The document already exists." textFill="#f03a0ef5" visible="false">
+        <TextField fx:id="tfAvailableCopies" layoutX="376.0" layoutY="418.0" prefHeight="25.0" prefWidth="200.0"
+                   promptText="Available copies"/>
+        <TextField fx:id="tfPageCount" layoutX="376.0" layoutY="458.0" prefHeight="25.0" prefWidth="200.0"
+                   promptText="Page count"/>
+        <Label fx:id="lbError" layoutX="63.0" layoutY="96.0" style="-fx-font-weight: bold;"
+               text="The document already exists." textFill="#f03a0ef5" visible="false">
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Label>
-      <DatePicker fx:id="dpPublicationDate" layoutX="382.0" layoutY="338.0" prefHeight="25.0" prefWidth="200.0" />
-      <Button fx:id="btFillUsingISBN" layoutX="543.0" layoutY="138.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="AutoFill" />
+        <DatePicker fx:id="dpPublicationDate" layoutX="376.0" layoutY="338.0" prefHeight="25.0" prefWidth="200.0"/>
+        <Button fx:id="btFillUsingISBN" layoutX="537.0" layoutY="138.0" mnemonicParsing="false" prefHeight="26.0"
+                prefWidth="78.0" text="AutoFill"/>
 
     </children>
 </AnchorPane>

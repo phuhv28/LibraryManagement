@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import librarymanagement.data.Book;
 import librarymanagement.data.Document;
+
+import javafx.scene.input.MouseEvent;
+import java.awt.font.ImageGraphicAttribute;
 
 public class DocumentInfoController {
     @FXML
@@ -62,6 +66,9 @@ public class DocumentInfoController {
     private ListView<String> lvComments;
 
     @FXML
+    private ScrollPane spScroll;
+
+    @FXML
     private Button btOneStar;
 
     @FXML
@@ -75,6 +82,9 @@ public class DocumentInfoController {
 
     @FXML
     private Button btFullStar;
+
+    @FXML
+    private ImageView ivImageBook;
 
     @FXML
     private ImageView image_OneStar;
@@ -95,9 +105,13 @@ public class DocumentInfoController {
 
     private final Image imageFirst = new Image(getClass().getResource("/images/image_starFirst.png").toExternalForm());
 
+    private final Image imagePublic = new Image(getClass().getResource("/images/image_bookPublic.png").toExternalForm());
+
     private Document document;
 
     private Stage stage;
+
+    private static DocumentInfoController instance;
 
     @FXML
     public void initialize() {
@@ -106,11 +120,11 @@ public class DocumentInfoController {
         bt3Star.setOnAction(event -> handleRating3Star());
         bt4Star.setOnAction(event -> handleRating4Star());
         btFullStar.setOnAction(event -> handleRating5Star());
+        spScroll.setOnMouseClicked(MouseEvent -> {informationDocument.requestFocus();});
     }
 
     public static DocumentInfoController newInstance(Document document) {
         FXMLLoader loader = new FXMLLoader(LoadingPopupController.class.getResource("/FXML/DocumentInfo.fxml"));
-        DocumentInfoController instance;
         try {
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
@@ -140,6 +154,12 @@ public class DocumentInfoController {
     public void show() {
         if (document != null) {
             if (document instanceof Book book) {
+                if(book.getThumbnailImage() == null){
+                    ivImageBook.setImage(imagePublic);
+                }
+                else {
+                    ivImageBook.setImage(new Image(book.getThumbnailImage()));
+                }
                 lbID.setText((book).getId());
                 lbTitle.setText(book.getTitle());
                 lbAuthor.setText(book.getAuthor());

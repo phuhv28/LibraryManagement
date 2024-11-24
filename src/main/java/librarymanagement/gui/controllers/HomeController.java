@@ -134,7 +134,7 @@ public class HomeController {
             button.setStyle("-fx-background-color: #232f33;");
 
             button.setOnAction(actionEvent -> {
-                DocumentInfoController.newInstance((Document) ((AbstractDocument) listBook.get(index)));
+                DocumentInfoController.newInstance((Document) ((AbstractDocument) listBook.get(index))).show();
                 System.out.println("click Button :" + index);
             });
 
