@@ -48,23 +48,22 @@ public class BorrowingService {
         return new BorrowRecord(recordID, account, document, borrowDate, dueDate, returnDate);
     }
 
-    // TODO
     public boolean borrowDocument(String userID, String documentId) {
-        Document document = bookService.findDocumentById(documentId);
-        if (document.getAvailableCopies() == 0) {
-            return false;
-        }
-
-        DocumentType documentType = document.getDocumentType();
-        if (documentType == DocumentType.BOOK) {
+        Document document = null;
+        if (documentId.charAt(0) == 'B') {
+            document = bookService.findDocumentById(documentId);
+            if (document == null) {
+                return false;
+            }
+            if (document.getAvailableCopies() == 0) {
+                return false;
+            }
             document.setAvailableCopies(document.getAvailableCopies() - 1);
             bookService.updateDocument((Book) document);
-        } else if (documentType == DocumentType.MAGAZINE) {
+        } else if (documentId.charAt(0) == 'M') {
             // TODO
-            return false;
-        } else if (documentType == DocumentType.THESIS) {
-            // TODO
-            return false;
+        } else if (documentId.charAt(0) == 'T') {
+            //TODO
         }
         Account account = AccountService.getInstance().getAccountByUserID(userID);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -79,7 +78,6 @@ public class BorrowingService {
         return borrowDocument(AccountService.getInstance().getCurrentAccount().getId(), documentId);
     }
 
-    // TODO
     public boolean returnDocument(String borrowId) {
         List<List<Object>> list = sqLiteInstance.find("BorrowRecord", "recordID", borrowId,
                 "userID", "docID", "borrowDate", "dueDate", "returnDate");

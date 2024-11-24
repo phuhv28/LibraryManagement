@@ -42,9 +42,21 @@ public class BookService implements DocumentService<Book> {
         return res.get(0).get(0) != null;
     }
 
+    public boolean checkIfHasTitleAndAuthor(String title, String author) {
+        List<List<Object>> res = sqLiteInstance.find("Book", "title", title, "title");
+        if (res.isEmpty() || res.get(0).isEmpty()) {
+            return false;
+        }
+        boolean has = res.get(0).get(0) != null;
+        res = sqLiteInstance.find("Book", "author", author, "author");
+        return has && res.get(0).get(0) != null;
+    }
+
     @Override
     public void addDocument(Book book) {
-        if (checkIfHasBookISBN(book.getISBN())) {
+        if (book.getISBN() == null && checkIfHasTitleAndAuthor(book.getTitle(), book.getAuthor())) {
+            return;
+        } else if (checkIfHasBookISBN(book.getISBN())) {
             System.out.println("Book already exists");
             return;
         }
@@ -154,5 +166,4 @@ public class BookService implements DocumentService<Book> {
         String sql = "SELECT * FROM Book";
         return createNewBookList(null, sql);
     }
-
 }

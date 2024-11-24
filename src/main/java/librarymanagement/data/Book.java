@@ -28,7 +28,8 @@ public class Book extends AbstractDocument {
     public Book(String id, String title, String publisher, LocalDate publishedDate, int pageCount, int availableCopies,
                 double averageRating, int ratingsCount, String ISBN,
                 String categories, String author, String description, String linkToAPI, byte[] thumbnailImage) {
-        super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount, linkToAPI, thumbnailImage);
+        super(id, title, publisher, publishedDate, pageCount, availableCopies,
+                averageRating, ratingsCount, linkToAPI, thumbnailImage);
         this.ISBN = ISBN;
         this.categories = categories;
         this.author = author;
