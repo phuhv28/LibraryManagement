@@ -139,4 +139,11 @@ public class BorrowingService {
     public List<BorrowRecord> getBorrowRecordsOfCurrentAccount() {
         return getBorrowRecordsOfUser(AccountService.getInstance().getCurrentAccount().getId());
     }
+
+
+    public boolean checkIfUserHasBorrowedDocument(String userID, String documentID) {
+        String sql = "SELECT userID FROM BorrowRecord WHERE userID = ? AND docID = ?";
+        List<List<Object>> lists = sqLiteInstance.findWithSQL(sql, new Object[]{userID, documentID}, "userID");
+        return !lists.isEmpty() && !lists.getFirst().isEmpty();
+    }
 }
