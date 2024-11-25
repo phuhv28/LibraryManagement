@@ -1,8 +1,5 @@
 package librarymanagement.gui;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import librarymanagement.gui.controllers.LoginController;
 import librarymanagement.gui.controllers.StartScreenController;
 import librarymanagement.gui.controllers.UIController;
 import javafx.application.Application;

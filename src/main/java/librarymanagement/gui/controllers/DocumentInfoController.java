@@ -16,12 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import librarymanagement.UserAuth.AccountService;
 import librarymanagement.data.*;
-import javafx.scene.control.Tooltip;
 import librarymanagement.gui.viewmodels.DocumentInfoViewModel;
 
-import javax.imageio.ImageWriter;
 import java.util.ArrayList;
 import java.util.List;
 

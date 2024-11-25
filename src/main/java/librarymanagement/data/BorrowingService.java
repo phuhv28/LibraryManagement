@@ -128,6 +128,11 @@ public class BorrowingService {
             LocalDate dueDate = LocalDate.parse((String) row.get(3), formatter);
             borrowRecords.add(new BorrowRecord(recordID, account, document, borrowDate, dueDate, null));
         }
+
+        if (borrowRecords.isEmpty()) {
+            return null;
+        }
+
         return borrowRecords;
     }
 

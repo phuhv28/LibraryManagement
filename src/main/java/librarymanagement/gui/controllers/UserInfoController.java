@@ -3,9 +3,12 @@ package librarymanagement.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import librarymanagement.UserAuth.AccountService;
+import librarymanagement.data.BorrowRecord;
 import librarymanagement.data.BorrowingService;
 import librarymanagement.data.DocumentServiceFactory;
 import librarymanagement.data.DocumentType;
+
+import java.util.List;
 
 public class UserInfoController {
 
@@ -27,8 +30,13 @@ public class UserInfoController {
     @FXML
     public void initialize() {
         lbFullName.setText(accountService.getCurrentAccount().getFullName());
-        lbNumberOfBooksBorrowed.setText(String.valueOf(borrowingService.getBorrowRecordsOfCurrentAccount().size()));
         lbUserName.setText(accountService.getCurrentAccount().getUsername());
         lbEmail.setText(accountService.getCurrentAccount().getEmail());
+        List<BorrowRecord> borrowRecords = borrowingService.getBorrowRecordsOfCurrentAccount();
+        if (borrowRecords == null) {
+            lbNumberOfBooksBorrowed.setText("0");
+        } else {
+            lbNumberOfBooksBorrowed.setText(String.valueOf(borrowRecords.size()));
+        }
     }
 }
