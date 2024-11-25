@@ -17,7 +17,6 @@ public class DeleteDocumentViewModel {
     }
 
     public boolean deleteDocument() {
-        IDProperty.set("");
         return bookService.deleteDocument(getID());
     }
 }
