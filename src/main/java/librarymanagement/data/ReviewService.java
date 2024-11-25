@@ -12,8 +12,8 @@ public class ReviewService {
     }
 
     public boolean checkIfUserHasCommentToDocument(String username, String docID) {
-        String sql = "SELECT userID FROM Review WHERE username = " + username + " AND docID = " + docID;
-        List<List<Object>> lists = sqLiteInstance.findWithSQL(sql, new Object[]{"username"}, "username");
+        String sql = "SELECT username FROM Review WHERE username = '" + username + "' AND docID = '" + docID + "'";
+        List<List<Object>> lists = sqLiteInstance.findWithSQL(sql, new Object[]{}, "username");
         return !lists.isEmpty();
     }
 
@@ -33,7 +33,7 @@ public class ReviewService {
         } else if (docID.charAt(0) == 'T') {
             //TODO
         }
-        sqLiteInstance.insertRow("review", username, docID, comment, rating);
+        sqLiteInstance.insertRow("Review", username, docID, comment, rating);
         return true;
     }
 

@@ -189,7 +189,7 @@ public class SQLiteInstance {
     /**
      * find function for important query
      * @param sql query sql
-     * @param params columns of result
+     * @param params Value to fill in ? in the query. If there is no ?, leave the params array empty.
      * @param columns columns of result
      * @return list of results after query
      */
@@ -201,6 +201,9 @@ public class SQLiteInstance {
             }
 
             ResultSet rs = stmt.executeQuery();
+            if (rs == null) {
+                return values;
+            }
             while (rs.next()) {
                 List<Object> row = new ArrayList<>();
                 for (String column : columns) {
