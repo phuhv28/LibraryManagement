@@ -167,12 +167,14 @@ public class DocumentInfoController {
             if (event.getCode() == KeyCode.ENTER) {
                 {
                     String inputText = taReview.getText();
-                    System.out.println(inputText);
+
                     documentInfoViewModel.getReviewService().addReview(documentInfoViewModel.getAccount().getUsername(), document.getId(), countStarRating, inputText);
+
                     setRatingImage(0, image_OneStar, image_Star2, image_Star3, image_Star4, image_FullStar);
                     countStarRating = 0;
                     taReview.clear();
-                    event.consume();
+
+                    show();
                 }
             }
         });
@@ -226,7 +228,7 @@ public class DocumentInfoController {
                 } else {
                     ivImageBook.setImage(new Image(book.getThumbnailImage()));
                 }
-                if (false) {
+                if (documentInfoViewModel.getBorrowingService().hasUserBorrowedDocument(documentInfoViewModel.getAccount().getId(), document.getId())) {
                     btFunction.setText("RETURN");
                 } else {
                     btFunction.setText("BORROW");
@@ -235,14 +237,18 @@ public class DocumentInfoController {
                 lbTitle.setText(book.getTitle());
                 lbAuthor.setText(book.getAuthor());
                 lbPublisher.setText(book.getPublisher());
-                lbPublicationDate.setText(book.getPublishedDate().toString());
+                if (book.getPublishedDate() == null) {
+                    lbPublicationDate.setText(" ");
+                } else {
+                    lbPublicationDate.setText(book.getPublishedDate().toString());
+                }
                 lbISBN.setText(book.getISBN());
                 lbCategories.setText(book.getCategories());
                 lbPageCount.setText(String.valueOf(book.getPageCount()));
                 lbDescription.setText(book.getDescription());
                 resizeAnPane();
                 lbRatingCount.setText(String.valueOf(book.getRatingsCount()));
-                setListReview(vbReviewDocument, getReviewList());
+                setListReview(vbReviewDocument, documentInfoViewModel.getReviewService().getAllReviewsInDocument(document.getId()));
             }
         }
         stage.show();
@@ -358,10 +364,12 @@ public class DocumentInfoController {
 
     public void setListReview(VBox currentVbox, List<Review> reviewList) {
         if (reviewList.isEmpty()) {
+            System.out.println("empty");
             return;
         }
+        currentVbox.getChildren().clear();
         int size = reviewList.size();
-        for (int i = size - 1; i > 0; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             String username = reviewList.get(i).getUsername();
             String comment = reviewList.get(i).getComment();
             int rating = reviewList.get(i).getRating();
@@ -370,19 +378,6 @@ public class DocumentInfoController {
         }
         currentVbox.setPrefHeight((size * 200) + (currentVbox.getSpacing() * (size - 1)));
         apScroll.setPrefHeight(1150 + (size * 200) + (currentVbox.getSpacing() * (size - 1)));
-    }
-
-    //demo(test)
-    public static List<Review> getReviewList() {
-        List<Review> reviews = new ArrayList<>();
-
-        reviews.add(new Review("user1", "doc123", "hello pro", 5));
-        reviews.add(new Review("user2", "doc124", "i like it", 3));
-        reviews.add(new Review("user3", "doc125", "I didn't like it much.", 2));
-        reviews.add(new Review("user4", "doc126", "oke good", 4));
-        reviews.add(new Review("user5", "doc127", "Fantastic read! Highly recommended.", 5));
-
-        return reviews;
     }
 
     public void resizeAnPane() {
