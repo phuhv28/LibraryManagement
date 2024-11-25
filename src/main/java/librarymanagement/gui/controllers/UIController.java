@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import librarymanagement.data.Document;
 
@@ -19,10 +18,14 @@ public class UIController {
 
     public static void setPrimaryStage(Stage primaryStage) {
         UIController.primaryStage = primaryStage;
-        primaryStage.sceneProperty().addListener((observable, oldScene, newScene) -> {
+        primaryStage.sceneProperty().addListener((_, _, newScene) -> {
             if (newScene != null) {
                 primaryStage.centerOnScreen();
             }
+        });
+        primaryStage.setOnCloseRequest(_ -> {
+            Platform.exit();
+            System.exit(0);
         });
     }
 
