@@ -13,9 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import librarymanagement.data.AbstractDocument;
 import librarymanagement.data.Book;
-import librarymanagement.data.Document;
 import librarymanagement.gui.viewmodels.HomeViewModel;
 
 import java.util.List;
@@ -73,12 +71,12 @@ public class HomeController {
 
     @FXML
     public void initialize() {
-        btLeftListBorrow.setOnAction(actionEvent -> scrollLeft(scrollDocumentBorrowed));
-        btRightListBorrowed.setOnAction(actionEvent -> scrollRight(scrollDocumentBorrowed));
-        btLeftListLibrary.setOnAction(actionEvent -> scrollLeft(scrollLibrary));
-        btRightListLibrary.setOnAction(actionEvent -> scrollRight(scrollLibrary));
-        btLeftListNewest.setOnAction(actionEvent -> scrollLeft(scrollDocumentNewest));
-        btRightListNewest.setOnAction(actionEvent -> scrollRight(scrollDocumentNewest));
+        btLeftListBorrow.setOnAction(_ -> scrollLeft(scrollDocumentBorrowed));
+        btRightListBorrowed.setOnAction(_ -> scrollRight(scrollDocumentBorrowed));
+        btLeftListLibrary.setOnAction(_ -> scrollLeft(scrollLibrary));
+        btRightListLibrary.setOnAction(_ -> scrollRight(scrollLibrary));
+        btLeftListNewest.setOnAction(_ -> scrollLeft(scrollDocumentNewest));
+        btRightListNewest.setOnAction(_ -> scrollRight(scrollDocumentNewest));
         setImageHBox(DocumentOfLibrary, apLibrary, viewModel.getListAllBook());
         setImageHBox(DocumentNewest, apDocumentNewest, viewModel.getListNewestBooks());
         setImageHBox(DocumentBorrowed, apDocumentBorrowed, viewModel.getListMostBorrowedBooks());
@@ -133,8 +131,8 @@ public class HomeController {
             button.setGraphic(buttonContent);
             button.setStyle("-fx-background-color: #232f33;");
 
-            button.setOnAction(actionEvent -> {
-                DocumentInfoController.newInstance((Document) ((AbstractDocument) listBook.get(index))).show();
+            button.setOnAction(_ -> {
+                UIController.showDocumentInfo(listBook.get(index));
                 System.out.println("click Button :" + index);
             });
 
