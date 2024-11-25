@@ -228,7 +228,7 @@ public class DocumentInfoController {
                 } else {
                     ivImageBook.setImage(new Image(book.getThumbnailImage()));
                 }
-                if (documentInfoViewModel.getBorrowingService().hasUserBorrowedDocument(documentInfoViewModel.getAccount().getId(), document.getId())) {
+                if (documentInfoViewModel.getBorrowingService().checkIfUserHasBorrowedDocument(documentInfoViewModel.getAccount().getId(), document.getId())) {
                     btFunction.setText("RETURN");
                 } else {
                     btFunction.setText("BORROW");
