@@ -42,13 +42,9 @@ public class BookService implements DocumentService<Book> {
     }
 
     public boolean checkIfHasTitleAndAuthor(String title, String author) {
-        List<List<Object>> res = sqLiteInstance.find("Book", "title", title, "title");
-        if (res.isEmpty() || res.getFirst().isEmpty()) {
-            return false;
-        }
-        boolean has = res.getFirst().getFirst() != null;
-        res = sqLiteInstance.find("Book", "author", author, "author");
-        return has && res.getFirst().getFirst() != null;
+        String sql = "SELECT ISBN FROM Book WHERE title = ? AND author = ?";
+        List<List<Object>> lists = sqLiteInstance.findWithSQL(sql, new Object[]{title, author}, "ISBN");
+        return !lists.isEmpty();
     }
 
     @Override
@@ -179,7 +175,7 @@ public class BookService implements DocumentService<Book> {
     }
 
     public List<Book> getAllDocument() {
-        String sql = "SELECT * FROM Book";
+        String sql = "SELECT * FROM Book ORDER BY id";
         return createNewBookList(null, sql);
     }
 }
