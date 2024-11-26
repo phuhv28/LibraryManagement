@@ -49,8 +49,12 @@ public class BookService implements DocumentService<Book> {
 
     @Override
     public boolean addDocument(Book book) {
-        if (book.getISBN() == null && checkIfHasTitleAndAuthor(book.getTitle(), book.getAuthor())) {
+        if ((book.getISBN() == null) && checkIfHasTitleAndAuthor(book.getTitle(), book.getAuthor())) {
             return false;
+        } else if (book.getISBN().equals("N/A")) {
+            if (checkIfHasTitleAndAuthor(book.getTitle(), book.getAuthor())) {
+                return false;
+            }
         } else if (checkIfHasBookISBN(book.getISBN())) {
             System.out.println("Book already exists");
             return false;
