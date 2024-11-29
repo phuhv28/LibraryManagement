@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/** Class represent for Books.*/
 public class Book extends AbstractDocument {
     private String ISBN;
     private String categories;

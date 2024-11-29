@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableCell;
 import javafx.scene.layout.AnchorPane;
+import librarymanagement.data.Book;
 import librarymanagement.data.BorrowRecord;
 import librarymanagement.gui.utils.SceneHistoryStack;
 import librarymanagement.gui.viewmodels.MyDocumentViewModel;
@@ -76,6 +77,16 @@ public class MyDocumentController {
             lbNoti.setVisible(true);
             tableView.setVisible(false);
         }
+
+        tableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                BorrowRecord selectedBook = tableView.getSelectionModel().getSelectedItem();
+
+                if (selectedBook != null) {
+                    UIController.showDocumentInfo(selectedBook.getDocument());
+                }
+            }
+        });
     }
 
     private void addReturnButtonToTable() {

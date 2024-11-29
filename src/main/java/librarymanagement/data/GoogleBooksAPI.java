@@ -13,6 +13,8 @@ import java.util.concurrent.Future;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+
+/** Class for using Google Books API.*/
 public class GoogleBooksAPI {
     private static final String API_KEY = "AIzaSyCDqQRwC5jM_KWFHGkkyDupSPbfAo9KvO8";
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes";

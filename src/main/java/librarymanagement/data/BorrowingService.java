@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/** Class handles handle borrowing operations.*/
 public class BorrowingService {
     private final SQLiteInstance sqLiteInstance = new SQLiteInstance();
     private final DocumentService<Book> bookService;

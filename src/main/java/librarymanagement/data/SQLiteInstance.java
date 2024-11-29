@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/** Utils for SQLite.*/
 public class SQLiteInstance {
     private static final String CONNECTION_URL = "jdbc:sqlite:library.db";
     private static SQLiteInstance instance = null;

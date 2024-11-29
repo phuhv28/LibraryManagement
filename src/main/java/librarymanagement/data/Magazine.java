@@ -3,29 +3,29 @@ package librarymanagement.data;
 import java.time.LocalDate;
 
 class Magazine extends AbstractDocument {
-    private String ISBN;
+    private String ISSN;
     private String categories;
 
-    public Magazine(String ISBN, String categories) {
-        this.ISBN = ISBN;
+    public Magazine(String ISSN, String categories) {
+        this.ISSN = ISSN;
         this.categories = categories;
     }
 
     public Magazine(String id, String title, String publisher, LocalDate publishedDate, int pageCount,
-                    int availableCopies, double averageRating, int ratingsCount, String ISBN,
+                    int availableCopies, double averageRating, int ratingsCount, String ISSN,
                     String categories, String linkToAPI, byte[] thumbnailImage) {
         super(id, title, publisher, publishedDate, pageCount, availableCopies, averageRating, ratingsCount,
                 linkToAPI, thumbnailImage);
-        this.ISBN = ISBN;
+        this.ISSN = ISSN;
         this.categories = categories;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getISSN() {
+        return ISSN;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setISSN(String ISSN) {
+        this.ISSN = ISSN;
     }
 
     public String getCategories() {

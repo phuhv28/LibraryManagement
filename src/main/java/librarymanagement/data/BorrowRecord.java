@@ -3,6 +3,7 @@ package librarymanagement.data;
 import librarymanagement.UserAuth.Account;
 import java.time.LocalDate;
 
+/** Class represents a borrow record.*/
 public class BorrowRecord {
     private String id;
     private Account account;

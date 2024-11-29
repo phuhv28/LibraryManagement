@@ -52,9 +52,7 @@ public class AddDocumentController {
     @FXML
     public void initialize() {
         btAddDocument.setOnAction(_ -> handleAddDocument());
-
         btFillUsingISBN.setOnAction(_ -> fillUsingISBN());
-
         tfISBN.textProperty().bindBidirectional(viewModel.ISBNProperty());
         tfTitle.textProperty().bindBidirectional(viewModel.titleProperty());
         tfPublisher.textProperty().bindBidirectional(viewModel.publisherProperty());
@@ -74,6 +72,7 @@ public class AddDocumentController {
         );
     }
 
+    /** Autofill document's attribute using ISBN with Google Books API.*/
     private void fillUsingISBN() {
         LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Searching for Document");
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
@@ -104,6 +103,7 @@ public class AddDocumentController {
         new Thread(fillDocumentTask).start();
     }
 
+    /** Add document to database using a new thread.*/
     private void handleAddDocument() {
         if (tfTitle.getText() == null || tfTitle.getText().isEmpty()
         || tfAuthor.getText() == null || tfAuthor.getText().isEmpty()) {
@@ -121,6 +121,7 @@ public class AddDocumentController {
         new Thread(addDocumentTask).start();
     }
 
+    /** Create add document task.*/
     @NotNull
     private Task<Boolean> getBooleanTask(LoadingPopupController loadingPopup) {
         Task<Boolean> addDocumentTask = new Task<>() {

@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 
+/**
+ * Abstract class represent for Document.
+ */
 public abstract class AbstractDocument implements Document {
     protected String id;
     protected String title;
@@ -35,7 +38,7 @@ public abstract class AbstractDocument implements Document {
 
     public AbstractDocument(String id, String title, String publisher, LocalDate publishedDate, int pageCount,
                             int availableCopies, double averageRating, int ratingsCount,
-                           String linkToAPI, byte[] thumbnailImage) {
+                            String linkToAPI, byte[] thumbnailImage) {
         this.id = id;
         this.title = title;
         this.publisher = publisher;
@@ -48,7 +51,7 @@ public abstract class AbstractDocument implements Document {
         this.thumbnailImage = thumbnailImage;
     }
 
-//        @Override
+    @Override
     public String getId() {
         return id;
     }
@@ -147,7 +150,7 @@ public abstract class AbstractDocument implements Document {
     }
 
     public InputStream getThumbnailImage() {
-        if(thumbnailImage == null ) {
+        if (thumbnailImage == null) {
             return null;
         }
         return new ByteArrayInputStream(thumbnailImage);

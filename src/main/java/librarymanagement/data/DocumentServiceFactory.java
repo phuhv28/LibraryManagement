@@ -1,5 +1,7 @@
 package librarymanagement.data;
 
+
+/** Factory for Document services.*/
 public class DocumentServiceFactory {
     private static BookService bookService = null;
     private static ThesisService thesisService = null;
