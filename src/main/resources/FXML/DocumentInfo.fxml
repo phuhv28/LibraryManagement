@@ -8,12 +8,13 @@
 
 <AnchorPane fx:id="informationDocument" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.DocumentInfoController">
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#474242" height="670.0" stroke="BLACK" strokeType="INSIDE" width="630.0" />
-    <Label layoutX="122.0" layoutY="32.0" prefHeight="40.0" prefWidth="385.0" style="-fx-font-weight: BOLD;" text="INFORMATION OF DOCUMENT" textFill="#f2f2f2" underline="true">
-        <font>
-            <Font size="26.0" />
-        </font>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="77.0" stroke="#0f1416" strokeType="INSIDE" width="630.0" />
+    <Label layoutX="126.0" layoutY="23.0" prefHeight="40.0" prefWidth="402.0" style="-fx-font-weight: BOLD;" text="INFORMATION OF DOCUMENT" textFill="#f2f2f2">
+      <font>
+         <Font size="27.0" />
+      </font>
     </Label>
-    <ScrollPane fx:id="spScroll" hbarPolicy="NEVER" layoutX="21.0" layoutY="91.0" prefHeight="554.0" prefWidth="591.0" vbarPolicy="NEVER">
+    <ScrollPane fx:id="spScroll" hbarPolicy="NEVER" layoutX="21.0" layoutY="91.0" prefHeight="552.0" prefWidth="591.0" vbarPolicy="NEVER">
         <AnchorPane fx:id="apScroll" minHeight="0.0" minWidth="0.0" prefHeight="1050.0" prefWidth="596.0" style="-fx-background-color: #474242;">
             <Button fx:id="btOneStar" focusTraversable="false" layoutX="101.0" layoutY="672.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="72.0" style="-fx-background-color: #474242;">
                 <graphic>
@@ -66,7 +67,7 @@
                     <Font size="20.0" />
                 </font>
             </Button>
-            <TextArea fx:id="taReview" focusTraversable="false" layoutX="135.0" layoutY="744.0" prefHeight="98.0" prefWidth="390.0" promptText="Your review of this document" wrapText="true">
+            <TextArea fx:id="taReview" focusTraversable="false" layoutX="115.0" layoutY="744.0" prefHeight="98.0" prefWidth="392.0" promptText="Your review of this document" wrapText="true">
                 <font>
                     <Font size="20.0" />
                 </font>
@@ -170,7 +171,7 @@
                     <Font size="20.0" />
                 </font>
             </Label>
-            <ImageView fitHeight="50.0" fitWidth="66.0" layoutX="65.0" layoutY="746.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="50.0" fitWidth="66.0" layoutX="45.0" layoutY="746.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../images/image_account.png" />
             </ImageView>
             <Label layoutX="47.0" layoutY="850.0" text="User reviews for this document :" textFill="#030202">
@@ -178,7 +179,7 @@
                     <Font size="20.0" />
                 </font>
             </Label>
-            <VBox fx:id="vbReviewDocument" layoutX="65.0" layoutY="919.0" prefHeight="200.0" prefWidth="468.0" style="-fx-background-color: #474242;" />
+            <VBox fx:id="vbReviewDocument" layoutX="55.0" layoutY="919.0" prefHeight="200.0" prefWidth="468.0" style="-fx-background-color: #474242;" />
             <ScrollPane hbarPolicy="NEVER" layoutX="253.0" layoutY="131.0" prefHeight="127.0" prefWidth="343.0" style="-fx-background-color: #474242;" vbarPolicy="NEVER">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="344.0" style="-fx-background-color: #474242;">
@@ -222,6 +223,15 @@
                     <Font name="System Bold" size="12.0" />
                 </font>
             </Button>
+         <Button fx:id="btReview" layoutX="510.0" layoutY="741.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="33.0" style="-fx-background-color: #474242;" text=" ">
+            <graphic>
+               <ImageView fx:id="btSent" fitHeight="52.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/image_review.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </Button>
 
         </AnchorPane>
     </ScrollPane>

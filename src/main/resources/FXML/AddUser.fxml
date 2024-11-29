@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddUserController">
+<AnchorPane prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.AddUserController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
-        <Label layoutX="199.0" layoutY="40.0" prefHeight="40.0" prefWidth="232.0" style="-fx-font-weight: BOLD;" text="ADD USER/ADMIN" textFill="#f2f2f2" underline="true">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="77.0" stroke="#0f1416" strokeType="INSIDE" width="630.0" />
+        <Label layoutX="199.0" layoutY="23.0" prefHeight="40.0" prefWidth="257.0" style="-fx-font-weight: BOLD;" text="ADD USER/ADMIN" textFill="#f2f2f2">
             <font>
-                <Font size="26.0" />
+                <Font size="27.0" />
             </font>
         </Label>
         <Label layoutX="114.0" layoutY="119.0" style="-fx-font-weight: BOLD;" text="Select Account Type :" textFill="WHITE">
@@ -60,7 +56,7 @@
         <PasswordField fx:id="tfPassword" layoutX="347.0" layoutY="342.0" prefHeight="26.0" prefWidth="159.0" promptText="Password" style="-fx-font-weight: bold;" />
         <PasswordField fx:id="tfConfirmPassword" layoutX="347.0" layoutY="380.0" prefHeight="26.0" prefWidth="159.0" promptText="Confirm Password" style="-fx-font-weight: bold;" />
 
-        <Button fx:id="btAddAccount" focusTraversable="false" layoutX="506.0" layoutY="587.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="107.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="ADD">
+        <Button fx:id="btAddAccount" focusTraversable="false" layoutX="346.0" layoutY="434.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="107.0" style="-fx-background-radius: 15; -fx-font-weight: bold;" text="ADD">
             <font>
                 <Font size="18.0" />
             </font>

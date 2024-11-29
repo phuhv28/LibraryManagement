@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="SettingScene" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.InformationAppController">
+    <children>
+        <Rectangle fill="#474242" height="670.0" width="630.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="77.0" stroke="#0f1416" strokeType="INSIDE" width="630.0" />
+        <Label layoutX="114.0" layoutY="20.0" prefHeight="40.0" prefWidth="413.0" style="-fx-font-weight: BOLD;" text="INFORMATION ABOUT THE APP" textFill="WHITE">
+            <font>
+                <Font size="27.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

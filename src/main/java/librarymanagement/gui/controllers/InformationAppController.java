@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 
-public class SettingController {
+public class InformationAppController {
     @FXML
     private AnchorPane SettingScene;
 

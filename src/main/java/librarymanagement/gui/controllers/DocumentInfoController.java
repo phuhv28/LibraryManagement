@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentInfoController {
-    @FXML
-    private AnchorPane informationDocument;
 
     @FXML
     private Label lbID;
@@ -64,6 +62,9 @@ public class DocumentInfoController {
 
     @FXML
     private AnchorPane apScroll;
+
+    @FXML
+    private Button btReview;
 
     @FXML
     private Button btOneStar;
@@ -166,18 +167,23 @@ public class DocumentInfoController {
         taReview.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 {
-                    String inputText = taReview.getText();
-
-                    documentInfoViewModel.getReviewService().addReview(documentInfoViewModel.getAccount().getUsername(), document.getId(), countStarRating, inputText);
-
-                    setRatingImage(0, image_OneStar, image_Star2, image_Star3, image_Star4, image_FullStar);
-                    countStarRating = 0;
-                    taReview.clear();
-
-                    show();
+                    handleReview();
                 }
             }
         });
+        btReview.setOnAction(actionEvent -> handleReview());
+    }
+
+    private void handleReview() {
+        String inputText = taReview.getText();
+
+        documentInfoViewModel.getReviewService().addReview(documentInfoViewModel.getAccount().getUsername(), document.getId(), countStarRating, inputText);
+
+        setRatingImage(0, image_OneStar, image_Star2, image_Star3, image_Star4, image_FullStar);
+        countStarRating = 0;
+        taReview.clear();
+
+        show();
     }
 
     private void handleFunction() {

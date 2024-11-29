@@ -1,16 +1,24 @@
 package librarymanagement.gui.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import librarymanagement.UserAuth.AccountService;
 import librarymanagement.data.BorrowRecord;
 import librarymanagement.data.BorrowingService;
 import librarymanagement.data.DocumentServiceFactory;
 import librarymanagement.data.DocumentType;
+import librarymanagement.gui.utils.SceneHistoryStack;
 
+import java.io.IOException;
 import java.util.List;
 
 public class UserInfoController {
+
+    @FXML
+    private AnchorPane apInformationUser;
 
     @FXML
     private Label lbFullName;
@@ -23,6 +31,9 @@ public class UserInfoController {
 
     @FXML
     private Label lbEmail;
+
+    @FXML
+    private Button btLogOut;
 
     private final AccountService accountService = AccountService.getInstance();
     private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
@@ -37,6 +48,22 @@ public class UserInfoController {
             lbNumberOfBooksBorrowed.setText("0");
         } else {
             lbNumberOfBooksBorrowed.setText(String.valueOf(borrowRecords.size()));
+        }
+        btLogOut.setOnAction(actionEvent -> handleLogOut());
+    }
+    private void handleLogOut() {
+        UIController.showScene(StartScreenController.getStartScreen());
+    }
+
+    public void gotoChangePassword() {
+        try {
+            SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
+            SceneHistoryStack.previousFxmlFile = "ChangePasswordScene.fxml";
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/ChangePasswordScene.fxml"));
+            apInformationUser.getChildren().setAll(newPane);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

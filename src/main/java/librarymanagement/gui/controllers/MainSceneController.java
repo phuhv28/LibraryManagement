@@ -34,16 +34,13 @@ public class MainSceneController {
     private Button btAdd;
 
     @FXML
-    private Button btLogOut;
-
-    @FXML
     private Button btAddUser;
 
     @FXML
     private Button btHome;
 
     @FXML
-    private Button btSetting;
+    private Button btInformationApp;
 
     @FXML
     private Button btUser;
@@ -56,10 +53,9 @@ public class MainSceneController {
         btEditDocument.setOnAction(event -> loadSceneFix());
         btDelete.setOnAction(event -> loadSceneDelete());
         btAdd.setOnAction(event -> loadSceneAdd());
-        btLogOut.setOnAction(actionEvent -> handleLogOut());
         btAddUser.setOnAction(actionEvent -> loadSceneAddAccount());
         btHome.setOnAction(event -> loadHome());
-        btSetting.setOnAction(event -> loadSetting());
+        btInformationApp.setOnAction(event -> loadInformationApp());
         btUser.setOnAction(event -> loadUser());
 
         loadHome();
@@ -130,10 +126,6 @@ public class MainSceneController {
         }
     }
 
-    private void handleLogOut() {
-        UIController.showScene(StartScreenController.getStartScreen());
-    }
-
     private void loadSceneAddAccount() {
         SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene("AddUser.fxml");
@@ -146,10 +138,10 @@ public class MainSceneController {
         SceneHistoryStack.previousFxmlFile = "Home.fxml";
     }
 
-    private void loadSetting() {
+    private void loadInformationApp() {
         SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
-        loadScene("Setting.fxml");
-        SceneHistoryStack.previousFxmlFile = "Setting.fxml";
+        loadScene("InformationApp.fxml");
+        SceneHistoryStack.previousFxmlFile = "InformationApp.fxml";
     }
 
     private void loadUser() {

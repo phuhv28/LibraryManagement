@@ -5,12 +5,14 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserInfoController">
+<AnchorPane fx:id="apInformationUser" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserInfoController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
-        <Label layoutX="184.0" layoutY="40.0" prefHeight="40.0" prefWidth="261.0" style="-fx-font-weight: BOLD;" text="INFORMATION USER" textFill="WHITE" underline="true">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="77.0" stroke="#0f1416" strokeType="INSIDE" width="630.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="200.0" layoutX="64.0" layoutY="125.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="503.0" />
+        <Label layoutX="184.0" layoutY="25.0" prefHeight="40.0" prefWidth="288.0" style="-fx-font-weight: BOLD;" text="INFORMATION USER" textFill="WHITE">
             <font>
-                <Font size="26.0" />
+                <Font size="27.0" />
             </font>
         </Label>
         <Label layoutX="83.0" layoutY="155.0" prefHeight="30.0" prefWidth="106.0" style="-fx-font-weight: BOLD;" text="Full name :" textFill="WHITE">
@@ -53,6 +55,16 @@
                 <Font size="18.0" />
             </font>
         </Label>
+        <Button fx:id="btLogOut" focusTraversable="false" layoutX="241.0" layoutY="364.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="146.0" style="-fx-background-radius: 20; -fx-font-weight: bold;" text="Log Out" textFill="#131212" textOverrun="CLIP">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+      <Hyperlink layoutX="241.0" layoutY="424.0" onAction="#gotoChangePassword" text="Change Password" textFill="#151111">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Hyperlink>
     </children>
 
 </AnchorPane>

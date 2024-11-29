@@ -11,7 +11,7 @@ public class AccountService {
     private static Account currentAccount = new Account();
     private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
 
-    private AccountService() {
+    public AccountService() {
     }
 
     public Account getCurrentAccount() {
