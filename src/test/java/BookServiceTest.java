@@ -1,5 +1,3 @@
-package test;
-
 import librarymanagement.data.Book;
 import librarymanagement.data.BookService;
 import librarymanagement.data.SQLiteInstance;
