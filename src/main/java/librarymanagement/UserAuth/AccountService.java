@@ -18,6 +18,14 @@ public class AccountService {
         return currentAccount;
     }
 
+    /**
+     * Returns the singleton instance of the AccountService class.
+     *
+     * <p>This method ensures that only one instance of AccountService is created and used throughout the application.
+     * It follows the Singleton design pattern to provide a global point of access to the AccountService instance.</p>
+     *
+     * @return the singleton instance of {@link AccountService}
+     */
     public static AccountService getInstance() {
         return INSTANCE;
     }
@@ -27,7 +35,19 @@ public class AccountService {
     }
 
     /**
-     * Verify user account.
+     * Checks the login credentials for a user or admin account.
+     *
+     * <p>This method checks the provided username and password against the records in the "Admin" or "User" table.
+     * If the username is found, it compares the provided password with the stored password. If the credentials
+     * are valid, it sets the current account information and returns a success result. Otherwise, it returns
+     * an error indicating the issue (e.g., incorrect password, username not found).</p>
+     *
+     * @param username the username of the account to check
+     * @param password the password of the account to check
+     * @return a {@link LoginResult} indicating the result of the login attempt:
+     *         - {@link LoginResult#SUCCESS} if the login is successful
+     *         - {@link LoginResult#USERNAME_NOT_FOUND} if the username is not found in the database
+     *         - {@link LoginResult#INCORRECT_PASSWORD} if the password is incorrect
      */
     public LoginResult checkLogin(String username, String password) {
         List<List<Object>> result =
@@ -91,7 +111,22 @@ public class AccountService {
     }
 
     /**
-     * Add an account.
+     * Adds a new account (either user or admin) to the database.
+     *
+     * <p>This method first checks if the provided username is already taken and ensures that the password
+     * and confirm password match. If both checks pass, it proceeds to create the account by inserting
+     * the necessary details into the appropriate database table based on the account type (either "User" or "Admin").</p>
+     *
+     * @param username the username of the new account
+     * @param password the password of the new account
+     * @param confirmPassword the confirmation password
+     * @param fullName the full name of the new account holder
+     * @param email the email address of the new account holder
+     * @param accountType the type of account to create, either {@link AccountType#USER} or {@link AccountType#ADMIN}
+     * @return a {@link RegistrationResult} indicating the result of the registration:
+     *         - {@link RegistrationResult#USERNAME_TAKEN} if the username is already taken
+     *         - {@link RegistrationResult#PASSWORD_NOT_MATCH} if the passwords do not match
+     *         - {@link RegistrationResult#SUCCESS} if the account was successfully created
      */
     public RegistrationResult addAccount(String username, String password, String confirmPassword, String fullName, String email, AccountType accountType) {
         if (isUsernameTaken(username)) {
@@ -131,6 +166,17 @@ public class AccountService {
         return !list.isEmpty();
     }
 
+    /**
+     * Retrieves an account by its user ID.
+     *
+     * <p>This method retrieves an account from the database based on the provided user ID. It determines
+     * whether the account belongs to an admin or a regular user based on the first character of the
+     * user ID. The account's details such as username, password, full name, email, and registration date
+     * are then retrieved from the corresponding table (either "Admin" or "User").</p>
+     *
+     * @param userID the user ID of the account to be retrieved
+     * @return an {@link Account} object containing the account details, or null if the account is not found
+     */
     public Account getAccountByUserID(String userID) {
         AccountType type = userID.charAt(0) == 'A' ? AccountType.ADMIN : AccountType.USER;
         String tableName = userID.charAt(0) == 'A' ? "Admin" : "User";

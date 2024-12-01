@@ -72,6 +72,18 @@ public class Book extends AbstractDocument {
     }
 
     //    @Override
+
+    /**
+     * Retrieves all the properties of the object as a list of {@link Object}.
+     * The method returns a list containing various attributes of the object such as ISBN,
+     * title, author, publisher, published date, categories, page count, available copies,
+     * description, average rating, ratings count, link to API, and thumbnail image.
+     *
+     * <p><strong>Note:</strong> The published date is converted to a string if it's not null,
+     * otherwise, it will be added as null to the list.</p>
+     *
+     * @return a list of {@link Object} containing all the attributes of the object.
+     */
     public List<Object> getAll() {
         List<Object> res = new ArrayList<>();
 

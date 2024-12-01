@@ -21,6 +21,7 @@ public class SQLiteInstance {
         }
     }
 
+
     public synchronized static SQLiteInstance getInstance() {
         if (instance == null) {
             instance = new SQLiteInstance();
@@ -62,9 +63,33 @@ public class SQLiteInstance {
     }
 
     /**
-     * function to add row to table in SQLite
-     * @param tableName table to insert
-     * @param values table properties
+     * Inserts a row into the specified table with the given values.
+     *
+     * @param tableName the name of the table where the row will be inserted.
+     * @param values    a list of values to be inserted into the table.
+     *                  Each value corresponds to a column in the table.
+     *                  Supported types include:
+     *                  <ul>
+     *                      <li>{@code String}</li>
+     *                      <li>{@code Integer}</li>
+     *                      <li>{@code Double}</li>
+     *                      <li>{@code Float}</li>
+     *                      <li>{@code Boolean}</li>
+     *                      <li>{@code Long}</li>
+     *                      <li>{@code java.sql.Date}</li>
+     *                      <li>{@code byte[]}</li>
+     *                      <li>{@code null} (sets the column to {@code NULL})</li>
+     *                  </ul>
+     * @throws IllegalArgumentException if a value's type is not supported.
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * List<Object> values = List.of("John Doe", 30, 50000.0, true);
+     * insertRow("employees", values);
+     * }</pre>
+     *
+     * <p>This example inserts a new row into the "employees" table with the values:
+     * "John Doe" (String), 30 (Integer), 50000.0 (Double), and true (Boolean).
      */
     public void insertRow(String tableName, List<Object> values) {
         try {
@@ -103,21 +128,57 @@ public class SQLiteInstance {
     }
 
     /**
-     * function to add row to table in SQLite
-     * @param tableName table to insert
-     * @param values table properties
+     * Inserts a row into the specified table with the given values.
+     *
+     * @param tableName the name of the table where the row will be inserted.
+     * @param values    a varargs array of values to be inserted into the table.
+     *                  Each value corresponds to a column in the table.
+     *                  Supported types include:
+     *                  <ul>
+     *                      <li>{@code String}</li>
+     *                      <li>{@code Integer}</li>
+     *                      <li>{@code Double}</li>
+     *                      <li>{@code Float}</li>
+     *                      <li>{@code Boolean}</li>
+     *                      <li>{@code Long}</li>
+     *                      <li>{@code java.sql.Date}</li>
+     *                      <li>{@code byte[]}</li>
+     *                      <li>{@code null} (sets the column to {@code NULL})</li>
+     *                  </ul>
+     *
+     * <p>This method delegates to {@link #insertRow(String, List)} by converting the varargs into a {@code List}.</p>
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * insertRow("employees", "Jane Doe", 25, 60000.0, false);
+     * }</pre>
+     *
+     * <p>This example inserts a new row into the "employees" table with the values:
+     * "Jane Doe" (String), 25 (Integer), 60000.0 (Double), and false (Boolean).</p>
      */
     public void insertRow(String tableName, Object... values) {
         insertRow(tableName, Arrays.asList(values));
     }
 
     /**
-     * findNotCondition function in SQLite
-     * @param tableName table to look up
-     * @param columnCheckCondition column to compare
-     * @param condition condition compare with columnCheckCondition
-     * @param columns columns return value columns
-     * @return list of results after query
+     * Retrieves rows from the specified table where the specified condition is met, returning only the specified columns.
+     *
+     * @param tableName           the name of the table to query.
+     * @param columnCheckCondition the name of the column to apply the condition on.
+     * @param condition           the value to match using a SQL {@code LIKE} condition.
+     *                             This can include wildcards (e.g., {@code %} or {@code _}).
+     * @param columns             the columns to retrieve from the table.
+     *                             At least one column must be specified.
+     * @return a list of rows matching the condition. Each row is represented as a list of objects,
+     *         with values corresponding to the specified columns in the order they are provided.
+     * @throws IllegalArgumentException if the {@code columns} array is empty.
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * List<List<Object>> results = find("employees", "name", "Jane%", "id", "name", "salary");
+     * }</pre>
+     * <p>This example retrieves rows from the "employees" table where the "name" column starts with "Jane".
+     * Each row will include the "id", "name", and "salary" columns.</p>
      */
     public List<List<Object>> find(String tableName, String columnCheckCondition, String condition, String... columns) {
         List<List<Object>> values = new ArrayList<>();
@@ -156,10 +217,25 @@ public class SQLiteInstance {
     }
 
     /**
-     * find function for query without condition
-     * @param tableName table to look up
-     * @param columns columns of result
-     * @return list of results after query
+     * Retrieves all rows from the specified table without applying any conditions,
+     * returning only the specified columns.
+     *
+     * @param tableName the name of the table to query.
+     * @param columns   the columns to retrieve from the table. At least one column must be specified.
+     * @return a list of rows from the table. Each row is represented as a list of objects,
+     *         with values corresponding to the specified columns in the order they are provided.
+     * @throws IllegalArgumentException if the {@code columns} array is empty.
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * // Example: Retrieve all rows with specified columns from the "users" table
+     * List<List<Object>> results = findNotCondition("users", "id", "name", "email");
+     * for (List<Object> row : results) {
+     *     System.out.println("ID: " + row.get(0) + ", Name: " + row.get(1) + ", Email: " + row.get(2));
+     * }
+     * }</pre>
+     * <p>This example retrieves all rows from the "users" table and returns the "id",
+     * "name", and "email" columns for each row.</p>
      */
     public List<List<Object>> findNotCondition(String tableName, String... columns) {
         List<List<Object>> values = new ArrayList<>();
@@ -188,11 +264,24 @@ public class SQLiteInstance {
 
 
     /**
-     * find function for important query
-     * @param sql query sql
-     * @param params Value to fill in ? in the query. If there is no ?, leave the params array empty.
-     * @param columns columns of result
-     * @return list of results after query
+     * Executes a SQL query with parameters and retrieves the specified columns from the result set.
+     *
+     * @param sql     the SQL query string with placeholders (?).
+     * @param params  an array of parameters to bind to the placeholders in the SQL query.
+     * @param columns the column names to retrieve from the result set.
+     * @return a list of rows, where each row is a list of column values.
+     *         Returns an empty list if the query produces no results or an error occurs.
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * String sql = "SELECT id, title FROM books WHERE author = ?";
+     * Object[] params = {"John Doe"};
+     * List<List<Object>> results = findWithSQL(sql, params, "id", "title");
+     * for (List<Object> row : results) {
+     *     System.out.println("ID: " + row.get(0));
+     *     System.out.println("Title: " + row.get(1));
+     * }
+     * }</pre>
      */
     public List<List<Object>> findWithSQL(String sql, Object[] params, String... columns) {
         List<List<Object>> values = new ArrayList<>();
@@ -218,6 +307,21 @@ public class SQLiteInstance {
         return values;
     }
 
+    /**
+     * Executes a SQL update operation (e.g., INSERT, UPDATE, DELETE) with parameters.
+     *
+     * @param sql    the SQL query with placeholders (?).
+     * @param setter a {@link PreparedStatementSetter} to set parameter values.
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * String sql = "UPDATE books SET title = ? WHERE id = ?";
+     * executeUpdate(sql, stmt -> {
+     *     stmt.setString(1, "New Title");
+     *     stmt.setInt(2, 1);
+     * });
+     * }</pre>
+     */
     public void executeUpdate(String sql, PreparedStatementSetter setter) {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             setter.setValues(stmt);
@@ -242,9 +346,20 @@ public class SQLiteInstance {
     }
 
     /**
-     * function delete row on table in SQLite
-     * @param tableName table to delete
-     * @param condition condition of row delete
+     * Deletes rows from the specified table that satisfy the given condition.
+     *
+     * @param tableName the name of the table from which rows will be deleted.
+     * @param condition the SQL condition to determine which rows to delete.
+     *                  For example, "id = 1" or "name = 'John'".
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * // Example: Delete rows from the "users" table where the id equals 1
+     * deleteRow("users", "id = 1");
+     * }</pre>
+     * <p>This example deletes the row in the "users" table where the "id" column equals 1.</p>
+     *
+     * @throws SQLException if there is an issue executing the SQL query. Errors will be logged to the console.
      */
     public void deleteRow(String tableName, String condition) {
         String sql = "DELETE FROM " + tableName + " WHERE " + condition;
@@ -257,12 +372,20 @@ public class SQLiteInstance {
     }
 
     /**
-     * update row in database
-     * @param tableName The table needs to be updated.
-     * @param column The column needs to be updated.
-     * @param newValue new value
-     * @param columnCondition column to check condition
-     * @param condition condition
+     * Updates a specific column in a table for rows that satisfy the given condition.
+     *
+     * @param tableName       the name of the table to update.
+     * @param column          the column to be updated.
+     * @param newValue        the new value to set for the specified column.
+     * @param columnCondition the column used in the WHERE clause to identify rows to update.
+     * @param condition       the value to match in the columnCondition to determine which rows to update.
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * // Update the "name" column to "John Doe" for rows where "id" equals 1
+     * updateRow("users", "name", "John Doe", "id", 1);
+     * }</pre>
+     * <p>This example updates the "name" column to "John Doe" for the row in the "users" table where the "id" column equals 1.</p>
      */
     public void updateRow(String tableName, String column, Object newValue, String columnCondition, Object condition) {
         String sql = "UPDATE " + tableName + " SET " + column + " = ? WHERE " + columnCondition + " = ?";
@@ -272,6 +395,18 @@ public class SQLiteInstance {
         });
     }
 
+    /**
+     * Returns the current date (today) in the system's default time zone.
+     *
+     * @return the current date as a {@link LocalDate} object representing today.
+     *
+     * <p><strong>Example:</strong></p>
+     * <pre>{@code
+     * LocalDate today = getToday();
+     * System.out.println("Today's date: " + today);
+     * }</pre>
+     * <p>This example will print today's date in the default format (e.g., YYYY-MM-DD).</p>
+     */
     public LocalDate getToday() {
         return LocalDate.now();
     }

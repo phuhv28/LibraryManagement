@@ -99,6 +99,14 @@ public class Account {
         return lists.get(0).get(0).toString();
     }
 
+    /**
+     * Returns the number of books borrowed by the current user.
+     *
+     * <p>This method queries the "Transaction" table to count the number of borrow transactions for the user
+     * identified by the current user's ID. If no borrow transactions are found, it returns 0.</p>
+     *
+     * @return the number of books borrowed by the user.
+     */
     public int getNumberOfBooksBorrowed() {
         List<List<Object>> lists = SQLiteInstance.getInstance().find("Transaction", "userID", getId(), "transactionID");
 

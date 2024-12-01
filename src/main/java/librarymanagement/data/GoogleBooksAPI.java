@@ -310,4 +310,12 @@ public class GoogleBooksAPI {
         }
         return books.getFirst();
     }
+
+    public static void main(String[] args) {
+        BookService bookService = new BookService();
+        List<Book> books = searchBooks("Love");
+        for (Book book : books) {
+            bookService.addDocument(book);
+        }
+    }
 }
