@@ -2,8 +2,10 @@ package librarymanagement.gui.viewmodels;
 
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
-import librarymanagement.UserAuth.*;
 import javafx.beans.property.SimpleStringProperty;
+import librarymanagement.entity.AccountType;
+import librarymanagement.entity.RegistrationResult;
+import librarymanagement.gui.models.AccountService;
 
 public class AddUserViewModel {
     private final StringProperty usernameProperty = new SimpleStringProperty();

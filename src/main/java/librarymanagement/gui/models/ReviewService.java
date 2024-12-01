@@ -1,6 +1,8 @@
-package librarymanagement.data;
+package librarymanagement.gui.models;
 
-import librarymanagement.UserAuth.AccountService;
+import librarymanagement.entity.Book;
+import librarymanagement.entity.Review;
+import librarymanagement.utils.SQLiteInstance;
 
 import java.util.ArrayList;
 import java.util.List;

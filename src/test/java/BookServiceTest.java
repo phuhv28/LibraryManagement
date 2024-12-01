@@ -1,6 +1,6 @@
-import librarymanagement.data.Book;
-import librarymanagement.data.BookService;
-import librarymanagement.data.SQLiteInstance;
+import librarymanagement.entity.Book;
+import librarymanagement.gui.models.BookService;
+import librarymanagement.utils.SQLiteInstance;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

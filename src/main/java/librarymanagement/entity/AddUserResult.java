@@ -1,4 +1,4 @@
-package librarymanagement.UserAuth;
+package librarymanagement.entity;
 
 public enum AddUserResult {
     SUCCESS_CREATE("An account has been successfully created."),

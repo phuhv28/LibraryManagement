@@ -11,9 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableCell;
 import javafx.scene.layout.AnchorPane;
-import librarymanagement.data.Book;
-import librarymanagement.data.BorrowRecord;
-import librarymanagement.gui.utils.SceneHistoryStack;
+import librarymanagement.entity.BorrowRecord;
+import librarymanagement.utils.SceneHistoryStack;
 import librarymanagement.gui.viewmodels.MyDocumentViewModel;
 
 import java.io.IOException;

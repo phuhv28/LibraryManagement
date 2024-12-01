@@ -11,17 +11,16 @@ module librarymanagement {
     requires org.junit.jupiter.params;
     requires org.junit.jupiter.api;
 
-    exports librarymanagement.data to javafx.base;
-    opens librarymanagement.data;
+    opens librarymanagement.entity;
     exports librarymanagement.gui to javafx.fxml, javafx.controls, java.base ,javafx.graphics;
     opens librarymanagement.gui;
     exports librarymanagement.gui.controllers to javafx.fxml, javafx.controls, java.base ,javafx.graphics;
     opens librarymanagement.gui.controllers;
-    exports librarymanagement.gui.models to java.base, javafx.controls, javafx.fxml , javafx.graphics;
     opens librarymanagement.gui.models;
     exports librarymanagement.gui.viewmodels to java.base, javafx.controls, javafx.fxml,  javafx.graphics;
     opens librarymanagement.gui.viewmodels;
-    exports librarymanagement.gui.utils to java.base, javafx.controls, javafx.fxml, javafx.graphics;
-    opens librarymanagement.gui.utils;
-    exports librarymanagement.UserAuth;
+    opens librarymanagement.utils;
+    exports librarymanagement.utils to java.base, javafx.base, javafx.controls, javafx.fxml, javafx.graphics;
+    exports librarymanagement.gui.models;
+    exports librarymanagement.entity;
 }

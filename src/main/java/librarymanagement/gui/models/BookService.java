@@ -1,4 +1,7 @@
-package librarymanagement.data;
+package librarymanagement.gui.models;
+
+import librarymanagement.entity.Book;
+import librarymanagement.utils.SQLiteInstance;
 
 import java.sql.*;
 import java.time.LocalDate;

@@ -1,4 +1,7 @@
-package librarymanagement.data;
+package librarymanagement.gui.models;
+
+import librarymanagement.entity.Magazine;
+import librarymanagement.utils.SQLiteInstance;
 
 import java.util.List;
 

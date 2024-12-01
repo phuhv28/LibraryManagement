@@ -1,7 +1,10 @@
-package librarymanagement.data;
+package librarymanagement.gui.models;
 
-import librarymanagement.UserAuth.Account;
-import librarymanagement.UserAuth.AccountService;
+import librarymanagement.entity.Account;
+import librarymanagement.entity.Book;
+import librarymanagement.entity.BorrowRecord;
+import librarymanagement.entity.Document;
+import librarymanagement.utils.SQLiteInstance;
 import librarymanagement.gui.controllers.BorrowResult;
 
 import java.time.LocalDate;

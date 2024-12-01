@@ -1,4 +1,4 @@
-package librarymanagement.data;
+package librarymanagement.utils;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import java.util.List;
 public class SQLiteInstance {
     private static final String CONNECTION_URL = "jdbc:sqlite:library.db";
     private static SQLiteInstance instance = null;
-    protected Connection connection;
+    public Connection connection;
 
     public SQLiteInstance() {
         try {

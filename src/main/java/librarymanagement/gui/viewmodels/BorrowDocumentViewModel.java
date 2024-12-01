@@ -2,10 +2,9 @@ package librarymanagement.gui.viewmodels;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import librarymanagement.UserAuth.AccountService;
-import librarymanagement.data.BorrowingService;
-import librarymanagement.data.DocumentServiceFactory;
-import librarymanagement.data.DocumentType;
+import librarymanagement.gui.models.BorrowingService;
+import librarymanagement.gui.models.DocumentServiceFactory;
+import librarymanagement.entity.DocumentType;
 import librarymanagement.gui.controllers.BorrowResult;
 
 public class BorrowDocumentViewModel {

@@ -1,6 +1,10 @@
 package librarymanagement.gui.viewmodels;
 
-import librarymanagement.data.*;
+import librarymanagement.entity.*;
+import librarymanagement.gui.models.BookService;
+import librarymanagement.gui.models.DocumentService;
+import librarymanagement.gui.models.DocumentServiceFactory;
+
 import java.util.List;
 
 public class HomeViewModel {

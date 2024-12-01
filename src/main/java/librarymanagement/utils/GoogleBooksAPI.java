@@ -1,4 +1,4 @@
-package librarymanagement.data;
+package librarymanagement.utils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -10,6 +10,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import librarymanagement.entity.Book;
+import librarymanagement.entity.Magazine;
+import librarymanagement.gui.models.BookService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

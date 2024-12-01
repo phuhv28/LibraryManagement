@@ -1,7 +1,10 @@
-import librarymanagement.UserAuth.AccountService;
-import librarymanagement.UserAuth.AccountType;
-import librarymanagement.data.*;
+import librarymanagement.gui.models.AccountService;
+import librarymanagement.entity.AccountType;
+import librarymanagement.entity.*;
 import librarymanagement.gui.controllers.BorrowResult;
+import librarymanagement.gui.models.BookService;
+import librarymanagement.gui.models.BorrowingService;
+import librarymanagement.utils.SQLiteInstance;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

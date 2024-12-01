@@ -3,8 +3,8 @@ package librarymanagement.gui.viewmodels;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import librarymanagement.UserAuth.AccountService;
-import librarymanagement.UserAuth.LoginResult;
+import librarymanagement.gui.models.AccountService;
+import librarymanagement.entity.LoginResult;
 
 public class LoginViewModel {
 

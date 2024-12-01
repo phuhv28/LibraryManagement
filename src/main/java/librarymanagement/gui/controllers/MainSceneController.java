@@ -4,9 +4,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import librarymanagement.UserAuth.AccountService;
-import librarymanagement.UserAuth.AccountType;
-import librarymanagement.gui.utils.SceneHistoryStack;
+import librarymanagement.gui.models.AccountService;
+import librarymanagement.entity.AccountType;
+import librarymanagement.utils.SceneHistoryStack;
 
 import java.io.IOException;
 

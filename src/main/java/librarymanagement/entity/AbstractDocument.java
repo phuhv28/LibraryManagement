@@ -1,4 +1,6 @@
-package librarymanagement.data;
+package librarymanagement.entity;
+
+import librarymanagement.utils.GoogleBooksAPI;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

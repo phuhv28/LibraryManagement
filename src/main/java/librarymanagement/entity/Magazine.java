@@ -1,8 +1,8 @@
-package librarymanagement.data;
+package librarymanagement.entity;
 
 import java.time.LocalDate;
 
-class Magazine extends AbstractDocument {
+public class Magazine extends AbstractDocument {
     private String ISSN;
     private String categories;
 

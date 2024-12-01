@@ -1,4 +1,4 @@
-package librarymanagement.data;
+package librarymanagement.entity;
 
 public class Thesis extends AbstractDocument {
 

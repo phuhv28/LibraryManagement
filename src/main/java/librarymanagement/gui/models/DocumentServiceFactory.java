@@ -1,5 +1,8 @@
-package librarymanagement.data;
+package librarymanagement.gui.models;
 
+
+import librarymanagement.entity.Document;
+import librarymanagement.entity.DocumentType;
 
 /** Factory for Document services.*/
 public class DocumentServiceFactory {

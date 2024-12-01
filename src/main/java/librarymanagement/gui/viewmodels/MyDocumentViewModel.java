@@ -2,10 +2,9 @@ package librarymanagement.gui.viewmodels;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import librarymanagement.data.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import librarymanagement.entity.*;
+import librarymanagement.gui.models.BorrowingService;
+import librarymanagement.gui.models.DocumentServiceFactory;
 
 public class MyDocumentViewModel {
     private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));

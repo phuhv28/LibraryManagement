@@ -1,7 +1,9 @@
 package librarymanagement.gui.viewmodels;
 
 import javafx.beans.property.*;
-import librarymanagement.data.*;
+import librarymanagement.entity.*;
+import librarymanagement.gui.models.DocumentService;
+import librarymanagement.gui.models.DocumentServiceFactory;
 
 import java.time.LocalDate;
 

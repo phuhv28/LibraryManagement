@@ -4,9 +4,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import librarymanagement.data.*;
+import librarymanagement.entity.*;
+import librarymanagement.gui.models.BookService;
+import librarymanagement.gui.models.DocumentService;
+import librarymanagement.gui.models.DocumentServiceFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchDocumentViewModel {

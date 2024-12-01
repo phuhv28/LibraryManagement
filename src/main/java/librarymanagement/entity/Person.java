@@ -1,4 +1,4 @@
-package librarymanagement.data;
+package librarymanagement.entity;
 
 class Person {
     private String name;

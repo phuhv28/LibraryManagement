@@ -1,4 +1,4 @@
-package librarymanagement.data;
+package librarymanagement.entity;
 
 public class Review {
     String username;

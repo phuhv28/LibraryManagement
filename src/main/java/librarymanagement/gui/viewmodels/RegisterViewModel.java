@@ -4,9 +4,9 @@ import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import librarymanagement.UserAuth.AccountService;
-import librarymanagement.UserAuth.AccountType;
-import librarymanagement.UserAuth.RegistrationResult;
+import librarymanagement.gui.models.AccountService;
+import librarymanagement.entity.AccountType;
+import librarymanagement.entity.RegistrationResult;
 
 public class RegisterViewModel {
     private final StringProperty usernameProperty = new SimpleStringProperty();

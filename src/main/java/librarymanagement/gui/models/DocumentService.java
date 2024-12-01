@@ -1,5 +1,7 @@
-package librarymanagement.data;
+package librarymanagement.gui.models;
 
+
+import librarymanagement.entity.Document;
 
 /** Interface for handling document types operations.*/
 public interface DocumentService<T extends Document> {

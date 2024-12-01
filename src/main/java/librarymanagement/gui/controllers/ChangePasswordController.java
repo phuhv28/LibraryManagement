@@ -5,8 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyCode;
-import librarymanagement.UserAuth.Account;
-import librarymanagement.UserAuth.AccountService;
+import librarymanagement.entity.Account;
+import librarymanagement.gui.models.AccountService;
 
 public class ChangePasswordController {
 

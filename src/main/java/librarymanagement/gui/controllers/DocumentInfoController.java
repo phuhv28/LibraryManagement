@@ -16,10 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import librarymanagement.data.*;
+import librarymanagement.entity.*;
 import librarymanagement.gui.viewmodels.DocumentInfoViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentInfoController {
@@ -130,14 +129,12 @@ public class DocumentInfoController {
 
     private final Image imageUser2 = new Image(getClass().getResource("/images/image2.png").toExternalForm());
 
-    private DocumentInfoViewModel documentInfoViewModel = new DocumentInfoViewModel();
+    private final DocumentInfoViewModel documentInfoViewModel = new DocumentInfoViewModel();
 
 
     private Document document;
 
     private Stage stage;
-
-    private static DocumentInfoController instance;
 
     private int countStarRating = 0;
 
@@ -199,6 +196,7 @@ public class DocumentInfoController {
 
     public static DocumentInfoController newInstance(Document document) {
         FXMLLoader loader = new FXMLLoader(LoadingPopupController.class.getResource("/FXML/DocumentInfo.fxml"));
+        DocumentInfoController instance;
         try {
             Parent parent = loader.load();
             Scene scene = new Scene(parent);

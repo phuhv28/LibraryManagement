@@ -1,4 +1,4 @@
-package librarymanagement.UserAuth;
+package librarymanagement.entity;
 
 public enum RegistrationResult {
     SUCCESS("Registration successful!"),

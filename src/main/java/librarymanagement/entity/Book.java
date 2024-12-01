@@ -1,4 +1,4 @@
-package librarymanagement.data;
+package librarymanagement.entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

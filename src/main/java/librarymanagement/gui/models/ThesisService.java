@@ -1,4 +1,6 @@
-package librarymanagement.data;
+package librarymanagement.gui.models;
+
+import librarymanagement.entity.Thesis;
 
 public class ThesisService implements DocumentService<Thesis> {
     private String generateNewID() {

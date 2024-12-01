@@ -5,7 +5,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import librarymanagement.data.Book;
+import librarymanagement.entity.Book;
 import librarymanagement.gui.viewmodels.SearchDocumentViewModel;
 
 

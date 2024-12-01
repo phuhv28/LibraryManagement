@@ -1,9 +1,11 @@
 package librarymanagement.gui.viewmodels;
 
-import librarymanagement.UserAuth.Account;
-import librarymanagement.UserAuth.AccountService;
-import librarymanagement.data.*;
-import librarymanagement.gui.controllers.DocumentInfoController;
+import librarymanagement.entity.Account;
+import librarymanagement.gui.models.AccountService;
+import librarymanagement.entity.*;
+import librarymanagement.gui.models.BorrowingService;
+import librarymanagement.gui.models.DocumentServiceFactory;
+import librarymanagement.gui.models.ReviewService;
 
 public class DocumentInfoViewModel {
     private final ReviewService reviewService = new ReviewService();

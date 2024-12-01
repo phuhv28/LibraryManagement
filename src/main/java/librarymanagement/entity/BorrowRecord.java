@@ -1,6 +1,5 @@
-package librarymanagement.data;
+package librarymanagement.entity;
 
-import librarymanagement.UserAuth.Account;
 import java.time.LocalDate;
 
 /** Class represents a borrow record.*/

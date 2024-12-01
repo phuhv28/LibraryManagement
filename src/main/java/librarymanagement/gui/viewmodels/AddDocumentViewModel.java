@@ -4,7 +4,10 @@ import javafx.beans.property.*;
 
 import java.time.LocalDate;
 
-import librarymanagement.data.*;
+import librarymanagement.entity.*;
+import librarymanagement.gui.models.DocumentService;
+import librarymanagement.gui.models.DocumentServiceFactory;
+import librarymanagement.utils.GoogleBooksAPI;
 
 public class AddDocumentViewModel {
     private final ObjectProperty<Book> bookProperty = new SimpleObjectProperty<>(new Book());

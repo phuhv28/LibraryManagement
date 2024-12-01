@@ -2,7 +2,9 @@ package librarymanagement.gui.viewmodels;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import librarymanagement.data.*;
+import librarymanagement.entity.*;
+import librarymanagement.gui.models.DocumentService;
+import librarymanagement.gui.models.DocumentServiceFactory;
 
 public class DeleteDocumentViewModel {
     private final StringProperty IDProperty = new SimpleStringProperty();

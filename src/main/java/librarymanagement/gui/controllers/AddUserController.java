@@ -5,7 +5,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import librarymanagement.UserAuth.RegistrationResult;
+import librarymanagement.entity.RegistrationResult;
 import librarymanagement.gui.viewmodels.AddUserViewModel;
 import org.jetbrains.annotations.NotNull;
 

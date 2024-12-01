@@ -5,12 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import librarymanagement.UserAuth.AccountService;
-import librarymanagement.data.BorrowRecord;
-import librarymanagement.data.BorrowingService;
-import librarymanagement.data.DocumentServiceFactory;
-import librarymanagement.data.DocumentType;
-import librarymanagement.gui.utils.SceneHistoryStack;
+import librarymanagement.gui.models.AccountService;
+import librarymanagement.entity.BorrowRecord;
+import librarymanagement.gui.models.BorrowingService;
+import librarymanagement.gui.models.DocumentServiceFactory;
+import librarymanagement.entity.DocumentType;
+import librarymanagement.utils.SceneHistoryStack;
 
 import java.io.IOException;
 import java.util.List;

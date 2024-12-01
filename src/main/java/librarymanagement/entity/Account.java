@@ -1,6 +1,6 @@
-package librarymanagement.UserAuth;
+package librarymanagement.entity;
 
-import librarymanagement.data.SQLiteInstance;
+import librarymanagement.utils.SQLiteInstance;
 
 import java.util.List;
 

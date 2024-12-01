@@ -1,6 +1,10 @@
-package librarymanagement.UserAuth;
+package librarymanagement.gui.models;
 
-import librarymanagement.data.SQLiteInstance;
+import librarymanagement.entity.Account;
+import librarymanagement.entity.AccountType;
+import librarymanagement.entity.LoginResult;
+import librarymanagement.entity.RegistrationResult;
+import librarymanagement.utils.SQLiteInstance;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
