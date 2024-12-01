@@ -56,11 +56,11 @@
     - Đăng nhập với vai trò phù hợp (quản trị viên/độc giả).
 2. **Thao tác chính:**
     - **Tìm tài liệu:** Ấn chọn nút Search Document, chọn thuộc tính bạn muốn search (ISBN, ID, Title, …), điền giá trị bạn muốn search và ấn nút search.
-    - **Quản lí danh sách tài liệu đang mượn:**
-    - **Thêm tài khoản:**
-    - **Sửa tài liệu:**
-    - **Xóa tài liệu:**
-    - **Thêm tài liệu:**
+    - **Quản lí danh sách tài liệu đang mượn:** Ấn chọn nút My Document sẽ hiện ra danh sách document đang mượn, ấn return để trả, ấn borrow để mượn thêm.
+    - **Thêm tài khoản (Chỉ dành cho admin):** Ấn add User/Admin, chọn loại account muốn add, ấn add.
+    - **Sửa tài liệu (Chỉ dành cho admin):** Ấn chọn Edit Document, điền ID Document muốn sửa, chỉnh sửa thông tin, ấn save để lưu.
+    - **Xóa tài liệu (Chỉ dành cho admin):** Ấn chọn Delete Document, điền ID Document muốn xóa, ấn Delete.
+    - **Thêm tài liệu (Chỉ dành cho admin):** Ấn chọn Add Document, điền thông tin Document muốn add (Có thể dùng ISBN để autofill), ấn Add.
 ---
 
 ## **Cấu trúc dự án**
@@ -70,12 +70,12 @@ src/
 ├── main/
 │   ├── java/
 │   │   ├── librarymanagement/
-│   │   │   ├── data/               # 
-│   │   │   ├── gui/                # 
-│   │   │   ├── data/               # 
+│   │   │   ├── entity/             # Các lớp tượng trưng cho các thực thể.
+│   │   │   ├── gui/                # Các lớp liên quan đến giao diện người dùng.
+│   │   │   ├── utils/              # Các lớp tiện ích.
 │   └── resources/
 │       ├── FXML/                   # Các tệp FXML (giao diện JavaFX)
-│       └── application.properties  # Các ảnh dùng trong app
+│       └── images                  # Các ảnh dùng trong app
 └── test/
     ├── java/                       # Kiểm thử
 ```
