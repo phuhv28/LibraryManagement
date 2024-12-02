@@ -66,7 +66,11 @@ public class Magazine extends AbstractDocument {
         list.add(ISSN);
         list.add(title);
         list.add(publisher);
-        list.add(publishedDate.toString());
+        if (getPublishedDate() == null) {
+            list.add(null);
+        } else {
+            list.add(getPublishedDate().toString());
+        }
         list.add(categories);
         list.add(pageCount);
         list.add(availableCopies);
