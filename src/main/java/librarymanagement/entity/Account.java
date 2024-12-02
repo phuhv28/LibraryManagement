@@ -108,7 +108,7 @@ public class Account {
      */
     public int getNumberOfBooksIsBorrowing() {
         String sql = "SELECT recordID FROM BorrowRecord WHERE userID = ? AND returnDate ISNULL";
-        String userID = AccountService.getInstance().getCurrentAccount().getId();
+        String userID = getId();
         List<List<Object>> lists = SQLiteInstance.getInstance().findWithSQL(sql, new Object[]{userID}, "recordID");
 
         return lists.isEmpty() ? 0 : lists.size();
