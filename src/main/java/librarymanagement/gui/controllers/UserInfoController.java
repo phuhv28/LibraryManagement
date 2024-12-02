@@ -5,11 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import librarymanagement.gui.models.AccountService;
 import librarymanagement.entity.BorrowRecord;
+import librarymanagement.entity.DocumentType;
+import librarymanagement.gui.models.AccountService;
 import librarymanagement.gui.models.BorrowingService;
 import librarymanagement.gui.models.DocumentServiceFactory;
-import librarymanagement.entity.DocumentType;
 import librarymanagement.utils.SceneHistoryStack;
 
 import java.io.IOException;
@@ -17,26 +17,20 @@ import java.util.List;
 
 public class UserInfoController {
 
-    @FXML
-    private AnchorPane apInformationUser;
-
-    @FXML
-    private Label lbFullName;
-
-    @FXML
-    private Label lbNumberOfBooksBorrowed;
-
-    @FXML
-    private Label lbUserName;
-
-    @FXML
-    private Label lbEmail;
-
-    @FXML
-    private Button btLogOut;
-
     private final AccountService accountService = AccountService.getInstance();
     private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
+    @FXML
+    private AnchorPane apInformationUser;
+    @FXML
+    private Label lbFullName;
+    @FXML
+    private Label lbNumberOfBooksBorrowed;
+    @FXML
+    private Label lbUserName;
+    @FXML
+    private Label lbEmail;
+    @FXML
+    private Button btLogOut;
 
     @FXML
     public void initialize() {
@@ -51,6 +45,7 @@ public class UserInfoController {
         }
         btLogOut.setOnAction(actionEvent -> handleLogOut());
     }
+
     private void handleLogOut() {
         UIController.showScene(StartScreenController.getStartScreen());
     }

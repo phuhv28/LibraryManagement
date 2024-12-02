@@ -18,6 +18,11 @@ import librarymanagement.gui.viewmodels.HomeViewModel;
 
 import java.util.List;
 
+/**
+ * Controller class for managing the home page UI of the library system.
+ * This class handles displaying lists of books (all, newest, borrowed), and enables scrolling and
+ * interaction with the books displayed on the screen.
+ */
 public class HomeController {
 
     @FXML
@@ -69,6 +74,10 @@ public class HomeController {
 
     private final HomeViewModel viewModel = new HomeViewModel();
 
+    /**
+     * Initializes the controller. This method is automatically called by the FXML loader.
+     * Sets up button actions for scrolling and populates the lists with books.
+     */
     @FXML
     public void initialize() {
         btLeftListBorrow.setOnAction(_ -> scrollLeft(scrollDocumentBorrowed));
@@ -82,6 +91,11 @@ public class HomeController {
         setImageHBox(DocumentBorrowed, apDocumentBorrowed, viewModel.getListMostBorrowedBooks());
     }
 
+    /**
+     * Scrolls the specified scroll pane to the right by a small increment.
+     *
+     * @param currentScrollPane the scroll pane to scroll.
+     */
     public void scrollRight(ScrollPane currentScrollPane) {
         double currentHval = currentScrollPane.getHvalue();
         double newHaval = currentHval + 0.05;
@@ -92,6 +106,11 @@ public class HomeController {
         currentScrollPane.setHvalue(newHaval);
     }
 
+    /**
+     * Scrolls the specified scroll pane to the left by a small increment.
+     *
+     * @param currentScrollPane the scroll pane to scroll.
+     */
     public void scrollLeft(ScrollPane currentScrollPane) {
         double currentHval = currentScrollPane.getHvalue();
         double newHaval = currentHval - 0.05;
@@ -101,6 +120,15 @@ public class HomeController {
         currentScrollPane.setHvalue(newHaval);
     }
 
+    /**
+     * Populates the specified HBox and AnchorPane with book images and titles.
+     * Each book is displayed in a button that shows the book's thumbnail (or a default image)
+     * and title. When clicked, it displays the book's details.
+     *
+     * @param currentHBox the HBox to add book buttons to.
+     * @param currentAnchorpane the AnchorPane to adjust the width based on the number of books.
+     * @param listBook the list of books to display.
+     */
     public void setImageHBox(HBox currentHBox, AnchorPane currentAnchorpane, List<Book> listBook) {
         if (listBook.isEmpty()) {
             return;
@@ -141,5 +169,4 @@ public class HomeController {
         currentAnchorpane.setPrefWidth((size * 150) + (currentHBox.getSpacing() * (size - 1)));
         currentHBox.setPrefWidth((size * 150) + (currentHBox.getSpacing() * (size - 1)));
     }
-
 }

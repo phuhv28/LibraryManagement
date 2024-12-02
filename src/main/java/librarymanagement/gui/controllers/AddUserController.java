@@ -1,6 +1,5 @@
 package librarymanagement.gui.controllers;
 
-
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,7 +10,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-
+/**
+ * The `AddUserController` class manages the UI logic for adding a new user account.
+ * It connects the view layer (FXML components) with the underlying `AddUserViewModel`
+ * and handles user interactions like form submission and input validation.
+ */
 public class AddUserController {
     @FXML
     private Button btAddAccount;
@@ -39,6 +42,13 @@ public class AddUserController {
 
     private final AddUserViewModel viewModel = new AddUserViewModel();
 
+    /**
+     * Initializes the controller.
+     * <p>
+     * Sets up bindings between UI components and the view model, assigns event handlers,
+     * and configures user interaction behavior, including form validation and submission on Enter key press.
+     * </p>
+     */
     @FXML
     public void initialize() {
         viewModel.menuAccountProperty().setValue("Account type");
@@ -80,6 +90,9 @@ public class AddUserController {
         });
     }
 
+    /**
+     * Clears all text fields in the user form.
+     */
     private void clear() {
         tfUsername.clear();
         tfPassword.clear();
@@ -88,6 +101,13 @@ public class AddUserController {
         tfEmail.clear();
     }
 
+    /**
+     * Handles the event of adding a new account.
+     * <p>
+     * Validates the form input, displays a loading popup, and submits the form asynchronously.
+     * If the form is incomplete, shows an error message in the result label.
+     * </p>
+     */
     private void handleAddAccount() {
         if (Objects.equals(mbAccountType.getText(), "Account type")
                 || tfUsername.getText() == null || tfUsername.getText().isEmpty()
@@ -106,11 +126,19 @@ public class AddUserController {
 
         Task<RegistrationResult> addAccountTask = getVoidTask(loadingPopup);
 
-
         new Thread(addAccountTask).start();
-
     }
 
+    /**
+     * Creates a background task to handle the account creation process.
+     * <p>
+     * Executes the account registration logic in the `AddUserViewModel`, updates the UI on success,
+     * and closes the loading popup.
+     * </p>
+     *
+     * @param loadingPopup the popup displayed during the account creation process.
+     * @return a `Task` object that performs the account creation operation.
+     */
     @NotNull
     private Task<RegistrationResult> getVoidTask(LoadingPopupController loadingPopup) {
         Task<RegistrationResult> addAccountTask = new Task<>() {
@@ -129,6 +157,4 @@ public class AddUserController {
 
         return addAccountTask;
     }
-
 }
-

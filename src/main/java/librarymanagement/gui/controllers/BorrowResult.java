@@ -1,5 +1,8 @@
 package librarymanagement.gui.controllers;
 
+/**
+ * Enum handle result of BorrowDocument in BorrowService
+ */
 public enum BorrowResult {
     OUT_OF_STOCK("Sorry, this book is currently out of stock!"),
     NOT_FOUND("The document is not available!"),

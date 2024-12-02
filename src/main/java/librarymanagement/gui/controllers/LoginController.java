@@ -12,6 +12,11 @@ import librarymanagement.gui.viewmodels.LoginViewModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the login screen.
+ * This class handles user interactions on the login page, including validating login credentials,
+ * displaying error messages, and navigating to the main application scene.
+ */
 public class LoginController implements Initializable {
 
     @FXML
@@ -28,6 +33,12 @@ public class LoginController implements Initializable {
 
     private final LoginViewModel viewModel = new LoginViewModel();
 
+    /**
+     * Returns an instance of the LoginController.
+     * This method loads the FXML file for the login screen and returns the controller instance.
+     *
+     * @return the LoginController instance.
+     */
     public static LoginController getInstance() {
         LoginController controller = null;
         FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("/FXML/Login.fxml"));
@@ -40,7 +51,14 @@ public class LoginController implements Initializable {
         return controller;
     }
 
-
+    /**
+     * Initializes the login screen controller.
+     * Binds the text properties of the username, password fields, and error label to the corresponding properties
+     * in the view model. Also, sets up key press event listeners to handle login attempts when the ENTER key is pressed.
+     *
+     * @param url the location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object does not require localization.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
@@ -60,6 +78,11 @@ public class LoginController implements Initializable {
         });
     }
 
+    /**
+     * Handles the login process.
+     * Displays a loading popup while verifying the login credentials in the background.
+     * If the login is successful, the main application scene is shown; otherwise, an error message is displayed.
+     */
     @FXML
     private void handleLogin() {
         LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Login");
@@ -85,6 +108,10 @@ public class LoginController implements Initializable {
         new Thread(loginTask).start();
     }
 
+    /**
+     * Handles the register action.
+     * Navigates to the registration screen.
+     */
     @FXML
     public void handleRegister() {
         StartScreenController.getStartScreenController().showRegister();

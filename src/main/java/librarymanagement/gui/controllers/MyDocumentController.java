@@ -19,7 +19,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
+/**
+ * Controller class for the "My Documents" scene, where users can view and manage their borrowed books.
+ * This class provides functionality to return borrowed books, view document information, and navigate to other scenes.
+ */
 public class MyDocumentController {
 
     @FXML
@@ -54,9 +57,12 @@ public class MyDocumentController {
 
     private final MyDocumentViewModel viewModel = new MyDocumentViewModel();
 
+    /**
+     * Initializes the "My Documents" scene by binding the table view to the borrowed books data,
+     * setting up cell factories for dates, adding a return button to the table, and handling empty state.
+     */
     @FXML
     public void initialize() {
-
         tableView.setItems(viewModel.borrowedBooksProperty());
 
         recordIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -71,12 +77,15 @@ public class MyDocumentController {
         addReturnButtonToTable();
 
         btBorrowBooks.setOnAction(event -> loadBorrowBooks());
+
+        // Handle no borrowed books state
         if (viewModel.borrowedBooksProperty() == null || viewModel.borrowedBooksProperty().isEmpty()) {
             lbNoti.setText("There are no books in your borrowed list at the moment.");
             lbNoti.setVisible(true);
             tableView.setVisible(false);
         }
 
+        // Handle double-click event to view document info
         tableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 BorrowRecord selectedBook = tableView.getSelectionModel().getSelectedItem();
@@ -88,6 +97,10 @@ public class MyDocumentController {
         });
     }
 
+    /**
+     * Adds a return button to the table for each borrowed book record.
+     * When clicked, the corresponding book will be returned.
+     */
     private void addReturnButtonToTable() {
         returnCol.setCellFactory(column -> new TableCell<>() {
             private final Button button = new Button("RETURN");
@@ -110,6 +123,12 @@ public class MyDocumentController {
         });
     }
 
+    /**
+     * Sets a custom cell factory to format the date columns in the table view.
+     * The date is formatted as "dd-MM-yyyy".
+     *
+     * @param col the column to apply the custom date format to.
+     */
     private void setCellFactoryForDate(TableColumn<BorrowRecord, LocalDate> col) {
         col.setCellFactory(column -> new TableCell<>() {
             @Override
@@ -124,8 +143,14 @@ public class MyDocumentController {
         });
     }
 
+    /**
+     * Handles the return of a borrowed book.
+     * It shows a loading popup while the return process is ongoing and updates the notification label upon success or failure.
+     *
+     * @param record the borrow record of the book to be returned.
+     */
     private void handleReturn(BorrowRecord record) {
-        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Adding document");
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Returning document");
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
 
@@ -151,22 +176,24 @@ public class MyDocumentController {
         new Thread(returnTask).start();
     }
 
+    /**
+     * Loads the BorrowDocument scene by replacing the current content with the new scene.
+     */
     private void loadScene() {
         try {
-            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/" + "BorrowDocument.fxml"));
+            AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/BorrowDocument.fxml"));
             MyDocument.getChildren().setAll(newPane);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
+    /**
+     * Navigates to the BorrowDocument scene, saving the current scene into the history stack.
+     */
     private void loadBorrowBooks() {
         SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
         loadScene();
         SceneHistoryStack.previousFxmlFile = "BorrowDocument.fxml";
     }
-
 }
-

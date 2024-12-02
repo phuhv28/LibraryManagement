@@ -21,6 +21,10 @@ import librarymanagement.gui.viewmodels.DocumentInfoViewModel;
 
 import java.util.List;
 
+/**
+ * Controller for displaying detailed information about a document, including reviews, ratings,
+ * and functionality to borrow or return the document.
+ */
 public class DocumentInfoController {
 
     @FXML
@@ -138,6 +142,10 @@ public class DocumentInfoController {
 
     private int countStarRating = 0;
 
+    /**
+     * Initializes the controller, setting up event handlers for rating buttons, review submission,
+     * and borrowing/returning the document.
+     */
     @FXML
     public void initialize() {
         btOneStar.setOnAction(event -> {
@@ -171,6 +179,10 @@ public class DocumentInfoController {
         btReview.setOnAction(actionEvent -> handleReview());
     }
 
+    /**
+     * Handles the review submission process, including saving the review to the database,
+     * resetting the review input field, and updating the review list.
+     */
     private void handleReview() {
         String inputText = taReview.getText();
 
@@ -183,6 +195,10 @@ public class DocumentInfoController {
         show();
     }
 
+    /**
+     * Handles the borrowing or returning of the document, toggling the function button text
+     * between "BORROW" and "RETURN".
+     */
     private void handleFunction() {
         if (btFunction.getText().equals("RETURN")) {
             btFunction.setText("BORROW");
@@ -193,7 +209,11 @@ public class DocumentInfoController {
         }
     }
 
-
+    /**
+     * Creates a new instance of the DocumentInfoController with the provided document details.
+     * @param document The document to display.
+     * @return A new instance of DocumentInfoController.
+     */
     public static DocumentInfoController newInstance(Document document) {
         FXMLLoader loader = new FXMLLoader(LoadingPopupController.class.getResource("/FXML/DocumentInfo.fxml"));
         DocumentInfoController instance;
@@ -223,6 +243,9 @@ public class DocumentInfoController {
         this.document = document;
     }
 
+    /**
+     * Displays the document information in the UI and updates the stage.
+     */
     public void show() {
         if (document != null) {
             if (document instanceof Book book) {
@@ -268,6 +291,15 @@ public class DocumentInfoController {
         this.stage = stage;
     }
 
+    /**
+     * Updates the star rating images based on the given rating value.
+     * @param Rating The rating value (1-5).
+     * @param image1 First star image.
+     * @param image2 Second star image.
+     * @param image3 Third star image.
+     * @param image4 Fourth star image.
+     * @param image5 Fifth star image.
+     */
     public void setRatingImage(int Rating, ImageView image1, ImageView image2, ImageView image3, ImageView image4, ImageView image5) {
         if (Rating == 0) {
             image1.setImage(imageFirst);
@@ -314,6 +346,21 @@ public class DocumentInfoController {
         }
     }
 
+    /**
+     * Creates and returns a UI component representing an individual review.
+     *
+     * This method constructs an HBox that contains the reviewer's profile image, their name,
+     * their star rating (as ImageViews), and the review text in a non-editable TextArea.
+     * The stars are displayed based on the rating provided (1 to 5 stars), and the layout
+     * alternates the profile image for every other review based on the index provided.
+     *
+     * @param name The name of the reviewer.
+     * @param review The text of the review written by the reviewer.
+     * @param rating The rating given by the reviewer, from 1 to 5 stars.
+     * @param index The index of the review, used to alternate profile images between two options.
+     *
+     * @return HBox A layout containing the profile image, name, star ratings, and review text.
+     */
     public HBox setEachReview(String name, String review, int rating, int index) {
         HBox currentHbox = new HBox(20);
 
@@ -366,6 +413,11 @@ public class DocumentInfoController {
         return currentHbox;
     }
 
+    /**
+     * Sets the review display area with the list of reviews.
+     * @param currentVbox The VBox to populate with reviews.
+     * @param reviewList The list of reviews to display.
+     */
     public void setListReview(VBox currentVbox, List<Review> reviewList) {
         if (reviewList.isEmpty()) {
             System.out.println("empty");
@@ -384,6 +436,14 @@ public class DocumentInfoController {
         apScroll.setPrefHeight(1150 + (size * 200) + (currentVbox.getSpacing() * (size - 1)));
     }
 
+    /**
+     * Adjusts the height of the description pane to fit the content.
+     * This method checks the height of the description text in the `lbDescription` label.
+     * If the height of the content exceeds the current height of the description label,
+     * the height of the associated scrollable description pane (`apScrollDescription`) is
+     * adjusted to accommodate the entire content, ensuring it is fully visible.
+     * The height of the scroll pane is increased by a small buffer (10.0 pixels).
+     */
     public void resizeAnPane() {
         Label copiesDescription = new Label(lbDescription.getText());
         copiesDescription.setFont(lbDescription.getFont());

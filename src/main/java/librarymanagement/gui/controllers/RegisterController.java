@@ -14,6 +14,10 @@ import librarymanagement.gui.viewmodels.RegisterViewModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the registration scene where new users can register an account.
+ * This class handles user inputs, validations, and the registration process.
+ */
 public class RegisterController implements Initializable {
     private Scene scene;
 
@@ -43,6 +47,12 @@ public class RegisterController implements Initializable {
 
     private final RegisterViewModel viewModel = new RegisterViewModel();
 
+    /**
+     * Singleton method to get an instance of the RegisterController.
+     * It loads the FXML for the registration scene and returns the controller.
+     *
+     * @return the instance of RegisterController.
+     */
     public static RegisterController getInstance() {
         FXMLLoader loader = new FXMLLoader(RegisterController.class.getResource("/FXML/Register.fxml"));
         try {
@@ -62,7 +72,10 @@ public class RegisterController implements Initializable {
         this.scene = scene;
     }
 
-
+    /**
+     * Initializes the RegisterController by binding UI fields to the view model,
+     * setting up listeners for the Enter key to trigger the registration process.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tfUsername.textProperty().bindBidirectional(viewModel.usernameProperty());
@@ -71,6 +84,8 @@ public class RegisterController implements Initializable {
         tfEmail.textProperty().bindBidirectional(viewModel.emailProperty());
         tfFullName.textProperty().bindBidirectional(viewModel.fullNameProperty());
         errorLabel.textProperty().bindBidirectional(viewModel.errorLabelProperty());
+
+        // Trigger registration on pressing Enter
         tfUsername.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 register();
@@ -98,14 +113,21 @@ public class RegisterController implements Initializable {
         });
     }
 
+    /**
+     * Navigates the user to the login scene when the login hyperlink is clicked.
+     */
     @FXML
     public void goToLogin() {
         StartScreenController.getStartScreenController().showLogin();
     }
 
+    /**
+     * Handles the registration process by calling the view model's register method.
+     * Shows a loading popup during registration and updates the error label if registration fails.
+     */
     @FXML
     public void register() {
-        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Register");
+        LoadingPopupController loadingPopup = LoadingPopupController.newInstance("Registering");
         loadingPopup.initOwnerStage(UIController.getPrimaryStage());
         loadingPopup.show();
 
@@ -119,16 +141,20 @@ public class RegisterController implements Initializable {
         registerTask.setOnSucceeded(event -> {
             loadingPopup.close();
             if (registerTask.getValue()) {
-                goToLogin();
+                goToLogin();  // If registration is successful, navigate to login
             } else {
-                errorLabel.setVisible(true);
+                errorLabel.setVisible(true);  // Show error if registration fails
             }
         });
 
         new Thread(registerTask).start();
-
     }
 
+    /**
+     * Sets the registration scene on the given primary stage.
+     *
+     * @param primaryStage the primary stage to display the registration scene.
+     */
     public void showScene(Stage primaryStage) {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Register");
