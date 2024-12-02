@@ -13,7 +13,7 @@ public class DocumentInfoViewModel {
     private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
 
 
-    public DocumentInfoViewModel(){
+    public DocumentInfoViewModel() {
     }
 
     public ReviewService getReviewService() {
@@ -28,11 +28,15 @@ public class DocumentInfoViewModel {
         return borrowingService;
     }
 
-    public void functionReturn(String id) {
-        borrowingService.returnDocument(id);
+    public void functionReturn(String recordID) {
+        borrowingService.returnDocument(recordID);
     }
 
-    public void functionBorrow(String userId, String id) {
-        borrowingService.borrowDocument(userId, id);
+    public void functionBorrow(String documentID) {
+        borrowingService.borrowDocumentForCurrentAccount(documentID);
+    }
+
+    public String getRecordIdOfBorrowedDocument(String documentID) {
+        return borrowingService.getRecordIdOfBorrowedDocument(documentID);
     }
 }

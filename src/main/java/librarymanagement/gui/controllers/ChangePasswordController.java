@@ -64,24 +64,8 @@ public class ChangePasswordController {
         String newPassword = pfNewPassword.getText();
         String confirmNewPassword = pfConfirmNewPassword.getText();
 
-        // Get the currently logged-in account
-        Account account = accountService.getCurrentAccount();
-
-        // Validate the current password
-        if (account.getPassword().equals(currentPassword)) {
-            // Check if the new password matches the confirmation password
-            if (newPassword.equals(confirmNewPassword)) {
-                // Update the password and display success message
-                account.setPassword(newPassword);
-                lbError.setText("Your password has been changed successfully");
-            } else {
-                // Display error if the passwords do not match
-                lbError.setText("Password and confirm password do not match");
-            }
-        } else {
-            // Display error if the current password is incorrect
-            lbError.setText("Incorrect password");
-        }
+        // Call the changePassword method and display the corresponding message (error or success) on the label.
+        lbError.setText(accountService.changePassword(currentPassword, newPassword, confirmNewPassword).getMessage());
 
         // Clear the password fields
         clear();

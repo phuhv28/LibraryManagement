@@ -255,4 +255,27 @@ public class BorrowingService {
         List<List<Object>> lists = sqLiteInstance.findWithSQL(sql, new Object[]{userID, documentID}, "userID");
         return !lists.isEmpty() && !lists.getFirst().isEmpty();
     }
+
+    // This method returns the record ID of a document if it has been borrowed by the current user.
+    public String getRecordIdOfBorrowedDocument(String documentID) {
+        List<BorrowRecord> lists = getBorrowRecordsOfCurrentAccount();
+
+        if (lists == null || lists.isEmpty()) {
+            return null;
+        }
+
+        for (BorrowRecord record : lists) {
+            if (record == null && record.getDocument() == null) {
+                continue;
+            }
+
+            if (record.getDocument().getId().equals(documentID)) {
+                System.out.println(documentID);
+                return record.getId();
+            }
+        }
+
+        return null;
+    }
+
 }

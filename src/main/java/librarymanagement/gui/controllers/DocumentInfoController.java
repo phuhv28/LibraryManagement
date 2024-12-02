@@ -202,9 +202,9 @@ public class DocumentInfoController {
     private void handleFunction() {
         if (btFunction.getText().equals("RETURN")) {
             btFunction.setText("BORROW");
-            documentInfoViewModel.functionReturn(document.getId());
+            documentInfoViewModel.functionReturn(documentInfoViewModel.getRecordIdOfBorrowedDocument(document.getId()));
         } else if (btFunction.getText().equals("BORROW")) {
-            documentInfoViewModel.functionBorrow(documentInfoViewModel.getAccount().getId(), document.getId());
+            documentInfoViewModel.functionBorrow(document.getId());
             btFunction.setText("RETURN");
         }
     }
