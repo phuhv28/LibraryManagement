@@ -281,12 +281,4 @@ public class AccountService {
 
         return accounts;
     }
-
-    public static void main(String[] args) {
-        AccountService accountService = new AccountService();
-        accountService.checkLogin("long", "345");
-        String a = accountService.changePassword("345", "kkk", "kkk").getMessage();
-        System.out.println(a);
-    }
-
 }

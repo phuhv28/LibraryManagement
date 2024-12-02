@@ -108,7 +108,7 @@ public class Account {
      * @return the number of books borrowed by the user.
      */
     public int getNumberOfBooksBorrowed() {
-        List<List<Object>> lists = SQLiteInstance.getInstance().find("Transaction", "userID", getId(), "transactionID");
+        List<List<Object>> lists = SQLiteInstance.getInstance().find("BorrowRecord", "userID", getId(), "recordID");
 
         return lists.isEmpty() ? 0 : lists.size();
     }
