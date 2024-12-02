@@ -1,5 +1,6 @@
 package librarymanagement.entity;
 
+import librarymanagement.gui.models.AccountService;
 import librarymanagement.utils.SQLiteInstance;
 
 import java.util.List;
@@ -102,13 +103,15 @@ public class Account {
     /**
      * Returns the number of books borrowed by the current user.
      *
-     * <p>This method queries the "Transaction" table to count the number of borrow transactions for the user
+     * <p>This method queries the "BorrowRecord" table to count the number of borrow transactions for the user
      * identified by the current user's ID. If no borrow transactions are found, it returns 0.</p>
      *
      * @return the number of books borrowed by the user.
      */
-    public int getNumberOfBooksBorrowed() {
-        List<List<Object>> lists = SQLiteInstance.getInstance().find("BorrowRecord", "userID", getId(), "recordID");
+    public int getNumberOfBooksIsBorrowing() {
+        String sql = "SELECT recordID FROM BorrowRecord WHERE userID = ? AND returnDate ISNULL";
+        String userID = AccountService.getInstance().getCurrentAccount().getId();
+        List<List<Object>> lists = SQLiteInstance.getInstance().findWithSQL(sql, new Object[]{userID}, "recordID");
 
         return lists.isEmpty() ? 0 : lists.size();
     }
