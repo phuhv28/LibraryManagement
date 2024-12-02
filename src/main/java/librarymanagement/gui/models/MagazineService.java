@@ -44,7 +44,7 @@ public class MagazineService implements DocumentService<Magazine> {
      * @return {@code true} if the ISSN exists, {@code false} otherwise.
      */
     private boolean checkIfHasMagazineISSN(String issn) {
-        List<List<Object>> res = sqLiteInstance.find("Magazine", "ISSN", issn, "ISBN");
+        List<List<Object>> res = sqLiteInstance.find("Magazine", "ISSN", issn, "ISSN");
         if (res.isEmpty() || res.getFirst().isEmpty()) {
             return false;
         }
@@ -199,7 +199,6 @@ public class MagazineService implements DocumentService<Magazine> {
     public Magazine searchMagazineByISSN(String issn) {
         String sql = "SELECT * FROM Magazine WHERE ISSN = ?";
         List<Magazine> magazines = createNewMagazineList(issn, sql);
-        assert magazines != null;
         if (magazines.isEmpty()) {
             return null;
         }
