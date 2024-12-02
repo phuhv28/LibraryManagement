@@ -5,6 +5,7 @@ import librarymanagement.utils.SQLiteInstance;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountService {
@@ -223,5 +224,62 @@ public class AccountService {
         String table = isAdmin(AccountService.getInstance().getCurrentAccount().getUsername()) ? "Admin" : "User";
         sqLiteInstance.updateRow(table, "password", newPassword, "username", username);
         return ChangePasswordResult.SUCCESS_CHANGE;
+    }
+
+    /**
+     * Retrieves all accounts (both users and admins) from the database.
+     *
+     * @return A list of {@link Account} objects containing all user and admin accounts,
+     *         ordered by their registration date.
+     */
+    public List<Account> getAllAccounts() {
+        List<Account> accounts = new ArrayList<>();
+
+        accounts.addAll(fetchAccounts(
+                "SELECT * FROM User ORDER BY regDate ASC",
+                new String[]{"userID", "username", "password", "fullName", "email", "regDate"},
+                AccountType.USER
+        ));
+
+        accounts.addAll(fetchAccounts(
+                "SELECT * FROM Admin ORDER BY regDate ASC",
+                new String[]{"adminID", "username", "password", "fullName", "email", "regDate"},
+                AccountType.ADMIN
+        ));
+
+        return accounts;
+    }
+
+    /**
+     * Fetches accounts from the database based on the given SQL query and account type.
+     *
+     * @param sql         The SQL query to execute.
+     * @param columns     The column names to retrieve.
+     * @param accountType The type of accounts (e.g., USER or ADMIN).
+     * @return A list of {@link Account} objects, or an empty list if no results are found.
+     *
+     * @throws ClassCastException        If a column value cannot be cast to the expected type.
+     * @throws IndexOutOfBoundsException If the result set has fewer columns than expected.
+     */
+    private List<Account> fetchAccounts(String sql, String[] columns, AccountType accountType) {
+        List<Account> accounts = new ArrayList<>();
+        List<List<Object>> results = sqLiteInstance.findWithSQL(sql, new Object[]{}, columns);
+
+        for (List<Object> row : results) {
+            try {
+                String userID = (String) row.get(0);
+                String username = (String) row.get(1);
+                String password = (String) row.get(2);
+                String fullName = (String) row.get(3);
+                String email = (String) row.get(4);
+                String regDate = (String) row.get(5);
+
+                accounts.add(new Account(userID, username, password, fullName, email, regDate, accountType));
+            } catch (ClassCastException | IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return accounts;
     }
 }
