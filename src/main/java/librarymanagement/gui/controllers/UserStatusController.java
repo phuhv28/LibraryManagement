@@ -56,9 +56,6 @@ public class UserStatusController {
     @FXML
     private TableColumn<BorrowRecord, LocalDate> dueDateCol;
 
-    @FXML
-    private TableColumn<BorrowRecord, Void> returnCol;
-
     private static final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
 
     private static UserStatusController instance;

@@ -73,8 +73,6 @@ public class Book extends AbstractDocument {
         this.description = description;
     }
 
-    //    @Override
-
     /**
      * Retrieves all the properties of the object as a list of {@link Object}.
      * The method returns a list containing various attributes of the object such as ISBN,
@@ -108,14 +106,5 @@ public class Book extends AbstractDocument {
         res.add(linkToAPI);
         res.add(thumbnailImage);
         return res;
-    }
-
-    @Override
-    public String getInfo() {
-        return super.getInfo() + "\n" +
-                "ISBN: " + ISBN + "\n" +
-                "Author: " + this.author + "\n" +
-                "Category: " + this.categories + "\n" +
-                "Description: " + this.description + "\n";
     }
 }

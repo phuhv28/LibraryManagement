@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="MyDocument" prefHeight="670.0" prefWidth="630.0" style="-fx-background-color: #474242;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.MyDocumentController">
+<AnchorPane fx:id="myDocumentPane" prefHeight="670.0" prefWidth="630.0" style="-fx-background-color: #474242;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.MyDocumentController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="77.0" stroke="#0f1416" strokeType="INSIDE" width="630.0" />

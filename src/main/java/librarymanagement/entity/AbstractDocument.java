@@ -165,16 +165,4 @@ public abstract class AbstractDocument implements Document {
     public void setThumbnailImage(byte[] thumbnailImage) {
         this.thumbnailImage = thumbnailImage;
     }
-
-
-    public String getInfo() {
-        return "ID: " + id + "\n" +
-                "Title: " + title + "\n" +
-                "Publisher: " + publisher + "\n" +
-                "Published Date: " + publishedDate + "\n" +
-                "Page Count: " + pageCount + "\n" +
-                "Available Copies: " + availableCopies + "\n" +
-                "Average Rating: " + averageRating + "\n" +
-                "Ratings Count: " + ratingsCount;
-    }
 }
