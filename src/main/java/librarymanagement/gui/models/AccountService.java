@@ -223,6 +223,7 @@ public class AccountService {
         String username = AccountService.getInstance().getCurrentAccount().getUsername();
         String table = isAdmin(AccountService.getInstance().getCurrentAccount().getUsername()) ? "Admin" : "User";
         sqLiteInstance.updateRow(table, "password", newPassword, "username", username);
+        currentAccount.setPassword(newPassword);
         return ChangePasswordResult.SUCCESS_CHANGE;
     }
 
