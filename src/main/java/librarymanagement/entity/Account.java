@@ -1,6 +1,5 @@
 package librarymanagement.entity;
 
-import librarymanagement.gui.models.AccountService;
 import librarymanagement.utils.SQLiteInstance;
 
 import java.util.List;

@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter;
 public class MyDocumentController {
 
     @FXML
-    private AnchorPane MyDocument;
+    private AnchorPane myDocumentPane;
 
     @FXML
     private TableView<BorrowRecord> tableView;
@@ -182,7 +182,7 @@ public class MyDocumentController {
     private void loadScene() {
         try {
             AnchorPane newPane = FXMLLoader.load(getClass().getResource("/FXML/BorrowDocument.fxml"));
-            MyDocument.getChildren().setAll(newPane);
+            myDocumentPane.getChildren().setAll(newPane);
         } catch (IOException e) {
             e.printStackTrace();
         }
