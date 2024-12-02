@@ -1,9 +1,6 @@
 package librarymanagement.gui.models;
 
-import librarymanagement.entity.Account;
-import librarymanagement.entity.AccountType;
-import librarymanagement.entity.LoginResult;
-import librarymanagement.entity.RegistrationResult;
+import librarymanagement.entity.*;
 import librarymanagement.utils.SQLiteInstance;
 
 import java.time.LocalDate;
@@ -12,14 +9,10 @@ import java.util.List;
 
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
-    private static Account currentAccount = new Account();
     private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
+    private static Account currentAccount = new Account();
 
     public AccountService() {
-    }
-
-    public Account getCurrentAccount() {
-        return currentAccount;
     }
 
     /**
@@ -32,6 +25,10 @@ public class AccountService {
      */
     public static AccountService getInstance() {
         return INSTANCE;
+    }
+
+    public Account getCurrentAccount() {
+        return currentAccount;
     }
 
     public void setCurrentAccount(Account currentAccount) {
@@ -49,9 +46,9 @@ public class AccountService {
      * @param username the username of the account to check
      * @param password the password of the account to check
      * @return a {@link LoginResult} indicating the result of the login attempt:
-     *         - {@link LoginResult#SUCCESS} if the login is successful
-     *         - {@link LoginResult#USERNAME_NOT_FOUND} if the username is not found in the database
-     *         - {@link LoginResult#INCORRECT_PASSWORD} if the password is incorrect
+     * - {@link LoginResult#SUCCESS} if the login is successful
+     * - {@link LoginResult#USERNAME_NOT_FOUND} if the username is not found in the database
+     * - {@link LoginResult#INCORRECT_PASSWORD} if the password is incorrect
      */
     public LoginResult checkLogin(String username, String password) {
         List<List<Object>> result =
@@ -121,16 +118,16 @@ public class AccountService {
      * and confirm password match. If both checks pass, it proceeds to create the account by inserting
      * the necessary details into the appropriate database table based on the account type (either "User" or "Admin").</p>
      *
-     * @param username the username of the new account
-     * @param password the password of the new account
+     * @param username        the username of the new account
+     * @param password        the password of the new account
      * @param confirmPassword the confirmation password
-     * @param fullName the full name of the new account holder
-     * @param email the email address of the new account holder
-     * @param accountType the type of account to create, either {@link AccountType#USER} or {@link AccountType#ADMIN}
+     * @param fullName        the full name of the new account holder
+     * @param email           the email address of the new account holder
+     * @param accountType     the type of account to create, either {@link AccountType#USER} or {@link AccountType#ADMIN}
      * @return a {@link RegistrationResult} indicating the result of the registration:
-     *         - {@link RegistrationResult#USERNAME_TAKEN} if the username is already taken
-     *         - {@link RegistrationResult#PASSWORD_NOT_MATCH} if the passwords do not match
-     *         - {@link RegistrationResult#SUCCESS} if the account was successfully created
+     * - {@link RegistrationResult#USERNAME_TAKEN} if the username is already taken
+     * - {@link RegistrationResult#PASSWORD_NOT_MATCH} if the passwords do not match
+     * - {@link RegistrationResult#SUCCESS} if the account was successfully created
      */
     public RegistrationResult addAccount(String username, String password, String confirmPassword, String fullName, String email, AccountType accountType) {
         if (isUsernameTaken(username)) {
@@ -197,5 +194,34 @@ public class AccountService {
         String email = (String) list.get(0).get(3);
         String regDate = (String) list.get(0).get(4);
         return new Account(userID, username, password, fullName, email, regDate, type);
+    }
+
+    /**
+     * Changes the password of the currently logged-in account.
+     *
+     * <p>This method verifies the old password, ensures that the new password matches its confirmation,
+     * and updates the account's password in the database. If any validation fails, it returns an appropriate result.</p>
+     *
+     * @param oldPassword     the current password of the account.
+     * @param newPassword     the new password to be set for the account.
+     * @param confirmPassword the confirmation of the new password.
+     * @return a {@code ChangePasswordResult} indicating the result of the operation:
+     * <ul>
+     *     <li>{@code WRONG_OLD_PASSWORD} if the old password is incorrect.</li>
+     *     <li>{@code WRONG_CONFIRM_NEW_PASSWORD} if the new password and its confirmation do not match.</li>
+     *     <li>{@code SUCCESS_CHANGE} if the password is successfully changed.</li>
+     * </ul>
+     */
+    public ChangePasswordResult changePassword(String oldPassword, String newPassword, String confirmPassword) {
+        if (!oldPassword.equals(AccountService.getInstance().getCurrentAccount().getPassword())) {
+            return ChangePasswordResult.WRONG_OLD_PASSWORD;
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            return ChangePasswordResult.WRONG_CONFIRM_NEW_PASSWORD;
+        }
+        String username = AccountService.getInstance().getCurrentAccount().getUsername();
+        String table = isAdmin(AccountService.getInstance().getCurrentAccount().getUsername()) ? "Admin" : "User";
+        sqLiteInstance.updateRow(table, "password", newPassword, "username", username);
+        return ChangePasswordResult.SUCCESS_CHANGE;
     }
 }

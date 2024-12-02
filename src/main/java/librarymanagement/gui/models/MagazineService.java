@@ -3,8 +3,17 @@ package librarymanagement.gui.models;
 import librarymanagement.entity.Magazine;
 import librarymanagement.utils.SQLiteInstance;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+/** Class handles handle operations related to magazines-operations related to magazine (Add, edit, delete,...).*/
 public class MagazineService implements DocumentService<Magazine> {
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
 
@@ -22,24 +31,149 @@ public class MagazineService implements DocumentService<Magazine> {
         return newId;
     }
 
+    private boolean checkIfHasMagazineISSN(String issn) {
+        List<List<Object>> res = sqLiteInstance.find("Magazine", "ISSN", issn, "ISBN");
+        if (res.isEmpty() || res.getFirst().isEmpty()) {
+            return false;
+        }
+        return res.getFirst().getFirst() != null;
+    }
+
+    private boolean checkIfHasMagazineId(String id) {
+        List<List<Object>> res = sqLiteInstance.find("Magazine", "id", id, "id");
+        if (res.isEmpty() || res.getFirst().isEmpty()) {
+            return false;
+        }
+        return res.getFirst().getFirst() != null;
+    }
+
+    private boolean checkIfHasMagazineTitle(String title) {
+        List<List<Object>> res = sqLiteInstance.find("Magazine", "title", title, "title");
+        if (res.isEmpty() || res.getFirst().isEmpty()) {
+            return false;
+        }
+        return res.getFirst().getFirst() != null;
+    }
+
     @Override
     public boolean addDocument(Magazine magazine) {
-
-        return false;
-    }
-
-    @Override
-    public void updateDocument(Magazine magazine) {
-
-    }
-
-    @Override
-    public boolean deleteDocument(String id) {
+        if (magazine.getISSN() == null && checkIfHasMagazineTitle(magazine.getTitle())) {
+            return false;
+        } else if (magazine.getISSN().equals("N/A") && checkIfHasMagazineTitle(magazine.getTitle())) {
+            return false;
+        } else if (checkIfHasMagazineISSN(magazine.getISSN())) {
+            return false;
+        }
+        magazine.setId(generateNewID());
+        sqLiteInstance.insertRow("Magazine", magazine.getAll());
         return true;
     }
 
     @Override
+    public void updateDocument(Magazine magazine) {
+        deleteDocument(magazine.getId());
+        sqLiteInstance.insertRow("Magazine", magazine.getAll());
+    }
+
+    @Override
+    public boolean deleteDocument(String id) {
+        if (!checkIfHasMagazineISSN(id)) {
+            return false;
+        }
+
+        String condition = "id = " + "'" + id + "'";
+        sqLiteInstance.deleteRow("Magazine", condition);
+        return true;
+    }
+
+    private List<Magazine> createNewMagazineList(String condition, String sql) {
+        List<Magazine> magazines = new ArrayList<>();
+        try (PreparedStatement stmt = sqLiteInstance.connection.prepareStatement(sql)) {
+            if (condition != null && !condition.isEmpty()) {
+                stmt.setString(1, "%" + condition + "%");
+            }
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String issn = rs.getString("ISSN");
+                String id = rs.getString("id");
+                String title = rs.getString("title");
+                String publisher = rs.getString("publisher");
+                String publishedDate = rs.getString("publishedDate");
+                String categories = rs.getString("categories");
+                int pageCount = rs.getInt("pageCount");
+                int availableCopies = rs.getInt("availableCopies");
+                float averageRating = rs.getFloat("averageRating");
+                int ratingCount = rs.getInt("ratingsCount");
+                String linkToAPI = rs.getString("linkToAPI");
+                byte[] thumbnailImage = rs.getBytes("thumbnailImage");
+
+                LocalDate finalDate = null;
+                if (publishedDate != null && !publishedDate.equals("N/A")) {
+                    if (publishedDate.length() == 4) {
+                        finalDate = LocalDate.of(Integer.parseInt(publishedDate), 1, 1);
+                    } else if (publishedDate.length() == 7) {
+                        DateTimeFormatter yearMonthFormatter = new DateTimeFormatterBuilder()
+                                .appendPattern("yyyy-MM")
+                                .parseDefaulting(java.time.temporal.ChronoField.DAY_OF_MONTH, 1)
+                                .toFormatter(Locale.getDefault());
+                        finalDate = LocalDate.parse(publishedDate, yearMonthFormatter);
+                    } else {
+                        finalDate = LocalDate.parse(publishedDate);
+                    }
+                }
+
+                magazines.add(new Magazine(id, title, publisher, finalDate, pageCount, availableCopies, averageRating,
+                        ratingCount, issn, categories, linkToAPI, thumbnailImage));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (magazines.isEmpty()) {
+            return null;
+        }
+
+        return magazines;
+    }
+
+    public List<Magazine> searchMagazineByTitle(String title) {
+        String sql = "SELECT * FROM Magazine WHERE title LIKE ?";
+        return createNewMagazineList(title, sql);
+    }
+
+    public Magazine searchMagazineByISSN(String issn) {
+        String sql = "SELECT * FROM Magazine WHERE ISSN = ?";
+        List<Magazine> magazines = createNewMagazineList(issn, sql);
+        if (magazines.isEmpty()) {
+            return null;
+        }
+        return magazines.getFirst();
+    }
+
+    public List<Magazine> searchMagazineByCategory(String category) {
+        String sql = "SELECT * FROM Magazine WHERE category = ?";
+        return createNewMagazineList(category, sql);
+    }
+
+    public List<Magazine> searchMagazineByPublisher(String publisher) {
+        String sql = "SELECT * FROM Magazine WHERE publisher = ?";
+        return createNewMagazineList(publisher, sql);
+    }
+
+    @Override
     public Magazine findDocumentById(String id) {
+        String sql = "SELECT * FROM Magazine WHERE id = ?";
+        List<Magazine> magazines = createNewMagazineList(sql, id);
         return null;
+    }
+
+    public List<Magazine> getRecentlyAddedMagazines() {
+        String sql = "SELECT * FROM Magazine ORDER BY id DESC LIMIT 10";
+        return createNewMagazineList(null, sql);
+    }
+
+    public List<Magazine> getAllMagazines() {
+        String sql = "SELECT * FROM Magazine ORDER BY id";
+        return createNewMagazineList(null, sql);
     }
 }
