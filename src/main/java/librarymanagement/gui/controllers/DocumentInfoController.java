@@ -121,6 +121,15 @@ public class DocumentInfoController {
     private Button btFunction;
 
     @FXML
+    private Label textAuthor;
+
+    @FXML
+    private Label textISBN;
+
+    @FXML
+    private Label lbTypeDocument;
+
+    @FXML
     private AnchorPane apScrollDescription;
 
     private final Image imageLast = new Image(getClass().getResource("/images/image_starLast.png").toExternalForm());
@@ -133,7 +142,7 @@ public class DocumentInfoController {
 
     private final Image imageUser2 = new Image(getClass().getResource("/images/image2.png").toExternalForm());
 
-    private final DocumentInfoViewModel documentInfoViewModel = new DocumentInfoViewModel();
+    private  DocumentInfoViewModel documentInfoViewModel;
 
 
     private Document document;
@@ -248,35 +257,64 @@ public class DocumentInfoController {
      */
     public void show() {
         if (document != null) {
+            setRatingImage((int) document.getAverageRating(), imageRatingDocument1, imageRatingDocument2, imageRatingDocument3, imageRatingDocument4, imageRatingDocument5);
+            lbID.setText((document).getId());
+            lbTitle.setText(document.getTitle());
+            lbPageCount.setText(String.valueOf(document.getPageCount()));
+            lbRatingCount.setText(String.valueOf(document.getRatingsCount()));
+            lbPublisher.setText(document.getPublisher());
+            if (document.getPublishedDate() == null) {
+                lbPublicationDate.setText(" ");
+            } else {
+                lbPublicationDate.setText(document.getPublishedDate().toString());
+            }
+
             if (document instanceof Book book) {
-                setRatingImage((int) book.getAverageRating(), imageRatingDocument1, imageRatingDocument2, imageRatingDocument3, imageRatingDocument4, imageRatingDocument5);
-                if (book.getThumbnailImage() == null) {
-                    ivImageBook.setImage(imagePublic);
-                } else {
-                    ivImageBook.setImage(new Image(book.getThumbnailImage()));
-                }
+                documentInfoViewModel = new DocumentInfoViewModel(DocumentType.BOOK);
+                setListReview(vbReviewDocument, documentInfoViewModel.getReviewService().getAllReviewsInDocument(document.getId()));
                 if (documentInfoViewModel.getBorrowingService().checkIfUserHasBorrowedDocument(documentInfoViewModel.getAccount().getId(), document.getId())) {
                     btFunction.setText("RETURN");
                 } else {
                     btFunction.setText("BORROW");
                 }
-                lbID.setText((book).getId());
-                lbTitle.setText(book.getTitle());
-                lbAuthor.setText(book.getAuthor());
-                lbPublisher.setText(book.getPublisher());
-                if (book.getPublishedDate() == null) {
-                    lbPublicationDate.setText(" ");
+                lbTypeDocument.setText(" BOOK");
+                if (book.getThumbnailImage() == null) {
+                    ivImageBook.setImage(imagePublic);
                 } else {
-                    lbPublicationDate.setText(book.getPublishedDate().toString());
+                    ivImageBook.setImage(new Image(book.getThumbnailImage()));
                 }
-                lbISBN.setText(book.getISBN());
-                lbCategories.setText(book.getCategories());
-                lbPageCount.setText(String.valueOf(book.getPageCount()));
+                lbAuthor.setText(book.getAuthor());
+                lbAuthor.setVisible(true);
+                textAuthor.setVisible(true);
                 lbDescription.setText(book.getDescription());
+                lbDescription.setVisible(true);
                 resizeAnPane();
-                lbRatingCount.setText(String.valueOf(book.getRatingsCount()));
-                setListReview(vbReviewDocument, documentInfoViewModel.getReviewService().getAllReviewsInDocument(document.getId()));
+                lbISBN.setText(book.getISBN());
+                textISBN.setText("ISBN :");
+                lbCategories.setText(book.getCategories());
             }
+            if (document instanceof Magazine magazine) {
+                documentInfoViewModel = new DocumentInfoViewModel(DocumentType.MAGAZINE);
+                setListReview(vbReviewDocument, documentInfoViewModel.getReviewService().getAllReviewsInDocument(document.getId()));
+                if (documentInfoViewModel.getBorrowingService().checkIfUserHasBorrowedDocument(documentInfoViewModel.getAccount().getId(), document.getId())) {
+                    btFunction.setText("RETURN");
+                } else {
+                    btFunction.setText("BORROW");
+                }
+                lbTypeDocument.setText(" MAGAZINE");
+                if (magazine.getThumbnailImage() == null) {
+                    ivImageBook.setImage(imagePublic);
+                } else {
+                    ivImageBook.setImage(new Image(magazine.getThumbnailImage()));
+                }
+                lbAuthor.setVisible(false);
+                textAuthor.setVisible(false);
+                lbDescription.setVisible(false);
+                textISBN.setText("ISSN :");
+                lbISBN.setText(magazine.getISSN());
+                lbCategories.setText(magazine.getCategories());
+            }
+
         }
         stage.show();
     }
@@ -433,7 +471,7 @@ public class DocumentInfoController {
             currentVbox.getChildren().add(vboxContent);
         }
         currentVbox.setPrefHeight((size * 200) + (currentVbox.getSpacing() * (size - 1)));
-        apScroll.setPrefHeight(1150 + (size * 200) + (currentVbox.getSpacing() * (size - 1)));
+        apScroll.setPrefHeight(1050 + (size * 200) + (currentVbox.getSpacing() * (size - 1)));
     }
 
     /**

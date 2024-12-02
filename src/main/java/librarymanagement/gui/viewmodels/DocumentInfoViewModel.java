@@ -10,10 +10,11 @@ import librarymanagement.gui.models.ReviewService;
 public class DocumentInfoViewModel {
     private final ReviewService reviewService = new ReviewService();
     private final AccountService accountService = AccountService.getInstance();
-    private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
+    private final BorrowingService borrowingService;
 
 
-    public DocumentInfoViewModel() {
+    public DocumentInfoViewModel(DocumentType documentType) {
+        borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(documentType));
     }
 
     public ReviewService getReviewService() {
