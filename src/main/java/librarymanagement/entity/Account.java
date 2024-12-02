@@ -14,12 +14,6 @@ public class Account {
     private String regDate;
     private AccountType accountType;
 
-    public Account(String username, String password, AccountType accountType) {
-        this.username = username;
-        this.password = password;
-        this.accountType = accountType;
-    }
-
     public Account(String username, String password, String fullName, String email, String regDate, AccountType accountType) {
         this.username = username;
         this.password = password;
@@ -92,12 +86,16 @@ public class Account {
         this.regDate = regDate;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
     public String getId() {
         String table = accountType == AccountType.USER ? "User" : "Admin";
         String column = accountType == AccountType.USER ? "userID" : "adminID";
         List<List<Object>> lists = SQLiteInstance.getInstance().find(table, "username", username, column);
 
-        return lists.get(0).get(0).toString();
+        return lists.getFirst().getFirst().toString();
     }
 
     /**

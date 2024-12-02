@@ -39,7 +39,7 @@ public class MainSceneController {
     private Button btAdd;
 
     @FXML
-    private Button btAddUser;
+    private Button btMangeUser;
 
     @FXML
     private Button btHome;
@@ -62,7 +62,7 @@ public class MainSceneController {
         btEditDocument.setOnAction(event -> loadSceneFix());
         btDelete.setOnAction(event -> loadSceneDelete());
         btAdd.setOnAction(event -> loadSceneAdd());
-        btAddUser.setOnAction(actionEvent -> loadSceneAddAccount());
+        btMangeUser.setOnAction(actionEvent -> loadManageUser());
         btHome.setOnAction(event -> loadHome());
         btInformationApp.setOnAction(event -> loadInformationApp());
         btUser.setOnAction(event -> loadUser());
@@ -71,10 +71,11 @@ public class MainSceneController {
 
         // Check the account type and hide buttons accordingly.
         if (AccountService.getInstance().getCurrentAccount().getAccountType() != AccountType.ADMIN) {
-            btAddUser.setVisible(false);
+            btMangeUser.setVisible(false);
             btDelete.setVisible(false);
             btAdd.setVisible(false);
             btEditDocument.setVisible(false);
+
         }
     }
 
@@ -90,6 +91,12 @@ public class MainSceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadManageUser() {
+        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
+        loadScene("ManageUser.fxml");
+        SceneHistoryStack.previousFxmlFile = "ManageUser.fxml";
     }
 
     /**
@@ -161,16 +168,6 @@ public class MainSceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Loads the add user account scene.
-     * Saves the current scene into the history stack before loading the new scene.
-     */
-    private void loadSceneAddAccount() {
-        SceneHistoryStack.listPreviousFxmlFile.push(SceneHistoryStack.previousFxmlFile);
-        loadScene("AddUser.fxml");
-        SceneHistoryStack.previousFxmlFile = "AddUser.fxml";
     }
 
     /**

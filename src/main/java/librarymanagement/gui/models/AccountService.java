@@ -61,10 +61,10 @@ public class AccountService {
                 "password", "fullName", "email", "regDate");
         if (result.isEmpty()) {
             return LoginResult.USERNAME_NOT_FOUND;
-        } else if (result.getFirst().get(0).equals(password)) {
-            String fullName = (String) result.get(0).get(1);
-            String email = (String) result.get(0).get(2);
-            String regDate = (String) result.get(0).get(3);
+        } else if (result.getFirst().getFirst().equals(password)) {
+            String fullName = (String) result.getFirst().get(1);
+            String email = (String) result.getFirst().get(2);
+            String regDate = (String) result.getFirst().get(3);
             currentAccount = new Account(username, password, fullName,
                     email, regDate, isAdmin ? AccountType.ADMIN : AccountType.USER);
             return LoginResult.SUCCESS;
@@ -94,18 +94,18 @@ public class AccountService {
         String newId = "";
         if (tableName.equals("User")) {
             List<List<Object>> result = sqLiteInstance.findNotCondition("User", "Max(userId)");
-            if (result.get(0).get(0) == null) {
+            if (result.getFirst().getFirst() == null) {
                 newId = "U101";
             } else {
-                String temp = result.get(0).get(0).toString().substring(1);
+                String temp = result.getFirst().getFirst().toString().substring(1);
                 newId = "U" + (Integer.parseInt(temp) + 1);
             }
         } else if (tableName.equals("Admin")) {
             List<List<Object>> result = sqLiteInstance.findNotCondition("Admin", "Max(adminId)");
-            if (result.get(0).get(0) == null) {
+            if (result.getFirst().getFirst() == null) {
                 newId = "A101";
             } else {
-                String temp = result.get(0).get(0).toString().substring(1);
+                String temp = result.getFirst().getFirst().toString().substring(1);
                 newId = "A" + (Integer.parseInt(temp) + 1);
             }
         }
@@ -189,11 +189,11 @@ public class AccountService {
             return null;
         }
 
-        String username = (String) list.get(0).get(0);
-        String password = (String) list.get(0).get(1);
-        String fullName = (String) list.get(0).get(2);
-        String email = (String) list.get(0).get(3);
-        String regDate = (String) list.get(0).get(4);
+        String username = (String) list.getFirst().getFirst();
+        String password = (String) list.getFirst().get(1);
+        String fullName = (String) list.getFirst().get(2);
+        String email = (String) list.getFirst().get(3);
+        String regDate = (String) list.getFirst().get(4);
         return new Account(userID, username, password, fullName, email, regDate, type);
     }
 
@@ -247,6 +247,10 @@ public class AccountService {
                 new String[]{"adminID", "username", "password", "fullName", "email", "regDate"},
                 AccountType.ADMIN
         ));
+
+        if (accounts.isEmpty()) {
+            return null;
+        }
 
         return accounts;
     }

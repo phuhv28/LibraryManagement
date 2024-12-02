@@ -188,7 +188,7 @@ public class SQLiteInstance {
             throw new IllegalArgumentException("Columns array must not be empty");
         }
 
-        StringBuilder sql = new StringBuilder("SELECT " + columnsList.get(0));
+        StringBuilder sql = new StringBuilder("SELECT " + columnsList.getFirst());
         for (int i = 1; i < columnsList.size(); i++) {
             sql.append(", ").append(columnsList.get(i));
         }

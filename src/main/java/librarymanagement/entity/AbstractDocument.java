@@ -166,7 +166,6 @@ public abstract class AbstractDocument implements Document {
         this.thumbnailImage = thumbnailImage;
     }
 
-    //    public abstract List<Object> getAll();
 
     public String getInfo() {
         return "ID: " + id + "\n" +
