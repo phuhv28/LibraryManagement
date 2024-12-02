@@ -4,7 +4,9 @@ package librarymanagement.gui.models;
 import librarymanagement.entity.Document;
 import librarymanagement.entity.DocumentType;
 
-/** Factory for Document services.*/
+/**
+ * Factory for Document services.
+ */
 public class DocumentServiceFactory {
     private static BookService bookService = null;
     private static ThesisService thesisService = null;

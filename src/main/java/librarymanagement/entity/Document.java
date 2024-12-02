@@ -6,33 +6,33 @@ public interface Document {
 
     String getId();
 
-    String getTitle();
-
-    String getPublisher();
-
-    LocalDate getPublishedDate();
-
-    int getPageCount();
-
-    int getAvailableCopies();
-
-    double getAverageRating();
-
-    int getRatingsCount();
-
     void setId(String id);
+
+    String getTitle();
 
     void setTitle(String title);
 
+    String getPublisher();
+
     void setPublisher(String publisher);
+
+    LocalDate getPublishedDate();
 
     void setPublishedDate(LocalDate publishedDate);
 
+    int getPageCount();
+
     void setPageCount(int pageCount);
+
+    int getAvailableCopies();
 
     void setAvailableCopies(int availableCopies);
 
+    double getAverageRating();
+
     void setAverageRating(double averageRating);
+
+    int getRatingsCount();
 
     void setRatingsCount(int ratingsCount);
 

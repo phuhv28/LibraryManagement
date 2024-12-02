@@ -21,7 +21,7 @@ public class ReviewService {
      * has commented on the specified document.</p>
      *
      * @param username the username of the user
-     * @param docID the ID of the document
+     * @param docID    the ID of the document
      * @return {@code true} if the user has commented on the document, {@code false} otherwise
      */
     public boolean checkIfUserHasCommentToDocument(String username, String docID) {
@@ -42,11 +42,11 @@ public class ReviewService {
      * further handling is needed (denoted by TODO).</p>
      *
      * @param username the username of the user adding the review
-     * @param docID the ID of the document being reviewed
-     * @param rating the rating given to the document (assumed to be an integer)
-     * @param comment the comment provided by the user
+     * @param docID    the ID of the document being reviewed
+     * @param rating   the rating given to the document (assumed to be an integer)
+     * @param comment  the comment provided by the user
      * @return {@code true} if the review was successfully added, {@code false} if the user has
-     *         already commented on the document
+     * already commented on the document
      */
     public boolean addReview(String username, String docID, int rating, String comment) {
         if (checkIfUserHasCommentToDocument(username, docID)) {
@@ -75,11 +75,11 @@ public class ReviewService {
      * (rating and comment) for a specific document. It calls the {@link #addReview(String, String, int, String)}
      * method to handle the actual review process.</p>
      *
-     * @param docID the ID of the document being reviewed
+     * @param docID   the ID of the document being reviewed
      * @param comment the comment provided by the user
-     * @param rating the rating given to the document (assumed to be an integer)
+     * @param rating  the rating given to the document (assumed to be an integer)
      * @return {@code true} if the review was successfully added, {@code false} if the current user
-     *         has already commented on the document
+     * has already commented on the document
      */
     public boolean addReviewForCurrentAccount(String docID, String comment, int rating) {
         String username = AccountService.getInstance().getCurrentAccount().getUsername();
@@ -95,7 +95,7 @@ public class ReviewService {
      *
      * @param docID the ID of the document for which reviews are being retrieved
      * @return a list of {@link Review} objects containing all reviews for the specified document,
-     *         or an empty list if no reviews are found
+     * or an empty list if no reviews are found
      */
     public List<Review> getAllReviewsInDocument(String docID) {
         List<Review> reviews = new ArrayList<>();

@@ -1,9 +1,6 @@
 package librarymanagement.gui.models;
 
-import librarymanagement.entity.Account;
-import librarymanagement.entity.Book;
-import librarymanagement.entity.BorrowRecord;
-import librarymanagement.entity.Document;
+import librarymanagement.entity.*;
 import librarymanagement.utils.SQLiteInstance;
 import librarymanagement.gui.controllers.BorrowResult;
 
@@ -110,9 +107,16 @@ public class BorrowingService {
             book.setAvailableCopies(book.getAvailableCopies() - 1);
             bookService.updateDocument(book);
         } else if (documentId.charAt(0) == 'M') {
-            // TODO
-        } else if (documentId.charAt(0) == 'T') {
-            //TODO
+            MagazineService magazineService = new MagazineService();
+            Magazine magazine = magazineService.findDocumentById(documentId);
+            if (magazine == null) {
+                return BorrowResult.NOT_FOUND;
+            }
+            if (magazine.getAvailableCopies() == 0) {
+                return BorrowResult.OUT_OF_STOCK;
+            }
+            magazine.setAvailableCopies(magazine.getAvailableCopies() - 1);
+            magazineService.updateDocument(magazine);
         } else {
             return BorrowResult.NOT_FOUND;
         }
@@ -168,9 +172,8 @@ public class BorrowingService {
         if (documentID.charAt(0) == 'B') {
             bookService.updateDocument((Book) document);
         } else if (documentID.charAt(0) == 'M') {
-            //TODO
-        } else if (documentID.charAt(0) == 'T') {
-            //TODO
+            MagazineService magazineService = new MagazineService();
+            magazineService.updateDocument((Magazine) document);
         }
         String returnDate = sqLiteInstance.getToday().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         sqLiteInstance.updateRow("BorrowRecord", "returnDate", returnDate, "recordID", borrowId);
@@ -206,9 +209,8 @@ public class BorrowingService {
             if (documentID.charAt(0) == 'B') {
                 document = bookService.findDocumentById(documentID);
             } else if (documentID.charAt(0) == 'M') {
-                //TODO
-            } else if (documentID.charAt(0) == 'T') {
-                //TODO
+                MagazineService magazineService = new MagazineService();
+                document = magazineService.findDocumentById(documentID);
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate borrowDate = LocalDate.parse((String) row.get(2), formatter);

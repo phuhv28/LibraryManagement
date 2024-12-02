@@ -164,7 +164,7 @@ public class AccountService {
      * @return isAdmin
      */
     public boolean isAdmin(String username) {
-        List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "*");
+        List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "username");
         return !list.isEmpty();
     }
 
@@ -230,7 +230,7 @@ public class AccountService {
      * Retrieves all accounts (both users and admins) from the database.
      *
      * @return A list of {@link Account} objects containing all user and admin accounts,
-     *         ordered by their registration date.
+     * ordered by their registration date.
      */
     public List<Account> getAllAccounts() {
         List<Account> accounts = new ArrayList<>();
@@ -257,7 +257,6 @@ public class AccountService {
      * @param columns     The column names to retrieve.
      * @param accountType The type of accounts (e.g., USER or ADMIN).
      * @return A list of {@link Account} objects, or an empty list if no results are found.
-     *
      * @throws ClassCastException        If a column value cannot be cast to the expected type.
      * @throws IndexOutOfBoundsException If the result set has fewer columns than expected.
      */
@@ -282,4 +281,12 @@ public class AccountService {
 
         return accounts;
     }
+
+    public static void main(String[] args) {
+        AccountService accountService = new AccountService();
+        accountService.checkLogin("long", "345");
+        String a = accountService.changePassword("345", "kkk", "kkk").getMessage();
+        System.out.println(a);
+    }
+
 }

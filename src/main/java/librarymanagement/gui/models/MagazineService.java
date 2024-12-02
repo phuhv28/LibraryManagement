@@ -17,6 +17,12 @@ import java.util.Locale;
 public class MagazineService implements DocumentService<Magazine> {
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
 
+    /**
+     * Generates a new unique ID for a magazine by finding the highest ID in the database
+     * and incrementing it.
+     *
+     * @return A new unique magazine ID.
+     */
     private String generateNewID() {
         String newId;
 
@@ -31,6 +37,12 @@ public class MagazineService implements DocumentService<Magazine> {
         return newId;
     }
 
+    /**
+     * Checks if a magazine with the given ISSN already exists in the database.
+     *
+     * @param issn The ISSN to check.
+     * @return {@code true} if the ISSN exists, {@code false} otherwise.
+     */
     private boolean checkIfHasMagazineISSN(String issn) {
         List<List<Object>> res = sqLiteInstance.find("Magazine", "ISSN", issn, "ISBN");
         if (res.isEmpty() || res.getFirst().isEmpty()) {
@@ -39,6 +51,12 @@ public class MagazineService implements DocumentService<Magazine> {
         return res.getFirst().getFirst() != null;
     }
 
+    /**
+     * Checks if a magazine with the given ID exists in the database.
+     *
+     * @param id The ID to check.
+     * @return {@code true} if the ID exists, {@code false} otherwise.
+     */
     private boolean checkIfHasMagazineId(String id) {
         List<List<Object>> res = sqLiteInstance.find("Magazine", "id", id, "id");
         if (res.isEmpty() || res.getFirst().isEmpty()) {
@@ -47,6 +65,12 @@ public class MagazineService implements DocumentService<Magazine> {
         return res.getFirst().getFirst() != null;
     }
 
+    /**
+     * Checks if a magazine with the given title already exists in the database.
+     *
+     * @param title The title to check.
+     * @return {@code true} if the title exists, {@code false} otherwise.
+     */
     private boolean checkIfHasMagazineTitle(String title) {
         List<List<Object>> res = sqLiteInstance.find("Magazine", "title", title, "title");
         if (res.isEmpty() || res.getFirst().isEmpty()) {
@@ -55,6 +79,13 @@ public class MagazineService implements DocumentService<Magazine> {
         return res.getFirst().getFirst() != null;
     }
 
+    /**
+     * Adds a new magazine to the database. Validates that the magazine ISSN or title
+     * does not already exist before adding it.
+     *
+     * @param magazine The {@link Magazine} to be added.
+     * @return {@code true} if the magazine was successfully added, {@code false} otherwise.
+     */
     @Override
     public boolean addDocument(Magazine magazine) {
         if (magazine.getISSN() == null && checkIfHasMagazineTitle(magazine.getTitle())) {
@@ -69,12 +100,23 @@ public class MagazineService implements DocumentService<Magazine> {
         return true;
     }
 
+    /**
+     * Updates the details of an existing magazine in the database.
+     *
+     * @param magazine The updated {@link Magazine} object.
+     */
     @Override
     public void updateDocument(Magazine magazine) {
         deleteDocument(magazine.getId());
         sqLiteInstance.insertRow("Magazine", magazine.getAll());
     }
 
+    /**
+     * Deletes a magazine from the database by its ID.
+     *
+     * @param id The ID of the magazine to be deleted.
+     * @return {@code true} if the magazine was successfully deleted, {@code false} otherwise.
+     */
     @Override
     public boolean deleteDocument(String id) {
         if (!checkIfHasMagazineISSN(id)) {
@@ -86,6 +128,13 @@ public class MagazineService implements DocumentService<Magazine> {
         return true;
     }
 
+    /**
+     * Creates a list of magazines based on the given SQL query and condition.
+     *
+     * @param condition The condition to filter the query.
+     * @param sql       The SQL query to execute.
+     * @return A list of {@link Magazine} objects matching the query, or {@code null} if none were found.
+     */
     private List<Magazine> createNewMagazineList(String condition, String sql) {
         List<Magazine> magazines = new ArrayList<>();
         try (PreparedStatement stmt = sqLiteInstance.connection.prepareStatement(sql)) {
@@ -136,6 +185,12 @@ public class MagazineService implements DocumentService<Magazine> {
         return magazines;
     }
 
+    /**
+     * Searches for magazines by title.
+     *
+     * @param title The title to search for.
+     * @return A list of {@link Magazine} objects matching the title.
+     */
     public List<Magazine> searchMagazineByTitle(String title) {
         String sql = "SELECT * FROM Magazine WHERE title LIKE ?";
         return createNewMagazineList(title, sql);
@@ -144,6 +199,7 @@ public class MagazineService implements DocumentService<Magazine> {
     public Magazine searchMagazineByISSN(String issn) {
         String sql = "SELECT * FROM Magazine WHERE ISSN = ?";
         List<Magazine> magazines = createNewMagazineList(issn, sql);
+        assert magazines != null;
         if (magazines.isEmpty()) {
             return null;
         }

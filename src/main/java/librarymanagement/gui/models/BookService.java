@@ -3,7 +3,9 @@ package librarymanagement.gui.models;
 import librarymanagement.entity.Book;
 import librarymanagement.utils.SQLiteInstance;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -11,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/** Class handles handle operations related to booksoperations related to books (Add, edit, delete,...).*/
+/**
+ * Class handles handle operations related to booksoperations related to books (Add, edit, delete,...).
+ */
 public class BookService implements DocumentService<Book> {
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
 
@@ -82,7 +86,7 @@ public class BookService implements DocumentService<Book> {
      * <p>This method queries the database to check if a book with the specified title and author exists.
      * It returns {@code true} if a book with the given title and author is found, otherwise {@code false}.</p>
      *
-     * @param title the title of the book to be checked.
+     * @param title  the title of the book to be checked.
      * @param author the author of the book to be checked.
      * @return {@code true} if a book with the given title and author exists, otherwise {@code false}.
      */
@@ -166,7 +170,7 @@ public class BookService implements DocumentService<Book> {
      *
      * @param condition the condition to filter the books. It is used in the SQL query to filter by matching titles or authors.
      *                  If null or empty, the condition is not applied.
-     * @param sql the SQL query string to execute, which should include a placeholder for the condition.
+     * @param sql       the SQL query string to execute, which should include a placeholder for the condition.
      * @return a list of {@link Book} objects created from the result of the SQL query, or null if no books are found.
      */
     private List<Book> createNewBookList(String condition, String sql) {

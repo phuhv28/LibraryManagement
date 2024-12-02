@@ -59,48 +59,13 @@ public abstract class AbstractDocument implements Document {
     }
 
     @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public String getPublisher() {
-        return publisher;
-    }
-
-    @Override
-    public LocalDate getPublishedDate() {
-        return publishedDate;
-    }
-
-    @Override
-    public int getPageCount() {
-        return pageCount;
-    }
-
-    @Override
-    public int getAvailableCopies() {
-        return availableCopies;
-    }
-
-    @Override
-    public double getAverageRating() {
-        return averageRating;
-    }
-
-    @Override
-    public int getRatingsCount() {
-        return ratingsCount;
-    }
-
-    @Override
-    public DocumentType getDocumentType() {
-        return documentType;
-    }
-
-    @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
     }
 
     @Override
@@ -109,8 +74,18 @@ public abstract class AbstractDocument implements Document {
     }
 
     @Override
+    public String getPublisher() {
+        return publisher;
+    }
+
+    @Override
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    @Override
+    public LocalDate getPublishedDate() {
+        return publishedDate;
     }
 
     @Override
@@ -119,8 +94,18 @@ public abstract class AbstractDocument implements Document {
     }
 
     @Override
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    @Override
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
+    }
+
+    @Override
+    public int getAvailableCopies() {
+        return availableCopies;
     }
 
     @Override
@@ -129,13 +114,28 @@ public abstract class AbstractDocument implements Document {
     }
 
     @Override
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    @Override
     public void setAverageRating(double averageRating) {
         this.averageRating = averageRating;
     }
 
     @Override
+    public int getRatingsCount() {
+        return ratingsCount;
+    }
+
+    @Override
     public void setRatingsCount(int ratingsCount) {
         this.ratingsCount = ratingsCount;
+    }
+
+    @Override
+    public DocumentType getDocumentType() {
+        return documentType;
     }
 
     @Override

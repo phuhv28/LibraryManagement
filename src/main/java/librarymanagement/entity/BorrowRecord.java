@@ -2,7 +2,9 @@ package librarymanagement.entity;
 
 import java.time.LocalDate;
 
-/** Class represents a borrow record.*/
+/**
+ * Class represents a borrow record.
+ */
 public class BorrowRecord {
     private String id;
     private Account account;
@@ -11,10 +13,6 @@ public class BorrowRecord {
     private LocalDate dueDate;
     private LocalDate returnDate;
     private Status status;
-
-    public enum Status {
-        BORROWING, OVERDUE, RETURNED
-    }
 
     public BorrowRecord(String id, Account account, Document document, LocalDate borrowDate,
                         LocalDate dueDate, LocalDate returnDate) {
@@ -89,5 +87,9 @@ public class BorrowRecord {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public enum Status {
+        BORROWING, OVERDUE, RETURNED
     }
 }
