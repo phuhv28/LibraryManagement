@@ -26,7 +26,7 @@ public class MagazineService implements DocumentService<Magazine> {
     private String generateNewID() {
         String newId;
 
-        List<List<Object>> result = sqLiteInstance.findNotCondition("Book", "Max(id)");
+        List<List<Object>> result = sqLiteInstance.findNotCondition("Magazine", "Max(id)");
         if (result.getFirst().getFirst() == null) {
             newId = "M101";
         } else {
@@ -44,7 +44,7 @@ public class MagazineService implements DocumentService<Magazine> {
      * @return {@code true} if the ISSN exists, {@code false} otherwise.
      */
     private boolean checkIfHasMagazineISSN(String issn) {
-        List<List<Object>> res = sqLiteInstance.find("Magazine", "ISSN", issn, "ISBN");
+        List<List<Object>> res = sqLiteInstance.find("Magazine", "ISSN", issn, "ISSN");
         if (res.isEmpty() || res.getFirst().isEmpty()) {
             return false;
         }
@@ -88,13 +88,6 @@ public class MagazineService implements DocumentService<Magazine> {
      */
     @Override
     public boolean addDocument(Magazine magazine) {
-        if (magazine.getISSN() == null && checkIfHasMagazineTitle(magazine.getTitle())) {
-            return false;
-        } else if (magazine.getISSN().equals("N/A") && checkIfHasMagazineTitle(magazine.getTitle())) {
-            return false;
-        } else if (checkIfHasMagazineISSN(magazine.getISSN())) {
-            return false;
-        }
         magazine.setId(generateNewID());
         sqLiteInstance.insertRow("Magazine", magazine.getAll());
         return true;
@@ -199,7 +192,6 @@ public class MagazineService implements DocumentService<Magazine> {
     public Magazine searchMagazineByISSN(String issn) {
         String sql = "SELECT * FROM Magazine WHERE ISSN = ?";
         List<Magazine> magazines = createNewMagazineList(issn, sql);
-        assert magazines != null;
         if (magazines.isEmpty()) {
             return null;
         }

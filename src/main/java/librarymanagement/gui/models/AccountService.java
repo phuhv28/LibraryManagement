@@ -286,4 +286,14 @@ public class AccountService {
 
         return accounts;
     }
+
+    public void deleteUser(String username) {
+        String condition = "username = '" + username + "'";
+        sqLiteInstance.deleteRow("User", condition);
+    }
+
+    public void deleteAdmin(String username) {
+        String condition = "adminId = '" + username + "'";
+        sqLiteInstance.deleteRow("Admin", condition);
+    }
 }

@@ -13,17 +13,25 @@ import java.util.concurrent.Future;
 import librarymanagement.entity.Book;
 import librarymanagement.entity.Magazine;
 import librarymanagement.gui.models.BookService;
+import librarymanagement.gui.models.MagazineService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
-/** Class for using Google Books API.*/
+/**
+ * A utility class to interact with the Google Books API.
+ * This class provides methods to search for books and magazines using the Google Books API,
+ * process the results, and convert relevant data into Book and Magazine objects.
+ */
 public class GoogleBooksAPI {
+
     private static final String API_KEY = "AIzaSyCDqQRwC5jM_KWFHGkkyDupSPbfAo9KvO8";
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
     /**
-     * @return null if not found.
+     * Handles the response from the Google Books API and processes it into a list of books.
+     *
+     * @param requestUrl the URL used to request the Google Books API
+     * @return a list of {@link Book} objects if found, or null if no books are found
      */
     private static List<Book> handleAPIResult(String requestUrl) {
         List<Book> books = new ArrayList<>();
@@ -159,7 +167,13 @@ public class GoogleBooksAPI {
         return books;
     }
 
-    private static List<Magazine> handleAPIResultMageZine(String requestUrl) {
+    /**
+     * Handles the response from the Google Books API and processes it into a list of magazines.
+     *
+     * @param requestUrl the URL used to request the Google Books API
+     * @return a list of {@link Magazine} objects if found, or an empty list if no magazines are found
+     */
+    private static List<Magazine> handleAPIResultMagazine(String requestUrl) {
         List<Magazine> magazines = new ArrayList<>();
         ExecutorService executor = Executors.newFixedThreadPool(10);
         List<Future<byte[]>> futures = new ArrayList<>();
@@ -180,11 +194,17 @@ public class GoogleBooksAPI {
             JSONObject jsonResponse = new JSONObject(content.toString());
             JSONArray items = jsonResponse.optJSONArray("items");
 
-            if (items == null) return magazines;
+            if (items == null || items.length() == 0) {
+                return magazines;
+            }
 
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
                 JSONObject volumeInfo = item.getJSONObject("volumeInfo");
+
+                if (!volumeInfo.has("categories") || !volumeInfo.getJSONArray("categories").toString().contains("Magazine")) {
+                    continue;
+                }
 
                 String id = item.optString("id", "N/A");
                 String title = volumeInfo.optString("title", "N/A");
@@ -280,14 +300,16 @@ public class GoogleBooksAPI {
             executor.shutdown();
         }
 
-        if (magazines.isEmpty()) {
-            return null;
-        }
-
         return magazines;
     }
 
-
+    /**
+     * Converts an InputStream to a byte array.
+     *
+     * @param inputStream the InputStream to be converted
+     * @return a byte array representing the data from the InputStream
+     * @throws IOException if an I/O error occurs during conversion
+     */
     public static byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[2048];
@@ -300,25 +322,40 @@ public class GoogleBooksAPI {
         return byteArrayOutputStream.toByteArray();
     }
 
+    /**
+     * Searches for books by query using the Google Books API.
+     *
+     * @param query the search query string
+     * @return a list of {@link Book} objects matching the query, or null if no results are found
+     */
     public static List<Book> searchBooks(String query) {
         String requestUrl = BASE_URL + "?q=" + query.replace(" ", "+") + "&key=" + API_KEY;
         return handleAPIResult(requestUrl);
     }
 
+    /**
+     * Searches for magazines by query using the Google Books API.
+     *
+     * @param query the search query string
+     * @return a list of {@link Magazine} objects matching the query
+     */
+    public static List<Magazine> searchMagazines(String query) {
+        String requestUrl = BASE_URL + "?q=" + query.replace(" ", "+") + "&key=" + API_KEY;
+        return handleAPIResultMagazine(requestUrl);
+    }
+
+    /**
+     * Searches for a book by its ISBN using the Google Books API.
+     *
+     * @param isbn the ISBN of the book to search for
+     * @return a {@link Book} object if found, or null if not found
+     */
     public static Book searchBookByISBN(String isbn) {
         String requestUrl = BASE_URL + "?q=isbn:" + isbn + "&key=" + API_KEY;
         List<Book> books = handleAPIResult(requestUrl);
         if (books == null) {
             return null;
         }
-        return books.getFirst();
-    }
-
-    public static void main(String[] args) {
-        BookService bookService = new BookService();
-        List<Book> books = searchBooks("Love");
-        for (Book book : books) {
-            bookService.addDocument(book);
-        }
+        return books.get(0);
     }
 }
