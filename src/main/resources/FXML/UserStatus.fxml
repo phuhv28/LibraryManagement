@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="552.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserStatusController">
+<AnchorPane prefHeight="552.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserStatusController">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#433d34f2" height="552.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="200.0" layoutX="49.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="503.0" />
       <Label layoutX="68.0" layoutY="44.0" prefHeight="30.0" prefWidth="106.0" style="-fx-font-weight: BOLD;" text="Full name :" textFill="WHITE">
          <font>
@@ -51,13 +49,13 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="tableView" layoutX="54.0" layoutY="227.0" prefHeight="283.0" prefWidth="486.0">
+      <TableView fx:id="tableView" layoutX="54.0" layoutY="227.0" prefHeight="283.0" prefWidth="497.0" style="-fx-background-color: #1c2528;">
          <columns>
-            <TableColumn fx:id="recordIdCol" minWidth="30.0" prefWidth="50.0" text="ID" />
-            <TableColumn fx:id="documentIdCol" prefWidth="60.0" text="Doc ID" />
-            <TableColumn fx:id="documentTitleCol" prefWidth="175.0" text="Document Title" />
-            <TableColumn fx:id="borrowDateCol" prefWidth="100.0" text="Borrow Date" />
-            <TableColumn fx:id="dueDateCol" prefWidth="100.0" text="Due Date" />
+            <TableColumn fx:id="recordIdCol" minWidth="30.0" prefWidth="50.0" text="ID" style="-fx-background-color: #1c2528; -fx-text-fill: white;" />
+            <TableColumn fx:id="documentIdCol" prefWidth="60.0" text="Doc ID" style="-fx-background-color: #1c2528; -fx-text-fill: white;" />
+            <TableColumn fx:id="documentTitleCol" prefWidth="175.0" text="Document Title" style="-fx-background-color: #1c2528; -fx-text-fill: white;" />
+            <TableColumn fx:id="borrowDateCol" prefWidth="100.0" text="Borrow Date"  style="-fx-background-color: #1c2528; -fx-text-fill: white;"/>
+            <TableColumn fx:id="dueDateCol" prefWidth="120.0" text="Due Date"  style="-fx-background-color: #1c2528; -fx-text-fill: white;"/>
          </columns>
       </TableView>
    </children>
