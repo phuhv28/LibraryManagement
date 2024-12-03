@@ -325,4 +325,23 @@ public class BookService implements DocumentService<Book> {
         String sql = "SELECT * FROM Book ORDER BY id";
         return createNewBookList(null, sql);
     }
+
+    /**
+     * Retrieves most borrowed books, limit 10
+     *
+     * @return a list of all {@link Book} objects
+     */
+    public List<Book> getMostBorrowedBooks() {
+        String sql = "SELECT  docID ,COUNT(BorrowRecord.docID) FROM BorrowRecord\n" +
+                "GROUP BY docID\n" +
+                "ORDER BY COUNT(BorrowRecord.docID) DESC\n" +
+                "LIMIT 10";
+        List<List<Object>> lists = sqLiteInstance.findWithSQL(sql, new Object[]{}, "docID");
+        List<Book> books = new ArrayList<>();
+        for (List<Object> list : lists) {
+            Book book = findDocumentById((String) list.get(0));
+            books.add(book);
+        }
+        return books;
+    }
 }
