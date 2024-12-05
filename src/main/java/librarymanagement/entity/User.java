@@ -4,36 +4,33 @@ import librarymanagement.utils.SQLiteInstance;
 
 import java.util.List;
 
-public class Account {
+public abstract class User {
     private String userID;
     private String username;
     private String password;
     private String fullName;
     private String email;
     private String regDate;
-    private AccountType accountType;
 
-    public Account(String username, String password, String fullName, String email, String regDate, AccountType accountType) {
+    public User(String username, String password, String fullName, String email, String regDate) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.regDate = regDate;
-        this.accountType = accountType;
         this.userID = getId();
     }
 
-    public Account(String userID, String username, String password, String fullName, String email, String regDate, AccountType accountType) {
+    public User(String userID, String username, String password, String fullName, String email, String regDate) {
         this.userID = userID;
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.regDate = regDate;
-        this.accountType = accountType;
     }
 
-    public Account() {
+    public User() {
 
     }
 
@@ -51,14 +48,6 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public AccountType getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
     }
 
     public String getFullName() {
@@ -90,11 +79,12 @@ public class Account {
     }
 
     public String getId() {
-        String table = accountType == AccountType.USER ? "User" : "Admin";
-        String column = accountType == AccountType.USER ? "userID" : "adminID";
-        List<List<Object>> lists = SQLiteInstance.getInstance().find(table, "username", username, column);
-
-        return lists.getFirst().getFirst().toString();
+//        String table = accountType == AccountType.USER ? "User" : "Admin";
+//        String column = accountType == AccountType.USER ? "userID" : "adminID";
+//        List<List<Object>> lists = SQLiteInstance.getInstance().find(table, "username", username, column);
+//
+//        return lists.getFirst().getFirst().toString();
+        return "";
     }
 
     /**

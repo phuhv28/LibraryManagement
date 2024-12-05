@@ -1,6 +1,6 @@
 package librarymanagement.gui.viewmodels;
 
-import librarymanagement.entity.Account;
+import librarymanagement.entity.User;
 import librarymanagement.gui.models.AccountService;
 import librarymanagement.entity.*;
 import librarymanagement.gui.models.BorrowingService;
@@ -21,7 +21,7 @@ public class DocumentInfoViewModel {
         return reviewService;
     }
 
-    public Account getAccount() {
+    public User getAccount() {
         return accountService.getCurrentAccount();
     }
 

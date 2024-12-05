@@ -58,7 +58,7 @@ public class BorrowingService {
     public BorrowRecord getBorrowRecordByID(String recordID) {
         List<List<Object>> list = sqLiteInstance.find("BorrowRecord", "recordID", recordID,
                 "userID", "docID", "borrowDate", "dueDate", "returnDate");
-        Account account = AccountService.getInstance().getAccountByUserID((String) list.getFirst().getFirst());
+        User user = AccountService.getInstance().getAccountByUserID((String) list.getFirst().getFirst());
         Document document = bookService.findDocumentById((String) list.getFirst().get(1));
         // TODO add type MAGAZINE and THESIS
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -70,7 +70,7 @@ public class BorrowingService {
         } else {
             returnDate = LocalDate.parse((String) list.getFirst().get(4), formatter);
         }
-        return new BorrowRecord(recordID, account, document, borrowDate, dueDate, returnDate);
+        return new BorrowRecord(recordID, user, document, borrowDate, dueDate, returnDate);
     }
 
     /**
@@ -120,11 +120,11 @@ public class BorrowingService {
         } else {
             return BorrowResult.NOT_FOUND;
         }
-        Account account = AccountService.getInstance().getAccountByUserID(userID);
+        User user = AccountService.getInstance().getAccountByUserID(userID);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate borrowDate = sqLiteInstance.getToday();
         LocalDate dueDate = borrowDate.plusDays(10);
-        sqLiteInstance.insertRow("BorrowRecord", generateBorrowRecordID(), account.getId(), documentId,
+        sqLiteInstance.insertRow("BorrowRecord", generateBorrowRecordID(), user.getId(), documentId,
                 borrowDate.format(formatter), null, dueDate.format(formatter));
         return BorrowResult.SUCCESS;
     }
@@ -203,7 +203,7 @@ public class BorrowingService {
                 continue;
             }
             String recordID = (String) row.getFirst();
-            Account account = AccountService.getInstance().getAccountByUserID(userID);
+            User user = AccountService.getInstance().getAccountByUserID(userID);
             String documentID = (String) row.get(1);
             Document document = null;
             if (documentID.charAt(0) == 'B') {
@@ -215,7 +215,7 @@ public class BorrowingService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate borrowDate = LocalDate.parse((String) row.get(2), formatter);
             LocalDate dueDate = LocalDate.parse((String) row.get(3), formatter);
-            borrowRecords.add(new BorrowRecord(recordID, account, document, borrowDate, dueDate, null));
+            borrowRecords.add(new BorrowRecord(recordID, user, document, borrowDate, dueDate, null));
         }
 
         if (borrowRecords.isEmpty()) {

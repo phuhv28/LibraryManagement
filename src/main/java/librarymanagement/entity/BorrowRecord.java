@@ -7,17 +7,17 @@ import java.time.LocalDate;
  */
 public class BorrowRecord {
     private String id;
-    private Account account;
+    private User user;
     private Document document;
     private LocalDate borrowDate;
     private LocalDate dueDate;
     private LocalDate returnDate;
     private Status status;
 
-    public BorrowRecord(String id, Account account, Document document, LocalDate borrowDate,
+    public BorrowRecord(String id, User user, Document document, LocalDate borrowDate,
                         LocalDate dueDate, LocalDate returnDate) {
         this.id = id;
-        this.account = account;
+        this.user = user;
         this.document = document;
         this.borrowDate = borrowDate;
         this.dueDate = dueDate;
@@ -41,12 +41,12 @@ public class BorrowRecord {
         this.id = id;
     }
 
-    public Account getAccount() {
-        return account;
+    public User getAccount() {
+        return user;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccount(User user) {
+        this.user = user;
     }
 
     public Document getDocument() {

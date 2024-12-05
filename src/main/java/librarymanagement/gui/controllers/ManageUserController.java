@@ -7,8 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import librarymanagement.entity.Account;
-import librarymanagement.entity.BorrowRecord;
+import librarymanagement.entity.User;
 import librarymanagement.gui.viewmodels.ManageUserViewModel;
 import librarymanagement.utils.SceneHistoryStack;
 
@@ -17,19 +16,19 @@ import java.io.IOException;
 public class ManageUserController {
 
     @FXML
-    private TableView<Account> tbUserList;
+    private TableView<User> tbUserList;
 
     @FXML
-    private TableColumn<Account, String> userIdCol;
+    private TableColumn<User, String> userIdCol;
 
     @FXML
-    private TableColumn<Account, String> usernameCol;
+    private TableColumn<User, String> usernameCol;
 
     @FXML
-    private TableColumn<Account, String> fullNameCol;
+    private TableColumn<User, String> fullNameCol;
 
     @FXML
-    private TableColumn<Account, Integer> borrowedCountCol;
+    private TableColumn<User, Integer> borrowedCountCol;
 
     @FXML
     private AnchorPane manageUserPane;
@@ -50,10 +49,10 @@ public class ManageUserController {
 
         tbUserList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                Account selectedAccount = tbUserList.getSelectionModel().getSelectedItem();
+                User selectedUser = tbUserList.getSelectionModel().getSelectedItem();
 
-                if (selectedAccount != null) {
-                    UserStatusController.newInstance(selectedAccount);
+                if (selectedUser != null) {
+                    UserStatusController.newInstance(selectedUser);
                 }
             }
         });

@@ -2,23 +2,23 @@ package librarymanagement.gui.viewmodels;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import librarymanagement.entity.Account;
+import librarymanagement.entity.User;
 import librarymanagement.gui.models.AccountService;
 
 import java.util.List;
 
 public class ManageUserViewModel {
     private final AccountService accountService = AccountService.getInstance();
-    private ObservableList<Account> accountsListProperty = null;
+    private ObservableList<User> accountsListProperty = null;
 
     public ManageUserViewModel() {
-        List<Account> accounts = accountService.getAllAccounts();
-        if (accounts != null) {
-            accountsListProperty = FXCollections.observableArrayList(accounts);
+        List<User> users = accountService.getAllAccounts();
+        if (users != null) {
+            accountsListProperty = FXCollections.observableArrayList(users);
         }
     }
 
-    public ObservableList<Account> accountsListProperty() {
+    public ObservableList<User> accountsListProperty() {
         return accountsListProperty;
     }
 }

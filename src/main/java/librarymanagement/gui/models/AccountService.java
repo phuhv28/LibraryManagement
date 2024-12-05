@@ -11,7 +11,7 @@ import java.util.List;
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
     private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
-    private static Account currentAccount = new Account();
+    private static User currentUser = null;
 
     private AccountService() {
     }
@@ -28,12 +28,12 @@ public class AccountService {
         return INSTANCE;
     }
 
-    public Account getCurrentAccount() {
-        return currentAccount;
+    public User getCurrentAccount() {
+        return currentUser;
     }
 
-    public void setCurrentAccount(Account currentAccount) {
-        AccountService.currentAccount = currentAccount;
+    public void setCurrentAccount(User currentUser) {
+        AccountService.currentUser = currentUser;
     }
 
     /**
@@ -65,7 +65,7 @@ public class AccountService {
             String fullName = (String) result.getFirst().get(1);
             String email = (String) result.getFirst().get(2);
             String regDate = (String) result.getFirst().get(3);
-            currentAccount = new Account(username, password, fullName,
+            currentUser = new User(username, password, fullName,
                     email, regDate, isAdmin ? AccountType.ADMIN : AccountType.USER);
             return LoginResult.SUCCESS;
         }
@@ -177,9 +177,9 @@ public class AccountService {
      * are then retrieved from the corresponding table (either "Admin" or "User").</p>
      *
      * @param userID the user ID of the account to be retrieved
-     * @return an {@link Account} object containing the account details, or null if the account is not found
+     * @return an {@link User} object containing the account details, or null if the account is not found
      */
-    public Account getAccountByUserID(String userID) {
+    public User getAccountByUserID(String userID) {
         AccountType type = userID.charAt(0) == 'A' ? AccountType.ADMIN : AccountType.USER;
         String tableName = userID.charAt(0) == 'A' ? "Admin" : "User";
         String column = userID.charAt(0) == 'A' ? "adminId" : "userId";
@@ -194,7 +194,7 @@ public class AccountService {
         String fullName = (String) list.getFirst().get(2);
         String email = (String) list.getFirst().get(3);
         String regDate = (String) list.getFirst().get(4);
-        return new Account(userID, username, password, fullName, email, regDate, type);
+        return new User(userID, username, password, fullName, email, regDate, type);
     }
 
     /**
@@ -223,36 +223,36 @@ public class AccountService {
         String username = AccountService.getInstance().getCurrentAccount().getUsername();
         String table = isAdmin(AccountService.getInstance().getCurrentAccount().getUsername()) ? "Admin" : "User";
         sqLiteInstance.updateRow(table, "password", newPassword, "username", username);
-        currentAccount.setPassword(newPassword);
+        currentUser.setPassword(newPassword);
         return ChangePasswordResult.SUCCESS_CHANGE;
     }
 
     /**
      * Retrieves all accounts (both users and admins) from the database.
      *
-     * @return A list of {@link Account} objects containing all user and admin accounts,
+     * @return A list of {@link User} objects containing all user and admin accounts,
      * ordered by their registration date.
      */
-    public List<Account> getAllAccounts() {
-        List<Account> accounts = new ArrayList<>();
+    public List<User> getAllAccounts() {
+        List<User> users = new ArrayList<>();
 
-        accounts.addAll(fetchAccounts(
+        users.addAll(fetchAccounts(
                 "SELECT * FROM User ORDER BY regDate ASC",
                 new String[]{"userID", "username", "password", "fullName", "email", "regDate"},
                 AccountType.USER
         ));
 
-        accounts.addAll(fetchAccounts(
+        users.addAll(fetchAccounts(
                 "SELECT * FROM Admin ORDER BY regDate ASC",
                 new String[]{"adminID", "username", "password", "fullName", "email", "regDate"},
                 AccountType.ADMIN
         ));
 
-        if (accounts.isEmpty()) {
+        if (users.isEmpty()) {
             return null;
         }
 
-        return accounts;
+        return users;
     }
 
     /**
@@ -261,12 +261,12 @@ public class AccountService {
      * @param sql         The SQL query to execute.
      * @param columns     The column names to retrieve.
      * @param accountType The type of accounts (e.g., USER or ADMIN).
-     * @return A list of {@link Account} objects, or an empty list if no results are found.
+     * @return A list of {@link User} objects, or an empty list if no results are found.
      * @throws ClassCastException        If a column value cannot be cast to the expected type.
      * @throws IndexOutOfBoundsException If the result set has fewer columns than expected.
      */
-    private List<Account> fetchAccounts(String sql, String[] columns, AccountType accountType) {
-        List<Account> accounts = new ArrayList<>();
+    private List<User> fetchAccounts(String sql, String[] columns, AccountType accountType) {
+        List<User> users = new ArrayList<>();
         List<List<Object>> results = sqLiteInstance.findWithSQL(sql, new Object[]{}, columns);
 
         for (List<Object> row : results) {
@@ -278,13 +278,13 @@ public class AccountService {
                 String email = (String) row.get(4);
                 String regDate = (String) row.get(5);
 
-                accounts.add(new Account(userID, username, password, fullName, email, regDate, accountType));
+                users.add(new User(userID, username, password, fullName, email, regDate, accountType));
             } catch (ClassCastException | IndexOutOfBoundsException e) {
                 e.printStackTrace();
             }
         }
 
-        return accounts;
+        return users;
     }
 
     public void deleteUser(String username) {

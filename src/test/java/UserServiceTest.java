@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assumptions.*;
 
-class AccountServiceTest {
+class UserServiceTest {
     private static final AccountService accountService = AccountService.getInstance();
 
     @BeforeAll
@@ -94,11 +94,11 @@ class AccountServiceTest {
 
     @Test
     void testGetAllAccounts() {
-        List<Account> accounts = accountService.getAllAccounts();
-        assumeFalse(accounts.isEmpty(), "Account list should not be empty.");
+        List<User> users = accountService.getAllAccounts();
+        assumeFalse(users.isEmpty(), "Account list should not be empty.");
         // Verify if test accounts are included
-        boolean containsTestUser = accounts.stream().anyMatch(acc -> acc.getUsername().equals("testuser1"));
-        boolean containsTestAdmin = accounts.stream().anyMatch(acc -> acc.getUsername().equals("testadmin1"));
+        boolean containsTestUser = users.stream().anyMatch(acc -> acc.getUsername().equals("testuser1"));
+        boolean containsTestAdmin = users.stream().anyMatch(acc -> acc.getUsername().equals("testadmin1"));
         assumeTrue(containsTestUser && containsTestAdmin, "Test accounts should be in the list.");
     }
 }

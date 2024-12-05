@@ -13,11 +13,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import librarymanagement.entity.Account;
+import librarymanagement.entity.User;
 import librarymanagement.entity.BorrowRecord;
-import librarymanagement.entity.Document;
 import librarymanagement.entity.DocumentType;
-import librarymanagement.gui.models.AccountService;
 import librarymanagement.gui.models.BorrowingService;
 import librarymanagement.gui.models.DocumentServiceFactory;
 
@@ -60,16 +58,16 @@ public class UserStatusController {
 
     private static UserStatusController instance;
     private static Stage stage;
-    private static Account account;
+    private static User user;
 
 
     public void initialize() {
-        lbFullName.setText(account.getFullName());
-        lbUserName.setText(account.getUsername());
-        lbEmail.setText(account.getEmail());
-        lbNumberOfBooksBorrowed.setText(String.valueOf(account.getNumberOfBooksIsBorrowing()));
+        lbFullName.setText(user.getFullName());
+        lbUserName.setText(user.getUsername());
+        lbEmail.setText(user.getEmail());
+        lbNumberOfBooksBorrowed.setText(String.valueOf(user.getNumberOfBooksIsBorrowing()));
 
-        List<BorrowRecord> records = borrowingService.getBorrowRecordsOfUser(account.getUserID());
+        List<BorrowRecord> records = borrowingService.getBorrowRecordsOfUser(user.getUserID());
         if (records != null) {
             tableView.setItems(FXCollections.observableArrayList(records));
             recordIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -83,8 +81,8 @@ public class UserStatusController {
         }
     }
 
-    public static void newInstance(Account account) {
-        UserStatusController.account = account;
+    public static void newInstance(User user) {
+        UserStatusController.user = user;
         FXMLLoader loader = new FXMLLoader(LoadingPopupController.class.getResource("/FXML/UserStatus.fxml"));
         try {
             Parent parent = loader.load();
