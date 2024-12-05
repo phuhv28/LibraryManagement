@@ -134,7 +134,7 @@ public class HomeController {
             return;
         }
         int size = listBook.size();
-        for (int i = 0; i < size; i++) {
+        for (int i = size - 1; i >= 0; i--) {
             final int index = i;
             VBox buttonContent = new VBox(5);
             buttonContent.setAlignment(Pos.CENTER);

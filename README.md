@@ -57,7 +57,7 @@
 2. **Thao tác chính:**
     - **Tìm tài liệu:** Ấn chọn nút Search Document, chọn thuộc tính bạn muốn search (ISBN, ID, Title, …), điền giá trị bạn muốn search và ấn nút search.
     - **Quản lí danh sách tài liệu đang mượn:** Ấn chọn nút My Document sẽ hiện ra danh sách document đang mượn, ấn return để trả, ấn borrow để mượn thêm.
-    - **Thêm tài khoản (Chỉ dành cho admin):** Ấn add User/Admin, chọn loại account muốn add, ấn add.
+    - **Quản lí các tài khoản (Chỉ dành cho admin):** Ấn Manage Users sẽ hiện thị danh sách các user, ấn chọn vào 1 user để xem thông tin chi tiết về user đó. Ấn nút Add để thêm Account mới.
     - **Sửa tài liệu (Chỉ dành cho admin):** Ấn chọn Edit Document, điền ID Document muốn sửa, chỉnh sửa thông tin, ấn save để lưu.
     - **Xóa tài liệu (Chỉ dành cho admin):** Ấn chọn Delete Document, điền ID Document muốn xóa, ấn Delete.
     - **Thêm tài liệu (Chỉ dành cho admin):** Ấn chọn Add Document, điền thông tin Document muốn add (Có thể dùng ISBN để autofill), ấn Add.

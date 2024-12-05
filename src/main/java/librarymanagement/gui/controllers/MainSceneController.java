@@ -75,7 +75,6 @@ public class MainSceneController {
             btDelete.setVisible(false);
             btAdd.setVisible(false);
             btEditDocument.setVisible(false);
-
         }
     }
 

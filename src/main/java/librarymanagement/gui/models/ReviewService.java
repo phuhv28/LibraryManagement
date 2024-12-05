@@ -49,9 +49,6 @@ public class ReviewService {
      * already commented on the document
      */
     public boolean addReview(String username, String docID, int rating, String comment) {
-        if (checkIfUserHasCommentToDocument(username, docID)) {
-            return false;
-        }
         if (docID.charAt(0) == 'B') {
             BookService bookService = new BookService();
             Book book = bookService.findDocumentById(docID);

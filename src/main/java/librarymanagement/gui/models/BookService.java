@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Class handles handle operations related to booksoperations related to books (Add, edit, delete,...).
+ * Class handles handle operations related to books operations related to books (Add, edit, delete,...).
  */
 public class BookService implements DocumentService<Book> {
     private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();

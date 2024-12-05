@@ -19,6 +19,6 @@ public class HomeViewModel {
     }
 
     public List<Book> getListMostBorrowedBooks() {
-        return ((BookService) bookService).searchBookByTitle("JAVA");
+        return ((BookService) bookService).getMostBorrowedBooks();
     }
 }

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="apInformationUser" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserInfoController">
+<AnchorPane fx:id="apInformationUser" prefHeight="670.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.gui.controllers.UserInfoController">
     <children>
         <Rectangle fill="#474242" height="670.0" width="630.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c2528" height="77.0" stroke="#0f1416" strokeType="INSIDE" width="630.0" />
@@ -35,32 +37,32 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label fx:id="lbFullName" layoutX="203.0" layoutY="153.0" prefHeight="27.0" prefWidth="353.0" textFill="WHITE">
+        <Label fx:id="lbFullName" layoutX="203.0" layoutY="157.0" prefHeight="32.0" prefWidth="353.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbNumberOfBooksBorrowed" layoutX="370.0" layoutY="193.0" prefHeight="27.0" prefWidth="185.0" textFill="WHITE">
+        <Label fx:id="lbNumberOfBooksBorrowed" layoutX="370.0" layoutY="197.0" prefHeight="27.0" prefWidth="185.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbEmail" layoutX="163.0" layoutY="232.0" prefHeight="27.0" prefWidth="404.0" textFill="WHITE">
+        <Label fx:id="lbEmail" layoutX="163.0" layoutY="237.0" prefHeight="27.0" prefWidth="404.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lbUserName" layoutX="204.0" layoutY="273.0" prefHeight="27.0" prefWidth="288.0" textFill="WHITE">
+        <Label fx:id="lbUserName" layoutX="204.0" layoutY="277.0" prefHeight="27.0" prefWidth="288.0" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button fx:id="btLogOut" focusTraversable="false" layoutX="241.0" layoutY="364.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="146.0" style="-fx-background-radius: 20; -fx-font-weight: bold;" text="Log Out" textFill="#131212" textOverrun="CLIP">
+        <Button fx:id="btLogOut" focusTraversable="false" layoutX="241.0" layoutY="475.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="146.0" style="-fx-background-radius: 20; -fx-font-weight: bold;" text="Log Out" textFill="#131212" textOverrun="CLIP">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-      <Hyperlink layoutX="241.0" layoutY="424.0" onAction="#gotoChangePassword" text="Change Password" textFill="#151111">
+      <Hyperlink layoutX="234.0" layoutY="395.0" onAction="#gotoChangePassword" text="Change Password" textFill="#e8d505">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
