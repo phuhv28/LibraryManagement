@@ -2,7 +2,6 @@ package librarymanagement.gui.models;
 
 import librarymanagement.entity.*;
 import librarymanagement.utils.SQLiteInstance;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,14 +15,7 @@ public class AccountService {
     private AccountService() {
     }
 
-    /**
-     * Returns the singleton instance of the AccountService class.
-     *
-     * <p>This method ensures that only one instance of AccountService is created and used throughout the application.
-     * It follows the Singleton design pattern to provide a global point of access to the AccountService instance.</p>
-     *
-     * @return the singleton instance of {@link AccountService}
-     */
+
     public static AccountService getInstance() {
         return INSTANCE;
     }
@@ -36,101 +28,57 @@ public class AccountService {
         AccountService.currentUser = currentUser;
     }
 
-    /**
-     * Checks the login credentials for a user or admin account.
-     *
-     * <p>This method checks the provided username and password against the records in the "Admin" or "User" table.
-     * If the username is found, it compares the provided password with the stored password. If the credentials
-     * are valid, it sets the current account information and returns a success result. Otherwise, it returns
-     * an error indicating the issue (e.g., incorrect password, username not found).</p>
-     *
-     * @param username the username of the account to check
-     * @param password the password of the account to check
-     * @return a {@link LoginResult} indicating the result of the login attempt:
-     * - {@link LoginResult#SUCCESS} if the login is successful
-     * - {@link LoginResult#USERNAME_NOT_FOUND} if the username is not found in the database
-     * - {@link LoginResult#INCORRECT_PASSWORD} if the password is incorrect
-     */
     public LoginResult checkLogin(String username, String password) {
-        List<List<Object>> result =
-                sqLiteInstance.find("Admin", "username", username, "username");
-        boolean isAdmin = !result.isEmpty();
-        String type = isAdmin ? "Admin" : "User";
 
-        result = sqLiteInstance.find(type, "username", username,
-                "password", "fullName", "email", "regDate");
+        boolean isAdmin = isAdmin(username);
+        String type = isAdmin ? "Admin" : "Member";
+        String id = isAdmin ? "adminID" : "memberID";
+
+        List<List<Object>> result = sqLiteInstance.find(type, "username", username,
+                "password", "fullName", "email", "regDate", id);
         if (result.isEmpty()) {
             return LoginResult.USERNAME_NOT_FOUND;
         } else if (result.getFirst().getFirst().equals(password)) {
             String fullName = (String) result.getFirst().get(1);
             String email = (String) result.getFirst().get(2);
             String regDate = (String) result.getFirst().get(3);
-            currentUser = new User(username, password, fullName,
-                    email, regDate, isAdmin ? AccountType.ADMIN : AccountType.USER);
+            String userID = (String) result.getFirst().get(4);
+            if (isAdmin) {
+                currentUser = new Admin(userID, username, password, fullName, email, regDate);
+            } else {
+                currentUser = new Member(userID, username, password, fullName, email, regDate);
+            }
             return LoginResult.SUCCESS;
         }
 
         return LoginResult.INCORRECT_PASSWORD;
     }
 
-    /**
-     * Check if a username is taken.
-     */
+
     public boolean isUsernameTaken(String username) {
-        String sql = "SELECT * FROM User WHERE User.username = ? UNION SELECT * FROM Admin WHERE Admin.username = ?";
+        String sql = "SELECT * FROM Member WHERE Member.username = ? UNION SELECT * FROM Admin WHERE Admin.username = ?";
         List<List<Object>> result =
                 sqLiteInstance.findWithSQL(sql, new Object[]{username, username}, "username");
 
         return !result.isEmpty();
     }
 
-    /**
-     * Generate new user ID based on the maximum user ID in the database.
-     *
-     * @param tableName name of table to generate new ID
-     *                  return new ID
-     */
+
     private String generateNewUserId(String tableName) {
-        String newId = "";
-        if (tableName.equals("User")) {
-            List<List<Object>> result = sqLiteInstance.findNotCondition("User", "Max(userId)");
-            if (result.getFirst().getFirst() == null) {
-                newId = "U101";
-            } else {
-                String temp = result.getFirst().getFirst().toString().substring(1);
-                newId = "U" + (Integer.parseInt(temp) + 1);
-            }
-        } else if (tableName.equals("Admin")) {
-            List<List<Object>> result = sqLiteInstance.findNotCondition("Admin", "Max(adminId)");
-            if (result.getFirst().getFirst() == null) {
-                newId = "A101";
-            } else {
-                String temp = result.getFirst().getFirst().toString().substring(1);
-                newId = "A" + (Integer.parseInt(temp) + 1);
-            }
+        String newId = tableName.equals("Admin") ? "A" : "M";
+        String columns = tableName.equals("Admin") ? "MAX(adminID)" : "MAX(memberID)";
+        List<List<Object>> list = sqLiteInstance.findNotCondition(tableName, columns);
+        if (list.getFirst().getFirst() == null) {
+            newId += "101";
+        } else {
+            String temp = list.getFirst().getFirst().toString().substring(1);
+            newId += (Integer.parseInt(temp) + 1);
         }
         return newId;
     }
 
-    /**
-     * Adds a new account (either user or admin) to the database.
-     *
-     * <p>This method first checks if the provided username is already taken and ensures that the password
-     * and confirm password match. If both checks pass, it proceeds to create the account by inserting
-     * the necessary details into the appropriate database table based on the account type (either "User" or "Admin").</p>
-     *
-     * @param username        the username of the new account
-     * @param password        the password of the new account
-     * @param confirmPassword the confirmation password
-     * @param fullName        the full name of the new account holder
-     * @param email           the email address of the new account holder
-     * @param accountType     the type of account to create, either {@link AccountType#USER} or {@link AccountType#ADMIN}
-     * @return a {@link RegistrationResult} indicating the result of the registration:
-     * - {@link RegistrationResult#USERNAME_TAKEN} if the username is already taken
-     * - {@link RegistrationResult#PASSWORD_NOT_MATCH} if the passwords do not match
-     * - {@link RegistrationResult#SUCCESS} if the account was successfully created
-     */
-    public RegistrationResult addAccount(String username, String password, String confirmPassword, String fullName, String email, AccountType accountType) {
+    public RegistrationResult addUser(String username, String password, String confirmPassword,
+                                      String fullName, String email, boolean isAdmin) {
         if (isUsernameTaken(username)) {
             return RegistrationResult.USERNAME_TAKEN;
         }
@@ -143,46 +91,37 @@ public class AccountService {
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        if (accountType == AccountType.USER) {
+        if (!isAdmin) {
             String userId = generateNewUserId("User");
-            ///Import new user to database
-            sqLiteInstance.insertRow("User", userId, username, password, dateFormatter.format(today), fullName, email);
-        } else if (accountType == AccountType.ADMIN) {
+            ///Import new member to database
+            sqLiteInstance.insertRow("Member", userId, username, password, dateFormatter.format(today), fullName, email);
+        } else {
             String newAdminId = generateNewUserId("Admin");
             ///Import new admin to database
             sqLiteInstance.insertRow("Admin", newAdminId, username, password, dateFormatter.format(today), fullName, email);
         }
 
-
         return RegistrationResult.SUCCESS;
     }
 
-    /**
-     * Check if username of admin
-     *
-     * @param username username
-     * @return isAdmin
-     */
+    public RegistrationResult addMember(String username, String password, String confirmPassword,
+                                        String fullName, String email) {
+        return addUser(username, password, confirmPassword, fullName, email, false);
+    }
+
+    public RegistrationResult addAdmin(String username, String password, String confirmPassword,
+                                       String fullName, String email) {
+        return addUser(username, password, confirmPassword, fullName, email, true);
+    }
+
     public boolean isAdmin(String username) {
         List<List<Object>> list = sqLiteInstance.find("Admin", "username", username, "username");
         return !list.isEmpty();
     }
 
-    /**
-     * Retrieves an account by its user ID.
-     *
-     * <p>This method retrieves an account from the database based on the provided user ID. It determines
-     * whether the account belongs to an admin or a regular user based on the first character of the
-     * user ID. The account's details such as username, password, full name, email, and registration date
-     * are then retrieved from the corresponding table (either "Admin" or "User").</p>
-     *
-     * @param userID the user ID of the account to be retrieved
-     * @return an {@link User} object containing the account details, or null if the account is not found
-     */
     public User getAccountByUserID(String userID) {
-        AccountType type = userID.charAt(0) == 'A' ? AccountType.ADMIN : AccountType.USER;
-        String tableName = userID.charAt(0) == 'A' ? "Admin" : "User";
-        String column = userID.charAt(0) == 'A' ? "adminId" : "userId";
+        String tableName = userID.charAt(0) == 'A' ? "Admin" : "Member";
+        String column = userID.charAt(0) == 'A' ? "adminId" : "memberId";
         List<List<Object>> list = sqLiteInstance.find(tableName, column, userID, "username", "password", "fullName", "email", "regDate");
 
         if (list.isEmpty()) {
@@ -194,25 +133,13 @@ public class AccountService {
         String fullName = (String) list.getFirst().get(2);
         String email = (String) list.getFirst().get(3);
         String regDate = (String) list.getFirst().get(4);
-        return new User(userID, username, password, fullName, email, regDate, type);
+        if (userID.charAt(0) == 'A') {
+            return new Admin(userID, username, password, fullName, email, regDate);
+        } else {
+            return new Member(userID, username, password, fullName, email, regDate);
+        }
     }
 
-    /**
-     * Changes the password of the currently logged-in account.
-     *
-     * <p>This method verifies the old password, ensures that the new password matches its confirmation,
-     * and updates the account's password in the database. If any validation fails, it returns an appropriate result.</p>
-     *
-     * @param oldPassword     the current password of the account.
-     * @param newPassword     the new password to be set for the account.
-     * @param confirmPassword the confirmation of the new password.
-     * @return a {@code ChangePasswordResult} indicating the result of the operation:
-     * <ul>
-     *     <li>{@code WRONG_OLD_PASSWORD} if the old password is incorrect.</li>
-     *     <li>{@code WRONG_CONFIRM_NEW_PASSWORD} if the new password and its confirmation do not match.</li>
-     *     <li>{@code SUCCESS_CHANGE} if the password is successfully changed.</li>
-     * </ul>
-     */
     public ChangePasswordResult changePassword(String oldPassword, String newPassword, String confirmPassword) {
         if (!oldPassword.equals(AccountService.getInstance().getCurrentAccount().getPassword())) {
             return ChangePasswordResult.WRONG_OLD_PASSWORD;
@@ -221,31 +148,25 @@ public class AccountService {
             return ChangePasswordResult.WRONG_CONFIRM_NEW_PASSWORD;
         }
         String username = AccountService.getInstance().getCurrentAccount().getUsername();
-        String table = isAdmin(AccountService.getInstance().getCurrentAccount().getUsername()) ? "Admin" : "User";
+        String table = isAdmin(AccountService.getInstance().getCurrentAccount().getUsername()) ? "Admin" : "Member";
         sqLiteInstance.updateRow(table, "password", newPassword, "username", username);
         currentUser.setPassword(newPassword);
         return ChangePasswordResult.SUCCESS_CHANGE;
     }
 
-    /**
-     * Retrieves all accounts (both users and admins) from the database.
-     *
-     * @return A list of {@link User} objects containing all user and admin accounts,
-     * ordered by their registration date.
-     */
     public List<User> getAllAccounts() {
         List<User> users = new ArrayList<>();
 
         users.addAll(fetchAccounts(
                 "SELECT * FROM User ORDER BY regDate ASC",
                 new String[]{"userID", "username", "password", "fullName", "email", "regDate"},
-                AccountType.USER
+                false
         ));
 
         users.addAll(fetchAccounts(
                 "SELECT * FROM Admin ORDER BY regDate ASC",
                 new String[]{"adminID", "username", "password", "fullName", "email", "regDate"},
-                AccountType.ADMIN
+                true
         ));
 
         if (users.isEmpty()) {
@@ -255,17 +176,7 @@ public class AccountService {
         return users;
     }
 
-    /**
-     * Fetches accounts from the database based on the given SQL query and account type.
-     *
-     * @param sql         The SQL query to execute.
-     * @param columns     The column names to retrieve.
-     * @param accountType The type of accounts (e.g., USER or ADMIN).
-     * @return A list of {@link User} objects, or an empty list if no results are found.
-     * @throws ClassCastException        If a column value cannot be cast to the expected type.
-     * @throws IndexOutOfBoundsException If the result set has fewer columns than expected.
-     */
-    private List<User> fetchAccounts(String sql, String[] columns, AccountType accountType) {
+    private List<User> fetchAccounts(String sql, String[] columns, boolean isAdmin) {
         List<User> users = new ArrayList<>();
         List<List<Object>> results = sqLiteInstance.findWithSQL(sql, new Object[]{}, columns);
 
@@ -278,7 +189,11 @@ public class AccountService {
                 String email = (String) row.get(4);
                 String regDate = (String) row.get(5);
 
-                users.add(new User(userID, username, password, fullName, email, regDate, accountType));
+                if (isAdmin) {
+                    users.add(new Admin(userID, username, password, fullName, email, regDate));
+                } else {
+                    users.add(new Member(userID, username, password, fullName, email, regDate));
+                }
             } catch (ClassCastException | IndexOutOfBoundsException e) {
                 e.printStackTrace();
             }
