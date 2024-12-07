@@ -75,7 +75,7 @@
       <font>
          <Font size="16.0" />
       </font></Label>
-   <Hyperlink layoutX="140.0" layoutY="375.0" onAction="#handleRegister" text="Don't have a user?" textFill="GOLD">
+   <Hyperlink layoutX="140.0" layoutY="375.0" onAction="#handleRegister" text="Don't have a account?" textFill="GOLD">
       <font>
          <Font name="System Bold Italic" size="15.0" />
       </font>

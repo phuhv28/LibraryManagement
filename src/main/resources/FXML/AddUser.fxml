@@ -46,7 +46,7 @@
         </Label>
         <MenuButton fx:id="mbAccountType" focusTraversable="false" layoutX="364.0" layoutY="121.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0" text="Account type">
             <items>
-                <MenuItem mnemonicParsing="false" text="User" />
+                <MenuItem mnemonicParsing="false" text="Member" />
                 <MenuItem mnemonicParsing="false" text="Admin" />
             </items>
         </MenuButton>

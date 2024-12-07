@@ -92,7 +92,7 @@ public class AccountService {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         if (!isAdmin) {
-            String userId = generateNewUserId("User");
+            String userId = generateNewUserId("Member");
             ///Import new member to database
             sqLiteInstance.insertRow("Member", userId, username, password, dateFormatter.format(today), fullName, email);
         } else {
@@ -158,8 +158,8 @@ public class AccountService {
         List<User> users = new ArrayList<>();
 
         users.addAll(fetchAccounts(
-                "SELECT * FROM User ORDER BY regDate ASC",
-                new String[]{"userID", "username", "password", "fullName", "email", "regDate"},
+                "SELECT * FROM Member ORDER BY regDate ASC",
+                new String[]{"memberID", "username", "password", "fullName", "email", "regDate"},
                 false
         ));
 

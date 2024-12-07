@@ -75,7 +75,7 @@
                 <Font size="18.0"/>
             </font>
         </Label>
-        <Hyperlink layoutX="130.0" layoutY="474.0" onAction="#goToLogin" text="Already have an user?"
+        <Hyperlink layoutX="130.0" layoutY="474.0" onAction="#goToLogin" text="Already have an account?"
                    textFill="GOLD">
             <font>
                 <Font name="System Bold Italic" size="15.0"/>

@@ -3,7 +3,6 @@ package librarymanagement.gui.viewmodels;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
-import librarymanagement.entity.AccountType;
 import librarymanagement.entity.RegistrationResult;
 import librarymanagement.gui.models.AccountService;
 
@@ -76,12 +75,12 @@ public class AddUserViewModel {
 
 
     public RegistrationResult addAccount() {
-        if (menuAccountProperty.get().equals("User")) {
-            RegistrationResult result = accountService.addAccount(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail(), AccountType.USER);
+        if (menuAccountProperty.get().equals("Member")) {
+            RegistrationResult result = accountService.addMember(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
             Platform.runLater(() -> resultProperty.set(result.getMessage()));
             return result;
         } else {
-            RegistrationResult result = accountService.addAccount(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail(), AccountType.ADMIN);
+            RegistrationResult result = accountService.addAdmin(getUsername(), getPassword(), getConfirmPassword(), getFullName(), getEmail());
             Platform.runLater(() -> resultProperty.set(result.getMessage()));
             return result;
         }

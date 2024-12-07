@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import librarymanagement.entity.Admin;
 import librarymanagement.gui.models.AccountService;
-import librarymanagement.entity.AccountType;
 import librarymanagement.utils.SceneHistoryStack;
 
 import java.io.IOException;
@@ -70,7 +70,7 @@ public class MainSceneController {
         loadHome();
 
         // Check the account type and hide buttons accordingly.
-        if (AccountService.getInstance().getCurrentAccount().getAccountType() != AccountType.ADMIN) {
+        if (!(AccountService.getInstance().getCurrentAccount() instanceof Admin)) {
             btMangeUser.setVisible(false);
             btDelete.setVisible(false);
             btAdd.setVisible(false);

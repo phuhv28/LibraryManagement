@@ -5,12 +5,12 @@ import librarymanagement.utils.SQLiteInstance;
 import java.util.List;
 
 public abstract class User {
-    private String userID;
-    private String username;
-    private String password;
-    private String fullName;
-    private String email;
-    private String regDate;
+    protected String userID;
+    protected String username;
+    protected String password;
+    protected String fullName;
+    protected String email;
+    protected String regDate;
 
     public User(String username, String password, String fullName, String email, String regDate) {
         this.username = username;
@@ -78,14 +78,7 @@ public abstract class User {
         return userID;
     }
 
-    public String getId() {
-//        String table = accountType == AccountType.USER ? "User" : "Admin";
-//        String column = accountType == AccountType.USER ? "userID" : "adminID";
-//        List<List<Object>> lists = SQLiteInstance.getInstance().find(table, "username", username, column);
-//
-//        return lists.getFirst().getFirst().toString();
-        return "";
-    }
+    public abstract String getId();
 
     /**
      * Returns the number of books borrowed by the current user.

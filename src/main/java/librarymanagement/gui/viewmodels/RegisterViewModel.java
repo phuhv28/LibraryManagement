@@ -5,7 +5,6 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import librarymanagement.gui.models.AccountService;
-import librarymanagement.entity.AccountType;
 import librarymanagement.entity.RegistrationResult;
 
 public class RegisterViewModel {
@@ -18,7 +17,7 @@ public class RegisterViewModel {
     private final AccountService accountService = AccountService.getInstance();
 
     public boolean handleRegister() {
-        RegistrationResult registrationResult = accountService.addAccount(getUsername(), getPassword(), getConfirmPassword() , getFullName() ,getEmail(), AccountType.USER);
+        RegistrationResult registrationResult = accountService.addMember(getUsername(), getPassword(), getConfirmPassword() , getFullName() ,getEmail());
 
         Platform.runLater(() -> {
             errorLabelProperty.set(registrationResult.getMessage());
