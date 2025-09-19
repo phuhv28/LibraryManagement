@@ -83,7 +83,7 @@ src/
 ---
 
 ## **Đóng góp**
-1. **Báo cáo lỗi:** Nếu bạn phát hiện lỗi, vui lòng mở issue tại [GitHub Issues](https://github.com/phuhv28/BTL_OOP.git).
+1. **Báo cáo lỗi:** Nếu bạn phát hiện lỗi, vui lòng mở issue tại [GitHub Issues](https://github.com/phuhv28/LibraryManagement/issues).
 2. **Đóng góp mã nguồn:** Fork repository, tạo branch mới, và gửi pull request.
 
 ---
