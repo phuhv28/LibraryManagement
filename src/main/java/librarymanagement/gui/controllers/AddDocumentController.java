@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.converter.NumberStringConverter;
 import librarymanagement.gui.viewmodels.AddDocumentViewModel;
-import org.jetbrains.annotations.NotNull;
 
 
 public class AddDocumentController {
@@ -122,7 +121,6 @@ public class AddDocumentController {
     }
 
     /** Create add document task.*/
-    @NotNull
     private Task<Boolean> getBooleanTask(LoadingPopupController loadingPopup) {
         Task<Boolean> addDocumentTask = new Task<>() {
             @Override

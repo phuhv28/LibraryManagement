@@ -1,6 +1,8 @@
 package librarymanagement.gui.models;
 
 import librarymanagement.entity.Book;
+import librarymanagement.entity.Document;
+import librarymanagement.entity.DocumentType;
 import librarymanagement.entity.Review;
 import librarymanagement.utils.SQLiteInstance;
 
@@ -8,9 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewService {
-    SQLiteInstance sqLiteInstance = new SQLiteInstance();
+    private static final ReviewService INSTANCE = new ReviewService();
+    private static SQLiteInstance sqLiteInstance;
 
-    public ReviewService() {
+    private ReviewService() {
+    }
+
+    public static ReviewService getInstance() {
+        return INSTANCE;
     }
 
     /**
@@ -29,6 +36,11 @@ public class ReviewService {
         List<List<Object>> lists = sqLiteInstance.findWithSQL(sql, new Object[]{}, "username");
         return !lists.isEmpty();
     }
+
+    public static void setSqLiteInstance(SQLiteInstance mock) {
+        sqLiteInstance = mock;
+    }
+
 
     /**
      * Adds a review for a document if the user hasn't already commented on it.
@@ -50,12 +62,12 @@ public class ReviewService {
      */
     public boolean addReview(String username, String docID, int rating, String comment) {
         if (docID.charAt(0) == 'B') {
-            BookService bookService = new BookService();
-            Book book = bookService.findDocumentById(docID);
+            DocumentService<Document> documentService = DocumentServiceFactory.getDocumentService(DocumentType.BOOK);
+            Document book = documentService.findDocumentById(docID);
             book.setAverageRating((book.getAverageRating() * book.getRatingsCount() + (double) rating)
                     / (book.getRatingsCount() + 1));
             book.setRatingsCount(book.getRatingsCount() + 1);
-            bookService.updateDocument(book);
+            documentService.updateDocument(book);
         } else if (docID.charAt(0) == 'M') {
             //TODO
         } else if (docID.charAt(0) == 'T') {

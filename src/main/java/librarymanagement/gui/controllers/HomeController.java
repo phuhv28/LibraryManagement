@@ -140,6 +140,9 @@ public class HomeController {
             buttonContent.setAlignment(Pos.CENTER);
             Image image = imagePublic;
 
+            if (listBook.get(i) == null) {
+                continue;
+            }
             if (listBook.get(i).getThumbnailImage() != null) {
                 image = new Image(listBook.get(i).getThumbnailImage());
             }

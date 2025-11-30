@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import librarymanagement.entity.RegistrationResult;
 import librarymanagement.gui.viewmodels.AddUserViewModel;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -139,7 +138,6 @@ public class AddUserController {
      * @param loadingPopup the popup displayed during the account creation process.
      * @return a `Task` object that performs the account creation operation.
      */
-    @NotNull
     private Task<RegistrationResult> getVoidTask(LoadingPopupController loadingPopup) {
         Task<RegistrationResult> addAccountTask = new Task<>() {
             @Override

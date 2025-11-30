@@ -4,12 +4,7 @@ module librarymanagement {
     requires javafx.fxml;
     requires javafx.graphics;
     requires org.json;
-    requires annotations;
-    requires org.xerial.sqlitejdbc;
-    requires org.junit.jupiter.engine;
-    requires org.junit.platform.launcher;
-    requires org.junit.jupiter.params;
-    requires org.junit.jupiter.api;
+    requires java.sql;
 
     opens librarymanagement.entity;
     exports librarymanagement.gui to javafx.fxml, javafx.controls, java.base ,javafx.graphics;

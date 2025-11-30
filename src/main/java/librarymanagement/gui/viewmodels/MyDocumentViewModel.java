@@ -7,7 +7,7 @@ import librarymanagement.gui.models.BorrowingService;
 import librarymanagement.gui.models.DocumentServiceFactory;
 
 public class MyDocumentViewModel {
-    private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
+    private final BorrowingService borrowingService = BorrowingService.getInstance();
     private ObservableList<BorrowRecord> borrowedBooksProperty = null;
 
     public MyDocumentViewModel() {

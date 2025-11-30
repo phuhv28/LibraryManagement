@@ -1,15 +1,20 @@
 package librarymanagement.utils;
 
+import librarymanagement.entity.Book;
+
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /** Utils for SQLite.*/
 public class SQLiteInstance {
     private static final String CONNECTION_URL = "jdbc:sqlite:library.db";
-    private static SQLiteInstance instance = null;
+    private static SQLiteInstance instance = new SQLiteInstance();
     public Connection connection;
 
     public SQLiteInstance() {
@@ -30,7 +35,7 @@ public class SQLiteInstance {
     }
 
     @FunctionalInterface
-    interface PreparedStatementSetter {
+    public interface PreparedStatementSetter {
         void setValues(PreparedStatement stmt) throws SQLException;
     }
 
@@ -421,4 +426,69 @@ public class SQLiteInstance {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Creates a list of books based on the provided condition and SQL query.
+     *
+     * <p>This method executes the provided SQL query with an optional condition, retrieves the book details from the result set,
+     * and constructs a list of {@link Book} objects. It handles different date formats for the published date and returns the
+     * list of books, or null if no books are found.</p>
+     *
+     * @param condition the condition to filter the books. It is used in the SQL query to filter by matching titles or authors.
+     *                  If null or empty, the condition is not applied.
+     * @param sql       the SQL query string to execute, which should include a placeholder for the condition.
+     * @return a list of {@link Book} objects created from the result of the SQL query, or null if no books are found.
+     */
+    public List<Book> createNewBookList(String condition, String sql) {
+        List<Book> books = new ArrayList<>();
+        try (PreparedStatement stmt = instance.connection.prepareStatement(sql)) {
+            if (condition != null && !condition.isEmpty()) {
+                stmt.setString(1, "%" + condition + "%");
+            }
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String isbn = rs.getString("ISBN");
+                String id = rs.getString("id");
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String publisher = rs.getString("publisher");
+                String publishedDate = rs.getString("publishedDate");
+                String categories = rs.getString("categories");
+                int pageCount = rs.getInt("pageCount");
+                int availableCopies = rs.getInt("availableCopies");
+                String description = rs.getString("description");
+                float averageRating = rs.getFloat("averageRating");
+                int ratingCount = rs.getInt("ratingsCount");
+                String linkToAPI = rs.getString("linkToAPI");
+                byte[] thumbnailImage = rs.getBytes("thumbnailImage");
+
+                LocalDate finalDate = null;
+                if (publishedDate != null && !publishedDate.equals("N/A")) {
+                    if (publishedDate.length() == 4) {
+                        finalDate = LocalDate.of(Integer.parseInt(publishedDate), 1, 1);
+                    } else if (publishedDate.length() == 7) {
+                        DateTimeFormatter yearMonthFormatter = new DateTimeFormatterBuilder()
+                                .appendPattern("yyyy-MM")
+                                .parseDefaulting(java.time.temporal.ChronoField.DAY_OF_MONTH, 1)
+                                .toFormatter(Locale.getDefault());
+                        finalDate = LocalDate.parse(publishedDate, yearMonthFormatter);
+                    } else {
+                        finalDate = LocalDate.parse(publishedDate);
+                    }
+                }
+
+                books.add(new Book(id, title, publisher, finalDate, pageCount, availableCopies,
+                        averageRating, ratingCount, isbn, categories, author, description, linkToAPI, thumbnailImage));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (books.isEmpty()) {
+            return null;
+        }
+
+        return books;
+    }
+
 }

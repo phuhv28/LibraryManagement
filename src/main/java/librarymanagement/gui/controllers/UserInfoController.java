@@ -18,7 +18,7 @@ import java.util.List;
 public class UserInfoController {
 
     private final AccountService accountService = AccountService.getInstance();
-    private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
+    private final BorrowingService borrowingService = BorrowingService.getInstance();
     @FXML
     private AnchorPane apInformationUser;
     @FXML

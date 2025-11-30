@@ -1,203 +1,172 @@
 import librarymanagement.entity.Book;
 import librarymanagement.gui.models.BookService;
 import librarymanagement.utils.SQLiteInstance;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class BookServiceTest {
-    private static final BookService bookService = new BookService();
-    private static final List<Book> testBooks = new ArrayList<>();
-    @BeforeAll
-    static void setUp() {
-        testBooks.add(new Book(
-                null, "Temp1", "TechWorld Publishing", LocalDate.of(2022, 6, 15), 300,
-                15, 4.3, 120, "1234567890123", "Fantasy Programming", "Alice Codewright",
-                "An adventurous journey into the mystical world of programming languages.",
-                "https://example.com/temp1", null
-        ));
 
-        testBooks.add(new Book(
-                null, "Temp2", "AI Chronicles Press", LocalDate.of(2020, 9, 10), 280,
-                10, 4.6, 95, "9876543210987", "Algorithms", "Bob Algoson",
-                "A collection of captivating tales about famous algorithms and their creators.",
-                "https://example.com/temp2", null
-        ));
+    private SQLiteInstance mockDB;
+    private BookService service;
 
-        testBooks.add(new Book(
-                null, "Temp3", "Cosmic Coders", LocalDate.of(2019, 11, 5), 450,
-                20, 4.7, 200, "5678901234567", "Science Fiction", "Dr. Code Asteroid",
-                "A thrilling story of a programmer debugging the simulation of the universe.",
-                "https://example.com/temp3", null
-        ));
-
-        testBooks.add(new Book(
-                null, "Temp4", "Pattern Masters Inc.", LocalDate.of(2021, 2, 18), 350,
-                5, 4.5, 80, "2468101214168", "Software Design", "Claire Pattern",
-                "Exploring futuristic design patterns for software engineering in 2050.",
-                "https://example.com/temp4", null
-        ));
-
-        testBooks.add(new Book(
-                null, "Temp5", "Epic Dev Press", LocalDate.of(2023, 8, 22), 500,
-                8, 4.8, 150, "3141592653589", "Programming Fiction", "Luke Devwalker",
-                "An epic tale of battle between programmers and rogue compilers in a galaxy far away.",
-                "https://example.com/temp5", null
-        ));
-
-        for (Book book : testBooks) {
-            bookService.addDocument(book);
-        }
-    }
-
-    @AfterAll
-    static void tearDown() {
-        Book book1 = bookService.searchBookByISBN("1234567890123");
-        if (book1 != null) bookService.deleteDocument(book1.getId());
-        book1 = bookService.searchBookByISBN("9876543210987");
-        if (book1 != null) bookService.deleteDocument(book1.getId());
-        book1 = bookService.searchBookByISBN("5678901234567");
-        bookService.deleteDocument(book1.getId());
-        book1 = bookService.searchBookByISBN("2468101214168");
-        bookService.deleteDocument(book1.getId());
-        book1 = bookService.searchBookByISBN("3141592653589");
-        bookService.deleteDocument(book1.getId());
-    }
-
-    @ParameterizedTest
-    @CsvSource({"Temp1, Long",
-                "Temp2, Alice",
-                "Temp3, Dr. Strange"})
-    void testCheckIfHasTitleAndAuthorTrue(String title, String author) {
-        assumeTrue(bookService.checkIfHasTitleAndAuthor(title, author),
-                "Result with " + title + " " + author  + "need be true.");
-    }
-
-    @ParameterizedTest
-    @CsvSource({"Temp4, Capitan America",
-            "Temp5, Capybara"})
-    void testCheckIfHasTitleAndAuthorFalse(String title, String author) {
-        assumeFalse(bookService.checkIfHasTitleAndAuthor(title, author),
-                "Result with " + title + " " + author  + " need be false.");
-    }
-
-    @ParameterizedTest
-    @CsvSource({"1234567890123, 0",
-                "9876543210987, 1"})
-    void testDeleteDocument(String ISBN, int index) {
-        Book book1 = bookService.searchBookByISBN(ISBN);
-        bookService.deleteDocument(book1.getId());
-        assumeTrue(bookService.searchBookByISBN(ISBN) == null, "Document was not deleted.");
-        bookService.addDocument(testBooks.get(index));
+    @BeforeEach
+    void setup() {
+        mockDB = mock(SQLiteInstance.class);
+        BookService.setSqLiteInstance(mockDB);
+        service = BookService.getInstance();
     }
 
     @Test
-    void TestAddDocument() {
-        bookService.addDocument(testBooks.getFirst());
-        Book book = bookService.searchBookByISBN(testBooks.getFirst().getISBN());
-        assumeTrue(testBooks.getFirst().getTitle().equals(book.getTitle()), "Document was not added.");
-        bookService.addDocument(testBooks.get(1));
-        book = bookService.searchBookByISBN(testBooks.get(1).getISBN());
-        assumeTrue(testBooks.get(1).getTitle().equals(book.getTitle()), "Document was not added.");
-        assumeFalse(bookService.addDocument(testBooks.get(1)), "Document already exists.");
-    }
+    void testAddDocument_success() {
+        Book b = new Book();
+        b.setISBN("ABC123");
+        b.setTitle("Java");
+        b.setAuthor("Author");
 
-    @ParameterizedTest
-    @CsvSource({"1234567890123, Long",
-            "9876543210987, Alice",
-            "5678901234567, Dr. Strange"})
-    void TestUpdateDocument(String ISBN, String author) {
-        Book book = bookService.searchBookByISBN(ISBN);
-        book.setAuthor(author);
-        bookService.updateDocument(book);
-        book = bookService.searchBookByISBN(ISBN);
-        assumeTrue(book.getAuthor().equals(author), "Document was not updated.");
-    }
+        when(mockDB.find("Book", "ISBN", "ABC123", "ISBN"))
+                .thenReturn(List.of());
 
-    @ParameterizedTest
-    @CsvSource({"Temp1, 0", "Temp2, 1", "Temp3, 2", "Temp4, 3", "Temp5, 4"})
-    void TestSearchBookByTitle(String title, int testBook) {
-        List<Book> books = bookService.searchBookByTitle(title);
-        assumeFalse(books.isEmpty(), "Result with " + title + " was not searched.");
-        for (Book book : books) {
-            if (book.getTitle().equals(title)) {
-                assumeTrue(book.getCategories().equals(testBooks.get(testBook).getCategories()),
-                        "Incorrect book information when search book by title.");
-            }
-        }
-    }
+        when(mockDB.findNotCondition("Book", "Max(id)"))
+                .thenReturn(List.of());
 
-    @ParameterizedTest
-    @CsvSource({"1234567890123, 0",
-            "9876543210987, 1",
-            "5678901234567, 2",
-            "2468101214168, 3"})
-    void TestSearchBookByISBN(String ISBN, int testBook) {
-        Book book = bookService.searchBookByISBN(ISBN);
-        assumeFalse(book == null, "Result with " + ISBN + " was not searched.");
-        assumeTrue(book.getCategories().equals(testBooks.get(testBook).getCategories()),
-                "Incorrect book information when search book by ISBN.");
 
-    }
+        boolean ok = service.addDocument(b);
 
-    @ParameterizedTest
-    @CsvSource({"0", "1", "2", "3", "4"})
-    void TestSearchBookByCategory(int index) {
-        List<Book> books = bookService.searchBookByCategory(testBooks.get(index).getCategories());
-        assumeFalse(books.isEmpty(), "Result with " + index + " was not searched.");
-        for (Book book : books) {
-            if (book.getCategories().equals(testBooks.get(index).getCategories())) {
-                assumeTrue(book.getTitle().equals(testBooks.get(index).getTitle()),
-                        "Incorrect book information when search book by Category.");
-            }
-        }
-    }
-
-    @ParameterizedTest
-    @CsvSource({"3", "4"})
-    void TestSearchBookByAuthor(int index) {
-        List<Book> books = bookService.searchBookByAuthor(testBooks.get(index).getAuthor());
-        assumeFalse(books.isEmpty(), "Result with " + index + " was not searched.");
-        for (Book book : books) {
-            if (book.getCategories().equals(testBooks.get(index).getCategories())) {
-                assumeTrue(book.getTitle().equals(testBooks.get(index).getTitle()),
-                        "Incorrect book information when search book by Author.");
-            }
-        }
-    }
-
-    @ParameterizedTest
-    @CsvSource({"0", "1", "2", "3", "4"})
-    void TestFindDocumentById(int index) {
-        Book book = bookService.searchBookByISBN(testBooks.get(index).getISBN());
-        book = bookService.findDocumentById(book.getId());
-        assumeFalse(book == null, "Result with " + index + " was not searched.");
-
+        assertTrue(ok);
+        verify(mockDB).insertRow(eq("Book"), anyList());
     }
 
     @Test
-    void TestGetRecentlyAddedBooks() {
-        List<Book> books = bookService.getRecentlyAddedBooks();
-        for (int i = 0; i < 5; i++) {
-            String temp = books.get(i).getTitle().substring(0, 4);
-            assumeTrue(temp.equals("Temp"), "Incorrect book information when searching recently-added books.");
-        }
+    void testAddDocument_duplicateISBN() {
+        Book b = new Book();
+        b.setISBN("dup");
+        b.setTitle("T");
+        b.setAuthor("A");
 
+        // ISBN đã tồn tại
+        when(mockDB.find("Book", "ISBN", "dup", "ISBN"))
+                .thenReturn(List.of(List.of("dup")));
+
+        boolean ok = service.addDocument(b);
+
+        assertFalse(ok);
+        verify(mockDB, never()).insertRow(anyString(), (List<Object>) any());
     }
 
     @Test
-    void getAllDocument() {
-        String sql = "SELECT COUNT(id) as total FROM Book";
-        int total = (int) SQLiteInstance.getInstance().findWithSQL(sql, new Object[]{}, "total").getFirst().getFirst();
-        List<Book> books = bookService.getAllDocument();
-        assumeTrue(books.size() == total, "Incorrect number of books.");
+    void testDeleteDocument_success() {
+        when(mockDB.find("Book", "id", "B101", "id"))
+                .thenReturn(List.of(List.of("B101")));
+
+        boolean ok = service.deleteDocument("B101");
+
+        assertTrue(ok);
+        verify(mockDB).deleteRow("Book", "id = 'B101'");
+    }
+
+    @Test
+    void testDeleteDocument_notFound() {
+        when(mockDB.find("Book", "id", "X", "id"))
+                .thenReturn(List.of());
+
+        boolean ok = service.deleteDocument("X");
+        assertFalse(ok);
+        verify(mockDB, never()).deleteRow(anyString(), anyString());
+    }
+
+    @Test
+    void testUpdateDocument_callsDeleteAndInsert() {
+        Book book = new Book();
+        book.setId("B999");
+
+        when(mockDB.find("Book", "id", "B999", "id"))
+                .thenReturn(List.of(List.of("B999")));
+
+        service.updateDocument(book);
+
+        verify(mockDB).deleteRow("Book", "id = 'B999'");
+        verify(mockDB).insertRow(eq("Book"), anyList());
+    }
+
+    @Test
+    void testSearchBookByTitle_callsCreateNewBookList() {
+        Book fake = new Book("B1", "Java", "Pub", LocalDate.now(),
+                100, 3, 4.5, 11, "isbn", "cat", "author", "desc");
+
+        when(mockDB.createNewBookList("Java", "SELECT * FROM Book WHERE title LIKE ?"))
+                .thenReturn(List.of(fake));
+
+        List<Book> list = service.searchBookByTitle("Java");
+
+        assertEquals(1, list.size());
+        assertEquals("B1", list.getFirst().getId());
+    }
+
+    @Test
+    void testSearchBookByAuthor() {
+        Book fake = new Book("B7", "T", "P", LocalDate.now(),
+                10, 2, 4, 3, "i", "cat", "John", "d");
+
+        when(mockDB.createNewBookList("John", "SELECT * FROM Book WHERE author LIKE ?"))
+                .thenReturn(List.of(fake));
+
+        List<Book> list = service.searchBookByAuthor("John");
+
+        assertEquals(1, list.size());
+        assertEquals("B7", list.get(0).getId());
+    }
+
+    @Test
+    void testFindDocumentById() {
+        Book fake = new Book("B55", "T", "P", LocalDate.now(),
+                10, 2, 4, 3, "i", "c", "a", "d");
+
+        when(mockDB.createNewBookList("B55", "SELECT * FROM Book WHERE id LIKE ?"))
+                .thenReturn(List.of(fake));
+
+        Book b = service.findDocumentById("B55");
+
+        assertNotNull(b);
+        assertEquals("B55", b.getId());
+    }
+
+    @Test
+    void testGetRecentlyAddedBooks() {
+        Book fake = new Book("B200", "T", "P", LocalDate.now(),
+                1, 1, 1, 1, "i", "c", "a", "d");
+
+        when(mockDB.createNewBookList(null, "SELECT * FROM Book ORDER BY id DESC LIMIT 10"))
+                .thenReturn(List.of(fake));
+
+        List<Book> list = service.getRecentlyAddedBooks();
+
+        assertEquals(1, list.size());
+        assertEquals("B200", list.get(0).getId());
+    }
+
+    @Test
+    void testGetMostBorrowedBooks() {
+
+        when(mockDB.findWithSQL(anyString(), any(), eq("docID")))
+                .thenReturn(List.of(
+                        List.of("B1")
+                ));
+
+        Book fake = new Book("B1", "X", "P", LocalDate.now(),
+                1, 1, 1, 1, "i", "c", "a", "d");
+
+        when(mockDB.createNewBookList("B1", "SELECT * FROM Book WHERE id LIKE ?"))
+                .thenReturn(List.of(fake));
+
+        List<Book> list = service.getMostBorrowedBooks();
+
+        assertEquals(1, list.size());
+        assertEquals("B1", list.get(0).getId());
     }
 }

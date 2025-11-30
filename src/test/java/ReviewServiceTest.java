@@ -1,76 +1,132 @@
+import librarymanagement.entity.Book;
+import librarymanagement.entity.Document;
+import librarymanagement.entity.DocumentType;
 import librarymanagement.entity.Review;
-import librarymanagement.gui.models.ReviewService;
+import librarymanagement.gui.models.*;
 import librarymanagement.utils.SQLiteInstance;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
+import org.mockito.MockedStatic;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 class ReviewServiceTest {
 
-    private ReviewService reviewService;
-    private SQLiteInstance sqLiteInstance;
+    private SQLiteInstance mockDB;
+    private ReviewService service;
+
+    private MockedStatic<DocumentServiceFactory> factoryMock;
+    private MockedStatic<AccountService> accountMock;
+
+    private DocumentService<Document> mockDocService;
+    private AccountService mockAccountService;
 
     @BeforeEach
-    void setUp() {
-        reviewService = new ReviewService();
-        sqLiteInstance = new SQLiteInstance();
+    void setup() {
+
+        mockDB = mock(SQLiteInstance.class);
+        ReviewService.setSqLiteInstance(mockDB);
+
+        service = ReviewService.getInstance();
+
+        factoryMock = mockStatic(DocumentServiceFactory.class);
+        mockDocService = mock(DocumentService.class);
+
+        factoryMock.when(() ->
+                DocumentServiceFactory.getDocumentService(DocumentType.BOOK)
+        ).thenReturn(mockDocService);
+
+        accountMock = mockStatic(AccountService.class);
+        mockAccountService = mock(AccountService.class);
+        accountMock.when(AccountService::getInstance).thenReturn(mockAccountService);
+    }
+
+    @AfterEach
+    void tearDown() {
+        factoryMock.close();
+        accountMock.close();
+    }
+    @Test
+    void testCheckIfUserHasCommentToDocument_true() {
+        when(mockDB.findWithSQL(anyString(), any(), eq("username")))
+                .thenReturn(List.of(List.of("john")));
+
+        boolean ok = service.checkIfUserHasCommentToDocument("john", "B1");
+        assertTrue(ok);
     }
 
     @Test
-    void testCheckIfUserHasCommentToDocument_ExistingReview() {
-        String username = "user1";
-        String docID = "B101";
-        boolean result = reviewService.checkIfUserHasCommentToDocument(username, docID);
-        assertTrue(result, "User should have commented on the document.");
+    void testCheckIfUserHasCommentToDocument_false() {
+        when(mockDB.findWithSQL(anyString(), any(), eq("username")))
+                .thenReturn(List.of());
+
+        boolean ok = service.checkIfUserHasCommentToDocument("john", "B1");
+        assertFalse(ok);
     }
 
     @Test
-    void testCheckIfUserHasCommentToDocument_NoReview() {
-        String username = "user2";
-        String docID = "B101";
-        boolean result = reviewService.checkIfUserHasCommentToDocument(username, docID);
-        assertFalse(result, "User should not have commented on the document.");
+    void testAddReview_updatesBookAndInsertReview() {
+
+        Book book = new Book();
+        book.setId("B1");
+        book.setAverageRating(4.0);
+        book.setRatingsCount(2);
+
+        when(mockDocService.findDocumentById("B1"))
+                .thenReturn(book);
+
+        boolean ok = service.addReview("john", "B1", 5, "Great!");
+
+        assertTrue(ok);
+
+        verify(mockDocService).updateDocument(book);
+
+        verify(mockDB).insertRow(eq("Review"), eq("john"), eq("B1"), eq("Great!"), eq(5));
     }
 
     @Test
-    void testAddReview_NewReview() {
-        String username = "user1";
-        String docID = "B101";
-        int rating = 5;
-        String comment = "Excellent book!";
+    void testAddReviewForCurrentAccount() {
 
-        boolean result = reviewService.addReview(username, docID, rating, comment);
-        assertTrue(result, "Review should be added successfully.");
+        var account = mock(librarymanagement.entity.User.class);
+        when(account.getUsername()).thenReturn("currentUser");
+        when(mockAccountService.getCurrentAccount()).thenReturn(account);
 
-        // Optionally, verify if the review was actually added to the database
-        List<Review> reviews = reviewService.getAllReviewsInDocument(docID);
-        assertTrue(reviews.stream().anyMatch(r -> r.getUsername().equals(username) && r.getRating() == rating),
-                "The added review should be present in the review list.");
-        String condition = "username = 'user1'";
-        sqLiteInstance.deleteRow("Review", condition);
-    }
+        Book book = new Book();
+        book.setId("B1");
+        book.setAverageRating(3.0);
+        book.setRatingsCount(1);
 
-    @Test
-    void testAddReview_UserAlreadyReviewed() {
-        String username = "user1";
-        String docID = "B101";
-        int rating = 4;
-        String comment = "Good book.";
+        when(mockDocService.findDocumentById("B1"))
+                .thenReturn(book);
 
-        reviewService.addReview(username, docID, rating, comment);
+        boolean ok = service.addReviewForCurrentAccount("B1", "Nice!", 4);
 
-        boolean result = reviewService.addReview(username, docID, 5, "Excellent!");
-        assertFalse(result, "Review should not be added again for the same user and document.");
+        assertTrue(ok);
+
+        verify(mockDB).insertRow(eq("Review"), eq("currentUser"), eq("B1"), eq("Nice!"), eq(4));
     }
 
     @Test
     void testGetAllReviewsInDocument() {
-        String docID = "B101";
-        List<Review> reviews = reviewService.getAllReviewsInDocument(docID);
-        assertNotNull(reviews, "Reviews should not be null.");
-        assertTrue(reviews.size() > 0, "There should be at least one review for the document.");
+
+        when(mockDB.find("Review", "docID", "B1",
+                "username", "rating", "comment"))
+                .thenReturn(List.of(
+                        List.of("u1", 5, "Good"),
+                        List.of("u2", 3, "Ok")
+                ));
+
+        List<Review> reviews = service.getAllReviewsInDocument("B1");
+
+        assertEquals(2, reviews.size());
+        assertEquals("u1", reviews.get(0).getUsername());
+        assertEquals(5, reviews.get(0).getRating());
+        assertEquals("Good", reviews.get(0).getComment());
+
+        assertEquals("u2", reviews.get(1).getUsername());
+        assertEquals(3, reviews.get(1).getRating());
+        assertEquals("Ok", reviews.get(1).getComment());
     }
 }

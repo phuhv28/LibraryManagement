@@ -3,21 +3,22 @@ package librarymanagement.gui.models;
 import librarymanagement.entity.Book;
 import librarymanagement.utils.SQLiteInstance;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Class handles handle operations related to books operations related to books (Add, edit, delete,...).
  */
 public class BookService implements DocumentService<Book> {
-    private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
+    private static final BookService INSTANCE = new BookService();
+    private static SQLiteInstance sqLiteInstance;
+
+    private BookService() {
+    }
+
+    public static BookService getInstance() {
+        return INSTANCE;
+    }
 
     /**
      * Generates a new ID for a book by retrieving the maximum current ID from the database
@@ -43,6 +44,11 @@ public class BookService implements DocumentService<Book> {
 
         return newId;
     }
+
+    public static void setSqLiteInstance(SQLiteInstance mock) {
+        sqLiteInstance = mock;
+    }
+
 
     /**
      * Checks if a book with the given ISBN exists in the database.
@@ -161,69 +167,6 @@ public class BookService implements DocumentService<Book> {
         System.out.println("Edit book successfully");
     }
 
-    /**
-     * Creates a list of books based on the provided condition and SQL query.
-     *
-     * <p>This method executes the provided SQL query with an optional condition, retrieves the book details from the result set,
-     * and constructs a list of {@link Book} objects. It handles different date formats for the published date and returns the
-     * list of books, or null if no books are found.</p>
-     *
-     * @param condition the condition to filter the books. It is used in the SQL query to filter by matching titles or authors.
-     *                  If null or empty, the condition is not applied.
-     * @param sql       the SQL query string to execute, which should include a placeholder for the condition.
-     * @return a list of {@link Book} objects created from the result of the SQL query, or null if no books are found.
-     */
-    private List<Book> createNewBookList(String condition, String sql) {
-        List<Book> books = new ArrayList<>();
-        try (PreparedStatement stmt = sqLiteInstance.connection.prepareStatement(sql)) {
-            if (condition != null && !condition.isEmpty()) {
-                stmt.setString(1, "%" + condition + "%");
-            }
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String isbn = rs.getString("ISBN");
-                String id = rs.getString("id");
-                String title = rs.getString("title");
-                String author = rs.getString("author");
-                String publisher = rs.getString("publisher");
-                String publishedDate = rs.getString("publishedDate");
-                String categories = rs.getString("categories");
-                int pageCount = rs.getInt("pageCount");
-                int availableCopies = rs.getInt("availableCopies");
-                String description = rs.getString("description");
-                float averageRating = rs.getFloat("averageRating");
-                int ratingCount = rs.getInt("ratingsCount");
-                String linkToAPI = rs.getString("linkToAPI");
-                byte[] thumbnailImage = rs.getBytes("thumbnailImage");
-
-                LocalDate finalDate = null;
-                if (publishedDate != null && !publishedDate.equals("N/A")) {
-                    if (publishedDate.length() == 4) {
-                        finalDate = LocalDate.of(Integer.parseInt(publishedDate), 1, 1);
-                    } else if (publishedDate.length() == 7) {
-                        DateTimeFormatter yearMonthFormatter = new DateTimeFormatterBuilder()
-                                .appendPattern("yyyy-MM")
-                                .parseDefaulting(java.time.temporal.ChronoField.DAY_OF_MONTH, 1)
-                                .toFormatter(Locale.getDefault());
-                        finalDate = LocalDate.parse(publishedDate, yearMonthFormatter);
-                    } else {
-                        finalDate = LocalDate.parse(publishedDate);
-                    }
-                }
-
-                books.add(new Book(id, title, publisher, finalDate, pageCount, availableCopies,
-                        averageRating, ratingCount, isbn, categories, author, description, linkToAPI, thumbnailImage));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        if (books.isEmpty()) {
-            return null;
-        }
-
-        return books;
-    }
 
     /**
      * Searches for books by title.
@@ -236,7 +179,7 @@ public class BookService implements DocumentService<Book> {
      */
     public List<Book> searchBookByTitle(String title) {
         String sql = "SELECT * FROM Book WHERE title LIKE ?";
-        return createNewBookList(title, sql);
+        return sqLiteInstance.createNewBookList(title, sql);
     }
 
     /**
@@ -249,7 +192,7 @@ public class BookService implements DocumentService<Book> {
      */
     public Book searchBookByISBN(String ISBN) {
         String sql = "SELECT * FROM Book WHERE ISBN LIKE ?";
-        List<Book> books = createNewBookList(ISBN, sql);
+        List<Book> books = sqLiteInstance.createNewBookList(ISBN, sql);
         if (books == null) {
             return null;
         }
@@ -267,7 +210,7 @@ public class BookService implements DocumentService<Book> {
      */
     public List<Book> searchBookByCategory(String category) {
         String sql = "SELECT * FROM Book WHERE Categories LIKE ?";
-        return createNewBookList(category, sql);
+        return sqLiteInstance.createNewBookList(category, sql);
     }
 
     /**
@@ -280,7 +223,7 @@ public class BookService implements DocumentService<Book> {
      */
     public List<Book> searchBookByAuthor(String author) {
         String sql = "SELECT * FROM Book WHERE author LIKE ?";
-        return createNewBookList(author, sql);
+        return sqLiteInstance.createNewBookList(author, sql);
     }
 
     /**
@@ -294,7 +237,7 @@ public class BookService implements DocumentService<Book> {
     @Override
     public Book findDocumentById(String id) {
         String sql = "SELECT * FROM Book WHERE id LIKE ?";
-        List<Book> books = createNewBookList(id, sql);
+        List<Book> books = sqLiteInstance.createNewBookList(id, sql);
         if (books == null) {
             return null;
         }
@@ -311,7 +254,7 @@ public class BookService implements DocumentService<Book> {
      */
     public List<Book> getRecentlyAddedBooks() {
         String sql = "SELECT * FROM Book ORDER BY id DESC LIMIT 10";
-        return createNewBookList(null, sql);
+        return sqLiteInstance.createNewBookList(null, sql);
     }
 
     /**
@@ -323,7 +266,7 @@ public class BookService implements DocumentService<Book> {
      */
     public List<Book> getAllDocument() {
         String sql = "SELECT * FROM Book ORDER BY id";
-        return createNewBookList(null, sql);
+        return sqLiteInstance.createNewBookList(null, sql);
     }
 
     /**
@@ -332,14 +275,15 @@ public class BookService implements DocumentService<Book> {
      * @return a list of all {@link Book} objects
      */
     public List<Book> getMostBorrowedBooks() {
-        String sql = "SELECT  docID ,COUNT(BorrowRecord.docID) FROM BorrowRecord\n" +
-                "GROUP BY docID\n" +
-                "ORDER BY COUNT(BorrowRecord.docID) DESC\n" +
-                "LIMIT 10";
+        String sql = """
+                SELECT  docID ,COUNT(BorrowRecord.docID) FROM BorrowRecord
+                GROUP BY docID
+                ORDER BY COUNT(BorrowRecord.docID) DESC
+                LIMIT 10""";
         List<List<Object>> lists = sqLiteInstance.findWithSQL(sql, new Object[]{}, "docID");
         List<Book> books = new ArrayList<>();
         for (List<Object> list : lists) {
-            Book book = findDocumentById((String) list.get(0));
+            Book book = findDocumentById((String) list.getFirst());
             books.add(book);
         }
         return books;

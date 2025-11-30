@@ -10,7 +10,7 @@ import librarymanagement.gui.controllers.BorrowResult;
 public class BorrowDocumentViewModel {
     private final StringProperty idProperty = new SimpleStringProperty();
 
-    private final BorrowingService borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(DocumentType.BOOK));
+    private final BorrowingService borrowingService = BorrowingService.getInstance();
 
     public StringProperty idProperty() {
         return idProperty;

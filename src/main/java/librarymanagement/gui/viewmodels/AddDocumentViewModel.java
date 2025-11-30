@@ -130,10 +130,6 @@ public class AddDocumentViewModel {
         return pageCountProperty;
     }
 
-    public void setPublicationDateProperty(LocalDate publicationDate) {
-        this.publicationDateProperty.set(publicationDate);
-    }
-
     public ObjectProperty<Book> bookProperty() {
         return bookProperty;
     }

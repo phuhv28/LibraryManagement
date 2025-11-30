@@ -15,8 +15,15 @@ import java.util.Locale;
 
 /** Class handles handle operations related to magazines-operations related to magazine (Add, edit, delete,...).*/
 public class MagazineService implements DocumentService<Magazine> {
-    private static final SQLiteInstance sqLiteInstance = SQLiteInstance.getInstance();
+    private static final MagazineService INSTANCE = new MagazineService();
+    private static SQLiteInstance sqLiteInstance;
 
+    private MagazineService() {
+    }
+
+    public static MagazineService getInstance() {
+        return INSTANCE;
+    }
     /**
      * Generates a new unique ID for a magazine by finding the highest ID in the database
      * and incrementing it.
@@ -36,6 +43,11 @@ public class MagazineService implements DocumentService<Magazine> {
 
         return newId;
     }
+
+    public static void setSqLiteInstance(SQLiteInstance mock) {
+        sqLiteInstance = mock;
+    }
+
 
     /**
      * Checks if a magazine with the given ISSN already exists in the database.

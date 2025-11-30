@@ -9,22 +9,22 @@ import librarymanagement.entity.DocumentType;
  */
 public class DocumentServiceFactory {
     private static BookService bookService = null;
-    private static ThesisService thesisService = null;
+    private static MagazineService magazineService = null;
 
     @SuppressWarnings("unchecked")
     public static <T extends Document> DocumentService<T> getDocumentService(DocumentType type) {
         return switch (type) {
             case BOOK -> {
                 if (bookService == null) {
-                    bookService = new BookService();
+                    bookService = BookService.getInstance();
                 }
                 yield (DocumentService<T>) bookService;
             }
-            case THESIS -> {
-                if (thesisService == null) {
-                    thesisService = new ThesisService();
+            case MAGAZINE -> {
+                if (magazineService == null) {
+                    magazineService = MagazineService.getInstance();
                 }
-                yield (DocumentService<T>) thesisService;
+                yield (DocumentService<T>) magazineService;
             }
             default -> throw new IllegalArgumentException("Unknown type");
         };

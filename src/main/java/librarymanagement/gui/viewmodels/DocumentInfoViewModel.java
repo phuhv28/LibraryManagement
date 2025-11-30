@@ -8,13 +8,13 @@ import librarymanagement.gui.models.DocumentServiceFactory;
 import librarymanagement.gui.models.ReviewService;
 
 public class DocumentInfoViewModel {
-    private final ReviewService reviewService = new ReviewService();
+    private final ReviewService reviewService = ReviewService.getInstance();
     private final AccountService accountService = AccountService.getInstance();
     private final BorrowingService borrowingService;
 
 
     public DocumentInfoViewModel(DocumentType documentType) {
-        borrowingService = new BorrowingService(DocumentServiceFactory.getDocumentService(documentType));
+        borrowingService = BorrowingService.getInstance();
     }
 
     public ReviewService getReviewService() {

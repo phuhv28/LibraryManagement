@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AccountService {
     private static final AccountService INSTANCE = new AccountService();
-    private static final SQLiteInstance sqLiteInstance = new SQLiteInstance();
+    private static SQLiteInstance sqLiteInstance;
     private static User currentUser = null;
 
     private AccountService() {
@@ -18,6 +18,10 @@ public class AccountService {
 
     public static AccountService getInstance() {
         return INSTANCE;
+    }
+
+    public static void setSqLiteInstance(SQLiteInstance sqLiteInstance) {
+        AccountService.sqLiteInstance = sqLiteInstance;
     }
 
     public User getCurrentAccount() {
